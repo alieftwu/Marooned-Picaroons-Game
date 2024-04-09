@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2ty2e5a3v5is"
-path="res://.godot/imported/Hit-3frm.png-e2e3881e3f5b15a2d0bc9afb4ae51df6.ctex"
+uid="uid://b37oc6xtqkox7"
+path="res://.godot/imported/Pirates Yellow Sprite Sheet.png-bf6ce0da0e1cc666505bca1f9fed7503.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TestPirate/Hit-3frm.png"
-dest_files=["res://.godot/imported/Hit-3frm.png-e2e3881e3f5b15a2d0bc9afb4ae51df6.ctex"]
+source_file="res://Sprites/Pirates Yellow Sprite Sheet.png"
+dest_files=["res://.godot/imported/Pirates Yellow Sprite Sheet.png-bf6ce0da0e1cc666505bca1f9fed7503.ctex"]
 
 [params]
 

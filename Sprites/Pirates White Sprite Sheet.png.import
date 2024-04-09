@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbo3g0dgepwq0"
-path="res://.godot/imported/Idle-5frm.png-60bab9032d44976f79b2cfcfda7e9c2b.ctex"
+uid="uid://bo4j5y36f5k8q"
+path="res://.godot/imported/Pirates White Sprite Sheet.png-7d03a6b4f1d1764bf852f9fbc84da799.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TestPirate/Idle-5frm.png"
-dest_files=["res://.godot/imported/Idle-5frm.png-60bab9032d44976f79b2cfcfda7e9c2b.ctex"]
+source_file="res://Sprites/Pirates White Sprite Sheet.png"
+dest_files=["res://.godot/imported/Pirates White Sprite Sheet.png-7d03a6b4f1d1764bf852f9fbc84da799.ctex"]
 
 [params]
 

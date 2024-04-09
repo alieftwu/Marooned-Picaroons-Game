@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8220h4lc55wk"
-path="res://.godot/imported/Gun-in-5frm.png-f2067ab965069fb737178fa462f9ce38.ctex"
+uid="uid://sy8trae7a6no"
+path="res://.godot/imported/Pirates Green Sprite Sheet.png-008b458c1abb4ead4f2303c3a68398be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TestPirate/Gun-in-5frm.png"
-dest_files=["res://.godot/imported/Gun-in-5frm.png-f2067ab965069fb737178fa462f9ce38.ctex"]
+source_file="res://Sprites/Pirates Green Sprite Sheet.png"
+dest_files=["res://.godot/imported/Pirates Green Sprite Sheet.png-008b458c1abb4ead4f2303c3a68398be.ctex"]
 
 [params]
 
