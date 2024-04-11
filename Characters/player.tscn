@@ -226,6 +226,7 @@ states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_05q78")
 speed = 80.0
