@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=11 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -9,6 +9,14 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
 size = Vector2(103.125, 9.18376)
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="6_ljdhw"]
+[ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ms3b"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
+size = Vector2(28, 32)
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
@@ -31,6 +39,30 @@ limit_bottom = 1000
 editor_draw_limits = true
 script = ExtResource("5_rtqw2")
 tilemap = NodePath("../../TileMap")
+
+[node name="TextureRect" type="TextureRect" parent="Player/Camera2D"]
+z_index = 2
+texture_filter = 1
+offset_left = -144.0
+offset_top = -14.0
+offset_right = 267.0
+offset_bottom = 126.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("6_ljdhw")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Player/Camera2D/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_0ms3b")
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)
@@ -57,3 +89,8 @@ position = Vector2(1112, 868)
 
 [node name="first_village" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(-535, 97)
+[node name="NPC" parent="." instance=ExtResource("7_kwfy2")]
+position = Vector2(263, 762)
+
+[connection signal="hideTextBox" from="NPC" to="." method="_on_npc_hide_text_box"]
+[connection signal="showTextBox" from="NPC" to="." method="_on_npc_show_text_box"]

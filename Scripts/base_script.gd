@@ -3,7 +3,11 @@ class_name BaseScene extends Node
 @onready var player : Player = $Player
 @onready var entrance_markers: Node2D = $EntranceMarkers
 
+@onready var boxText = get_node("Player/Camera2D/TextureRect")
+@onready var NPC = get_node("NPC")
+
 func _ready():
+	boxText.hide()
 	if scene_manager.player:
 		if player:
 			player.queue_free()
@@ -22,3 +26,14 @@ func position_player() -> void:
 
 func _on_follow_node_set(node):
 	$Camera2D.follow_node = node
+
+
+func _on_npc_show_text_box():
+	boxText.show()
+	boxText.get_node("Label").text = NPC.npcText
+
+
+
+
+func _on_npc_hide_text_box():
+	boxText.hide()
