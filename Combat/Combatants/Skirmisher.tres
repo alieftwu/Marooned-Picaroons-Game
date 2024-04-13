@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Attributes" load_steps=2 format=3 uid="uid://di3jwmrxshp2f"]
+
+[ext_resource type="Script" path="res://Combat/Scripts/Attributes.gd" id="1_a2yl6"]
+
+[resource]
+script = ExtResource("1_a2yl6")
+Health = 4
+Armor = 0
+Speed = 4
+BasicAttackDamage = 3
+Experience = 0

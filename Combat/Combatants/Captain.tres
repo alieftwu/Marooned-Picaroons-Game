@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Attributes" load_steps=3 format=3 uid="uid://boi27y1e73lim"]
+
+[ext_resource type="Texture2D" uid="uid://cogvewjjv8w1u" path="res://icon.svg" id="1_6ghwl"]
+[ext_resource type="Script" path="res://Combat/Scripts/Attributes.gd" id="1_r7ytg"]
+
+[resource]
+script = ExtResource("1_r7ytg")
+Name = "Captain Bob"
+Title = "Captain"
+PirateColor = "Red"
+Health = 6
+Armor = 1
+Speed = 2
+BasicAttackDamage = 3
+PirateTexture = ExtResource("1_6ghwl")
