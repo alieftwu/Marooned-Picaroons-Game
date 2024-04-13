@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bopo13erbbnwp"]
+[gd_scene load_steps=12 format=3 uid="uid://bopo13erbbnwp"]
 
 [ext_resource type="Texture2D" uid="uid://b47hfo2rbti4o" path="res://Tilesets/Tiles.png" id="1_w77tv"]
 [ext_resource type="Texture2D" uid="uid://b3ek4c28udisd" path="res://Tilesets/Props.png" id="2_2aqdj"]
 [ext_resource type="Script" path="res://Scenes/TestPlayer.gd" id="2_m8sl8"]
 [ext_resource type="Texture2D" uid="uid://b1r13ed5vl8sh" path="res://Sprites/Pirates Blue Sprite Sheet.png" id="3_w5dcs"]
 [ext_resource type="Texture2D" uid="uid://bs6j46k71tevy" path="res://Tilesets/Trees.png" id="3_ysc2t"]
+[ext_resource type="Texture2D" uid="uid://cd3m300vnx5l8" path="res://Sprites/Pirates Red Sprite Sheet.png" id="6_not1c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5t7hn"]
 texture = ExtResource("1_w77tv")
@@ -506,3 +507,11 @@ texture = SubResource("AtlasTexture_gssht")
 
 [node name="PlayerCamera" type="Camera2D" parent="TestPlayer"]
 zoom = Vector2(1.5, 1.5)
+
+[node name="TestEnemy" type="Node2D" parent="."]
+position = Vector2(104, 24)
+
+[node name="Sprite2D" type="Sprite2D" parent="TestEnemy"]
+texture = ExtResource("6_not1c")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
