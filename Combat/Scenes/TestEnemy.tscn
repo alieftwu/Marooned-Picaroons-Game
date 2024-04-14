@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Combat/Scripts/EnemyManager.gd" id="1_e11t6"]
 [ext_resource type="Texture2D" uid="uid://cd3m300vnx5l8" path="res://Sprites/Pirates Red Sprite Sheet.png" id="2_ep6q1"]
 
-[node name="Enemy" type="Node2D"]
+[node name="TestEnemy" type="Node2D"]
 script = ExtResource("1_e11t6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
