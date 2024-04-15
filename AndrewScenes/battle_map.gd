@@ -3,13 +3,14 @@ extends Node2D
 @onready var tile_map = $TileMap
 @onready var main_camera = $BattleCam
 @onready var player = $Player
-
+@onready var highlight_map = $HighlightMap
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 var target_position: Vector2
 var canMove: bool = false
 var startMoving : bool = false
 var person_node : Node2D
+var doBucketFill : bool = true
 
 var height : int = 9
 var width : int = 9
@@ -28,6 +29,7 @@ var rockStoneTile_source_id : int = 6
 
 signal moveSelected
 signal finishedMoving
+signal finishedGenerating
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,13 +42,15 @@ func _ready():
 	_loadBackground()
 	_startMusic()
 	canMove = false
+	emit_signal("finishedGenerating")
+	return
 	
 func _generateMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
 	random_DangerRowNum = randi_range(0, height - 1)
 	random_DangerRowNum2 = randi_range(0, height - 1)
-	for y in range(height):
+	for y in range(height): # reverse x and y for generation purposes
 		random_ColNum = randi_range(1, width - 2)
 		random_ExtraColNum = randi_range(1, width - 2)
 		random_ExtraColNum2 = randi_range(1, width - 2)
@@ -62,6 +66,8 @@ func _generateMap():
 				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), stoneTile_source_id, Vector2i(0, 0))
+				
+	return
 	
 func _makeAStarGrid():
 	astar_grid = AStarGrid2D.new()
@@ -80,6 +86,7 @@ func _makeAStarGrid():
 			
 			if tile_data == null or tile_data.get_custom_data("walkable") == false:
 				astar_grid.set_point_solid(tile_position, true)
+	return
 	
 func get_AStarGrid() -> AStarGrid2D:
 	return astar_grid
@@ -88,9 +95,10 @@ func get_TileMap():
 	return tile_map
 	
 func _input(event):
-	if event.is_action_pressed("move") == false: #nothing clicked
-		return
 	if canMove == false: # not allowed to move
+		return
+	
+	if event.is_action_pressed("move") == false: #nothing clicked
 		return
 		
 	var id_path
@@ -120,7 +128,10 @@ func movePerson(person : Node2D):
 	person_node = person
 	canMove = true
 	print("wait to pick")
+	
+	highlight_map._generateMoveMap(person_node)
 	await moveSelected # wait for person to select valid spot to move
+	highlight_map.clear()
 	print("moving")
 	target_position = tile_map.map_to_local(current_id_path.front())
 	
@@ -142,6 +153,7 @@ func _physics_process(delta):
 		current_id_path.pop_front()
 		startMoving == false
 		emit_signal("finishedMoving")
+	return
 	
 func _spawnPlayers():
 	pass

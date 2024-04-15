@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=16 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://AndrewScenes/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://8nugfd2un5nr" path="res://AndrewImages/tilemap_packed.png" id="3_3ytvu"]
 [ext_resource type="Texture2D" uid="uid://b5uhkk2hmeqwv" path="res://AndrewImages/tinyrockTile.png" id="3_skalu"]
 [ext_resource type="Texture2D" uid="uid://jjyelae1kq5v" path="res://AndrewImages/tinyStoneTile.png" id="4_ltbq7"]
 [ext_resource type="Script" path="res://AndrewScenes/Player.gd" id="5_bakyf"]
+[ext_resource type="Script" path="res://AndrewScenes/HighlightMap.gd" id="5_mf6xs"]
+[ext_resource type="Texture2D" uid="uid://cwrroyahhtq0s" path="res://AndrewImages/tinyturkDot.png" id="5_qar2n"]
 [ext_resource type="Texture2D" uid="uid://c45mb5dhu3r3s" path="res://AndrewImages/smallPirate.png" id="6_m62ro"]
 [ext_resource type="Texture2D" uid="uid://cd1uafb065qbe" path="res://AndrewImages/cityBackground.jpg" id="7_y6ins"]
 
@@ -170,6 +172,15 @@ sources/3 = SubResource("TileSetAtlasSource_3dwrm")
 sources/5 = SubResource("TileSetAtlasSource_1ri82")
 sources/6 = SubResource("TileSetAtlasSource_m7f70")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hu7xg"]
+texture = ExtResource("5_qar2n")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_8ollj"]
+tile_size = Vector2i(32, 32)
+sources/2 = SubResource("TileSetAtlasSource_hu7xg")
+
 [node name="BattleMap" type="Node2D"]
 position = Vector2(0, 1)
 script = ExtResource("1_nbqfk")
@@ -178,6 +189,11 @@ script = ExtResource("1_nbqfk")
 tile_set = SubResource("TileSet_hcfap")
 format = 2
 layer_0/tile_data = PackedInt32Array(0, 5, 0, 1, 5, 0, 2, 5, 0, 3, 5, 0, 4, 5, 0, 5, 5, 0, 6, 5, 0, 65543, 5, 0, 131079, 5, 0, 262151, 5, 0, 196615, 5, 0, 7, 5, 0, 65542, 5, 0, 65541, 5, 0, 65540, 5, 0, 65539, 5, 0, 65538, 5, 0, 65537, 5, 0, 65536, 5, 0, 131073, 5, 0, 131074, 5, 0, 196610, 5, 0, 196611, 5, 0, 262147, 5, 0, 262148, 5, 0, 327684, 5, 0, 327685, 5, 0, 393221, 5, 0, 393222, 5, 0, 131072, 5, 0, 196608, 5, 0, 262144, 5, 0, 327680, 5, 0, 393216, 5, 0, 458752, 5, 0, 196609, 5, 0, 262145, 5, 0, 327681, 5, 0, 393217, 5, 0, 458753, 5, 0, 262146, 5, 0, 327682, 5, 0, 393218, 5, 0, 458754, 5, 0, 131075, 5, 0, 327683, 5, 0, 393219, 5, 0, 458755, 5, 0, 131076, 5, 0, 196612, 5, 0, 393220, 5, 0, 458756, 5, 0, 131077, 5, 0, 196613, 5, 0, 262149, 5, 0, 458757, 5, 0, 131078, 5, 0, 196614, 5, 0, 262150, 5, 0, 327686, 5, 0, 458758, 5, 0, 327687, 5, 0, 393223, 5, 0, 458759, 5, 0, 8, 5, 0, 65544, 5, 0, 131080, 5, 0, 196616, 5, 0, 262152, 5, 0, 327688, 5, 0, 393224, 5, 0, 458760, 5, 0, 524296, 5, 0, 524295, 5, 0, 524294, 5, 0, 524293, 5, 0, 524291, 5, 0, 524292, 5, 0, 524290, 5, 0, 524289, 5, 0, 524288, 5, 0)
+
+[node name="HighlightMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_8ollj")
+format = 2
+script = ExtResource("5_mf6xs")
 
 [node name="BattleCam" type="Camera2D" parent="."]
 position = Vector2(-38, -45)
