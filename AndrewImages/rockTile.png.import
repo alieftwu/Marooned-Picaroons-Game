@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c45mb5dhu3r3s"
-path="res://.godot/imported/smallPirate.png-6556da2c70ff0b5b063f26aeea27ce8d.ctex"
+uid="uid://bjveoo4pjkvh0"
+path="res://.godot/imported/rockTile.png-63b5c21d26ad783eb62e67df7f901824.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://smallPirate.png"
-dest_files=["res://.godot/imported/smallPirate.png-6556da2c70ff0b5b063f26aeea27ce8d.ctex"]
+source_file="res://AndrewImages/rockTile.png"
+dest_files=["res://.godot/imported/rockTile.png-63b5c21d26ad783eb62e67df7f901824.ctex"]
 
 [params]
 

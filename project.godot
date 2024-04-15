@@ -13,7 +13,7 @@ config_version=5
 config/name="PiratePicaroons"
 run/main_scene="res://battle_map.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://AndrewImages/icon.svg"
 
 [display]
 

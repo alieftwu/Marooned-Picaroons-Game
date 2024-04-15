@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd1uafb065qbe"
-path="res://.godot/imported/cityBackground.jpg-895bab4d62f2bf9653575d1497f48295.ctex"
+uid="uid://b5uhkk2hmeqwv"
+path="res://.godot/imported/tinyrockTile.png-b2871af1555162793225b5272dbdd41f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://cityBackground.jpg"
-dest_files=["res://.godot/imported/cityBackground.jpg-895bab4d62f2bf9653575d1497f48295.ctex"]
+source_file="res://AndrewImages/tinyrockTile.png"
+dest_files=["res://.godot/imported/tinyrockTile.png-b2871af1555162793225b5272dbdd41f.ctex"]
 
 [params]
 
