@@ -28,7 +28,7 @@ func _generateMoveMap(person : Node2D):
 	person_node = person
 	speed = person.speed
 	starting_location = tile_map.local_to_map(person_node.global_position)
-	exploreGrid(starting_location[0], starting_location[1], 0, 3)
+	exploreGrid(starting_location[0], starting_location[1], 0, person_node.speed)
 	self.erase_cell(0, starting_location)
 
 func exploreGrid(x, y, moves_made, max_moves):

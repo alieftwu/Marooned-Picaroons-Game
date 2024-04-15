@@ -103,9 +103,20 @@ func _input(event):
 		
 	var id_path
 	var clicked_tile = tile_map.local_to_map(get_global_mouse_position())
+	# get all possible spaces you can move to
+	var starting_position = tile_map.local_to_map(person_node.global_position)
+	var allowedSpaces : Array = []
+	getAllowedSpaces(starting_position[0], starting_position[1], person_node.speed, 0, allowedSpaces)
+	
+	clicked_tile = Vector2(clicked_tile[0], clicked_tile[1]) # make it a vector
+		
+	if clicked_tile not in allowedSpaces: # make sure character has speed to move there
+		print("Not in my house")
+		return
+		
 	print("clicked tile: " + str(clicked_tile))
 	id_path = astar_grid.get_id_path(
-	tile_map.local_to_map(person_node.global_position),
+	starting_position,
 	tile_map.local_to_map(get_global_mouse_position())	
 	).slice(1)
 	
@@ -119,10 +130,34 @@ func _input(event):
 	emit_signal("moveSelected")
 	return
 			
-func highlight_tile(tile_pos):
-	#highlight_tilemap.clear()  # Clear previous highlights
-	#highlight_tilemap.set_cellv(tile_pos, 0)  # Set a highlight tile at the clicked position
-	pass
+func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
+	var current_position = Vector2(x, y)
+	spacesArray.append(current_position)
+	
+	# Base case: If moves made are equal to max_moves, stop recursion.
+	if moves_made == max_moves:
+		return
+	
+	# Directions for movement: up, down, left, right
+	var directions = [
+		Vector2(0, -1),  # Up
+		Vector2(0, 1),   # Down
+		Vector2(-1, 0),  # Left
+		Vector2(1, 0)    # Right
+	]
+	
+	# Explore all possible directions
+	for direction in directions:
+		var new_x = x + direction.x
+		var new_y = y + direction.y
+		
+		var tile_position = Vector2(new_x, new_y)
+		var tile_data = tile_map.get_cell_tile_data(0, tile_position)
+	
+		# Check bounds and if can go to the new cell
+		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
+			getAllowedSpaces(new_x, new_y, max_moves, moves_made + 1, spacesArray)
+	return
 	
 func movePerson(person : Node2D):
 	person_node = person

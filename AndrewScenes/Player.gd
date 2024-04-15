@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var BattleMap = get_parent()
-var speed : int = 2
+var speed : int = 4
 
 func _ready():
 	pass
