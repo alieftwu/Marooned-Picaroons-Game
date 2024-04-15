@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=18 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://AndrewScenes/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://8nugfd2un5nr" path="res://AndrewImages/tilemap_packed.png" id="3_3ytvu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://AndrewScenes/Player.gd" id="5_bakyf"]
 [ext_resource type="Script" path="res://AndrewScenes/HighlightMap.gd" id="5_mf6xs"]
 [ext_resource type="Texture2D" uid="uid://cwrroyahhtq0s" path="res://AndrewImages/tinyturkDot.png" id="5_qar2n"]
+[ext_resource type="Texture2D" uid="uid://bv5a2jswv3d50" path="res://AndrewImages/verytinyturkDot.png" id="6_883rm"]
 [ext_resource type="Texture2D" uid="uid://c45mb5dhu3r3s" path="res://AndrewImages/smallPirate.png" id="6_m62ro"]
 [ext_resource type="Texture2D" uid="uid://cd1uafb065qbe" path="res://AndrewImages/cityBackground.jpg" id="7_y6ins"]
 
@@ -177,9 +178,15 @@ texture = ExtResource("5_qar2n")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cev2j"]
+texture = ExtResource("6_883rm")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_8ollj"]
 tile_size = Vector2i(32, 32)
 sources/2 = SubResource("TileSetAtlasSource_hu7xg")
+sources/3 = SubResource("TileSetAtlasSource_cev2j")
 
 [node name="BattleMap" type="Node2D"]
 position = Vector2(0, 1)
