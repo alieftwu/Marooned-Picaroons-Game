@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Combat/Scripts/PlayerManager.gd" id="1_8ctw7"]
 [ext_resource type="Resource" uid="uid://di3jwmrxshp2f" path="res://Combat/Combatants/Skirmisher.tres" id="2_q8g3a"]
-[ext_resource type="Texture2D" uid="uid://b37oc6xtqkox7" path="res://Sprites/Pirates Yellow Sprite Sheet.png" id="3_olye3"]
+[ext_resource type="Texture2D" uid="uid://b37oc6xtqkox7" path="res://Sprites/Pirates/Pirates Yellow Sprite Sheet.png" id="3_olye3"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_8ctw7")

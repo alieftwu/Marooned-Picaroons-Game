@@ -4,4 +4,4 @@ extends Node
 @export var PlayerMovement : Script
 
 func _ready():
-	$PlyaerPanel.hide()
+	$PlayerPanel.hide()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxq1k8x0igytt"]
+[gd_scene load_steps=7 format=3 uid="uid://bxq1k8x0igytt"]
 
-[ext_resource type="Script" path="res://CombatManager.gd" id="1_gpkyi"]
+[ext_resource type="Script" path="res://Combat/Scripts/CombatManager.gd" id="1_gpkyi"]
 [ext_resource type="PackedScene" uid="uid://bopo13erbbnwp" path="res://Combat/Scenes/TestCombatMap.tscn" id="2_nsvjl"]
 [ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_t5ilx"]
 [ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="4_ims13"]
 [ext_resource type="PackedScene" uid="uid://b2t4d8plqaafx" path="res://Combat/Scenes/TestEnemy.tscn" id="5_3yta0"]
+[ext_resource type="Script" path="res://Combat/Scenes/Move.gd" id="6_7norg"]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_gpkyi")
@@ -18,3 +19,9 @@ position = Vector2(72, 120)
 
 [node name="TestEnemy" parent="TurnQueue" instance=ExtResource("5_3yta0")]
 position = Vector2(72, 24)
+
+[node name="TestEnemy2" parent="TurnQueue" instance=ExtResource("5_3yta0")]
+position = Vector2(96, 24)
+
+[node name="BattleMap" type="Node2D" parent="."]
+script = ExtResource("6_7norg")

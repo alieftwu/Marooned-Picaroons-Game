@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b37oc6xtqkox7"
-path="res://.godot/imported/Pirates Yellow Sprite Sheet.png-bf6ce0da0e1cc666505bca1f9fed7503.ctex"
+uid="uid://catm6nwxi1ldb"
+path="res://.godot/imported/Pirates Gray Sprite Sheet.png-ad20cd2de14ea0a1246b3f27d7527863.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Pirates Yellow Sprite Sheet.png"
-dest_files=["res://.godot/imported/Pirates Yellow Sprite Sheet.png-bf6ce0da0e1cc666505bca1f9fed7503.ctex"]
+source_file="res://Sprites/Pirates/Pirates Gray Sprite Sheet.png"
+dest_files=["res://.godot/imported/Pirates Gray Sprite Sheet.png-ad20cd2de14ea0a1246b3f27d7527863.ctex"]
 
 [params]
 
