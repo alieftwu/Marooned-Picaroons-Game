@@ -7,19 +7,27 @@ extends Node2D
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 var target_position: Vector2
-var is_moving: bool
+var canMove: bool = false
+var startMoving : bool = false
+var person_node : Node2D
 
-var height : int = 8
-var width : int = 8
+var height : int = 9
+var width : int = 9
 var hazardPlaced : bool = false
 var random_ColNum : int
 var random_ExtraColNum : int
+var random_ExtraColNum2 : int
+var random_ExtraColNum3 : int
 var random_SafeRowNum : int
 var random_DangerRowNum : int
+var random_DangerRowNum2 : int
 
 # tile source IDs
 var stoneTile_source_id : int = 5
 var rockStoneTile_source_id : int = 6
+
+signal moveSelected
+signal finishedMoving
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,22 +39,26 @@ func _ready():
 	_spawnEnemies()
 	_loadBackground()
 	_startMusic()
+	canMove = false
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func _generateMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
 	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
 	for y in range(height):
 		random_ColNum = randi_range(1, width - 2)
 		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
 		for x in range(width):
 			if x == random_ColNum and y != random_SafeRowNum:
 				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
 			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
 				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), stoneTile_source_id, Vector2i(0, 0))
@@ -68,15 +80,69 @@ func _makeAStarGrid():
 			
 			if tile_data == null or tile_data.get_custom_data("walkable") == false:
 				astar_grid.set_point_solid(tile_position, true)
-				
+	
 func get_AStarGrid() -> AStarGrid2D:
 	return astar_grid
 	
 func get_TileMap():
 	return tile_map
 	
-func movePerson():
+func _input(event):
+	if event.is_action_pressed("move") == false: #nothing clicked
+		return
+	if canMove == false: # not allowed to move
+		return
+		
+	var id_path
+	var clicked_tile = tile_map.local_to_map(get_global_mouse_position())
+	print("clicked tile: " + str(clicked_tile))
+	id_path = astar_grid.get_id_path(
+	tile_map.local_to_map(person_node.global_position),
+	tile_map.local_to_map(get_global_mouse_position())	
+	).slice(1)
+	
+	if id_path.is_empty() == false:
+		current_id_path = id_path
+	
+	if current_id_path.is_empty():
+		return
+		
+	canMove = false
+	emit_signal("moveSelected")
+	return
+			
+func highlight_tile(tile_pos):
+	#highlight_tilemap.clear()  # Clear previous highlights
+	#highlight_tilemap.set_cellv(tile_pos, 0)  # Set a highlight tile at the clicked position
 	pass
+	
+func movePerson(person : Node2D):
+	person_node = person
+	canMove = true
+	print("wait to pick")
+	await moveSelected # wait for person to select valid spot to move
+	print("moving")
+	target_position = tile_map.map_to_local(current_id_path.front())
+	
+	startMoving = true
+	await finishedMoving # wait for physics to finish moving
+	
+	return
+	
+func _physics_process(delta):
+	if current_id_path.is_empty():
+		return
+	if startMoving == false:
+		return
+		
+	target_position = tile_map.map_to_local(current_id_path.front())
+	person_node.global_position = person_node.global_position.move_toward(target_position, 3)
+	
+	if person_node.global_position == target_position:
+		current_id_path.pop_front()
+		startMoving == false
+		emit_signal("finishedMoving")
+	
 func _spawnPlayers():
 	pass
 	
