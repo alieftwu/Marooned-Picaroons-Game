@@ -7,6 +7,7 @@ class_name BaseScene extends Node
 @onready var NPC = get_node("NPC")
 
 func _ready():
+	boxText.hide()
 	if scene_manager.player:
 		if player:
 			player.queue_free()
@@ -29,6 +30,10 @@ func _on_follow_node_set(node):
 
 func _on_npc_show_text_box():
 	boxText.show()
+	boxText.get_node("Label").text = NPC.npcText[0]
+
+
+
 
 func _on_npc_hide_text_box():
 	boxText.hide()
