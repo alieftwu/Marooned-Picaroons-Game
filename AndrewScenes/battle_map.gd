@@ -1,8 +1,11 @@
 extends Node2D
 
+class_name BattleMap
+
+@onready var turn_queue = $TurnQueue
 @onready var tile_map = $TileMap
 @onready var main_camera = $BattleCam
-@onready var player = $Player
+@onready var player = turn_queue.get_active_character()
 @onready var highlight_map = $HighlightMap
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]

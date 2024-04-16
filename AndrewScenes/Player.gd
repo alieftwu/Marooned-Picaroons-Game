@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var BattleMap = get_parent()
-var speed : int = 4
+@onready var BattleMap = $BattleMap
+@export var Attributes : Resource 
 
 func _ready():
 	pass
@@ -11,4 +11,3 @@ func _input(event):
 		return
 		
 	BattleMap.movePerson(self)
-			
