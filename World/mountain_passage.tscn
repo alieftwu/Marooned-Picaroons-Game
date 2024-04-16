@@ -31,11 +31,24 @@ layer_3/tile_data = PackedInt32Array(393217, 7, 14, 524288, 131075, 3, 1376256, 
 [node name="any" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(32, 454)
 
+[node name="mountain_village" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(422, 173)
+
 [node name="SceneTrigger" parent="." instance=ExtResource("3_gsj4q")]
 position = Vector2(-11, 452)
 connected_scene = "world"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_epkyg")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("3_gsj4q")]
+position = Vector2(431, 120)
+rotation = 1.56044
+connected_scene = "mountain_village"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger2"]
 position = Vector2(-1.3, 3)
 scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_epkyg")
