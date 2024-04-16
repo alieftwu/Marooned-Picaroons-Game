@@ -8,6 +8,7 @@ class_name BaseScene extends Node
 
 func _ready():
 	boxText.hide()
+func _ready():
 	if scene_manager.player:
 		if player:
 			player.queue_free()
