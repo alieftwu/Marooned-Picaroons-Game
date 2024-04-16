@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8nugfd2un5nr"
-path="res://.godot/imported/tilemap_packed.png-4053c223f17000527520c7d4156aacb7.ctex"
+uid="uid://b80ewhfmxu2mt"
+path="res://.godot/imported/icon.svg-ed6591be5984bf3e10d6b9ca8e5b3b52.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AndrewImages/tilemap_packed.png"
-dest_files=["res://.godot/imported/tilemap_packed.png-4053c223f17000527520c7d4156aacb7.ctex"]
+source_file="res://Sprites/AndrewImages/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-ed6591be5984bf3e10d6b9ca8e5b3b52.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

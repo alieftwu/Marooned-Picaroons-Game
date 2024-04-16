@@ -1,16 +1,16 @@
 [gd_scene load_steps=16 format=3 uid="uid://cwpfckf0fl30q"]
 
-[ext_resource type="Script" path="res://AndrewScenes/battle_map.gd" id="1_nbqfk"]
-[ext_resource type="Texture2D" uid="uid://8nugfd2un5nr" path="res://AndrewImages/tilemap_packed.png" id="3_3ytvu"]
-[ext_resource type="Texture2D" uid="uid://b5uhkk2hmeqwv" path="res://AndrewImages/tinyrockTile.png" id="3_skalu"]
-[ext_resource type="Texture2D" uid="uid://jjyelae1kq5v" path="res://AndrewImages/tinyStoneTile.png" id="4_ltbq7"]
-[ext_resource type="Script" path="res://AndrewScenes/HighlightMap.gd" id="5_mf6xs"]
-[ext_resource type="Texture2D" uid="uid://cwrroyahhtq0s" path="res://AndrewImages/tinyturkDot.png" id="5_qar2n"]
-[ext_resource type="Texture2D" uid="uid://bv5a2jswv3d50" path="res://AndrewImages/verytinyturkDot.png" id="6_883rm"]
-[ext_resource type="Texture2D" uid="uid://cd1uafb065qbe" path="res://AndrewImages/cityBackground.jpg" id="7_y6ins"]
+[ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
+[ext_resource type="Texture2D" uid="uid://8nugfd2un5nr" path="res://Sprites/AndrewImages/tilemap_packed.png" id="2_dt4n1"]
+[ext_resource type="Texture2D" uid="uid://jjyelae1kq5v" path="res://Sprites/AndrewImages/tinyStoneTile.png" id="3_2a76f"]
+[ext_resource type="Texture2D" uid="uid://b5uhkk2hmeqwv" path="res://Sprites/AndrewImages/tinyrockTile.png" id="4_87afl"]
+[ext_resource type="Script" path="res://Combat/Scripts/HighlightMap.gd" id="5_mf6xs"]
+[ext_resource type="Texture2D" uid="uid://cwrroyahhtq0s" path="res://Sprites/AndrewImages/tinyturkDot.png" id="5_y02eo"]
+[ext_resource type="Texture2D" uid="uid://bv5a2jswv3d50" path="res://Sprites/AndrewImages/verytinyturkDot.png" id="6_fr53e"]
+[ext_resource type="Texture2D" uid="uid://cd1uafb065qbe" path="res://Sprites/AndrewImages/cityBackground.jpg" id="8_67l2n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3dwrm"]
-texture = ExtResource("3_3ytvu")
+texture = ExtResource("2_dt4n1")
 0:0/0 = 0
 0:0/0/custom_data_0 = true
 1:0/0 = 0
@@ -153,13 +153,13 @@ texture = ExtResource("3_3ytvu")
 16:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ri82"]
-texture = ExtResource("4_ltbq7")
+texture = ExtResource("3_2a76f")
 0:0/size_in_atlas = Vector2i(2, 2)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m7f70"]
-texture = ExtResource("3_skalu")
+texture = ExtResource("4_87afl")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 
@@ -172,12 +172,12 @@ sources/5 = SubResource("TileSetAtlasSource_1ri82")
 sources/6 = SubResource("TileSetAtlasSource_m7f70")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hu7xg"]
-texture = ExtResource("5_qar2n")
+texture = ExtResource("5_y02eo")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cev2j"]
-texture = ExtResource("6_883rm")
+texture = ExtResource("6_fr53e")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 
@@ -211,7 +211,7 @@ offset_left = -129.0
 offset_top = -117.0
 offset_right = 423.0
 offset_bottom = 415.0
-texture = ExtResource("7_y6ins")
+texture = ExtResource("8_67l2n")
 expand_mode = 1
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]

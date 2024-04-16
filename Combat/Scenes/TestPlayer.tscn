@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://72nmcd4jn5p5"]
 
-[ext_resource type="Script" path="res://AndrewScenes/Player.gd" id="1_8d1rl"]
+[ext_resource type="Script" path="res://Combat/Scripts/Player.gd" id="1_8d1rl"]
 [ext_resource type="Texture2D" uid="uid://b1r13ed5vl8sh" path="res://Sprites/Pirates/Pirates Blue Sprite Sheet.png" id="3_w0e3q"]
 [ext_resource type="Texture2D" uid="uid://8o3ueryei1od" path="res://Sprites/Icons/Move.png" id="5_jn272"]
 [ext_resource type="Texture2D" uid="uid://88w28i2vycqh" path="res://Sprites/Icons/Sword.png" id="6_ji8og"]
@@ -18,6 +18,7 @@ script = ExtResource("1_8d1rl")
 texture = SubResource("AtlasTexture_v1mjp")
 
 [node name="PlayerPanel" type="Panel" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

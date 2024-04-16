@@ -6,5 +6,6 @@
 script = ExtResource("1_b2asv")
 Health = 3
 Armor = 0
-Speed = 1
+Speed = 3
 BasicAttackDamage = 1
+Experience = 0

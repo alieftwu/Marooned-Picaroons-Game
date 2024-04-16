@@ -2,8 +2,8 @@ extends TileMap
 
 @onready var battle_map = get_parent()
 @onready var tile_map = get_node("../TileMap")
+@onready var turn_queue = $"../../TurnQueue"
 var astar_grid: AStarGrid2D
-var person_node : Node2D
 var height : int = 9
 var width : int = 9
 var speed : int = 1
@@ -23,12 +23,10 @@ func _ready():
 	width = battle_map.width
 	astar_grid = battle_map.astar_grid
 
-func _generateMoveMap(person : Node2D):
+func _generateMoveMap(player):
 	self.clear()
-	person_node = person
-	speed = person.speed
-	starting_location = tile_map.local_to_map(person_node.global_position)
-	exploreGrid(starting_location[0], starting_location[1], 0, person_node.speed)
+	starting_location = tile_map.local_to_map(player.global_position)
+	exploreGrid(starting_location[0], starting_location[1], 0, player.stats.Speed)
 	self.erase_cell(0, starting_location)
 
 func exploreGrid(x, y, moves_made, max_moves):

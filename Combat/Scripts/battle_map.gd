@@ -2,19 +2,16 @@ extends Node2D
 
 class_name BattleMap
 
-@onready var turn_queue = $TurnQueue
+@onready var turn_queue = $"../TurnQueue"
 @onready var tile_map = $TileMap
 @onready var main_camera = $BattleCam
-@onready var player = turn_queue.get_active_character()
 @onready var highlight_map = $HighlightMap
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 var target_position: Vector2
 var canMove: bool = false
 var startMoving : bool = false
-var person_node : Node2D
 var doBucketFill : bool = true
-
 var height : int = 9
 var width : int = 9
 var hazardPlaced : bool = false
@@ -35,7 +32,7 @@ signal finishedMoving
 signal finishedGenerating
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func initialize():
 	randomize()
 	main_camera.make_current()
 	_generateMap()
@@ -103,26 +100,26 @@ func _input(event):
 	
 	if event.is_action_pressed("move") == false: #nothing clicked
 		return
-		
+	
 	var id_path
 	var clicked_tile = tile_map.local_to_map(get_global_mouse_position())
 	# get all possible spaces you can move to
-	var starting_position = tile_map.local_to_map(person_node.global_position)
+	var player = turn_queue.get_active_character()
+	var starting_position = tile_map.local_to_map(player.global_position)
 	var allowedSpaces : Array = []
-	getAllowedSpaces(starting_position[0], starting_position[1], person_node.speed, 0, allowedSpaces)
+	getAllowedSpaces(starting_position[0], starting_position[1], player.stats.Speed, 0, allowedSpaces)
 	
 	clicked_tile = Vector2(clicked_tile[0], clicked_tile[1]) # make it a vector
-		
+	
 	if clicked_tile not in allowedSpaces: # make sure character has speed to move there
 		print("Not in my house")
 		return
-		
 	print("clicked tile: " + str(clicked_tile))
 	id_path = astar_grid.get_id_path(
 	starting_position,
 	tile_map.local_to_map(get_global_mouse_position())	
 	).slice(1)
-	
+
 	if id_path.is_empty() == false:
 		current_id_path = id_path
 	
@@ -162,12 +159,10 @@ func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
 			getAllowedSpaces(new_x, new_y, max_moves, moves_made + 1, spacesArray)
 	return
 	
-func movePerson(person : Node2D):
-	person_node = person
+func movePerson(player):
 	canMove = true
 	print("wait to pick")
-	
-	highlight_map._generateMoveMap(person_node)
+	highlight_map._generateMoveMap(player)
 	await moveSelected # wait for person to select valid spot to move
 	highlight_map.clear()
 	print("moving")
@@ -185,12 +180,14 @@ func _physics_process(delta):
 		return
 		
 	target_position = tile_map.map_to_local(current_id_path.front())
-	person_node.global_position = person_node.global_position.move_toward(target_position, 3)
+	var player = turn_queue.get_active_character()
+	player.global_position = player.global_position.move_toward(target_position, 3)
 	
-	if person_node.global_position == target_position:
+	if player.global_position == target_position:
 		current_id_path.pop_front()
 		startMoving == false
 		emit_signal("finishedMoving")
+		print("finished moving")
 	return
 	
 func _spawnPlayers():

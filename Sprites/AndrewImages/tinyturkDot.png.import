@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmimyil6c6i7j"
-path="res://.godot/imported/StoneTile.png-f57ba8162d168a37ac09e99af412dc4b.ctex"
+uid="uid://cwrroyahhtq0s"
+path="res://.godot/imported/tinyturkDot.png-7e33dfbfee22c78e258944635763e034.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AndrewImages/StoneTile.png"
-dest_files=["res://.godot/imported/StoneTile.png-f57ba8162d168a37ac09e99af412dc4b.ctex"]
+source_file="res://Sprites/AndrewImages/tinyturkDot.png"
+dest_files=["res://.godot/imported/tinyturkDot.png-7e33dfbfee22c78e258944635763e034.ctex"]
 
 [params]
 
