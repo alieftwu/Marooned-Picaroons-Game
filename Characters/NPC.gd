@@ -21,7 +21,8 @@ func _process(delta):
 	else:
 		bubble.hide()
 	# check for interaction
-	if Input.is_action_just_pressed("ui_accept") and closeEnough:
+	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
+		textDisplayed = true
 		print("output text: ", npcText, " goes here!")
 		emit_signal("showTextBox")
 
@@ -34,4 +35,5 @@ func _on_area_2d_body_entered(body):
 func _on_area_2d_body_exited(body):
 	print("remove textbox")
 	closeEnough = false
+	textDisplayed = false
 	emit_signal("hideTextBox")

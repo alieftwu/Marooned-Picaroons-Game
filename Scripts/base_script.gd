@@ -29,7 +29,10 @@ func _on_follow_node_set(node):
 
 func _on_npc_show_text_box():
 	boxText.show()
-	boxText.get_node("Label").text = NPC.npcText[0]
 
 func _on_npc_hide_text_box():
+	boxText.hide()
+
+
+func _on_label_hide_box_label():
 	boxText.hide()

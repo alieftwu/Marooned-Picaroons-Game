@@ -96,5 +96,6 @@ position = Vector2(-535, 97)
 [node name="NPC" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(263, 762)
 
+[connection signal="hideBoxLabel" from="Player/Camera2D/TextureRect/Label" to="." method="_on_label_hide_box_label"]
 [connection signal="hideTextBox" from="NPC" to="." method="_on_npc_hide_text_box"]
 [connection signal="showTextBox" from="NPC" to="." method="_on_npc_show_text_box"]
