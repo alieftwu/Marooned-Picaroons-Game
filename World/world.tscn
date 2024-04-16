@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=13 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -10,6 +10,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
 size = Vector2(103.125, 9.18376)
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="6_ljdhw"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="7_2sq6k"]
+[ext_resource type="Script" path="res://World/Label.gd" id="7_ii1ta"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0ms3b"]
@@ -50,6 +52,7 @@ offset_bottom = 126.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("6_ljdhw")
 stretch_mode = 4
+script = ExtResource("7_2sq6k")
 
 [node name="Label" type="Label" parent="Player/Camera2D/TextureRect"]
 texture_filter = 1
@@ -63,6 +66,7 @@ text goes here."
 label_settings = SubResource("LabelSettings_0ms3b")
 horizontal_alignment = 1
 autowrap_mode = 2
+script = ExtResource("7_ii1ta")
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)

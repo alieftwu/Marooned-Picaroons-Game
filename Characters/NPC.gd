@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var around = get_node("Area2D")
 @onready var bubble = get_node("TextureRect")
 
-@export var npcText = "I say words!"
+@export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know."]
 
 signal showTextBox
 signal hideTextBox
