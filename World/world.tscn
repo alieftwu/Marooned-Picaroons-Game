@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
-size = Vector2(28, 32)
+size = Vector2(103.125, 9.18376)
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
@@ -41,7 +41,19 @@ connected_scene = "mountain_passage"
 position = Vector2(-1, 3)
 shape = SubResource("RectangleShape2D_3llp2")
 
+[node name="SceneTrigger2" parent="." instance=ExtResource("4_wqytr")]
+position = Vector2(566, 980)
+scale = Vector2(1.28, 1.96)
+connected_scene = "first_village"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger2"]
+position = Vector2(9.375, 3.57135)
+shape = SubResource("RectangleShape2D_3llp2")
+
 [node name="EntranceMarkers" type="Node2D" parent="."]
 position = Vector2(1112, 868)
 
 [node name="mountain_passage" type="Marker2D" parent="EntranceMarkers"]
+
+[node name="first_village" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(-535, 97)
