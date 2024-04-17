@@ -29,6 +29,7 @@ var rockStoneTile_source_id : int = 6
 
 signal moveSelected
 signal finishedMoving
+signal characterMovementComplete
 signal finishedGenerating
 
 # Called when the node enters the scene tree for the first time.
@@ -162,17 +163,16 @@ func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
 func movePerson(player):
 	current_id_path.clear()
 	canMove = true
-	print("child ", player.get_index(), "wait to pick")
+	print("child ", player.get_index(), " waiting to pick")
 	highlight_map._generateMoveMap(player)
 	await moveSelected # wait for person to select valid spot to move
-	print("child ", player.get_index(), " move selected")
 	highlight_map.clear()
 	print("child ", player.get_index(), " started moving")
 	target_position = tile_map.map_to_local(current_id_path.front())
 	
 	startMoving = true
 	await finishedMoving # wait for physics to finish moving
-	
+	emit_signal("characterMovementComplete")
 	return
 	
 func _physics_process(delta):
@@ -180,17 +180,37 @@ func _physics_process(delta):
 		return
 	if startMoving == false:
 		return
-		
+	print(current_id_path)
 	target_position = tile_map.map_to_local(current_id_path.front())
 	var player = turn_queue.get_active_character()
 	player.global_position = player.global_position.move_toward(target_position, 3)
 	
 	if player.global_position == target_position:
 		current_id_path.pop_front()
-		startMoving == false
-		emit_signal("finishedMoving")
-		print("child ", player.get_index(), " finished moving")
+		if current_id_path.is_empty():
+			print(current_id_path)
+			startMoving = false
+			emit_signal("finishedMoving")
+			print("child ", player.get_index(), " finished moving")
+		#current_id_path.clear()
+	
 	return
+	
+#func _physics_process(delta):
+	#if current_id_path.is_empty():
+		#return
+	#if startMoving == false:
+		#return
+		#
+	#target_position = tile_map.map_to_local(current_id_path.front())
+	#var person_node = turn_queue.get_active_character()
+	#person_node.global_position = person_node.global_position.move_toward(target_position, 3)
+	#
+	#if person_node.global_position == target_position:
+		#current_id_path.pop_front()
+		#startMoving == false
+		#emit_signal("finishedMoving")
+	#return
 	
 func _spawnPlayers():
 	pass
