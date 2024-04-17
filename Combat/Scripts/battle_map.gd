@@ -187,7 +187,6 @@ func _physics_process(delta):
 	
 	if player.global_position == target_position:
 		current_id_path.pop_front()
-		
 		if current_id_path.is_empty():
 			print(current_id_path)
 			startMoving = false
@@ -196,6 +195,22 @@ func _physics_process(delta):
 		#current_id_path.clear()
 	
 	return
+	
+#func _physics_process(delta):
+	#if current_id_path.is_empty():
+		#return
+	#if startMoving == false:
+		#return
+		#
+	#target_position = tile_map.map_to_local(current_id_path.front())
+	#var person_node = turn_queue.get_active_character()
+	#person_node.global_position = person_node.global_position.move_toward(target_position, 3)
+	#
+	#if person_node.global_position == target_position:
+		#current_id_path.pop_front()
+		#startMoving == false
+		#emit_signal("finishedMoving")
+	#return
 	
 func _spawnPlayers():
 	pass
