@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Game 3"
-run/main_scene="res://World/world.tscn"
+run/main_scene="res://Main Menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,7 +21,12 @@ scene_manager="*res://Scripts/SceneManager.gd"
 
 [display]
 
+window/size/mode=2
 window/stretch/scale=4.0
+
+[dotnet]
+
+project/assembly_name="Game 3"
 
 [input]
 
@@ -54,3 +59,7 @@ move={
 [layer_names]
 
 2d_physics/layer_4="triggers"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
