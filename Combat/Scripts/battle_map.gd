@@ -187,11 +187,9 @@ func _physics_process(delta):
 	
 	if player.global_position == target_position:
 		current_id_path.pop_front()
-		startMoving == false
+		#startMoving = false
 		emit_signal("finishedMoving")
 		print("child ", player.get_index(), " finished moving")
-	return
-	
 func _spawnPlayers():
 	pass
 	
