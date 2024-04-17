@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bd4m5aw50fvff"]
 
 [ext_resource type="Script" path="res://Main Menu/main_menu.gd" id="1_epbv5"]
-[ext_resource type="Texture2D" uid="uid://e3dbc6pcfn0l" path="res://Main Menu/main menu background.png" id="2_2a5qm"]
+[ext_resource type="Texture2D" uid="uid://bdjqhjajx5yhj" path="res://Main Menu/other main menu.png" id="2_52hmm"]
 
 [sub_resource type="SystemFont" id="SystemFont_c70ce"]
 font_names = PackedStringArray("Impact")
@@ -23,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_2a5qm")
+texture = ExtResource("2_52hmm")
 expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
