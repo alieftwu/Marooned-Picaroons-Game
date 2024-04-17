@@ -65,6 +65,7 @@ label_settings = SubResource("LabelSettings_0ms3b")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("7_ii1ta")
+connected_scene = "CombatScene"
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)
