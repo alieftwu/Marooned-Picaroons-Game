@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://72nmcd4jn5p5"]
+
+[ext_resource type="Script" path="res://Combat/Scripts/PlayerManager.gd" id="1_xdvuv"]
+[ext_resource type="Resource" uid="uid://doxw4nj5vqhyd" path="res://Combat/Combatants/TestPlayer.tres" id="2_c1y5g"]
+[ext_resource type="Script" path="res://Combat/Scripts/PlayerMovement.gd" id="3_etyag"]
+[ext_resource type="Texture2D" uid="uid://b1r13ed5vl8sh" path="res://Sprites/Pirates Blue Sprite Sheet.png" id="3_w0e3q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v1mjp"]
+atlas = ExtResource("3_w0e3q")
+region = Rect2(0, 0, 16, 16)
+
+[node name="TestPlayer" type="Node2D"]
+script = ExtResource("1_xdvuv")
+Attributes = ExtResource("2_c1y5g")
+PlayerMovement = ExtResource("3_etyag")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_v1mjp")
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="Panel" type="Panel" parent="PlayerCamera"]
+offset_left = -56.0
+offset_top = 32.0
+offset_right = -16.0
+offset_bottom = 72.0
+scale = Vector2(2.78611, 0.6069)

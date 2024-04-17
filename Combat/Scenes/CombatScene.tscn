@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxq1k8x0igytt"]
+
+[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_81gjc"]
+[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_yj7ip"]
+[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_t5ilx"]
+[ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="4_ims13"]
+
+[node name="Combat" type="Node2D"]
+script = ExtResource("1_81gjc")
+
+[node name="BattleMap" parent="." instance=ExtResource("2_yj7ip")]
+
+[node name="TurnQueue" parent="." instance=ExtResource("3_t5ilx")]
+
+[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_ims13")]
+position = Vector2(16, 80)
+
+[node name="TestPlayer2" parent="TurnQueue" instance=ExtResource("4_ims13")]
+position = Vector2(16, 144)
+
+[node name="TestPlayer3" parent="TurnQueue" instance=ExtResource("4_ims13")]
+position = Vector2(16, 208)
