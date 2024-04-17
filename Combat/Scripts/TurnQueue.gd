@@ -4,8 +4,10 @@ class_name TurnQueue
 @onready var battle_map = $"../BattleMap"
 var num_children
 var active_character
+var new_index
 
 func initialize():
+	num_children = get_child_count()
 	active_character = get_child(0)
 
 func get_active_character():
@@ -17,5 +19,8 @@ func play_round():
 		child.play_turn()
 		await battle_map.finishedMoving
 		print("child ", active_character.get_index(), "'s turn has ended")
-		var new_index : int = (active_character.get_index() + 1)
+		new_index = active_character.get_index() + 1
+		if new_index == num_children:
+			return
 		active_character = get_child(new_index)
+		
