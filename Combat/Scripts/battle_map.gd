@@ -114,7 +114,7 @@ func _input(event):
 	if clicked_tile not in allowedSpaces: # make sure character has speed to move there
 		print("Not in my house")
 		return
-	print("clicked tile: " + str(clicked_tile))
+	print("child ", player.get_index(), " clicked tile: " + str(clicked_tile))
 	id_path = astar_grid.get_id_path(
 	starting_position,
 	tile_map.local_to_map(get_global_mouse_position())	
@@ -160,12 +160,14 @@ func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
 	return
 	
 func movePerson(player):
+	current_id_path.clear()
 	canMove = true
-	print("wait to pick")
+	print("child ", player.get_index(), "wait to pick")
 	highlight_map._generateMoveMap(player)
 	await moveSelected # wait for person to select valid spot to move
+	print("child ", player.get_index(), " move selected")
 	highlight_map.clear()
-	print("moving")
+	print("child ", player.get_index(), " started moving")
 	target_position = tile_map.map_to_local(current_id_path.front())
 	
 	startMoving = true
@@ -187,7 +189,7 @@ func _physics_process(delta):
 		current_id_path.pop_front()
 		startMoving == false
 		emit_signal("finishedMoving")
-		print("finished moving")
+		print("child ", player.get_index(), " finished moving")
 	return
 	
 func _spawnPlayers():
