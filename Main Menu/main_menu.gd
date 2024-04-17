@@ -2,9 +2,9 @@ class_name Main_Menu
 extends Control
 
 
-@onready var start_button = $HBoxContainer/VBoxContainer/Start_Button as Button
-@onready var exit_button = $HBoxContainer/VBoxContainer/Exit_Button as Button
-@onready var start_level = preload("res://Main Menu/main_menu.tscn")
+@onready var start_button = $MarginContainer/HBoxContainer/VBoxContainer/Start_Button as Button
+@onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/Exit_Button as Button
+@onready var start_level = preload("res://World/world.tscn") as PackedScene
 
 
 func _ready():
@@ -13,7 +13,7 @@ func _ready():
 	
 	
 func on_start_pressed() -> void:
-	pass
+	get_tree().change_scene_to_packed(start_level)
 
 
 func on_exit_pressed() -> void:
