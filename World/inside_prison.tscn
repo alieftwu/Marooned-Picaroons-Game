@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjmo7auen0fx5"]
+
+[ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_x3f7w"]
+
+[node name="inside_prison" type="Node2D"]
+y_sort_enabled = true
+
+[node name="TileMap" type="TileMap" parent="."]
+y_sort_enabled = true
+tile_set = ExtResource("1_x3f7w")
+format = 2
+layer_0/name = "Tilemap - No Collision"
+layer_1/name = "Tilemap - Collision"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Tilemap - Doodads - Collision"
+layer_2/y_sort_enabled = true
+layer_2/tile_data = PackedInt32Array()
+layer_3/name = "Tilemap - Doodads - No Collision"
+layer_3/tile_data = PackedInt32Array()
