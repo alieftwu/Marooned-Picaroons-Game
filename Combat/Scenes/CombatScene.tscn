@@ -13,10 +13,10 @@ script = ExtResource("1_81gjc")
 [node name="TurnQueue" parent="." instance=ExtResource("3_t5ilx")]
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_ims13")]
-position = Vector2(16, 80)
+position = Vector2(8, 18)
 
 [node name="TestPlayer2" parent="TurnQueue" instance=ExtResource("4_ims13")]
-position = Vector2(16, 144)
+position = Vector2(8, 35)
 
 [node name="TestPlayer3" parent="TurnQueue" instance=ExtResource("4_ims13")]
-position = Vector2(16, 208)
+position = Vector2(8, 55)

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-@export var speed : float = 100.0
+@export var speed : float = 200.0
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 var direction : Vector2 = Vector2.ZERO

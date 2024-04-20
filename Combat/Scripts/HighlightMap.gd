@@ -13,7 +13,7 @@ var tile_data
 var current_position : Vector2
 
 # tile source IDs
-var turkDot_source_id : int = 3
+var turkDot_source_id : int = 0
 
 
 # Called after tile map is done generating by call_deferred

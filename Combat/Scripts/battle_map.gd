@@ -24,8 +24,10 @@ var random_DangerRowNum : int
 var random_DangerRowNum2 : int
 
 # tile source IDs
-var stoneTile_source_id : int = 5
-var rockStoneTile_source_id : int = 6
+var stonePath_source_id : int = 11
+var StoneBasic_atlas = Vector2i(0,0)
+var BarrelOnStone_source_id : int = 9
+var CrateOnStone_source_id : int = 10
 
 signal moveSelected
 signal finishedMoving
@@ -58,15 +60,27 @@ func _generateMap():
 		random_ExtraColNum3 = randi_range(1, width - 2)
 		for x in range(width):
 			if x == random_ColNum and y != random_SafeRowNum:
-				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
 			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
-				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
 			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
-				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
 			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
-				tile_map.set_cell(0, Vector2i(x, y), rockStoneTile_source_id, Vector2i(0, 0))
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
 			else:
-				tile_map.set_cell(0, Vector2i(x, y), stoneTile_source_id, Vector2i(0, 0))
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
 				
 	return
 	
