@@ -84,7 +84,7 @@ position = Vector2(1112, 868)
 [node name="first_village" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(-532, 78)
 
-[node name="NPC" parent="." instance=ExtResource("7_kwfy2")]
+[node name="fighty" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(263, 762)
 
 [node name="SceneTrigger2" parent="." instance=ExtResource("4_wqytr")]
@@ -96,6 +96,14 @@ connected_scene = "first_village"
 position = Vector2(-1, 3)
 shape = SubResource("RectangleShape2D_3llp2")
 
+[node name="talky" parent="." instance=ExtResource("7_kwfy2")]
+position = Vector2(857, 765)
+npcText = ["These are different words!", "Not the same as the other guy!", "I hope this works lmao", "but heres hoping!"]
+
 [connection signal="hideBoxLabel" from="Player/Camera2D/TextureRect/Label" to="." method="_on_label_hide_box_label"]
-[connection signal="hideTextBox" from="NPC" to="." method="_on_npc_hide_text_box"]
-[connection signal="showTextBox" from="NPC" to="." method="_on_npc_show_text_box"]
+[connection signal="hideTextBox" from="fighty" to="." method="_on_npc_hide_text_box"]
+[connection signal="newText" from="fighty" to="Player/Camera2D/TextureRect/Label" method="_on_fighty_new_text"]
+[connection signal="showTextBox" from="fighty" to="." method="_on_npc_show_text_box"]
+[connection signal="hideTextBox" from="talky" to="." method="_on_npc_hide_text_box"]
+[connection signal="newText" from="talky" to="Player/Camera2D/TextureRect/Label" method="_on_talky_new_text"]
+[connection signal="showTextBox" from="talky" to="." method="_on_npc_show_text_box"]

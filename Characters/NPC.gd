@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 signal showTextBox
 signal hideTextBox
+signal newText
 
 var closeEnough = false
 var textDisplayed = false
@@ -30,6 +31,7 @@ func _on_area_2d_body_entered(body):
 	if body != self and body != get_parent().get_node("TileMap"):
 		print("display and await!")
 		closeEnough = true
+		emit_signal("newText")
 
 
 func _on_area_2d_body_exited(body):

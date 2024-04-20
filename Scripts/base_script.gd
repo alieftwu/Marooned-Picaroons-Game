@@ -4,7 +4,8 @@ class_name BaseScene extends Node
 @onready var entrance_markers: Node2D = $EntranceMarkers
 
 @onready var boxText = get_node("Player/Camera2D/TextureRect")
-@onready var NPC = get_node("NPC")
+@onready var NPC1 = get_node("fighty")
+@onready var NPC2 = get_node("talky")
 
 func _ready():
 	if scene_manager.player:
