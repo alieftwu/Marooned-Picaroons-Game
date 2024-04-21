@@ -4,8 +4,6 @@ class_name BaseScene extends Node
 @onready var entrance_markers: Node2D = $EntranceMarkers
 
 @onready var boxText = get_node("Player/Camera2D/TextureRect")
-@onready var NPC1 = get_node("fighty")
-@onready var NPC2 = get_node("talky")
 
 func _ready():
 	if scene_manager.player:
@@ -33,7 +31,6 @@ func _on_npc_show_text_box():
 
 func _on_npc_hide_text_box():
 	boxText.hide()
-
 
 func _on_label_hide_box_label():
 	boxText.hide()

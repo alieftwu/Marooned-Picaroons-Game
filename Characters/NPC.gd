@@ -35,7 +35,8 @@ func _on_area_2d_body_entered(body):
 
 
 func _on_area_2d_body_exited(body):
-	print("remove textbox")
-	closeEnough = false
-	textDisplayed = false
-	emit_signal("hideTextBox")
+	if(textDisplayed):
+		emit_signal("hideTextBox")
+		print("remove textbox")
+		closeEnough = false
+		textDisplayed = false

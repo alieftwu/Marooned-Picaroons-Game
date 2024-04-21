@@ -42,3 +42,13 @@ func _on_fighty_new_text():
 func _on_talky_new_text():
 	NPC = NPC.get_node("talky")
 	text = NPC.npcText[0]
+
+
+func _on_child_new_text():
+	NPC = NPC.get_node("child")
+	text = NPC.npcText[0]
+
+
+func _on_parent_new_text():
+	NPC = NPC.get_node("parent")
+	text = NPC.npcText[0]
