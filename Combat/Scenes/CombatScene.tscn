@@ -14,16 +14,16 @@ script = ExtResource("1_81gjc")
 [node name="TurnQueue" parent="." instance=ExtResource("3_t5ilx")]
 
 [node name="TestEnemy" parent="TurnQueue" groups=["EnemyUnits", "Units"] instance=ExtResource("4_1mkxc")]
-position = Vector2(139, 39)
+position = Vector2(136, 40)
 
 [node name="TestEnemy2" parent="TurnQueue" groups=["EnemyUnits", "Units"] instance=ExtResource("4_1mkxc")]
-position = Vector2(139, 76)
+position = Vector2(136, 88)
 
 [node name="TestPlayer" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("4_ims13")]
-position = Vector2(7, 67)
+position = Vector2(8, 72)
 
 [node name="TestPlayer2" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("4_ims13")]
-position = Vector2(7, 41)
+position = Vector2(8, 40)
 
 [node name="TestPlayer3" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("4_ims13")]
-position = Vector2(6, 91)
+position = Vector2(8, 104)

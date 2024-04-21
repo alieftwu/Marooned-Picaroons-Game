@@ -49,13 +49,10 @@ signal attackDone
 func initialize():
 	randomize()
 	main_camera.make_current()
-	_gatherUnitInfo()
+	gatherUnitInfo()
 	_generateMap()
 	_makeAStarGrid()
-	_spawnPlayers()
-	_spawnEnemies()
 	_loadBackground()
-	_startMusic()
 	canMove = false
 	emit_signal("finishedGenerating")
 	$BackgroundMusic.play()
@@ -298,9 +295,9 @@ func simpleAttack(player):
 		print("not good attack")
 		
 	var global_tile_pos = tile_map.map_to_local(tile_selected)
-	for unit in enemyUnits:
+	for unit in Units:
 		if unit.global_position == global_tile_pos:
-			#unit.health -= 1 this does not work
+			unit.health -= player.basicAttackDamage
 			print("hit him!")
 			break
 		
@@ -337,31 +334,56 @@ func moveEnemyPerson(enemy):
 		).slice(1)
 		startMoving = true
 		await finishedMoving # wait for physics to finish moving
+		
+	else:
+		print("chose to not move")
+		emit_signal("finishedMoving")
 	
 	startMoving = false
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
 		
-func _spawnPlayers():
-	pass	
-	
 func simpleEnemyAttack(enemy):
 	currentEnemy = enemy
 	var enemy_position = enemy.global_position
+	var starting_position = tile_map.local_to_map(enemy_position)
+	var attackOptions = []
+	var directions = [
+		Vector2i(0, -1),  # Up
+		Vector2i(0, 1),   # Down
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0),   # Right
+		Vector2i(-1, -1),
+		Vector2i(1, 1),   
+		Vector2i(-1, 1), 
+		Vector2i(1, -1)  
+	]
+	
+	for direction in directions:
+		attackOptions.append(starting_position + direction)
+	var attackTargets = []
+	for option in attackOptions:
+		for unit in friendlyUnits:
+			if tile_map.local_to_map(unit.global_position) == option:
+				attackTargets.append([option, unit])
+	if attackTargets.is_empty() == false:
+		var random_Choice = attackTargets.pick_random()
+		var attacked_unit = random_Choice[1]
+		attacked_unit.health -= enemy.basicAttackDamage
+		print("Player hit!")
 	emit_signal("attackDone")
+	
 	return
 	
-func _gatherUnitInfo():
+func gatherUnitInfo():
 	friendlyUnits = get_tree().get_nodes_in_group("PlayerUnits")
 	Units = get_tree().get_nodes_in_group("Units")
 	enemyUnits = get_tree().get_nodes_in_group("EnemyUnits")
 	
-func _spawnEnemies():
 	pass
 
 func _loadBackground():
 	pass
 
-func _startMusic():
 	pass

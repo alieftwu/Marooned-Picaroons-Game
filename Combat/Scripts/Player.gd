@@ -5,11 +5,13 @@ extends Node2D
 var stats = load("res://Combat/Resources/playertest.tres")
 var speed : int
 var health : int
+var basicAttackDamage : int
 signal finishedTurn
 
 func _ready():
 	speed = stats.Speed
 	health = stats.Health
+	basicAttackDamage = stats.BasicAttackDamage
 
 func play_turn():
 	battlemap.movePerson(self)

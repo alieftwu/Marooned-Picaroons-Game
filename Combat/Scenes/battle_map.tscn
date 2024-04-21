@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bguckoljhdrkh" path="res://Tilesets/tinyredDot.png" id="6_3pyvn"]
 [ext_resource type="Texture2D" uid="uid://c15spoh8tyf2q" path="res://Tilesets/barrelonStone.png" id="6_27daa"]
 [ext_resource type="Texture2D" uid="uid://cunualw136qme" path="res://Tilesets/tinyturkDot.png" id="7_bfi6l"]
-[ext_resource type="Texture2D" uid="uid://cd1uafb065qbe" path="res://Sprites/AndrewImages/cityBackground.jpg" id="8_67l2n"]
+[ext_resource type="Texture2D" uid="uid://y5tt87ymfvwp" path="res://Combat/Resources/firstVillageBackground2.png" id="8_jlphp"]
 [ext_resource type="AudioStream" uid="uid://c0vkdjtfvnyn1" path="res://Combat/Resources/sea_theme_1.wav" id="9_2kih8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfpvn"]
@@ -55,25 +55,26 @@ script = ExtResource("1_nbqfk")
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_hcfap")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 11, 0, 1, 11, 0, 2, 11, 0, 3, 11, 0, 4, 11, 0, 5, 11, 0, 6, 11, 0, 7, 11, 0, 65543, 11, 0, 131079, 11, 0, 196615, 11, 0, 262151, 11, 0, 327687, 11, 0, 393223, 11, 0, 458759, 11, 0, 524295, 11, 0, 524294, 11, 0, 524293, 11, 0, 524292, 11, 0, 524291, 11, 0, 524290, 11, 0, 524289, 11, 0, 524288, 11, 0, 65536, 11, 0, 65537, 11, 0, 65538, 11, 0, 65539, 11, 0, 65540, 11, 0, 65541, 11, 0, 65542, 11, 0, 131078, 11, 0, 131077, 11, 0, 131076, 11, 0, 131075, 11, 0, 131074, 11, 0, 131073, 11, 0, 196609, 11, 0, 196608, 11, 0, 131072, 11, 0, 262144, 11, 0, 327680, 11, 0, 393216, 11, 0, 458752, 11, 0, 458753, 11, 0, 458754, 11, 0, 458755, 11, 0, 458756, 11, 0, 458757, 11, 0, 458758, 11, 0, 393222, 11, 0, 327686, 11, 0, 262150, 11, 0, 196614, 11, 0, 196613, 11, 0, 262149, 11, 0, 327685, 11, 0, 393221, 11, 0, 393220, 11, 0, 327684, 11, 0, 262148, 11, 0, 196612, 11, 0, 196611, 11, 0, 262147, 11, 0, 327683, 11, 0, 327682, 11, 0, 393218, 11, 0, 262146, 11, 0, 196610, 11, 0, 262145, 11, 0, 327681, 11, 0, 393217, 11, 0, 393219, 11, 0, 8, 11, 0, 65544, 11, 0, 131080, 11, 0, 196616, 11, 0, 262152, 11, 0, 327688, 11, 0, 393224, 11, 0, 458760, 11, 0, 524296, 11, 0)
+layer_0/tile_data = PackedInt32Array(0, 65547, 1, 1, 65547, 1, 2, 65547, 1, 3, 65547, 1, 4, 65547, 1, 5, 65547, 1, 6, 65547, 1, 7, 65547, 1, 8, 65547, 1, 65544, 65547, 1, 131080, 65547, 1, 196616, 65547, 1, 262152, 65547, 1, 327688, 65547, 1, 393224, 65547, 1, 393223, 65547, 1, 393222, 65547, 1, 393221, 65547, 1, 393220, 65547, 1, 393219, 65547, 1, 393218, 65547, 1, 393217, 65547, 1, 393216, 65547, 1, 327680, 65547, 1, 262144, 65547, 1, 196608, 65547, 1, 131072, 65547, 1, 65536, 65547, 1, 65537, 65547, 1, 65538, 65547, 1, 65539, 65547, 1, 65540, 65547, 1, 65541, 65547, 1, 65542, 65547, 1, 65543, 65547, 1, 131079, 65547, 1, 196615, 65547, 1, 262151, 65547, 1, 262150, 65547, 1, 262149, 65547, 1, 327685, 65547, 1, 327686, 65547, 1, 327687, 65547, 1, 327684, 65547, 1, 327683, 65547, 1, 327682, 65547, 1, 327681, 65547, 1, 262145, 65547, 1, 196609, 65547, 1, 131073, 65547, 1, 131074, 65547, 1, 131075, 65547, 1, 131076, 65547, 1, 131077, 65547, 1, 131078, 65547, 1, 196614, 65547, 1, 196613, 65547, 1, 196612, 65547, 1, 196611, 65547, 1, 196610, 65547, 1, 262146, 65547, 1, 262147, 65547, 1, 262148, 65547, 1, 458752, 65547, 1, 458753, 65547, 1, 458754, 65547, 1, 458755, 65547, 1, 458756, 65547, 1, 458757, 65547, 1, 458758, 65547, 1, 458759, 65547, 1, 458760, 65547, 1, 524296, 65547, 1, 524295, 65547, 1, 524294, 65547, 1, 524293, 65547, 1, 524292, 65547, 1, 524291, 65547, 1, 524290, 65547, 1, 524289, 65547, 1, 524288, 65547, 1)
 
 [node name="HighlightMap" type="TileMap" parent="."]
+top_level = true
 tile_set = SubResource("TileSet_8ollj")
 format = 2
 script = ExtResource("5_mf6xs")
 
 [node name="BattleCam" type="Camera2D" parent="."]
-position = Vector2(-124, -29)
+position = Vector2(-96, -15)
 anchor_mode = 0
 zoom = Vector2(1.5, 1.5)
 
 [node name="Background" type="TextureRect" parent="."]
 show_behind_parent = true
-offset_left = -217.0
-offset_top = -178.0
-offset_right = 335.0
-offset_bottom = 354.0
-texture = ExtResource("8_67l2n")
+offset_left = -140.0
+offset_top = -39.0
+offset_right = 269.0
+offset_bottom = 173.0
+texture = ExtResource("8_jlphp")
 expand_mode = 1
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
