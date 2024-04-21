@@ -1,12 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=17 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
 [ext_resource type="Texture2D" uid="uid://dtjf5kr6xduil" path="res://Tilesets/SettlementPathBase.png" id="3_y4wru"]
 [ext_resource type="Script" path="res://Combat/Scripts/HighlightMap.gd" id="5_mf6xs"]
+[ext_resource type="Texture2D" uid="uid://bguckoljhdrkh" path="res://Tilesets/tinyredDot.png" id="6_3pyvn"]
 [ext_resource type="Texture2D" uid="uid://c15spoh8tyf2q" path="res://Tilesets/barrelonStone.png" id="6_27daa"]
 [ext_resource type="Texture2D" uid="uid://cunualw136qme" path="res://Tilesets/tinyturkDot.png" id="7_bfi6l"]
 [ext_resource type="Texture2D" uid="uid://cd1uafb065qbe" path="res://Sprites/AndrewImages/cityBackground.jpg" id="8_67l2n"]
+[ext_resource type="AudioStream" uid="uid://c0vkdjtfvnyn1" path="res://Combat/Resources/sea_theme_1.wav" id="9_2kih8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfpvn"]
 texture = ExtResource("2_3sjpn")
@@ -38,8 +40,13 @@ sources/11 = SubResource("TileSetAtlasSource_6mihe")
 texture = ExtResource("7_bfi6l")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_poqc1"]
+texture = ExtResource("6_3pyvn")
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_8ollj"]
 sources/0 = SubResource("TileSetAtlasSource_q7wo7")
+sources/2 = SubResource("TileSetAtlasSource_poqc1")
 
 [node name="BattleMap" type="Node2D"]
 position = Vector2(0, 1)
@@ -56,7 +63,7 @@ format = 2
 script = ExtResource("5_mf6xs")
 
 [node name="BattleCam" type="Camera2D" parent="."]
-position = Vector2(-325, -135)
+position = Vector2(-124, -29)
 anchor_mode = 0
 zoom = Vector2(1.5, 1.5)
 
@@ -70,4 +77,6 @@ texture = ExtResource("8_67l2n")
 expand_mode = 1
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(127, 278)
+position = Vector2(72, 176)
+stream = ExtResource("9_2kih8")
+max_distance = 4000.0

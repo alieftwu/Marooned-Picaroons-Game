@@ -14,7 +14,7 @@ var current_position : Vector2
 
 # tile source IDs
 var turkDot_source_id : int = 0
-
+var redDot_source_id : int = 2
 
 # Called after tile map is done generating by call_deferred
 func _ready():
@@ -55,7 +55,15 @@ func exploreGrid(x, y, moves_made, max_moves):
 	
 		# Check bounds and if can go to the new cell
 		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
-			exploreGrid(new_x, new_y, moves_made + 1, max_moves)
+			var global_tile_pos = tile_map.map_to_local(tile_position)
+			var noUnitThere = true
+			for unit in battle_map.Units:
+				if unit.global_position == global_tile_pos:
+					noUnitThere = false
+					break
+			if noUnitThere == true:
+				exploreGrid(new_x, new_y, moves_made + 1, max_moves)
+	
 			
 func basicAttackGrid(start_pos):
 	var directions = [
@@ -69,7 +77,11 @@ func basicAttackGrid(start_pos):
 		Vector2i(1, -1)     
 	]
 	
+	
 	for direction in directions:
-		self.set_cell(0, start_pos + direction, turkDot_source_id, Vector2i(0, 0))
+		var new_direction = start_pos + direction
+		tile_data = tile_map.get_cell_tile_data(0, new_direction)
+		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
+			self.set_cell(0, new_direction, redDot_source_id, Vector2i(0, 0))
 		
 	return

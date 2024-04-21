@@ -30,6 +30,7 @@ var friendlyUnits : Array
 var Units : Array
 var enemyUnits : Array
 var currentPlayer : Node2D #Not being used everywhere is should
+var currentEnemy : Node2D
 
 # tile source IDs
 var stonePath_source_id : int = 11
@@ -48,15 +49,16 @@ signal attackDone
 func initialize():
 	randomize()
 	main_camera.make_current()
+	_gatherUnitInfo()
 	_generateMap()
 	_makeAStarGrid()
 	_spawnPlayers()
 	_spawnEnemies()
 	_loadBackground()
-	_gatherUnitInfo()
 	_startMusic()
 	canMove = false
 	emit_signal("finishedGenerating")
+	$BackgroundMusic.play()
 	return
 	
 func _generateMap():
@@ -114,6 +116,29 @@ func _makeAStarGrid():
 				astar_grid.set_point_solid(tile_position, true)
 	return
 	
+func update_AStarGrid():
+	astar_grid.update()
+	for x in tile_map.get_used_rect().size.x:
+		for y in tile_map.get_used_rect().size.y:
+			var tile_position = Vector2i(
+				x + tile_map.get_used_rect().position.x,
+				y + tile_map.get_used_rect().position.y
+				)
+			var tile_data = tile_map.get_cell_tile_data(0, tile_position)
+			
+			if tile_data == null or tile_data.get_custom_data("walkable") == false:
+				var noUnitThere = true
+				var global_tile_pos = tile_map.map_to_local(tile_position)
+				for unit in Units:
+					if unit.global_position == global_tile_pos:
+						noUnitThere = false
+						break
+				if noUnitThere == true:
+					astar_grid.set_point_solid(tile_position, true)
+					
+	astar_grid.update()
+	return
+	
 func get_AStarGrid() -> AStarGrid2D:
 	return astar_grid
 	
@@ -140,7 +165,7 @@ func _input(event):
 	var player = turn_queue.get_active_character()
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var allowedSpaces : Array = []
-	getAllowedSpaces(starting_position[0], starting_position[1], player.stats.Speed, 0, allowedSpaces)
+	getAllowedSpaces(starting_position[0], starting_position[1], player.speed, 0, allowedSpaces)
 	
 	clicked_tile = Vector2(clicked_tile[0], clicked_tile[1]) # make it a vector
 	
@@ -196,7 +221,15 @@ func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
 	
 		# Check bounds and if can go to the new cell
 		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
-			getAllowedSpaces(new_x, new_y, max_moves, moves_made + 1, spacesArray)
+			var global_tile_pos = tile_map.map_to_local(tile_position)
+			var noUnitThere = true
+			for unit in Units:
+				if unit.global_position == global_tile_pos:
+					noUnitThere = false
+					break
+			if noUnitThere == true:
+				getAllowedSpaces(new_x, new_y, max_moves, moves_made + 1, spacesArray)
+			
 	return
 	
 func movePerson(player):
@@ -211,6 +244,7 @@ func movePerson(player):
 	
 	startMoving = true
 	await finishedMoving # wait for physics to finish moving
+	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
 	
@@ -221,16 +255,16 @@ func _physics_process(delta):
 		return
 
 	target_position = tile_map.map_to_local(current_id_path.front())
-	var player = turn_queue.get_active_character()
-	player.global_position = player.global_position.move_toward(target_position, 3)
+	var activeUnit = turn_queue.get_active_character()
+	activeUnit.global_position = activeUnit.global_position.move_toward(target_position, 3)
 	
-	if player.global_position == target_position:
+	if activeUnit.global_position == target_position:
 		current_id_path.pop_front()
 		if current_id_path.is_empty():
 			startMoving = false
 			emit_signal("finishedMoving")
-			print("child ", player.get_index(), " finished moving")
-			print(player.global_position)
+			print("child ", activeUnit.get_index(), " finished moving")
+			print(activeUnit.global_position)
 	return
 	
 func simpleAttack(player):
@@ -266,8 +300,9 @@ func simpleAttack(player):
 	var global_tile_pos = tile_map.map_to_local(tile_selected)
 	for unit in enemyUnits:
 		if unit.global_position == global_tile_pos:
-			unit.health -= 1
+			#unit.health -= 1 this does not work
 			print("hit him!")
+			break
 		
 	canAttack = false
 	highlight_map.clear()
@@ -275,14 +310,52 @@ func simpleAttack(player):
 	
 	return
 	
+func moveEnemyPerson(enemy):
+	currentEnemy = enemy
+	var enemy_position = enemy.global_position
+	var allowedSpaces : Array = []
+	var starting_position = tile_map.local_to_map(enemy_position)
+	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
+	var validMove = false
+	var attemptCounter = 0 #if we don't find a good random move in this many tries we just dont move
+	var random_movePick
+	while (validMove == false) and (attemptCounter <= 10):
+		validMove = true
+		attemptCounter += 1
+		random_movePick = allowedSpaces.pick_random()
+		
+		var global_tile_pos = tile_map.map_to_local(random_movePick)
+		for unit in Units:
+			if unit.global_position == global_tile_pos:
+				validMove = false
+				break
+				
+	if attemptCounter <= 10:		
+		current_id_path = astar_grid.get_id_path(
+		starting_position,
+		random_movePick	
+		).slice(1)
+		startMoving = true
+		await finishedMoving # wait for physics to finish moving
 	
-	
+	startMoving = false
+	update_AStarGrid()
+	emit_signal("characterMovementComplete")
+	return
+		
 func _spawnPlayers():
-	pass
+	pass	
+	
+func simpleEnemyAttack(enemy):
+	currentEnemy = enemy
+	var enemy_position = enemy.global_position
+	emit_signal("attackDone")
+	return
 	
 func _gatherUnitInfo():
 	friendlyUnits = get_tree().get_nodes_in_group("PlayerUnits")
 	Units = get_tree().get_nodes_in_group("Units")
+	enemyUnits = get_tree().get_nodes_in_group("EnemyUnits")
 	
 func _spawnEnemies():
 	pass
