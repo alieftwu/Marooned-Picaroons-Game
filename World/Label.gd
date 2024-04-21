@@ -51,4 +51,4 @@ func _on_child_new_text():
 
 func _on_parent_new_text():
 	NPC = NPC.get_node("parent")
-	text = NPC.npcText[0]
+	text = NPC.npcText[0] 

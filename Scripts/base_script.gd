@@ -7,8 +7,9 @@ class_name BaseScene extends Node
 
 func _ready():
 	if scene_manager.player:
-		if player:
+		if is_instance_valid(player):
 			player.queue_free()
+			pass
 			
 		player = scene_manager.player
 		add_child(player)
