@@ -56,8 +56,9 @@ format = 2
 script = ExtResource("5_mf6xs")
 
 [node name="BattleCam" type="Camera2D" parent="."]
-position = Vector2(-104, -22)
+position = Vector2(-325, -135)
 anchor_mode = 0
+zoom = Vector2(1.5, 1.5)
 
 [node name="Background" type="TextureRect" parent="."]
 show_behind_parent = true

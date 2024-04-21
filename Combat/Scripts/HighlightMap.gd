@@ -56,3 +56,20 @@ func exploreGrid(x, y, moves_made, max_moves):
 		# Check bounds and if can go to the new cell
 		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
 			exploreGrid(new_x, new_y, moves_made + 1, max_moves)
+			
+func basicAttackGrid(start_pos):
+	var directions = [
+		Vector2i(0, -1),  # Up
+		Vector2i(0, 1),   # Down
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0),
+		Vector2i(-1, -1),  
+		Vector2i(1, 1),   
+		Vector2i(-1, 1),
+		Vector2i(1, -1)     
+	]
+	
+	for direction in directions:
+		self.set_cell(0, start_pos + direction, turkDot_source_id, Vector2i(0, 0))
+		
+	return

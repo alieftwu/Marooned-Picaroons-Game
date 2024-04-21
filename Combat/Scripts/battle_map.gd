@@ -22,6 +22,14 @@ var random_ExtraColNum3 : int
 var random_SafeRowNum : int
 var random_DangerRowNum : int
 var random_DangerRowNum2 : int
+var canAttack : bool = false
+var tile_selected : Vector2i
+
+# Unit Storage
+var friendlyUnits : Array
+var Units : Array
+var enemyUnits : Array
+var currentPlayer : Node2D #Not being used everywhere is should
 
 # tile source IDs
 var stonePath_source_id : int = 11
@@ -33,6 +41,8 @@ signal moveSelected
 signal finishedMoving
 signal characterMovementComplete
 signal finishedGenerating
+signal attackChosen
+signal attackDone
 
 # Called when the node enters the scene tree for the first time.
 func initialize():
@@ -43,6 +53,7 @@ func initialize():
 	_spawnPlayers()
 	_spawnEnemies()
 	_loadBackground()
+	_gatherUnitInfo()
 	_startMusic()
 	canMove = false
 	emit_signal("finishedGenerating")
@@ -110,6 +121,13 @@ func get_TileMap():
 	return tile_map
 	
 func _input(event):
+	
+	if canAttack == true:
+		if event.is_action_pressed("move") == true:
+			tile_selected = tile_map.local_to_map(get_global_mouse_position())
+			emit_signal("attackChosen")
+			return
+			
 	if canMove == false: # not allowed to move
 		return
 	
@@ -129,6 +147,13 @@ func _input(event):
 	if clicked_tile not in allowedSpaces: # make sure character has speed to move there
 		print("Not in my house")
 		return
+		
+	var global_tile_pos = tile_map.map_to_local(clicked_tile)
+	for unit in Units:
+		if unit.global_position == global_tile_pos:
+			print("Person already there")
+			return
+			
 	print("child ", player.get_index(), " clicked tile: " + str(clicked_tile))
 	id_path = astar_grid.get_id_path(
 	starting_position,
@@ -194,7 +219,7 @@ func _physics_process(delta):
 		return
 	if startMoving == false:
 		return
-	print(current_id_path)
+
 	target_position = tile_map.map_to_local(current_id_path.front())
 	var player = turn_queue.get_active_character()
 	player.global_position = player.global_position.move_toward(target_position, 3)
@@ -202,32 +227,62 @@ func _physics_process(delta):
 	if player.global_position == target_position:
 		current_id_path.pop_front()
 		if current_id_path.is_empty():
-			print(current_id_path)
 			startMoving = false
 			emit_signal("finishedMoving")
 			print("child ", player.get_index(), " finished moving")
-		#current_id_path.clear()
+			print(player.global_position)
+	return
+	
+func simpleAttack(player):
+	currentPlayer = player
+	canAttack = true
+	canMove = false
+	startMoving = false
+	
+	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
+	var attackOptions = []
+	
+	var directions = [
+		Vector2i(0, -1),  # Up
+		Vector2i(0, 1),   # Down
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0),   # Right
+		Vector2i(-1, -1),
+		Vector2i(1, 1),   
+		Vector2i(-1, 1), 
+		Vector2i(1, -1)  
+	]
+	
+	for direction in directions:
+		attackOptions.append(starting_position + direction)
+	
+	highlight_map.basicAttackGrid(starting_position)
+	
+	await attackChosen
+	while tile_selected not in attackOptions:
+		await attackChosen
+		print("not good attack")
+		
+	var global_tile_pos = tile_map.map_to_local(tile_selected)
+	for unit in enemyUnits:
+		if unit.global_position == global_tile_pos:
+			unit.health -= 1
+			print("hit him!")
+		
+	canAttack = false
+	highlight_map.clear()
+	emit_signal("attackDone")
 	
 	return
 	
-#func _physics_process(delta):
-	#if current_id_path.is_empty():
-		#return
-	#if startMoving == false:
-		#return
-		#
-	#target_position = tile_map.map_to_local(current_id_path.front())
-	#var person_node = turn_queue.get_active_character()
-	#person_node.global_position = person_node.global_position.move_toward(target_position, 3)
-	#
-	#if person_node.global_position == target_position:
-		#current_id_path.pop_front()
-		#startMoving == false
-		#emit_signal("finishedMoving")
-	#return
+	
 	
 func _spawnPlayers():
 	pass
+	
+func _gatherUnitInfo():
+	friendlyUnits = get_tree().get_nodes_in_group("PlayerUnits")
+	Units = get_tree().get_nodes_in_group("Units")
 	
 func _spawnEnemies():
 	pass
