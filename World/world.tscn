@@ -29,6 +29,7 @@ layer_2/tile_data = PackedInt32Array(524322, 2686976, 1, 589858, 2686976, 2, 524
 
 [node name="Player" parent="." instance=ExtResource("3_0fysw")]
 position = Vector2(579, 126)
+speed = 200.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
 position = Vector2(0, 3)
