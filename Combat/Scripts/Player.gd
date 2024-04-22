@@ -14,8 +14,12 @@ func _ready():
 	basicAttackDamage = stats.BasicAttackDamage
 
 func play_turn():
+	print("pMove")
 	battlemap.movePerson(self)
+	print("pMoveAfter")
 	await battlemap.characterMovementComplete
+	print("pAttack")
 	battlemap.simpleAttack(self)
+	print("pAttackAfter")
 	await battlemap.attackDone
 	emit_signal("finishedTurn")

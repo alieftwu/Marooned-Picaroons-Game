@@ -245,7 +245,7 @@ func movePerson(player):
 	emit_signal("characterMovementComplete")
 	return
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	if current_id_path.is_empty():
 		return
 	if startMoving == false:
@@ -372,6 +372,7 @@ func simpleEnemyAttack(enemy):
 		var attacked_unit = random_Choice[1]
 		attacked_unit.health -= enemy.basicAttackDamage
 		print("Player hit!")
+		
 	emit_signal("attackDone")
 	
 	return

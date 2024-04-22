@@ -4,3 +4,4 @@
 
 [node name="TurnQueue" type="Node2D"]
 script = ExtResource("1_iwms3")
+connected_scene = "world"
