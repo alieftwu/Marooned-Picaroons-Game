@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="PiratePicaroons"
+config/name="Game 3"
 run/main_scene="res://Combat/Scenes/CombatScene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://Sprites/AndrewImages/icon.svg"

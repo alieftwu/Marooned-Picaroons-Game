@@ -25,5 +25,27 @@ func play_round():
 		new_index = active_character.get_index() + 1
 		if new_index == num_children:
 			emit_signal("endRound")
-		active_character = get_child(new_index)
+	
+	print("Round Error")
+	#emit_signal("endRound") # how for loop works makes it hard to loop when unit dies. this catches a 
+	# few misses
 		
+func checkDeaths(): # i just make them invisible for now, we will need other way of handling 
+	for unit in battle_map.Units:
+		if unit.health == 0:
+			unit.remove_from_group("Units")
+			unit.remove_from_group("PlayerUnits")
+			unit.remove_from_group("EnemyUnits")
+			activeUnits.erase(unit)
+			remove_child(unit)
+			unit.queue_free()
+			battle_map.gatherUnitInfo() # since unit is deleted, groups should update to show that
+	return
+	
+func checkGameOver():
+	if battle_map.friendlyUnits.is_empty():
+		return 1 # 1 results in a loss
+	if battle_map.enemyUnits.is_empty():
+		return 2 # 2 results in a win
+	else:
+		return 0 # 0 nothing happens
