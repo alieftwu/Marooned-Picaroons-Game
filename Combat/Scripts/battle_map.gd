@@ -24,6 +24,7 @@ var random_DangerRowNum : int
 var random_DangerRowNum2 : int
 var canAttack : bool = false
 var tile_selected : Vector2i
+var skipMovement : bool = false
 
 # Unit Storage
 var friendlyUnits : Array
@@ -147,6 +148,7 @@ func _input(event):
 	if canAttack == true:
 		if event.is_action_pressed("move") == true:
 			tile_selected = tile_map.local_to_map(get_global_mouse_position())
+			canAttack = false
 			emit_signal("attackChosen")
 			return
 			
@@ -159,33 +161,39 @@ func _input(event):
 	var id_path
 	var clicked_tile = tile_map.local_to_map(get_global_mouse_position())
 	# get all possible spaces you can move to
-	var player = turn_queue.get_active_character()
-	var starting_position = tile_map.local_to_map(player.global_position)
+	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
 	var allowedSpaces : Array = []
-	getAllowedSpaces(starting_position[0], starting_position[1], player.speed, 0, allowedSpaces)
+	getAllowedSpaces(starting_position[0], starting_position[1], currentPlayer.speed, 0, allowedSpaces)
 	
 	clicked_tile = Vector2(clicked_tile[0], clicked_tile[1]) # make it a vector
 	
-	if clicked_tile not in allowedSpaces: # make sure character has speed to move there
+	if (clicked_tile == Vector2(starting_position[0], starting_position[1])): # skip move phase
+		skipMovement = true
+	else:
+		skipMovement = false
+		
+	print(clicked_tile)
+	print(allowedSpaces)
+	if (clicked_tile not in allowedSpaces) and (skipMovement == false): # make sure character has speed to move there
 		print("Not in my house")
 		return
 		
 	var global_tile_pos = tile_map.map_to_local(clicked_tile)
 	for unit in Units:
-		if unit.global_position == global_tile_pos:
+		if (unit.global_position == global_tile_pos) and (skipMovement == false):
 			print("Person already there")
 			return
 			
-	print("child ", player.get_index(), " clicked tile: " + str(clicked_tile))
+	# print("child ", currentPlayer.get_index(), " clicked tile: " + str(clicked_tile))
 	id_path = astar_grid.get_id_path(
 	starting_position,
 	tile_map.local_to_map(get_global_mouse_position())	
 	).slice(1)
 
-	if id_path.is_empty() == false:
+	if (id_path.is_empty() == false):
 		current_id_path = id_path
 	
-	if current_id_path.is_empty():
+	if (current_id_path.is_empty()) and (skipMovement == false):
 		return
 		
 	canMove = false
@@ -230,17 +238,20 @@ func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
 	return
 	
 func movePerson(player):
+	currentPlayer = player
 	current_id_path.clear()
 	canMove = true
-	print("child ", player.get_index(), " waiting to pick")
-	highlight_map._generateMoveMap(player)
+	# print("child ", player.get_index(), " waiting to pick")
+	highlight_map._generateMoveMap(currentPlayer)
 	await moveSelected # wait for person to select valid spot to move
 	highlight_map.clear()
-	print("child ", player.get_index(), " started moving")
-	target_position = tile_map.map_to_local(current_id_path.front())
-	
-	startMoving = true
-	await finishedMoving # wait for physics to finish moving
+	if (skipMovement == false):
+		# print("child ", player.get_index(), " started moving")
+		target_position = tile_map.map_to_local(current_id_path.front())
+		
+		startMoving = true
+		await finishedMoving # wait for physics to finish moving
+	skipMovement = false
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
@@ -269,6 +280,7 @@ func simpleAttack(player):
 	canAttack = true
 	canMove = false
 	startMoving = false
+	print("1")
 	
 	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
 	var attackOptions = []
@@ -289,27 +301,31 @@ func simpleAttack(player):
 	
 	highlight_map.basicAttackGrid(starting_position)
 	
+	print("2")
 	await attackChosen
+	print("3")
 	while tile_selected not in attackOptions:
+		canAttack = true
 		await attackChosen
 		print("not good attack")
-		
+	print("4")
 	var global_tile_pos = tile_map.map_to_local(tile_selected)
 	for unit in Units:
 		if unit.global_position == global_tile_pos:
-			unit.health -= player.basicAttackDamage
+			unit.health -= currentPlayer.basicAttackDamage
 			print("hit him!")
 			break
 		
 	canAttack = false
 	highlight_map.clear()
+	print("5")
 	emit_signal("attackDone")
 	
 	return
 	
 func moveEnemyPerson(enemy):
 	currentEnemy = enemy
-	var enemy_position = enemy.global_position
+	var enemy_position = currentEnemy.global_position
 	var allowedSpaces : Array = []
 	var starting_position = tile_map.local_to_map(enemy_position)
 	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
@@ -370,7 +386,7 @@ func simpleEnemyAttack(enemy):
 	if attackTargets.is_empty() == false:
 		var random_Choice = attackTargets.pick_random()
 		var attacked_unit = random_Choice[1]
-		attacked_unit.health -= enemy.basicAttackDamage
+		attacked_unit.health -= currentEnemy.basicAttackDamage
 		print("Player hit!")
 		
 	emit_signal("attackDone")
@@ -385,6 +401,4 @@ func gatherUnitInfo():
 	pass
 
 func _loadBackground():
-	pass
-
 	pass

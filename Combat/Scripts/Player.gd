@@ -20,6 +20,6 @@ func play_turn():
 	await battlemap.characterMovementComplete
 	print("pAttack")
 	battlemap.simpleAttack(self)
-	print("pAttackAfter")
 	await battlemap.attackDone
+	print("pAttackAfter")
 	emit_signal("finishedTurn")
