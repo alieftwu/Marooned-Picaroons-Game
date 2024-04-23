@@ -24,8 +24,8 @@ func play_round():
 		#print("child ", active_character.get_index(), "'s turn has begun")
 		if child in battle_map.Units:
 			active_character = child
-			child.play_turn()
-			await child.finishedTurn
+			#child.play_turn()
+			await child.play_turn()
 		checkDeaths()
 		gameResult = checkGameOver()
 		if gameResult == 1:
@@ -43,10 +43,10 @@ func play_round():
 		print("numchildren: " + str(num_children) + " index: " + str(new_index))
 		if new_index >= num_children:
 			emit_signal("endRound")
+			return
 	
 	print("Round Error")
-	emit_signal("endRound") # how for loop works makes it hard to loop when unit dies. this catches a 
-	# few misses
+	return
 		
 func checkDeaths(): # i just make them invisible for now, we will need other way of handling 
 	for unit in battle_map.Units:

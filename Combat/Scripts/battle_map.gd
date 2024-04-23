@@ -134,7 +134,6 @@ func update_AStarGrid():
 				if noUnitThere == true:
 					astar_grid.set_point_solid(tile_position, true)
 					
-	astar_grid.update()
 	return
 	
 func get_AStarGrid() -> AStarGrid2D:

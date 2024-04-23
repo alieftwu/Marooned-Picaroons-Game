@@ -15,11 +15,9 @@ func _ready():
 
 func play_turn():
 	print("eMove")
-	battlemap.moveEnemyPerson(self)
 	print("eMoveAfter")
-	await battlemap.characterMovementComplete
+	await battlemap.moveEnemyPerson(self)
 	print("eAttack")
-	battlemap.simpleEnemyAttack(self)
+	await battlemap.simpleEnemyAttack(self)
 	print("pAttackAfter")
-	#await battlemap.attackDone
 	emit_signal("finishedTurn")
