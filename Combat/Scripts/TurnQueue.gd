@@ -42,10 +42,10 @@ func play_round():
 		num_children = get_child_count()
 		print("numchildren: " + str(num_children) + " index: " + str(new_index))
 		if new_index >= num_children:
-			emit_signal("endRound")
-			return
+			break
 	
-	print("Round Error")
+	emit_signal("endRound")
+	print("Round End")
 	return
 		
 func checkDeaths(): # i just make them invisible for now, we will need other way of handling 

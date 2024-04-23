@@ -11,7 +11,7 @@
 atlas = ExtResource("3_w0e3q")
 region = Rect2(0, 0, 16, 16)
 
-[node name="TestPlayer" type="Node2D"]
+[node name="TestPlayer" type="Node2D" groups=["PlayerUnits", "Units"]]
 script = ExtResource("1_8d1rl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
