@@ -82,6 +82,12 @@ func basicAttackGrid(start_pos):
 		var new_direction = start_pos + direction
 		tile_data = tile_map.get_cell_tile_data(0, new_direction)
 		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
-			self.set_cell(0, new_direction, redDot_source_id, Vector2i(0, 0))
+			var friendThere = false
+			for unit in battle_map.friendlyUnits:
+				if tile_map.local_to_map(unit.global_position) == new_direction:
+					friendThere = true
+					break
+			if friendThere == false:
+				self.set_cell(0, new_direction, redDot_source_id, Vector2i(0, 0))
 		
 	return

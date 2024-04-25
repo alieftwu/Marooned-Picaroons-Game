@@ -25,10 +25,10 @@ position = Vector2(136, 72)
 position = Vector2(136, 104)
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_ims13")]
-position = Vector2(8, 72)
+position = Vector2(8, 40)
 
 [node name="TestPlayer2" parent="TurnQueue" instance=ExtResource("4_ims13")]
-position = Vector2(8, 40)
+position = Vector2(8, 72)
 
 [node name="TestPlayer3" parent="TurnQueue" instance=ExtResource("4_ims13")]
 position = Vector2(8, 104)

@@ -24,7 +24,7 @@ func play_round():
 		#print("child ", active_character.get_index(), "'s turn has begun")
 		if child in battle_map.Units:
 			active_character = child
-			#child.play_turn()
+			print("Turn of " + str(child))
 			await child.play_turn()
 		checkDeaths()
 		gameResult = checkGameOver()
