@@ -27,11 +27,4 @@ func _on_follow_node_set(node):
 	$Camera2D.follow_node = node
 
 
-func _on_npc_show_text_box():
-	boxText.show()
 
-func _on_npc_hide_text_box():
-	boxText.hide()
-
-func _on_label_hide_box_label():
-	boxText.hide()

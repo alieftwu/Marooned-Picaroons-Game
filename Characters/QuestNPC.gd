@@ -3,14 +3,19 @@ extends CharacterBody2D
 @onready var around = get_node("Area2D")
 @onready var bubble = get_node("TextureRect")
 
-@export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
+@export var preQuest = ["I say words! and ask you to do something!", "so this is all test dialogue", "Very cool I know.", "Now, lets do something!"]
+@export var durQuest = ["How's that thing I told you to do going?", "hope it's going well! Good luck!"]
+@export var postQuest = ["You came back! no way that's crazy!", "anyway thanks for the help!", "alright buh bye now!", "I SAID BUH BYE GET OUTTA HERE!"]
+@export var questFinished = false
+@export var questStarted = false
 
 signal showTextBox
 signal hideTextBox
-signal newText(title)
+signal newQText(title, QS, QF)
 
 var closeEnough = false
 var textDisplayed = false
+
 
 func _ready():
 	bubble.hide()
@@ -24,14 +29,15 @@ func _process(delta):
 	# check for interaction
 	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
 		textDisplayed = true
-		print("output text: ", npcText, " goes here!")
 		emit_signal("showTextBox")
+		if !questStarted:
+			questStarted = true
 
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_parent().get_node("TileMap"):
 		print("display and await!")
 		closeEnough = true
-		newText.emit(name)
+		newQText.emit(name, questStarted, questFinished)
 
 
 func _on_area_2d_body_exited(body):
