@@ -1,8 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://bfgli07b0m8kh"]
+[gd_scene load_steps=29 format=3 uid="uid://bwj0xppo37et1"]
 
-[ext_resource type="Script" path="res://Characters/NPC.gd" id="1_kphk8"]
-[ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_laeti"]
-[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="2_v5kf8"]
+[ext_resource type="Script" path="res://Characters/QuestNPC.gd" id="1_utidl"]
+[ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_blqqc"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_8vtj1"]
 
 [sub_resource type="Animation" id="Animation_5rgvr"]
 resource_name = "backwards_idle"
@@ -232,15 +232,16 @@ radius = 15.0
 [node name="NPC" type="CharacterBody2D"]
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_kphk8")
+script = ExtResource("1_utidl")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("2_laeti")
+texture = ExtResource("2_blqqc")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 7
+frame = 1
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -271,7 +272,7 @@ offset_left = -5.0
 offset_top = -34.0
 offset_right = 7.0
 offset_bottom = -22.0
-texture = ExtResource("2_v5kf8")
+texture = ExtResource("3_8vtj1")
 expand_mode = 3
 stretch_mode = 4
 
