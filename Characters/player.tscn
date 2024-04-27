@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://754l5c1v65w4"]
 
-[ext_resource type="Texture2D" uid="uid://b38d7bsewywmv" path="res://Art/Pirates/Placeholder Pirate/Pirate.png" id="1_3yqtt"]
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_05q78"]
+[ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
 
 [sub_resource type="Animation" id="Animation_5rgvr"]
 resource_name = "backwards_idle"
@@ -233,7 +233,7 @@ speed = 80.0
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("1_3yqtt")
+texture = ExtResource("2_lsqmj")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 8
