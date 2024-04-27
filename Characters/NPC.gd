@@ -24,7 +24,7 @@ func _process(delta):
 	# check for interaction
 	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
 		textDisplayed = true
-		print("output text: ", npcText, " goes here!")
+		print("output text here!")
 		emit_signal("showTextBox")
 
 func _on_area_2d_body_entered(body):
@@ -40,3 +40,8 @@ func _on_area_2d_body_exited(body):
 		print("remove textbox")
 		closeEnough = false
 		textDisplayed = false
+
+
+func _on_world_scene_transition():
+	bubble = get_node("TextureRect")
+	get_node("Area2D")

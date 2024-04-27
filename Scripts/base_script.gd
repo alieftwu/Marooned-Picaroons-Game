@@ -3,7 +3,7 @@ class_name BaseScene extends Node
 @onready var player : Player = $Player
 @onready var entrance_markers: Node2D = $EntranceMarkers
 
-@onready var boxText = get_node("Player/Camera2D/TextureRect")
+signal sceneTransistion
 
 func _ready():
 	if scene_manager.player:
@@ -13,6 +13,7 @@ func _ready():
 			
 		player = scene_manager.player
 		add_child(player)
+		sceneTransistion.emit()
 	position_player()
 	
 func position_player() -> void:
