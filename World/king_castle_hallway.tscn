@@ -8,6 +8,7 @@ y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
+texture_filter = 1
 tile_set = ExtResource("1_treh7")
 format = 2
 layer_0/name = "Tilemap - No Collisions"
