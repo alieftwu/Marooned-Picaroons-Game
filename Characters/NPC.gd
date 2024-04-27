@@ -2,12 +2,14 @@ extends CharacterBody2D
 
 @onready var around = get_node("Area2D")
 @onready var bubble = get_node("TextureRect")
+@onready var textBox = get_node("HUD/TextureRect2")
+@onready var textBoxText = get_node("HUD/TextureRect2/Label")
 
 @export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
 
 signal showTextBox
 signal hideTextBox
-signal newText(title)
+signal newText
 
 var closeEnough = false
 var textDisplayed = false
@@ -28,10 +30,10 @@ func _process(delta):
 		emit_signal("showTextBox")
 
 func _on_area_2d_body_entered(body):
-	if body != self and body != get_parent().get_node("TileMap"):
+	if body != self and body != get_tree().current_scene.get_node("TileMap"):
 		print("display and await!")
 		closeEnough = true
-		newText.emit(name)
+		newText.emit()
 
 
 func _on_area_2d_body_exited(body):
@@ -40,8 +42,3 @@ func _on_area_2d_body_exited(body):
 		print("remove textbox")
 		closeEnough = false
 		textDisplayed = false
-
-
-func _on_world_scene_transition():
-	bubble = get_node("TextureRect")
-	get_node("Area2D")

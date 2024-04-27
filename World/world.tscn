@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=10 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -6,14 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="3_0fysw"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_wqytr"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
-[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="6_ljdhw"]
-[ext_resource type="Script" path="res://World/TextureRect.gd" id="7_2sq6k"]
-[ext_resource type="Script" path="res://World/Label.gd" id="7_ii1ta"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_0ms3b"]
-font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
 size = Vector2(28, 32)
@@ -41,33 +35,6 @@ limit_bottom = 1000
 editor_draw_limits = true
 script = ExtResource("5_rtqw2")
 tilemap = NodePath("../../TileMap")
-
-[node name="TextureRect" type="TextureRect" parent="Player/Camera2D"]
-z_index = 2
-texture_filter = 1
-offset_left = -144.0
-offset_top = -14.0
-offset_right = 267.0
-offset_bottom = 126.0
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("6_ljdhw")
-stretch_mode = 4
-script = ExtResource("7_2sq6k")
-
-[node name="Label" type="Label" parent="Player/Camera2D/TextureRect"]
-texture_filter = 1
-layout_mode = 0
-offset_left = 68.0
-offset_top = 37.0
-offset_right = 347.0
-offset_bottom = 102.0
-text = "This is a text box!
-text goes here."
-label_settings = SubResource("LabelSettings_0ms3b")
-horizontal_alignment = 1
-autowrap_mode = 2
-script = ExtResource("7_ii1ta")
-connected_scene = "CombatScene"
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)
@@ -114,20 +81,3 @@ npcText = ["Are you a pirate?", "If so you shouldn't be talking to my son.", "Yo
 position = Vector2(776, 833)
 scale = Vector2(0.75, 0.75)
 npcText = ["Woah! A pirate!", "Are you a real pirate? If so that's so cool!", "My mom doesn't like pirates, says they're criminals", "So shoo before my mom sees you! go go!"]
-
-[connection signal="hideBoxLabel" from="Player/Camera2D/TextureRect/Label" to="Player/Camera2D/TextureRect" method="_on_label_hide_box_label"]
-[connection signal="hideTextBox" from="talky" to="Player/Camera2D/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newText" from="talky" to="Player/Camera2D/TextureRect/Label" method="_on_new_text"]
-[connection signal="showTextBox" from="talky" to="Player/Camera2D/TextureRect" method="_on_npc_show_text_box"]
-[connection signal="hideTextBox" from="questy" to="Player/Camera2D/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newQText" from="questy" to="Player/Camera2D/TextureRect/Label" method="_on_new_q_text"]
-[connection signal="showTextBox" from="questy" to="Player/Camera2D/TextureRect" method="_on_npc_show_text_box"]
-[connection signal="hideTextBox" from="fighty" to="Player/Camera2D/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newText" from="fighty" to="Player/Camera2D/TextureRect/Label" method="_on_new_text"]
-[connection signal="showTextBox" from="fighty" to="Player/Camera2D/TextureRect" method="_on_npc_show_text_box"]
-[connection signal="hideTextBox" from="parent" to="Player/Camera2D/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newText" from="parent" to="Player/Camera2D/TextureRect/Label" method="_on_new_text"]
-[connection signal="showTextBox" from="parent" to="Player/Camera2D/TextureRect" method="_on_npc_show_text_box"]
-[connection signal="hideTextBox" from="child" to="Player/Camera2D/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newText" from="child" to="Player/Camera2D/TextureRect/Label" method="_on_new_text"]
-[connection signal="showTextBox" from="child" to="Player/Camera2D/TextureRect" method="_on_npc_show_text_box"]
