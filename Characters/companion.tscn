@@ -1,7 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://754l5c1v65w4"]
+[gd_scene load_steps=26 format=3 uid="uid://da137es324l1j"]
 
-[ext_resource type="Script" path="res://Characters/player.gd" id="1_05q78"]
-[ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
+[ext_resource type="Script" path="res://Characters/companion.gd" id="1_3d8y2"]
+[ext_resource type="Texture2D" uid="uid://ciw7w4q5nveis" path="res://Art/Pirates/Pirate Red Sprite Sheet/red pirate companion.png" id="1_c80th"]
 
 [sub_resource type="Animation" id="Animation_5rgvr"]
 resource_name = "backwards_idle"
@@ -151,10 +151,6 @@ _data = {
 "walk_up": SubResource("Animation_otycb")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
-radius = 3.0
-height = 6.0
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nte6"]
 animation = &"left_idle"
 
@@ -225,30 +221,24 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
 states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Companion" type="CharacterBody2D"]
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_05q78")
-speed = 80.0
+script = ExtResource("1_3d8y2")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_lsqmj")
+texture = ExtResource("1_c80th")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 8
-frame = 9
+frame = 10
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_2kr0c")
 }
 speed_scale = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-y_sort_enabled = true
-position = Vector2(0, -9)
-shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
