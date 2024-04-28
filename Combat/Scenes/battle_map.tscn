@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=22 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -9,7 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://cu7oi7cxqo7k2" path="res://Combat/Resources/whiteTransparent.png" id="6_b76gv"]
 [ext_resource type="Texture2D" uid="uid://cunualw136qme" path="res://Tilesets/tinyturkDot.png" id="7_bfi6l"]
 [ext_resource type="Texture2D" uid="uid://y5tt87ymfvwp" path="res://Combat/Resources/firstVillageBackground2.png" id="8_jlphp"]
+[ext_resource type="Texture2D" uid="uid://nsquju3boomg" path="res://Tilesets/PlayerBorder.png" id="8_sgaia"]
 [ext_resource type="AudioStream" uid="uid://c0vkdjtfvnyn1" path="res://Combat/Resources/sea_theme_1.wav" id="9_2kih8"]
+[ext_resource type="Script" path="res://Combat/Scenes/AbilityControl.gd" id="11_rlhw2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfpvn"]
 texture = ExtResource("2_3sjpn")
@@ -1648,10 +1650,15 @@ texture = ExtResource("6_b76gv")
 texture = ExtResource("6_3pyvn")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nvo0p"]
+texture = ExtResource("8_sgaia")
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_8ollj"]
 sources/0 = SubResource("TileSetAtlasSource_q7wo7")
 sources/2 = SubResource("TileSetAtlasSource_poqc1")
 sources/1 = SubResource("TileSetAtlasSource_3ohuy")
+sources/5 = SubResource("TileSetAtlasSource_nvo0p")
 
 [node name="BattleMap" type="Node2D"]
 position = Vector2(0, 1)
@@ -1686,3 +1693,6 @@ expand_mode = 1
 position = Vector2(72, 176)
 stream = ExtResource("9_2kih8")
 max_distance = 4000.0
+
+[node name="AbilityControl" type="Node2D" parent="."]
+script = ExtResource("11_rlhw2")

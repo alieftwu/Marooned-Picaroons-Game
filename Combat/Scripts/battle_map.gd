@@ -298,17 +298,17 @@ func simpleAttack(player):
 				
 	highlight_map.basicAttackGrid(starting_position)			
 				
-	if len(attackOptions) == 1:
-		tile_selected = attackOptions[0]
-		var global_tile_pos = tile_map.map_to_local(tile_selected)
-		for unit in Units:
-			if unit.global_position == global_tile_pos:
-				unit.health -= currentPlayer.basicAttackDamage
-				print("hit him!")
-				break
+	#if len(attackOptions) == 1:
+		#tile_selected = attackOptions[0]
+		#var global_tile_pos = tile_map.map_to_local(tile_selected)
+		#for unit in Units:
+			#if unit.global_position == global_tile_pos:
+				#unit.health -= currentPlayer.basicAttackDamage
+				#print("hit him!")
+				#break
 
 	
-	elif attackOptions.is_empty() == false:
+	if attackOptions.is_empty() == false:
 		canAttack = true
 		await attackChosen
 		while tile_selected not in attackOptions:

@@ -16,6 +16,7 @@ var current_position : Vector2
 var turkDot_source_id : int = 0
 var whiteTrans_source_id : int = 1
 var redDot_source_id : int = 2
+var playerBorder_source_id : int = 5
 
 # Called after tile map is done generating by call_deferred
 func _ready():
@@ -94,4 +95,4 @@ func basicAttackGrid(start_pos):
 
 func highlightPlayer(player):
 	starting_location = tile_map.local_to_map(player.global_position)
-	self.set_cell(0, starting_location, whiteTrans_source_id, Vector2i(0, 0))
+	self.set_cell(0, starting_location, playerBorder_source_id, Vector2i(0, 0))
