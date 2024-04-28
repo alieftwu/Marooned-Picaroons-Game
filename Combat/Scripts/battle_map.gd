@@ -209,6 +209,7 @@ func movePerson(player):
 	current_id_path.clear()
 	# print("child ", player.get_index(), " waiting to pick")
 	highlight_map._generateMoveMap(currentPlayer)
+	highlight_map.highlightPlayer(currentPlayer)
 	
 	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
 	var allowedSpaces : Array = []
@@ -285,28 +286,35 @@ func simpleAttack(player):
 	
 	for direction in directions:
 		var calcDirection = starting_position + direction
-		var friendThere = false
-		for unit in friendlyUnits:
+		var enemyThere = false
+		for unit in enemyUnits:
 			if tile_map.local_to_map(unit.global_position) == calcDirection:
-				friendThere = true
+				enemyThere = true
 				break
-		if friendThere == false:
+		if enemyThere == true:
 			var tile_data = tile_map.get_cell_tile_data(0, calcDirection)
 			if tile_data != null and tile_data.get_custom_data("walkable") == true:
 				attackOptions.append(calcDirection)
+				
+	highlight_map.basicAttackGrid(starting_position)			
+				
+	if len(attackOptions) == 1:
+		tile_selected = attackOptions[0]
+		var global_tile_pos = tile_map.map_to_local(tile_selected)
+		for unit in Units:
+			if unit.global_position == global_tile_pos:
+				unit.health -= currentPlayer.basicAttackDamage
+				print("hit him!")
+				break
+
 	
-	highlight_map.basicAttackGrid(starting_position)
-	
-	if attackOptions.is_empty() == false:
-		print("2")
+	elif attackOptions.is_empty() == false:
 		canAttack = true
 		await attackChosen
-		print("3")
 		while tile_selected not in attackOptions:
 			canAttack = true
 			await attackChosen
 			print("not good attack")
-		print("4")
 		var global_tile_pos = tile_map.map_to_local(tile_selected)
 		for unit in Units:
 			if unit.global_position == global_tile_pos:
@@ -316,7 +324,6 @@ func simpleAttack(player):
 		
 	canAttack = false
 	highlight_map.clear()
-	print("5")
 	emit_signal("attackDone")
 	
 	return

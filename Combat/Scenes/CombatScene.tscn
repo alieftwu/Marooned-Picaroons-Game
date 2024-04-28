@@ -17,6 +17,7 @@ script = ExtResource("1_81gjc")
 
 [node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_1mkxc")]
 position = Vector2(136, 40)
+scale = Vector2(1, 0.76)
 
 [node name="TestEnemyAg" parent="TurnQueue" instance=ExtResource("5_3xphh")]
 position = Vector2(136, 72)
