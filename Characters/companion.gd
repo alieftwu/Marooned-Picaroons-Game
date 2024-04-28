@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Companion
 @onready var animation_tree : AnimationTree = $AnimationTree
 
 var target : Player

@@ -72,11 +72,9 @@ connected_scene = "CombatScene"
 
 [node name="Companion" parent="." instance=ExtResource("12_1eip4")]
 position = Vector2(585, 111)
-scale = Vector2(1, 1)
 
 [node name="Companion2" parent="." instance=ExtResource("12_1eip4")]
 position = Vector2(564, 109)
-scale = Vector2(1, 1)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)

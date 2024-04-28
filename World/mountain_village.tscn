@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cptqw6by0eogk"]
+[gd_scene load_steps=13 format=3 uid="uid://cptqw6by0eogk"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_mpgjl"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_ql2ok"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_4oavv"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_oojuv"]
+[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 
 [sub_resource type="Gradient" id="Gradient_dvd5f"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -101,3 +103,13 @@ connected_scene = "mountain_passage"
 position = Vector2(-1.3, 3)
 scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_b6pub")
+
+[node name="Player" parent="." instance=ExtResource("4_oojuv")]
+speed = 110.0
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Companion" parent="." instance=ExtResource("5_lwphu")]
+
+[node name="Companion2" parent="." instance=ExtResource("5_lwphu")]
+position = Vector2(22, 0)

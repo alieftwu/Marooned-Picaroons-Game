@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjmo7auen0fx5"]
+[gd_scene load_steps=7 format=3 uid="uid://bjmo7auen0fx5"]
 
+[ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_dumpt"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_x3f7w"]
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_7oa6q"]
+[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_1po7k"]
+[ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_rjxpv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4o1x5"]
+size = Vector2(21.1607, 60)
 
 [node name="inside_prison" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_dumpt")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -22,5 +29,28 @@ layer_3/tile_data = PackedInt32Array(2162719, 655378, 0, 2228255, 655378, 1, 216
 
 [node name="Player" parent="." instance=ExtResource("2_7oa6q")]
 position = Vector2(561, 383)
+speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Companion" parent="." instance=ExtResource("3_1po7k")]
+position = Vector2(588, 383)
+
+[node name="Companion2" parent="." instance=ExtResource("3_1po7k")]
+position = Vector2(535, 382)
+
+[node name="EntranceMarkers" type="Node2D" parent="."]
+position = Vector2(338, 134)
+
+[node name="any" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(222, 252)
+
+[node name="SceneTrigger" parent="." instance=ExtResource("4_rjxpv")]
+position = Vector2(562, 412)
+scale = Vector2(1.56987, 0.181329)
+connected_scene = "county_prison"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_4o1x5")
