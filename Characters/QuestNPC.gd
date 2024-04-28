@@ -34,7 +34,7 @@ func _process(delta):
 			questStarted = true
 
 func _on_area_2d_body_entered(body):
-	if body != self and body != get_parent().get_node("TileMap"):
+	if body != self and body != get_tree().current_scene.get_node("TileMap"):
 		print("display and await!")
 		closeEnough = true
 		newQText.emit(name, questStarted, questFinished)

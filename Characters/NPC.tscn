@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bfgli07b0m8kh"]
+[gd_scene load_steps=34 format=3 uid="uid://bfgli07b0m8kh"]
 
 [ext_resource type="Script" path="res://Characters/NPC.gd" id="1_kphk8"]
 [ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_laeti"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="4_q7t6r"]
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="5_tgl3m"]
 [ext_resource type="Script" path="res://World/Label.gd" id="6_tsve4"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="6_we2jn"]
 
 [sub_resource type="Animation" id="Animation_5rgvr"]
 resource_name = "backwards_idle"
@@ -233,6 +234,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 radius = 15.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("6_we2jn")
 font_color = Color(0, 0, 0, 1)
 
 [node name="NPC" type="CharacterBody2D"]
@@ -290,10 +292,10 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="TextureRect2" type="TextureRect" parent="HUD"]
+[node name="TextureRect" type="TextureRect" parent="HUD"]
 z_index = 2
 texture_filter = 1
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -309,8 +311,9 @@ size_flags_vertical = 8
 texture = ExtResource("4_q7t6r")
 stretch_mode = 4
 script = ExtResource("5_tgl3m")
+metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="HUD/TextureRect2"]
+[node name="Label" type="Label" parent="HUD/TextureRect"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 68.0
@@ -325,6 +328,9 @@ autowrap_mode = 2
 script = ExtResource("6_tsve4")
 connected_scene = "CombatScene"
 
+[connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newText" from="." to="HUD/TextureRect/Label" method="_on_new_text"]
+[connection signal="showTextBox" from="." to="HUD/TextureRect" method="_on_npc_show_text_box"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
-[connection signal="hideBoxLabel" from="HUD/TextureRect2/Label" to="HUD/TextureRect2" method="_on_label_hide_box_label"]
+[connection signal="hideBoxLabel" from="HUD/TextureRect/Label" to="HUD/TextureRect" method="_on_label_hide_box_label"]
