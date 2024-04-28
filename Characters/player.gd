@@ -20,7 +20,6 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 
 	move_and_slide()
-
 func update_animation_parameters():
 	if(velocity == Vector2.ZERO):
 		animation_tree["parameters/conditions/idle"] = true
