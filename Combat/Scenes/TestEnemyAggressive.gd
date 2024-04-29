@@ -4,8 +4,9 @@ extends Node2D
 @onready var highlightmap = $"../../BattleMap/HighlightMap"
 var stats = load("res://Combat/Resources/enemytest.tres")
 var speed : int
-var health : int
+var health : float
 var basicAttackDamage : int
+var passiveAbility : String = "none"
 signal finishedTurn
 
 func _ready():

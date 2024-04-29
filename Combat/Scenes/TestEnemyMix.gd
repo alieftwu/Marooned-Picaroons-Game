@@ -4,8 +4,9 @@ extends Node2D
 @onready var highlightmap = $"../../BattleMap/HighlightMap"
 var stats = load("res://Combat/Resources/enemytest.tres")
 var speed : int
-var health : int
+var health : float
 var basicAttackDamage : int
+var passiveAbility : String = "Brawler"
 signal finishedTurn
 
 func _ready():
@@ -15,7 +16,7 @@ func _ready():
 
 func play_turn():
 	print("e3Move")
-	if randf() < .5:
+	if randf() < .75:
 		await battlemap.agressiveEnemyMove(self)
 	else:
 		await battlemap.moveEnemyPerson(self)

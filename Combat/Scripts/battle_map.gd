@@ -162,7 +162,6 @@ func _input(event):
 		tile_selected = tile_map.local_to_map(get_global_mouse_position())
 		tile_selected_converted = Vector2(tile_selected[0], tile_selected[1])
 		canMove = false
-		print("here")
 		emit_signal("moveSelected")
 	
 	return
@@ -238,9 +237,9 @@ func movePerson(player):
 				print("path error 2")
 				return
 			startMoving = true
-			print("await finishedmoving")
+			#print("await finishedmoving")
 			await finishedMoving # wait for physics to finish moving
-			print("passed finished moving")
+			#print("passed finished moving")
 	highlight_map.clear()
 	update_AStarGrid() # make sure we cant get by people
 	emit_signal("characterMovementComplete")
@@ -260,7 +259,7 @@ func _physics_process(_delta):
 		current_id_path.pop_front()
 		if current_id_path.is_empty():
 			startMoving = false
-			print("send finished moving")
+			#print("send finished moving")
 			emit_signal("finishedMoving")
 	return
 	
@@ -268,7 +267,6 @@ func simpleAttack(player):
 	currentPlayer = player
 	canMove = false
 	startMoving = false
-	print("1")
 	
 	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
 	var attackOptions = []
@@ -298,17 +296,17 @@ func simpleAttack(player):
 				
 	highlight_map.basicAttackGrid(starting_position)			
 				
-	#if len(attackOptions) == 1:
-		#tile_selected = attackOptions[0]
-		#var global_tile_pos = tile_map.map_to_local(tile_selected)
-		#for unit in Units:
-			#if unit.global_position == global_tile_pos:
-				#unit.health -= currentPlayer.basicAttackDamage
-				#print("hit him!")
-				#break
+	if len(attackOptions) == 1:
+		tile_selected = attackOptions[0]
+		var global_tile_pos = tile_map.map_to_local(tile_selected)
+		for unit in Units:
+			if unit.global_position == global_tile_pos:
+				unit.health -= currentPlayer.basicAttackDamage
+				print("hit enemy!")
+				break
 
 	
-	if attackOptions.is_empty() == false:
+	elif attackOptions.is_empty() == false:
 		canAttack = true
 		await attackChosen
 		while tile_selected not in attackOptions:
@@ -319,7 +317,7 @@ func simpleAttack(player):
 		for unit in Units:
 			if unit.global_position == global_tile_pos:
 				unit.health -= currentPlayer.basicAttackDamage
-				print("hit him!")
+				print("hit enemy!")
 				break
 		
 	canAttack = false
@@ -367,7 +365,6 @@ func moveEnemyPerson(enemy): # move enemy randomly
 	return
 		
 func agressiveEnemyMove(enemy): # move enemy to nearest player
-	print("AgMove")
 	currentEnemy = enemy
 	var enemy_position = currentEnemy.global_position
 	var allowedSpaces : Array = []
@@ -400,9 +397,9 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 	move_pick	
 	).slice(1)
 	startMoving = true
-	print("awaitAgMove")
+	#print("awaitAgMove")
 	await finishedMoving # wait for physics to finish moving
-	print("finishedAgMove")
+	#print("finishedAgMove")
 	startMoving = false
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")

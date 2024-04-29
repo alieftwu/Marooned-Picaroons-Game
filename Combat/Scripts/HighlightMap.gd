@@ -105,3 +105,7 @@ func highlightRed(position):
 func highlightBlue(position):
 	self.set_cell(0, position, turkDot_source_id, Vector2i(0, 0))
 	return
+
+func clearTile(position):
+	self.set_cell(0, position, -1, Vector2i(0, 0))
+	return

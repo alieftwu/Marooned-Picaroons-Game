@@ -50,7 +50,7 @@ func play_round():
 		
 func checkDeaths(): # i just make them invisible for now, we will need other way of handling 
 	for unit in battle_map.Units:
-		if unit.health == 0:
+		if unit.health <= 0:
 			unit.remove_from_group("Units")
 			unit.remove_from_group("PlayerUnits")
 			unit.remove_from_group("EnemyUnits")

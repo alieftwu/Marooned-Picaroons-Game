@@ -38,8 +38,21 @@ func _input(event):
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
 	pass
 
-func checkPassive(player): # check passive ability
-	pass
+func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
+	var damageModifier : float = 1.0
+	if player.passiveAbility == "Brawler":
+		if damageType == "Melee":
+			damageModifier = 1.40
+			print("Melee Damage increased flag")
+	return damageModifier
+	
+func checkPassiveDefend(player, potentialDamage = 0, damageType = null): # check passive ability
+	var damageModifier : float = 1.0
+	if player.passiveAbility == "ShotPrediction":
+		if damageType == "Ranged":
+			damageModifier = 0.60
+			print("Range Damage reduced flag")
+	return damageModifier
 	
 func checkTeam(player): # check what team the calling player is on
 	var isPlayer = true
@@ -106,6 +119,40 @@ func lineFind(x, y, moves_made, max_moves, direction, spacesArray, isPlayer):
 	if validTile:
 		lineFind(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)
 	
+func areaFind(x, y, moves_made, max_moves, spacesArray, isPlayer): # find spaces in an area
+	var current_position = Vector2i(x, y)
+	
+	# Base case: If moves made are equal to max_moves, stop recursion.
+	if moves_made == max_moves:
+		return
+	
+	# Directions for movement: up, down, left, right
+	var directions = [
+		Vector2i(0, -1),  # Up
+		Vector2i(0, 1),   # Down
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0)    # Right
+	]
+	
+	moves_made += 1
+	
+	# Explore all possible directions
+	for direction in directions:
+		var new_x = x + direction.x
+		var new_y = y + direction.y
+		
+		var new_position = Vector2i(new_x, new_y)
+		var enemyThere = checkEnemyPresent(new_position, isPlayer)
+		var validTile = checkTileData(new_position)
+		if enemyThere and validTile: # if a unit from other team is there, add to possible attack spaces
+			if new_position not in spacesArray: # make sure its a unique space
+				spacesArray.append(new_position)
+				highlight_map.highlightRed(new_position)
+		
+		if validTile:
+			areaFind(new_x, new_y, moves_made, max_moves, spacesArray, isPlayer)		
+	return
+	
 func pistolShot(player): #shoot in a line 3 away
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
@@ -128,7 +175,9 @@ func pistolShot(player): #shoot in a line 3 away
 			attackChoice = attackTargets.pick_random()
 			
 		interactUnit = getTarget(attackChoice)
-		interactUnit.health -= (player.basicAttackDamage * 2)
+		var attackModifier = checkPassiveAttack(player, 0, "Range")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -156,7 +205,9 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 			attackChoice = attackTargets.pick_random()
 			
 		interactUnit = getTarget(attackChoice)
-		interactUnit.health -= (player.basicAttackDamage * 3)
+		var attackModifier = checkPassiveAttack(player, 0, "Melee")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier)
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -178,7 +229,53 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 func desparateStrike(player): # deal more damage if low health 1 away
 	pass
 func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
-	pass
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	areaFind(starting_position.x, starting_position.y, 0, 2, attackTargets, isPlayer)
+	var areTwoTargets = true
+	if len(attackTargets) <= 1: # so we know to move on if only 1 target
+		areTwoTargets = false
+	
+	if attackTargets.is_empty() == false:
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		var index = attackTargets.find(attackChoice)
+		attackTargets.remove_at(index)
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Ranged")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
+		interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier)
+		highlight_map.clearTile(attackChoice)
+		
+		if areTwoTargets == true: # second attack
+			if isPlayer == true:
+				chooseAttack = true
+				await specialAttackChosen
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets.pick_random()
+				
+			interactUnit = getTarget(attackChoice)
+			attackModifier = checkPassiveAttack(player, 0, "Ranged")
+			defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
+			interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier)
+			
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
 func cannonShot(player): #cannon attack in a line, you skip next turn
 	pass
 func cleverInsults(player): #taunt AI for a turn

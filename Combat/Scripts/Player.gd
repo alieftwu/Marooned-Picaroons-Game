@@ -5,8 +5,9 @@ extends Node2D
 @onready var abilityControl = $"../../BattleMap/AbilityControl"
 var stats = load("res://Combat/Resources/playertest.tres")
 var speed : int
-var health : int
+var health : float
 var basicAttackDamage : int
+var passiveAbility : String = "Brawler"
 signal finishedTurn
 
 func _ready():
@@ -19,6 +20,6 @@ func play_turn():
 	await battlemap.movePerson(self)
 	print("pBetweenMoveAtack")
 	#await battlemap.simpleAttack(self)
-	await abilityControl.pistolShot(self)
+	await abilityControl.heavySwordSwing(self)
 	print("pAttackAfter")
 	emit_signal("finishedTurn")
