@@ -96,3 +96,12 @@ func basicAttackGrid(start_pos):
 func highlightPlayer(player):
 	starting_location = tile_map.local_to_map(player.global_position)
 	self.set_cell(0, starting_location, playerBorder_source_id, Vector2i(0, 0))
+	return
+	
+func highlightRed(position):
+	self.set_cell(0, position, redDot_source_id, Vector2i(0, 0))
+	return
+	
+func highlightBlue(position):
+	self.set_cell(0, position, turkDot_source_id, Vector2i(0, 0))
+	return
