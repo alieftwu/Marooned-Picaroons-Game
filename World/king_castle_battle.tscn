@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://duk18h72tn37u"]
+[gd_scene load_steps=6 format=3 uid="uid://duk18h72tn37u"]
 
+[ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_n8x85"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_xbltg"]
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_dc0h5"]
+[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_wo8mo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h5jpg"]
 
 [node name="king_castle_battle" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_n8x85")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -24,5 +29,23 @@ layer_3/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("2_dc0h5")]
 position = Vector2(141, 614)
+speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Companion" parent="." instance=ExtResource("3_wo8mo")]
+
+[node name="Companion2" parent="." instance=ExtResource("3_wo8mo")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-29, 578)
+scale = Vector2(1, 10.56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_h5jpg")
+
+[node name="EntranceMarkers" type="Node2D" parent="."]
+position = Vector2(232, 547)
+
+[node name="king_castle_hallway" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(-165, 49)

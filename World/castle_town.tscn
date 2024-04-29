@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1kvfk5elbeq7"]
+[gd_scene load_steps=7 format=3 uid="uid://c1kvfk5elbeq7"]
 
+[ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_4p81j"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_l3uni"]
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_6hnhg"]
+[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="4_2tl43"]
+[ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="5_eqxoq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03bfn"]
+size = Vector2(21.1607, 60)
 
 [node name="castle_town" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_4p81j")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -24,5 +31,52 @@ layer_3/tile_data = PackedInt32Array(1310779, 3407896, 5, 1376315, 3407896, 6, 1
 
 [node name="Player" parent="." instance=ExtResource("2_6hnhg")]
 position = Vector2(592, 704)
+speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Companion" parent="." instance=ExtResource("4_2tl43")]
+
+[node name="Companion2" parent="." instance=ExtResource("4_2tl43")]
+
+[node name="SceneTrigger" parent="." instance=ExtResource("5_eqxoq")]
+position = Vector2(740, 1075)
+scale = Vector2(3.60381, 0.182274)
+connected_scene = "front_gate"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_03bfn")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("5_eqxoq")]
+position = Vector2(1073, 731)
+scale = Vector2(1.36381, 0.182274)
+connected_scene = "sewers"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger2"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_03bfn")
+
+[node name="SceneTrigger3" parent="." instance=ExtResource("5_eqxoq")]
+position = Vector2(742, 478)
+scale = Vector2(1.36381, 0.182274)
+connected_scene = "kings_castle_entrance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger3"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_03bfn")
+
+[node name="EntranceMarkers" type="Node2D" parent="."]
+position = Vector2(338, 134)
+
+[node name="front_gate" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(399, 861)
+
+[node name="sewers" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(732, 632)
+
+[node name="kings_castle_entrance" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(404, 379)

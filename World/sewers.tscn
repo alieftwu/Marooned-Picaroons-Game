@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://du1t36r23w1wn"]
+[gd_scene load_steps=7 format=3 uid="uid://du1t36r23w1wn"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_5rb32"]
+[ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rv8p8"]
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_als4q"]
+[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_ph08f"]
+[ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_nyyt4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykatl"]
+size = Vector2(21.1607, 60)
 
 [node name="sewers" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_rv8p8")
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1
@@ -25,6 +32,41 @@ layer_3/tile_data = PackedInt32Array(-1048566, 262166, 9, -983030, 262166, 10, -
 
 [node name="Player" parent="." instance=ExtResource("2_als4q")]
 position = Vector2(242, 1065)
-speed = 200.0
+speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Companion" parent="." instance=ExtResource("3_ph08f")]
+position = Vector2(239, 1050)
+
+[node name="Companion2" parent="." instance=ExtResource("3_ph08f")]
+position = Vector2(230, 1064)
+
+[node name="EntranceMarkers" type="Node2D" parent="."]
+position = Vector2(338, 134)
+
+[node name="side_wall" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(-118, 920)
+
+[node name="castle_town" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(725, 13)
+
+[node name="SceneTrigger" parent="." instance=ExtResource("4_nyyt4")]
+position = Vector2(164, 1045)
+scale = Vector2(0.806331, 0.44485)
+connected_scene = "side_wall"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_ykatl")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("4_nyyt4")]
+position = Vector2(1064, 89)
+scale = Vector2(0.323817, 0.182274)
+connected_scene = "castle_town"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger2"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_ykatl")
