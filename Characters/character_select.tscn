@@ -1,0 +1,119 @@
+[gd_scene load_steps=14 format=3 uid="uid://b46v8cq7taha1"]
+
+[ext_resource type="Script" path="res://Characters/CharacterSelect.gd" id="1_5snsd"]
+[ext_resource type="Texture2D" uid="uid://bjptmc0gjefyg" path="res://Art/Pirates/Pirate Green Sprite Sheet/Pirate Green Character Select.png" id="2_2vp2i"]
+[ext_resource type="Texture2D" uid="uid://bkh7x18u67560" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Blue Pirate Character Select.png" id="3_bfv64"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0x2pw"]
+bg_color = Color(0.34902, 0.372549, 0.337255, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7818q"]
+atlas = ExtResource("2_2vp2i")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p0f8"]
+atlas = ExtResource("2_2vp2i")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_naylh"]
+atlas = ExtResource("2_2vp2i")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybgql"]
+atlas = ExtResource("2_2vp2i")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnem8"]
+atlas = ExtResource("3_bfv64")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tebln"]
+atlas = ExtResource("3_bfv64")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h4y3"]
+atlas = ExtResource("3_bfv64")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25eyd"]
+atlas = ExtResource("3_bfv64")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a32go"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7818q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7p0f8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_naylh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybgql")
+}],
+"loop": true,
+"name": &"Player0",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnem8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tebln")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2h4y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25eyd")
+}],
+"loop": true,
+"name": &"Player1",
+"speed": 2.0
+}]
+
+[node name="CharacterSelect" type="Node2D"]
+script = ExtResource("1_5snsd")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 1152.0
+offset_bottom = 647.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0x2pw")
+
+[node name="Desc" type="Label" parent="."]
+offset_left = 363.0
+offset_top = 405.0
+offset_right = 479.0
+offset_bottom = 428.0
+scale = Vector2(0.439998, 0.439998)
+text = "Special Ability: "
+
+[node name="PlayerSelect" type="AnimatedSprite2D" parent="."]
+position = Vector2(525, 348)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_a32go")
+animation = &"Player1"
+frame_progress = 0.134264
+
+[node name="Camera2D" type="Camera2D" parent="PlayerSelect"]
+
+[node name="Left" type="Button" parent="."]
+offset_left = 403.0
+offset_top = 335.0
+offset_right = 441.0
+offset_bottom = 366.0
+text = "Left"
+
+[node name="Right" type="Button" parent="."]
+offset_left = 627.0
+offset_top = 337.0
+offset_right = 665.0
+offset_bottom = 368.0
+text = "Right"
+
+[connection signal="pressed" from="Left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="Right" to="." method="_on_right_pressed"]
