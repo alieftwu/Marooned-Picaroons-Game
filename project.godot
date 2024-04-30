@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 scene_manager="*res://Scripts/SceneManager.gd"
 TransitionScreen="*res://Main Menu/transition_screen.tscn"
-Game="*res://Global/Game.gd"
+Global="*res://Global/Global.gd"
 
 [display]
 
