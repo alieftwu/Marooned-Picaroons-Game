@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_2cw13")
-Health = 2
+Health = 100
 Armor = 0
 Speed = 3
-BasicAttackDamage = 2
+BasicAttackDamage = 10
 Experience = 0

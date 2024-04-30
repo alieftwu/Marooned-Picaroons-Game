@@ -36,7 +36,12 @@ func _input(event):
 			return
 
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
-	pass
+	if player.frenzyBuff == true:
+		player.frenzyBuffCounter -= 1
+		if player.frenzyBuffCounter == 0:
+			player.frenzyBuff = false
+			player.speed -= 1
+			player.basicAttackDamage -= 10
 
 func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
@@ -84,6 +89,13 @@ func checkTileData(targetSpace): #see if tile has certain properties
 		validTile = true
 	return validTile
 	
+func checkTileDataPierce(targetSpace): #see if tile has certain properties	
+	var validTile = false
+	tile_data = tile_map.get_cell_tile_data(0, targetSpace)
+	if (tile_data != null):
+		validTile = true
+	return validTile
+	
 func getTarget(targetSpace): # get unit at target space
 	var targetUnit = null
 	for unit in battle_map.Units:
@@ -116,8 +128,35 @@ func lineFind(x, y, moves_made, max_moves, direction, spacesArray, isPlayer):
 		highlight_map.highlightRed(new_position)
 	
 	moves_made += 1
-	if validTile:
+	if validTile and enemyThere == false: # can't shoot this through units
 		lineFind(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)
+	
+func lineFindPierce(x, y, moves_made, max_moves, direction, spacesArray, isPlayer):
+	var new_position = Vector2i(x, y)
+	
+	if moves_made == max_moves:
+		return
+	if direction == "left":
+		new_position += Vector2i(1,0)
+	elif direction == "right":
+		new_position += Vector2i(-1,0)
+	elif direction == "up":
+		new_position += Vector2i(0,1)
+	elif direction == "down":
+		new_position += Vector2i(0,-1)
+	else:
+		print("invalid direction for lineFind")
+		return
+	
+	var enemyThere = checkEnemyPresent(new_position, isPlayer)
+	var validTile = checkTileDataPierce(new_position)
+	if enemyThere and validTile: # if a unit from other team is there, add to possible attack spaces
+		spacesArray.append(new_position)
+		highlight_map.highlightRed(new_position)
+	
+	moves_made += 1
+	if validTile:
+		lineFind(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)	
 	
 func areaFind(x, y, moves_made, max_moves, spacesArray, isPlayer): # find spaces in an area
 	var current_position = Vector2i(x, y)
@@ -260,13 +299,86 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 	return
 	
 func recklessFrenzy(player): # increase speed and attack at cost of health for 2 turns
-	pass
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var buffTargets : Array = []
+	var attackChoice = null
+	aroundFind(starting_position, 1, buffTargets, isPlayer)
+	
+	player.speed += 1
+	player.basicAttackDamage += 10
+	player.health -= 10
+	player.frezyBuff = true
+	player.frenzyBuffCount = 2 # to tell when 2 turns are up
+	
+	for space in buffTargets:	
+		interactUnit = getTarget(space)
+		interactUnit.speed += 1
+		interactUnit.basicAttackDamage += 10
+		interactUnit.health -= 10
+		interactUnit.frezyBuff = true
+		interactUnit.frenzyBuffCount = 2
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+	
 func takeDown(player): # must have ally next to you, damage and stun nearby opponent for 2-3 turns
 	pass
 func pirateBlessing(player): #heal any friend on the map a little
-	pass
+	var isPlayer = checkTeam(player)
+	var healTargets : Array = []
+	var healChoice = null
+	var healTile = null
+	
+	if isPlayer:
+		for unit in battle_map.friendlyUnits:
+			var unit_position = tile_map.local_to_map(player.global_position)
+			highlight_map.highlightRed(unit_position)
+			healTargets.append(unit_position)
+		chooseAttack = true
+		await specialAttackChosen
+		while tile_selected not in healTargets:
+			chooseAttack = true
+			await specialAttackChosen
+		healChoice = getTarget(tile_selected)
+	else:
+		healChoice = battle_map.enemyUnits.pick_random()
+	var healerModifier = checkPassiveAttack(player, 0, "Heal")
+	var healedModifier = checkPassiveDefend(healChoice, 0, "Heal")
+	healChoice.health += 25 * healedModifier * healerModifier
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+	
 func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away from you
-	pass
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	lineFindPierce(starting_position.x - 1, starting_position.y, 0, 2, "left", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x + 1, starting_position.y, 0, 2, "right", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y + 1, 0, 2, "up", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y - 1, 0, 2, "down", attackTargets, isPlayer)
+	
+	if attackTargets.is_empty() == false:
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Range")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		interactUnit.health -= (player.basicAttackDamage * 1.75 * attackModifier * defendModifier)
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+	
 func piercingShot(player): # hit all units(including players if that doesnt break anything) in a line of 4
 	pass
 func quickStrike(player): # gain 1 speed, attack like basic then you can move again
@@ -304,6 +416,7 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
+	
 func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
@@ -352,6 +465,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
+	
 func cannonShot(player): #cannon attack in a line, you skip next turn
 	pass
 func cleverInsults(player): #taunt AI for a turn
