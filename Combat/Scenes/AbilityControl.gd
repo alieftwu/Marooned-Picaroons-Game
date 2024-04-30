@@ -153,6 +153,53 @@ func areaFind(x, y, moves_made, max_moves, spacesArray, isPlayer): # find spaces
 			areaFind(new_x, new_y, moves_made, max_moves, spacesArray, isPlayer)		
 	return
 	
+func aroundFind(startSpace, max_moves, spacesArray, isPlayer): # find spaces around spot (includes diagnols) (up to 3)
+	# Base case: If moves made are equal to max_moves, stop recursion.
+	var new_position : Vector2i
+	var enemyThere
+	var validTile
+	# Directions for movement: up, down, left, right
+	var directions = [
+		Vector2i(0, -1),  # Up
+		Vector2i(0, 1),   # Down
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0) ,   # Right
+		Vector2i(-1, -1),  
+		Vector2i(1, 1),   
+		Vector2i(-1, 1),  
+		Vector2i(1, -1)    
+	]
+	
+	# Explore all possible directions
+	for direction in directions:
+		
+		new_position = startSpace + direction
+		enemyThere = checkEnemyPresent(new_position, isPlayer)
+		validTile = checkTileData(new_position)
+		if enemyThere and validTile: # if a unit from other team is there, add to possible attack spaces
+			if new_position not in spacesArray: # make sure its a unique space
+				spacesArray.append(new_position)
+				highlight_map.highlightRed(new_position)
+	if max_moves >= 2:
+		for direction in directions:
+			new_position = startSpace + (direction * 2)
+			enemyThere = checkEnemyPresent(new_position, isPlayer)
+			validTile = checkTileData(new_position)
+			if enemyThere and validTile: # if a unit from other team is there, add to possible attack spaces
+				if new_position not in spacesArray: # make sure its a unique space
+					spacesArray.append(new_position)
+					highlight_map.highlightRed(new_position)
+	if max_moves >= 3:
+		for direction in directions:
+			new_position = startSpace + (direction * 3)
+			enemyThere = checkEnemyPresent(new_position, isPlayer)
+			validTile = checkTileData(new_position)
+			if enemyThere and validTile: # if a unit from other team is there, add to possible attack spaces
+				if new_position not in spacesArray: # make sure its a unique space
+					spacesArray.append(new_position)
+					highlight_map.highlightRed(new_position)
+	return
+	
 func pistolShot(player): #shoot in a line 3 away
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
@@ -226,8 +273,37 @@ func quickStrike(player): # gain 1 speed, attack like basic then you can move ag
 	pass
 func circleSlash(player): # hit all enemies around you for 1.5 basic
 	pass
-func desparateStrike(player): # deal more damage if low health 1 away
-	pass
+func desparateStrike(player): # deal more damage if low health 1 away !!!!! need max health stat!!!!!!!
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	lineFind(starting_position.x, starting_position.y, 0, 1, "left", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "right", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "up", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "down", attackTargets, isPlayer)
+	
+	if attackTargets.is_empty() == false:
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Melee")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		var moveModifier = 1.0
+		if (player.health <= 10):
+			moveModifier = 2.0
+		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier * moveModifier)
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
 func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
