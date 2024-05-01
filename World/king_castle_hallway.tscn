@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbfk0kbf5v48l"]
+[gd_scene load_steps=8 format=3 uid="uid://bbfk0kbf5v48l"]
 
+[ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_jtbjt"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_treh7"]
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_pkk2k"]
+[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_mgfj5"]
+[ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_tvvh3"]
+[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_awytk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m888h"]
+size = Vector2(21.1607, 60)
 
 [node name="king_castle_hallway" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_jtbjt")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -22,6 +30,42 @@ layer_3/name = "Tilemap - Doodads - No Collision"
 layer_3/tile_data = PackedInt32Array(2424841, 1048602, 52, 2490377, 1048602, 53, 2555913, 1048602, 54, 2621449, 1048602, 55, 2424842, 1114138, 52, 2490378, 1114138, 53, 2555914, 1114138, 54, 2621450, 1114138, 55, 2424851, 1048602, 52, 2490387, 1048602, 53, 2555923, 1048602, 54, 2621459, 1048602, 55, 2424852, 1114138, 52, 2490388, 1114138, 53, 2555924, 1114138, 54, 2621460, 1114138, 55)
 
 [node name="Player" parent="." instance=ExtResource("2_pkk2k")]
-position = Vector2(234, 558)
+position = Vector2(619, 569)
+speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Companion" parent="." instance=ExtResource("3_mgfj5")]
+position = Vector2(580, 569)
+
+[node name="Companion2" parent="." instance=ExtResource("5_awytk")]
+SPEED = 100.0
+
+[node name="SceneTrigger" parent="." instance=ExtResource("4_tvvh3")]
+position = Vector2(239, 621)
+scale = Vector2(0.963803, 0.182274)
+connected_scene = "kings_castle_entrance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_m888h")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("4_tvvh3")]
+position = Vector2(761, 558)
+scale = Vector2(0.963803, 0.782274)
+connected_scene = "king_castle_battle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger2"]
+position = Vector2(-1.3, 3)
+scale = Vector2(2.24, 2)
+shape = SubResource("RectangleShape2D_m888h")
+
+[node name="EntranceMarkers" type="Node2D" parent="."]
+position = Vector2(232, 547)
+
+[node name="kings_castle_entrance" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(7, 27)
+
+[node name="king_castle_battle" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(464, 22)

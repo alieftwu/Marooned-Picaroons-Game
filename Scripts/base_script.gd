@@ -2,7 +2,7 @@ class_name BaseScene extends Node
 
 @onready var player : Player = $Player
 @onready var companion : Companion = $Companion
-@onready var companion2 : Companion = $Companion2
+@onready var companion2 : Companion2 = $Companion2
 @onready var entrance_markers: Node2D = $EntranceMarkers
 signal sceneTransition
 
@@ -30,12 +30,12 @@ func _ready():
 			print("Companion 1 about to position")
 			position_player()
 	#handles 2nd companion
-	if scene_manager.companion:
-		if is_instance_valid(scene_manager.companion):
-			var companion2_parent = scene_manager.companion.get_parent()
+	if scene_manager.companion2:
+		if is_instance_valid(scene_manager.companion2):
+			var companion2_parent = scene_manager.companion2.get_parent()
 			if companion2_parent != null:
-				companion2_parent.remove_child(scene_manager.companion)
-				companion2 = scene_manager.companion
+				companion2_parent.remove_child(scene_manager.companion2)
+				companion2 = scene_manager.companion2
 				add_child(companion2)
 			sceneTransition.emit()
 			print("Companion 2 about to position")
