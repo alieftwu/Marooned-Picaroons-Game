@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=13 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_wqytr"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
+[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_qpf25"]
+[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="11_cg1eh"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
 
@@ -37,11 +39,12 @@ editor_draw_limits = true
 script = ExtResource("5_rtqw2")
 tilemap = NodePath("../../TileMap")
 
+[node name="Companion2" parent="." instance=ExtResource("7_qpf25")]
+position = Vector2(566, 107)
+SPEED = 100.0
+
 [node name="Companion" parent="." instance=ExtResource("12_1eip4")]
 position = Vector2(585, 111)
-
-[node name="Companion2" parent="." instance=ExtResource("12_1eip4")]
-position = Vector2(564, 109)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)
@@ -75,7 +78,6 @@ shape = SubResource("RectangleShape2D_3llp2")
 
 [node name="questy" parent="." instance=ExtResource("11_x7c8x")]
 position = Vector2(660, 811)
-questFinished = true
 
 [node name="fighty" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(492, 812)
@@ -88,3 +90,14 @@ npcText = ["Are you a pirate?", "If so you shouldn't be talking to my son.", "Yo
 position = Vector2(776, 833)
 scale = Vector2(0.75, 0.75)
 npcText = ["Woah! A pirate!", "Are you a real pirate? If so that's so cool!", "My mom doesn't like pirates, says they're criminals", "So shoo before my mom sees you! go go!"]
+
+[node name="crewman1" parent="." instance=ExtResource("7_kwfy2")]
+position = Vector2(458, 123)
+npcText = ["Ahoy Cap'n! We are on the shores of england! A few of us will stay back.", "How are you planning to go about this mission? I know whatever you pick will be a good one!", "You could head through the villages and work your way through the platoons of folks,", "Or you could head into the mountains and see if that fairs better! Good luck!"]
+
+[node name="crewman2" parent="." instance=ExtResource("7_kwfy2")]
+position = Vector2(673, 124)
+npcText = ["Hello Captain! ", "like this!", "Very cool I know.", "Now lets fight!"]
+
+[node name="Englishman" parent="." instance=ExtResource("11_cg1eh")]
+position = Vector2(575, 349)
