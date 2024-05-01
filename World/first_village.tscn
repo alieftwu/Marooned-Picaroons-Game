@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjpxvcpu5uu7q"]
+[gd_scene load_steps=12 format=3 uid="uid://bjpxvcpu5uu7q"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_dvtju"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_hbqp5"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_0dqrl"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_k3fc5"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="6_mdsp7"]
+[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_whcwq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtqkp"]
 size = Vector2(13, 671)
@@ -105,6 +106,5 @@ tilemap = NodePath("../../TileMap")
 [node name="Companion" parent="." instance=ExtResource("6_mdsp7")]
 position = Vector2(635, 43)
 
-[node name="Companion2" parent="." instance=ExtResource("6_mdsp7")]
-position = Vector2(551, 44)
-SPEED = 110.0
+[node name="Companion2" parent="." instance=ExtResource("7_whcwq")]
+SPEED = 100.0

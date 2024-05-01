@@ -30,6 +30,10 @@ window/stretch/scale=4.0
 
 project/assembly_name="Game 3"
 
+[gui]
+
+theme/custom="res://Art/Theme/GUI.tres"
+
 [input]
 
 left={

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=17 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="7_2sq6k"]
 [ext_resource type="Script" path="res://World/Label.gd" id="7_ii1ta"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
+[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="10_jeoaa"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
 
@@ -76,8 +77,9 @@ connected_scene = "CombatScene"
 [node name="Companion" parent="." instance=ExtResource("12_1eip4")]
 position = Vector2(585, 111)
 
-[node name="Companion2" parent="." instance=ExtResource("12_1eip4")]
-position = Vector2(564, 109)
+[node name="Companion2" parent="." instance=ExtResource("10_jeoaa")]
+position = Vector2(563, 110)
+SPEED = 100.0
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_wqytr")]
 position = Vector2(1146, 868)

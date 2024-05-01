@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsiq8d3452055"]
+[gd_scene load_steps=9 format=3 uid="uid://dsiq8d3452055"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_3wigp"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_5kknc"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_o2tub"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_khk7t"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="4_x5kux"]
+[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_b510a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bwlne"]
 size = Vector2(21.1607, 60)
@@ -38,7 +39,8 @@ layer_3/tile_data = PackedInt32Array(524351, 458770, 6, 589887, 458770, 7, 52435
 
 [node name="Companion" parent="." instance=ExtResource("3_o2tub")]
 
-[node name="Companion2" parent="." instance=ExtResource("3_o2tub")]
+[node name="Companion2" parent="." instance=ExtResource("6_b510a")]
+SPEED = 100.0
 
 [node name="EntranceMarkers" type="Node2D" parent="."]
 position = Vector2(338, 134)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://du1t36r23w1wn"]
+[gd_scene load_steps=8 format=3 uid="uid://du1t36r23w1wn"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_5rb32"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rv8p8"]
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_als4q"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_ph08f"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_nyyt4"]
+[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_jokib"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykatl"]
 size = Vector2(21.1607, 60)
@@ -39,8 +40,8 @@ speed = 110.0
 [node name="Companion" parent="." instance=ExtResource("3_ph08f")]
 position = Vector2(239, 1050)
 
-[node name="Companion2" parent="." instance=ExtResource("3_ph08f")]
-position = Vector2(230, 1064)
+[node name="Companion2" parent="." instance=ExtResource("5_jokib")]
+SPEED = 100.0
 
 [node name="EntranceMarkers" type="Node2D" parent="."]
 position = Vector2(338, 134)
