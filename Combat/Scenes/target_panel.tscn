@@ -23,6 +23,7 @@ layout_mode = 0
 offset_top = 32.0
 offset_right = 128.0
 offset_bottom = 59.0
+value = 2.0
 
 [node name="AdditionalText" type="RichTextLabel" parent="Panel"]
 layout_mode = 0
