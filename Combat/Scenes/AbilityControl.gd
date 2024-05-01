@@ -36,13 +36,28 @@ func _input(event):
 			return
 
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
+	var skipTurn = false
 	if player.frenzyBuff == true:
 		player.frenzyBuffCounter -= 1
 		if player.frenzyBuffCounter == 0:
 			player.frenzyBuff = false
 			player.speed -= 1
 			player.basicAttackDamage -= 10
-
+	if player.isStunned == true:
+		skipTurn = true
+		player.isStunnedCount -= 1
+		if player.isStunnedCount == 0:
+			player.isStunned = false
+	if player.isBlocking == true: # if I was blocking, stop blocking, if i did not block anything i am stunned
+		player.isBlocking = false
+		if player.didBlock == false:
+			player.isStunned = true
+			player.isStunnedCount = 2
+			skipTurn = true
+		player.didBlock = false
+		
+	return skipTurn
+	
 func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
 	if player.passiveAbility == "Brawler":
@@ -57,6 +72,9 @@ func checkPassiveDefend(player, potentialDamage = 0, damageType = null): # check
 		if damageType == "Ranged":
 			damageModifier = 0.60
 			print("Range Damage reduced flag")
+	if player.isBlocking == true: # if they are blocking negate all damage
+		damageModifier = 0.0
+		player.didBlock = true
 	return damageModifier
 	
 func checkTeam(player): # check what team the calling player is on
@@ -157,6 +175,7 @@ func lineFindPierce(x, y, moves_made, max_moves, direction, spacesArray, isPlaye
 	moves_made += 1
 	if validTile:
 		lineFind(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)	
+	return
 	
 func areaFind(x, y, moves_made, max_moves, spacesArray, isPlayer): # find spaces in an area
 	var current_position = Vector2i(x, y)
@@ -317,13 +336,45 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 		interactUnit.basicAttackDamage += 10
 		interactUnit.health -= 10
 		interactUnit.frezyBuff = true
-		interactUnit.frenzyBuffCount = 2
+		interactUnit.frenzyBuffCount = 3 # lasts 2 turns
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
 	
 func takeDown(player): # must have ally next to you, damage and stun nearby opponent for 2-3 turns
-	pass
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	lineFind(starting_position.x, starting_position.y, 0, 1, "left", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "right", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "up", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "down", attackTargets, isPlayer)
+	
+	var allyList : Array = []
+	aroundFind(starting_position, 1, allyList, !isPlayer) # find ally around you
+	
+	if (attackTargets.is_empty() == false) and (allyList.is_empty() == false):
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Melee")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+		interactUnit.isStunned = true
+		interactUnit.isStunnedCount = 3 # 2 turns
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+	
 func pirateBlessing(player): #heal any friend on the map a little
 	var isPlayer = checkTeam(player)
 	var healTargets : Array = []
@@ -379,12 +430,52 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 	emit_signal("specialAttackDone")
 	return
 	
-func piercingShot(player): # hit all units(including players if that doesnt break anything) in a line of 4
-	pass
-func quickStrike(player): # gain 1 speed, attack like basic then you can move again
-	pass
+func quickStrike(player): # attack then you can move again
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	lineFind(starting_position.x, starting_position.y, 0, 1, "left", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "right", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "up", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 1, "down", attackTargets, isPlayer)
+	
+	if attackTargets.is_empty() == false:
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Melee")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		interactUnit.health -= (player.basicAttackDamage * 1.2 * attackModifier * defendModifier)
+	highlight_map.clear()
+	player.bonusMove = true
+	emit_signal("specialAttackDone")
+	return
+	
 func circleSlash(player): # hit all enemies around you for 1.5 basic
-	pass
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	aroundFind(starting_position, 1, attackTargets, isPlayer)
+	
+	if attackTargets.is_empty() == false:
+		for targetSpace in attackTargets:
+			interactUnit = getTarget(targetSpace)
+			var attackModifier = checkPassiveAttack(player, 0, "Melee")
+			var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+			interactUnit.health -= (player.basicAttackDamage * 1.5 * attackModifier * defendModifier)
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+	
 func desparateStrike(player): # deal more damage if low health 1 away !!!!! need max health stat!!!!!!!
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
@@ -467,8 +558,77 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 	return
 	
 func cannonShot(player): #cannon attack in a line, you skip next turn
-	pass
-func cleverInsults(player): #taunt AI for a turn
-	pass
-func engagingBlock(player): # block all attacks until your next turn, if not hit stuned for 2 turns
-	pass
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	lineFind(starting_position.x, starting_position.y, 0, 9, "left", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 9, "right", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 9, "up", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 9, "down", attackTargets, isPlayer)
+	
+	if attackTargets.is_empty() == false:
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Range")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		interactUnit.health -= (player.basicAttackDamage * 5 * attackModifier * defendModifier)
+	player.isStunned = true
+	player.isStunnedCount = 2 # 1 turn
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+	
+func engagingBlock(player): # block all attacks until your next turn, if not hit stunned for 2 turns
+	player.isBlocking = true
+	emit_signal("specialAttackDone")
+	return
+
+func bombThrow(player): # throw bomb that hits units nearby as well
+	var starting_position = tile_map.local_to_map(player.global_position)
+	var isPlayer = checkTeam(player)
+	var attackTargets : Array = []
+	var attackChoice = null
+	lineFindPierce(starting_position.x - 1, starting_position.y, 0, 2, "left", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x + 1, starting_position.y, 0, 2, "right", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y + 1, 0, 2, "up", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y - 1, 0, 2, "down", attackTargets, isPlayer)
+	
+	if attackTargets.is_empty() == false:
+		if isPlayer == true:
+			chooseAttack = true
+			await specialAttackChosen
+			while tile_selected not in attackTargets:
+				chooseAttack = true
+				await specialAttackChosen
+			attackChoice = tile_selected
+		else:
+			attackChoice = attackTargets.pick_random()
+			
+		interactUnit = getTarget(attackChoice)
+		var attackModifier = checkPassiveAttack(player, 0, "Range")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier)
+		
+		# find units around for splash damage
+		var splashTargets : Array = []
+		aroundFind(attackChoice, 1, splashTargets, isPlayer)
+		aroundFind(attackChoice, 1, splashTargets, !isPlayer) # teammates to
+		for unit in splashTargets:
+			interactUnit = getTarget(attackChoice)
+			attackModifier = checkPassiveAttack(player, 0, "Range")
+			defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+			interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+			
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return

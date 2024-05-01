@@ -11,7 +11,11 @@ var passiveAbility : String = "Brawler"
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
 var frenzyBuffCount : int = 0
-
+var isStunned : bool = false
+var isStunnedCount : int = 0
+var bonusMove = false
+var isBlocking = false
+var didBlock = false
 signal finishedTurn
 
 func _ready():
@@ -21,10 +25,14 @@ func _ready():
 
 func play_turn():
 	print("pMove")
+	await abilityControl.checkFlags(self)
 	await battlemap.movePerson(self)
 	print("pBetweenMoveAtack")
 	#await battlemap.simpleAttack(self)
 	await abilityControl.heavySwordSwing(self)
-	await abilityControl.checkFlags(self)
 	print("pAttackAfter")
+	if bonusMove == true:
+		bonusMove = false
+		await battlemap.movePerson(self)
+		print("bonusmove")
 	emit_signal("finishedTurn")
