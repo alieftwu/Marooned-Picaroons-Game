@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_b2asv")
+Name = "TestPlayer"
 Health = 3
 Armor = 0
 Speed = 3

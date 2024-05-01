@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cgwnnkkwt8vjm"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="CharacterName" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(3.2, 0.800001)
+
+[node name="HealthBar" type="ProgressBar" parent="Panel"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 128.0
+offset_bottom = 59.0
+
+[node name="AdditionalText" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 40.0
+offset_bottom = 104.0
+scale = Vector2(3.17677, 1.56529)

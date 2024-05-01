@@ -2,6 +2,7 @@ extends Node2D
 
 class_name TurnQueue
 @onready var battle_map = $"../BattleMap"
+@onready var active_panel = $"../ActivePanel"
 var num_children
 var active_character
 var new_index
