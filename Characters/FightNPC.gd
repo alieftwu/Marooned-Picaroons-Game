@@ -9,6 +9,7 @@ extends CharacterBody2D
 
 signal showTextBox
 signal hideTextBox
+signal haltMove
 signal newText(title)
 
 var closeEnough = false
@@ -19,26 +20,16 @@ func _ready():
 	pass
 
 func _process(delta):
-	if(closeEnough):
-		bubble.show()
-	else:
-		bubble.hide()
-	# check for interaction
-	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
-		textDisplayed = true
-		print("output text here!")
-		showTextBox.emit()
+	pass
 
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_tree().current_scene.get_node("TileMap"):
-		print("display and await!\n", self.name)
 		closeEnough = true
 		newText.emit(self.name)
+		showTextBox.emit()
 
 
 func _on_area_2d_body_exited(body):
-	if(textDisplayed):
-		emit_signal("hideTextBox")
-		print("remove textbox")
-		closeEnough = false
-		textDisplayed = false
+	emit_signal("hideTextBox")
+	closeEnough = false
+

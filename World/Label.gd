@@ -14,10 +14,11 @@ func _ready():
 	pass
 
 func _process(delta):
-	if textBox.visible == true and Input.is_action_just_pressed("ui_accept") and iterator < textList.size()-1:
+	if textBox.visible and Input.is_action_just_pressed("ui_accept") and iterator < textList.size()-1:
 		iterator += 1
+		print("iterate from ", iterator-1 , " to ", iterator)
 		text = textList[iterator]
-	elif textBox.visible == true and Input.is_action_just_pressed("ui_accept") and iterator == textList.size()-1:
+	elif textBox.visible and Input.is_action_just_pressed("ui_accept") and iterator == textList.size()-1:
 		emit_signal("hideBoxLabel")
 		print("swap to scene for fighting")
 		iterator = -1

@@ -30,3 +30,8 @@ func update_animation_parameters():
 	if(direction != Vector2.ZERO):
 		animation_tree["parameters/Idle/blend_position"] = direction
 		animation_tree["parameters/Walk/blend_position"] = direction
+
+
+func _on_halt_move():
+	print("do something to stop the player from moving")
+	pass # Replace with function body.

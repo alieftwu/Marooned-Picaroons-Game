@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://754l5c1v65w4"]
 
-[ext_resource type="Script" path="res://Characters/player.gd" id="1_05q78"]
+[ext_resource type="Script" path="res://Characters/Player.gd" id="1_05q78"]
 [ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
 
 [sub_resource type="GDScript" id="GDScript_oqcru"]

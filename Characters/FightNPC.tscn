@@ -1,6 +1,6 @@
-[gd_scene load_steps=35 format=3 uid="uid://cf1ivq7wok67g"]
+[gd_scene load_steps=34 format=3 uid="uid://cf1ivq7wok67g"]
 
-[ext_resource type="Script" path="res://Characters/NPC.gd" id="1_3kbe6"]
+[ext_resource type="Script" path="res://Characters/FightNPC.gd" id="1_cbjnb"]
 [ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_vlp0u"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_a773g"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="4_lk6ln"]
@@ -230,20 +230,17 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
 states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5s0k2"]
-radius = 15.0
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_diywf"]
+points = PackedVector2Array(-6, 0, -40, 75, 40, 75, 6, 0, 0, -6)
 
 [sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
 font = ExtResource("6_xdx5j")
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_6rqhu"]
-points = PackedVector2Array(0, 0, -30, 60, 30, 60)
-
 [node name="NPC" type="CharacterBody2D"]
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_3kbe6")
+script = ExtResource("1_cbjnb")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -290,8 +287,12 @@ stretch_mode = 4
 position = Vector2(0, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_5s0k2")
+shape = SubResource("ConvexPolygonShape2D_diywf")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -330,13 +331,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("7_onnyt")
 connected_scene = "CombatScene"
-
-[node name="Area2D2" type="Area2D" parent="."]
-position = Vector2(0, -11)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-shape = SubResource("ConvexPolygonShape2D_6rqhu")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newText" from="." to="HUD/TextureRect/Label" method="_on_new_text"]
