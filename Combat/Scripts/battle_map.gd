@@ -27,6 +27,7 @@ var canAttack : bool = false
 var tile_selected : Vector2i
 var tile_selected_converted : Vector2
 var skipMovement : bool = false
+var prisonSpikeSwitch : bool = false # to switch what spikes are spawned for damage animation
 
 # Unit Storage
 var friendlyUnits : Array
@@ -40,12 +41,14 @@ var grass_tile_source_id : int = 0
 var grass_list : Array = [Vector2i(2,1), Vector2i(3,1), Vector2i(1,2), Vector2i(2,2), Vector2i(3,3),
 Vector2i(1,3), Vector2i(7,1), Vector2i(3,4), Vector2i(1,3)]
 var snow_tiles : int = 1
-var snowTiles_list : Array = [Vector2i(5,9), Vector2i(5,8), Vector2i(11,9), Vector2i(11,9), Vector2i(11,9),
-Vector2i(11, 9), Vector2i(11,9), Vector2i(8,5), Vector2i(10,9), Vector2i(11,9)]
+var snowTiles_list : Array = [Vector2i(5,9), Vector2i(11,9), Vector2i(5,8), Vector2i(11,9), Vector2i(11,9), Vector2i(11,9),
+Vector2i(11, 9), Vector2i(11,9), Vector2i(8,5), Vector2i(10,9), Vector2i(11,9), Vector2i(11,9)]
 var sewer_tiles : int = 2
 var sewer_coords = Vector2i(8,8)
 var prison_tiles : int = 3
-var prison_coord = Vector2i(8,0)
+var prison_coord = Vector2i(5,1)
+var prisionHole_coord = Vector2i(4,10)
+var prisionSpike_coord = Vector2i(4,9)
 var castle_tiles : int = 4
 var castleTiles_list : Array = [Vector2i(32, 68), Vector2i(33,69), Vector2i(35,68), Vector2i(36, 71),
 Vector2i(39,71), Vector2i(36,72), Vector2i(37,73)]
@@ -81,7 +84,7 @@ func initialize():
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generateSnowMap()
+	_generateGrassMap()
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
@@ -126,6 +129,45 @@ func _generateCityMap():
 	loadBackground(newBackImage)			
 	return
 	
+func _generatePrisonMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prisionHole_coord)
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), prison_tiles, prison_coord)
+				
+	prisonSpikeSwitch = true			
+	var newBackImage = load("res://Combat/Resources/prisonBackground.png")
+	loadBackground(newBackImage)			
+	return	
+	
 func _generateGrassMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
@@ -160,7 +202,7 @@ func _generateGrassMap():
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), grass_tile_source_id, grass_list.pick_random())	
 				
-	var newBackImage = load("res://Combat/Resources/forestBackground2.png")
+	var newBackImage = load("res://Combat/Resources/forestBackground1.png")
 	loadBackground(newBackImage)					
 	return
 	
@@ -198,7 +240,7 @@ func _generateSnowMap():
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), snow_tiles, snowTiles_list.pick_random())	
 				
-	var newBackImage = load("res://Combat/Resources/SnowBackground2.png")
+	var newBackImage = load("res://Combat/Resources/SnowBackground3.png")
 	loadBackground(newBackImage)					
 	return	
 	
@@ -236,7 +278,7 @@ func _generateSewerMap():
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), sewer_tiles, sewer_coords)
 				
-	var newBackImage = load("res://Combat/Resources/forestBackground2.png")
+	var newBackImage = load("res://Combat/Resources/sewerBackground1.png")
 	loadBackground(newBackImage)			
 	return
 	
@@ -273,7 +315,8 @@ func _generateCastleMap():
 					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), castle_tiles, castleTiles_list.pick_random())
-				
+			
+	prisonSpikeSwitch = false			
 	var newBackImage = load("res://Combat/Resources/CastleBackground1.png")
 	loadBackground(newBackImage)			
 	return	
@@ -685,9 +728,14 @@ func checkHazardTile(unit):
 	var tile_data = tile_map.get_cell_tile_data(0, player_position)
 	if (tile_data.get_custom_data("hazard") == true):
 		unit.health -= 10
-		tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
-		await get_tree().create_timer(1).timeout # wait for 3 secodns
-		tile_map.set_cell(0, player_position, castleHoles_tile, Vector2i(0, 0))
+		if prisonSpikeSwitch == false:
+			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
+			await get_tree().create_timer(1).timeout # wait for 3 secodns
+			tile_map.set_cell(0, player_position, castleHoles_tile, Vector2i(0, 0))
+		else:
+			tile_map.set_cell(0, player_position, prison_tiles, prisionSpike_coord)
+			await get_tree().create_timer(1).timeout # wait for 3 secodns
+			tile_map.set_cell(0, player_position, prison_tiles, prisionHole_coord)
 	return
 	
 func loadBackground(newTexture):

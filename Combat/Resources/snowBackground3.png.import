@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk5e0dicap2h4"
-path="res://.godot/imported/forestBackground2.png-29e68438a82e341981031d8151cce20e.ctex"
+uid="uid://cpnc5ufwldhfp"
+path="res://.godot/imported/snowBackground3.png-ac0939a49ebe324d8f83d49e952e39aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Combat/Resources/forestBackground2.png"
-dest_files=["res://.godot/imported/forestBackground2.png-29e68438a82e341981031d8151cce20e.ctex"]
+source_file="res://Combat/Resources/snowBackground3.png"
+dest_files=["res://.godot/imported/snowBackground3.png-ac0939a49ebe324d8f83d49e952e39aa.ctex"]
 
 [params]
 
