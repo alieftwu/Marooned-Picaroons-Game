@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var turn_queue = $TurnQueue
 @onready var battle_map = $BattleMap
+@onready var highlight_map = $HighlightMap
 
 func _ready():
 	turn_queue.initialize()
