@@ -282,7 +282,8 @@ func pistolShot(player): #shoot in a line 3 away
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
-		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -312,7 +313,8 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
-		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -335,13 +337,14 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 		interactUnit.speed += 1
 		interactUnit.basicAttackDamage += 10
 		interactUnit.health -= 10
+		interactUnit.updateHealthBar()
 		interactUnit.frezyBuff = true
 		interactUnit.frenzyBuffCount = 3 # lasts 2 turns
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
 	
-func takeDown(player): # must have ally next to you, damage and stun nearby opponent for 2-3 turns
+func takeDown(player): # must have ally next to you, damage and stun nearby opponent for 2-3 turns. Ignores armor
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
 	var attackTargets : Array = []
@@ -369,6 +372,7 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+		interactUnit.updateHealthBar()
 		interactUnit.isStunned = true
 		interactUnit.isStunnedCount = 3 # 2 turns
 	highlight_map.clear()
@@ -397,6 +401,7 @@ func pirateBlessing(player): #heal any friend on the map a little
 	var healerModifier = checkPassiveAttack(player, 0, "Heal")
 	var healedModifier = checkPassiveDefend(healChoice, 0, "Heal")
 	healChoice.health += 25 * healedModifier * healerModifier
+	healChoice.updateHealthBar()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -425,7 +430,8 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
-		interactUnit.health -= (player.basicAttackDamage * 1.75 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -454,7 +460,8 @@ func quickStrike(player): # attack then you can move again
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
-		interactUnit.health -= (player.basicAttackDamage * 1.2 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 1.2 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 	highlight_map.clear()
 	player.bonusMove = true
 	emit_signal("specialAttackDone")
@@ -471,7 +478,8 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 			interactUnit = getTarget(targetSpace)
 			var attackModifier = checkPassiveAttack(player, 0, "Melee")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
-			interactUnit.health -= (player.basicAttackDamage * 1.5 * attackModifier * defendModifier)
+			interactUnit.health -= (player.basicAttackDamage * 1.5 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.updateHealthBar()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -503,7 +511,8 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 		var moveModifier = 1.0
 		if (player.health <= 10):
 			moveModifier = 2.0
-		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier * moveModifier)
+		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -534,7 +543,8 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Ranged")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
-		interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 		highlight_map.clearTile(attackChoice)
 		
 		if areTwoTargets == true: # second attack
@@ -551,13 +561,14 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 			interactUnit = getTarget(attackChoice)
 			attackModifier = checkPassiveAttack(player, 0, "Ranged")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
-			interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier)
+			interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.updateHealthBar()
 			
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
 	
-func cannonShot(player): #cannon attack in a line, you skip next turn
+func cannonShot(player): #cannon attack in a line, you skip next turn ignores armor
 	var starting_position = tile_map.local_to_map(player.global_position)
 	var isPlayer = checkTeam(player)
 	var attackTargets : Array = []
@@ -582,6 +593,7 @@ func cannonShot(player): #cannon attack in a line, you skip next turn
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 		interactUnit.health -= (player.basicAttackDamage * 5 * attackModifier * defendModifier)
+		interactUnit.updateHealthBar()
 	player.isStunned = true
 	player.isStunnedCount = 2 # 1 turn
 	highlight_map.clear()
@@ -617,7 +629,8 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
-		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.updateHealthBar()
 		
 		# find units around for splash damage
 		var splashTargets : Array = []
@@ -627,7 +640,8 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 			interactUnit = getTarget(attackChoice)
 			attackModifier = checkPassiveAttack(player, 0, "Range")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
-			interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+			interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.updateHealthBar()
 			
 	highlight_map.clear()
 	emit_signal("specialAttackDone")

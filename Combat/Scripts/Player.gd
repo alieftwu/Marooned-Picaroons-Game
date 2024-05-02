@@ -3,9 +3,12 @@ extends Node2D
 @onready var battlemap = $"../../BattleMap"
 @onready var highlightmap = $"../../BattleMap/HighlightMap"
 @onready var abilityControl = $"../../BattleMap/AbilityControl"
+@onready var healthBar = $HealthBar
 var stats = load("res://Combat/Resources/playertest.tres")
 var speed : int
 var health : float
+var maxHealth : float
+var armor : int
 var basicAttackDamage : int
 var passiveAbility : String = "Brawler"
 
@@ -21,9 +24,13 @@ signal finishedTurn
 func _ready():
 	speed = stats.Speed
 	health = stats.Health
+	print("Start Health: ", health)
+	maxHealth = stats.MaxHealth
+	armor = stats.Armor
 	basicAttackDamage = stats.BasicAttackDamage
 
 func play_turn():
+	updateHealthBar()
 	print("pMove")
 	await abilityControl.checkFlags(self)
 	await battlemap.movePerson(self)
@@ -36,3 +43,8 @@ func play_turn():
 		await battlemap.movePerson(self)
 		print("bonusmove")
 	emit_signal("finishedTurn")
+
+func updateHealthBar():
+	var maxValue = maxHealth
+	healthBar.value = (health / maxHealth) * 100
+	print("new player health: ", (health / maxHealth) * 100)

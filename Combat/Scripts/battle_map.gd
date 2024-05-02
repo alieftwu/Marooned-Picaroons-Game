@@ -529,7 +529,8 @@ func simpleAttack(player):
 		var global_tile_pos = tile_map.map_to_local(tile_selected)
 		for unit in Units:
 			if unit.global_position == global_tile_pos:
-				unit.health -= currentPlayer.basicAttackDamage
+				unit.health -= currentPlayer.basicAttackDamage - unit.armor
+				unit.updateHealthBar()
 				print("hit enemy!")
 				break
 
@@ -544,7 +545,8 @@ func simpleAttack(player):
 		var global_tile_pos = tile_map.map_to_local(tile_selected)
 		for unit in Units:
 			if unit.global_position == global_tile_pos:
-				unit.health -= currentPlayer.basicAttackDamage
+				unit.health -= currentPlayer.basicAttackDamage - unit.armor
+				unit.updateHealthBar()
 				print("hit enemy!")
 				break
 		
@@ -709,8 +711,11 @@ func simpleEnemyAttack(enemy):
 	if attackTargets.is_empty() == false:
 		var random_Choice = attackTargets.pick_random()
 		var attacked_unit = random_Choice[1]
-		attacked_unit.health -= currentEnemy.basicAttackDamage
-		print("Player hit!")
+		attacked_unit.health -= currentEnemy.basicAttackDamage - attacked_unit.armor
+		attacked_unit.updateHealthBar()
+		print("player hit!")
+	else:
+		print("no player found")
 		
 	emit_signal("attackDone")
 	
@@ -728,6 +733,7 @@ func checkHazardTile(unit):
 	var tile_data = tile_map.get_cell_tile_data(0, player_position)
 	if (tile_data.get_custom_data("hazard") == true):
 		unit.health -= 10
+		unit.updateHealthBar()
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
 			await get_tree().create_timer(1).timeout # wait for 3 secodns
@@ -746,11 +752,15 @@ func spawnUnits(playerUnitsList, enemyUnitsList):
 	var x_cord = 8
 	var y_cord = 56
 	for unit in playerUnitsList:
+		unit.health = unit.maxHealth
+		unit.updateHealthBar()
 		unit.global_position = Vector2i(x_cord,y_cord)
 		y_cord += 16
 	var y_cord_list = [Vector2i(136, 8), Vector2i(136, 24), Vector2i(136, 40), Vector2i(136, 56),
 	Vector2i(136, 72), Vector2i(136, 88), Vector2i(136, 104), Vector2i(136, 120), Vector2i(136, 136)] 
 	for unit in enemyUnitsList:
+		unit.health = unit.maxHealth
+		unit.updateHealthBar()
 		var spawnChoice = y_cord_list.pick_random()
 		y_cord_list.erase(spawnChoice)
 		unit.global_position = spawnChoice

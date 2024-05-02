@@ -4,8 +4,10 @@
 
 [resource]
 script = ExtResource("1_b2asv")
-Health = 10
+Name = "Unit"
+Health = 100
+MaxHealth = 100
 Armor = 0
-Speed = 4
+Speed = 3
 BasicAttackDamage = 10
 Experience = 0
