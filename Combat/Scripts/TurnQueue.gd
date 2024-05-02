@@ -67,3 +67,18 @@ func checkGameOver():
 		return 2 # 2 results in a win
 	else:
 		return 0 # 0 nothing happens
+
+func addUnits(playerUnits, enemyUnits): # add units to scene, spawn them in, not tested if works
+	var playerList = []
+	for unit in playerUnits:
+		var newUnit = unit.instance()
+		add_child(newUnit)
+		playerList.append(newUnit)
+	var enemyList = []
+	for unit in enemyUnits:
+		var newEnemyUnit = unit.instance()
+		add_child(newEnemyUnit)
+		enemyList.append(newEnemyUnit)
+		
+	battle_map.spawnUnits(playerList, enemyList)
+	return

@@ -741,3 +741,17 @@ func checkHazardTile(unit):
 func loadBackground(newTexture):
 	background.texture = newTexture
 	return
+
+func spawnUnits(playerUnitsList, enemyUnitsList):
+	var x_cord = 8
+	var y_cord = 56
+	for unit in playerUnitsList:
+		unit.global_position = Vector2i(x_cord,y_cord)
+		y_cord += 16
+	var y_cord_list = [Vector2i(136, 8), Vector2i(136, 24), Vector2i(136, 40), Vector2i(136, 56),
+	Vector2i(136, 72), Vector2i(136, 88), Vector2i(136, 104), Vector2i(136, 120), Vector2i(136, 136)] 
+	for unit in enemyUnitsList:
+		var spawnChoice = y_cord_list.pick_random()
+		y_cord_list.erase(spawnChoice)
+		unit.global_position = spawnChoice
+	return

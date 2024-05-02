@@ -13,6 +13,3 @@ func start_game():
 	while 1:
 		turn_queue.play_round()
 		await turn_queue.endRound
-
-func spawn_Unts():
-	pass
