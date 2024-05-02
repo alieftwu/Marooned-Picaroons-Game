@@ -45,3 +45,7 @@ func _on_new_q_text(title, QS, QF):
 
 func _on_scene_transition():
 	print("here I am!")
+
+
+func _on_npc_halt_move():
+	iterator = 0
