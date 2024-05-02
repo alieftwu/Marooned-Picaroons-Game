@@ -11,13 +11,24 @@ config_version=5
 [application]
 
 config/name="Game 3"
+<<<<<<< HEAD
 run/main_scene="res://Combat/Scenes/CombatScene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://Sprites/Icons/IconFlag.png"
+=======
+run/main_scene="res://Main Menu/main_menu.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.svg"
+>>>>>>> aliefs-branch
 
 [autoload]
 
 scene_manager="*res://Scripts/SceneManager.gd"
+<<<<<<< HEAD
+=======
+TransitionScreen="*res://Main Menu/transition_screen.tscn"
+Global="*res://Global/Global.gd"
+>>>>>>> aliefs-branch
 
 [display]
 
@@ -28,6 +39,13 @@ window/stretch/scale=4.0
 
 project/assembly_name="Game 3"
 
+<<<<<<< HEAD
+=======
+[gui]
+
+theme/custom="res://Art/Theme/GUI.tres"
+
+>>>>>>> aliefs-branch
 [input]
 
 left={
@@ -63,3 +81,7 @@ move={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+<<<<<<< HEAD
+=======
+environment/defaults/default_clear_color=Color(0.0784314, 0.0784314, 0.0705882, 1)
+>>>>>>> aliefs-branch
