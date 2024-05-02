@@ -40,7 +40,7 @@ var grass_tile_source_id : int = 0
 var grass_list : Array = [Vector2i(2,1), Vector2i(3,1), Vector2i(1,2), Vector2i(2,2), Vector2i(3,3),
 Vector2i(1,3), Vector2i(7,1), Vector2i(3,4), Vector2i(1,3)]
 var snow_tiles : int = 1
-var snowTiles_list : Array = [Vector2i(5,9), Vector2i(5,8), Vector2i(11,9), Vector2i(11,9),
+var snowTiles_list : Array = [Vector2i(5,9), Vector2i(5,8), Vector2i(11,9), Vector2i(11,9), Vector2i(11,9),
 Vector2i(11, 9), Vector2i(11,9), Vector2i(8,5), Vector2i(10,9), Vector2i(11,9)]
 var sewer_tiles : int = 2
 var sewer_coords = Vector2i(8,8)
@@ -67,7 +67,7 @@ var castleBossSpikes_tile : int = 16
 var castleSpikes_tile : int = 17
 var castleBossHoles : int = 18
 var stonesCastle_tile : int = 19
-
+var snowTrunk_tile : int = 20
 
 signal moveSelected
 signal finishedMoving
@@ -81,7 +81,7 @@ func initialize():
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generateCityMap()
+	_generateSnowMap()
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
@@ -177,28 +177,28 @@ func _generateSnowMap():
 		for x in range(width):
 			if x == random_ColNum and y != random_SafeRowNum:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snowTrunk_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), grassTrunk, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snow_tiles, Vector2i(11, 6))
 			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snowTrunk_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), grassRock, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snow_tiles, Vector2i(11, 6))
 			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snowTrunk_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), grassTrunk, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snow_tiles, Vector2i(11, 6))
 			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snowTrunk_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), grassRock, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), snow_tiles, Vector2i(11, 6))
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), snow_tiles, snowTiles_list.pick_random())	
 				
-	var newBackImage = load("res://Combat/Resources/forestBackground2.png")
+	var newBackImage = load("res://Combat/Resources/SnowBackground2.png")
 	loadBackground(newBackImage)					
 	return	
 	

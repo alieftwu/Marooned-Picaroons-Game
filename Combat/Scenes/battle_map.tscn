@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=58 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://dfkuarayqhcac" path="res://Tilesets/SpikesHolesBossCastle.png" id="12_al1bn"]
 [ext_resource type="Texture2D" uid="uid://bgy7uhthar01y" path="res://Tilesets/StonescastleFloor.png" id="13_g7ule"]
 [ext_resource type="Texture2D" uid="uid://cetutp7pyxf8e" path="res://Art/Tilesets/Tiles Sewers.png" id="14_qvxy6"]
+[ext_resource type="Texture2D" uid="uid://bmt2er00rlyn2" path="res://Combat/Resources/truck.png" id="15_1s4q5"]
 [ext_resource type="Texture2D" uid="uid://c4lhqm6rsjun3" path="res://Art/Tilesets/Tiles Prison.png" id="15_n7kyo"]
 [ext_resource type="Texture2D" uid="uid://xx7fdpxyy6p4" path="res://Art/Tilesets/castle_interriors.png" id="16_6lsmr"]
 [ext_resource type="Texture2D" uid="uid://1j73h3f0qwdo" path="res://Tilesets/grassBush.png" id="17_2lk5e"]
@@ -1009,6 +1010,10 @@ texture = ExtResource("14_qvxy6")
 10:13/0 = 0
 11:13/0 = 0
 12:13/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwcma"]
+texture = ExtResource("15_1s4q5")
+0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ewvy7"]
 texture = ExtResource("15_n7kyo")
@@ -5326,6 +5331,7 @@ sources/16 = SubResource("TileSetAtlasSource_03jkc")
 sources/17 = SubResource("TileSetAtlasSource_yqt5e")
 sources/18 = SubResource("TileSetAtlasSource_e3d77")
 sources/19 = SubResource("TileSetAtlasSource_2jx8v")
+sources/20 = SubResource("TileSetAtlasSource_rwcma")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q7wo7"]
 texture = ExtResource("7_bfi6l")
