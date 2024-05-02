@@ -40,12 +40,12 @@ func play_turn():
 	updateHealthBar()
 	var skipTurn = await abilityControl.checkStun(self)
 	if skipTurn == false:
-		abilityControl.checkFlags(self)
-		battlemap.setAttackIconsDull() # make buttons dull
+		await abilityControl.checkFlags(self)
+		await battlemap.setAttackIconsDull() # make buttons dull
 		print("pMove")
 		await battlemap.movePerson(self)
 		print("pBetweenMoveAtack")
-		battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		canPress = true
 		await battlemap.abilityFinished
 		print("pAttackAfter")

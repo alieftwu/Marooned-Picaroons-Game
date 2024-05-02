@@ -883,12 +883,14 @@ func checkCooldownIcons(unit):
 		cooldownDisp2.visible = false
 	else:
 		cooldownDisp2.visible = true
-		cooldownDisp1.text = " " + str(unit.special2CoolDown)
+		cooldownDisp1.text = (" " + str(unit.special2CoolDown))
 	if unit.special3CoolDown == 0:
 		cooldownDisp3.visible = false
 	else:
 		cooldownDisp3.visible = true
 		cooldownDisp1.text = " " + str(unit.special3CoolDown)
+	print(cooldownDisp2.text)
+	print("flag 2")
 	return
 
 func setAttackIconsDull(): # make attacks dull
@@ -899,6 +901,7 @@ func setAttackIconsDull(): # make attacks dull
 	cooldownDisp1.text = ""
 	cooldownDisp2.text = ""
 	cooldownDisp3.text = ""
+	print("flag 1")
 	return
 
 func checkStun(unit): # see if unit needs to skip turn
