@@ -35,10 +35,28 @@ var currentPlayer : Node2D #Not being used everywhere is should
 var currentEnemy : Node2D
 
 # tile source IDs
-var stonePath_source_id : int = 11
-var StoneBasic_atlas = Vector2i(0,0)
+var grass_tile : int = 0
+var snow_tiles : int = 1
+var sewer_tiles : int = 2
+var prison_tiles : int = 3
+var castle_tiles : int = 4
+var grassBuss_tile : int = 5
+var grassRock : int = 6
+var grassTrunk : int = 7
+var sewerBarrel : int = 8
 var BarrelOnStone_source_id : int = 9
 var CrateOnStone_source_id : int = 10
+var stonePath_source_id : int = 11
+var StoneBasic_atlas = Vector2i(0,0)
+var sewerBrokenBarrel_tile : int = 12
+var sewerBrokenCrate_tile : int = 13
+var sewerCrate_tile : int = 14
+var castleHoles_tile : int = 15
+var castleBossSpikes_tile : int = 16
+var castleSpikes_tile : int = 17
+var castleBossHoles : int = 18
+var stonesCastle_tile : int = 19
+
 
 signal moveSelected
 signal finishedMoving
