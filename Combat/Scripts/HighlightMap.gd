@@ -34,37 +34,40 @@ func _generateMoveMap(player):
 func exploreGrid(x, y, moves_made, max_moves):
 	current_position = Vector2(x, y)
 	self.set_cell(0, current_position, turkDot_source_id, Vector2i(0, 0))
+	var tile_data = tile_map.get_cell_tile_data(0, current_position)
+	if (tile_data.get_custom_data("sticky") == false) or (moves_made == 0):
 	
-	# Base case: If moves made are equal to max_moves, stop recursion.
-	if moves_made == max_moves:
-		return
-	
-	# Directions for movement: up, down, left, right
-	var directions = [
-		Vector2(0, -1),  # Up
-		Vector2(0, 1),   # Down
-		Vector2(-1, 0),  # Left
-		Vector2(1, 0)    # Right
-	]
-	
-	# Explore all possible directions
-	for direction in directions:
-		var new_x = x + direction.x
-		var new_y = y + direction.y
+		# Base case: If moves made are equal to max_moves, stop recursion.
+		if moves_made == max_moves:
+			return
 		
-		tile_position = Vector2(new_x, new_y)
-		tile_data = tile_map.get_cell_tile_data(0, tile_position)
-	
-		# Check bounds and if can go to the new cell
-		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
-			var global_tile_pos = tile_map.map_to_local(tile_position)
-			var noUnitThere = true
-			for unit in battle_map.Units:
-				if unit.global_position == global_tile_pos:
-					noUnitThere = false
-					break
-			if noUnitThere == true:
-				exploreGrid(new_x, new_y, moves_made + 1, max_moves)
+		# Directions for movement: up, down, left, right
+		var directions = [
+			Vector2(0, -1),  # Up
+			Vector2(0, 1),   # Down
+			Vector2(-1, 0),  # Left
+			Vector2(1, 0)    # Right
+		]
+		
+		# Explore all possible directions
+		for direction in directions:
+			var new_x = x + direction.x
+			var new_y = y + direction.y
+			
+			tile_position = Vector2(new_x, new_y)
+			tile_data = tile_map.get_cell_tile_data(0, tile_position)
+		
+			# Check bounds and if can go to the new cell
+			if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
+				var global_tile_pos = tile_map.map_to_local(tile_position)
+				var noUnitThere = true
+				for unit in battle_map.Units:
+					if unit.global_position == global_tile_pos:
+						noUnitThere = false
+						break
+				if (noUnitThere == true):
+					exploreGrid(new_x, new_y, moves_made + 1, max_moves)
+	return
 
 func basicAttackGrid(start_pos):
 	var directions = [

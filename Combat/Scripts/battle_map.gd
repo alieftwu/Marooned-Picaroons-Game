@@ -6,6 +6,7 @@ class_name BattleMap
 @onready var tile_map = $TileMap
 @onready var main_camera = $BattleCam
 @onready var highlight_map = $HighlightMap
+@onready var background = $Background
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 var target_position: Vector2
@@ -35,12 +36,22 @@ var currentPlayer : Node2D #Not being used everywhere is should
 var currentEnemy : Node2D
 
 # tile source IDs
-var grass_tile : int = 0
+var grass_tile_source_id : int = 0
+var grass_list : Array = [Vector2i(2,1), Vector2i(3,1), Vector2i(1,2), Vector2i(2,2), Vector2i(3,3),
+Vector2i(1,3), Vector2i(7,1), Vector2i(3,4), Vector2i(1,3)]
 var snow_tiles : int = 1
+var snowTiles_list : Array = [Vector2i(5,9), Vector2i(5,8), Vector2i(11,9), Vector2i(11,9),
+Vector2i(11, 9), Vector2i(11,9), Vector2i(8,5), Vector2i(10,9), Vector2i(11,9)]
 var sewer_tiles : int = 2
+var sewer_coords = Vector2i(8,8)
 var prison_tiles : int = 3
+var prison_coord = Vector2i(8,0)
 var castle_tiles : int = 4
-var grassBuss_tile : int = 5
+var castleTiles_list : Array = [Vector2i(32, 68), Vector2i(33,69), Vector2i(35,68), Vector2i(36, 71),
+Vector2i(39,71), Vector2i(36,72), Vector2i(37,73)]
+# var castleBossTiles_list : Array = [Vector2i(29, 70)]
+var brownPrison_coors = Vector2i(27,72)
+var grassBush_tile : int = 5
 var grassRock : int = 6
 var grassTrunk : int = 7
 var sewerBarrel : int = 8
@@ -70,15 +81,14 @@ func initialize():
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generateMap()
+	_generateCityMap()
 	_makeAStarGrid()
-	_loadBackground()
 	canMove = false
 	emit_signal("finishedGenerating")
 	$BackgroundMusic.play()
 	return
 	
-func _generateMap():
+func _generateCityMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
 	random_DangerRowNum = randi_range(0, height - 1)
@@ -111,8 +121,114 @@ func _generateMap():
 					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
 			else:
 				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
-				
+	var newBackImage = load("res://Combat/Resources/firstVillageBackground2.png")
+	loadBackground(newBackImage)			
 	return
+	
+func _generateGrassMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), grassTrunk, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), grassRock, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), grassTrunk, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), grassBush_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), grassRock, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), grass_tile_source_id, grass_list.pick_random())		
+	return
+	
+func _generateSewerMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBrokenBarrel_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBrokenCrate_tile, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBarrel, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), sewerCrate_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBrokenCrate_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBrokenBarrel_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBrokenCrate_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), sewerBrokenBarrel_tile, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), sewer_tiles, sewer_coords)
+	return
+	
+func _generateCastleMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), castle_tiles, castleTiles_list.pick_random())
+	return	
 	
 func _makeAStarGrid():
 	astar_grid = AStarGrid2D.new()
@@ -187,37 +303,39 @@ func _input(event):
 func getAllowedSpaces(x, y, max_moves : int, moves_made, spacesArray):
 	var current_position = Vector2(x, y)
 	spacesArray.append(current_position)
+	var tile_data = tile_map.get_cell_tile_data(0, current_position)
+	if (tile_data.get_custom_data("sticky") == false) or (moves_made == 0):
 	
-	# Base case: If moves made are equal to max_moves, stop recursion.
-	if moves_made == max_moves:
-		return
-	
-	# Directions for movement: up, down, left, right
-	var directions = [
-		Vector2(0, -1),  # Up
-		Vector2(0, 1),   # Down
-		Vector2(-1, 0),  # Left
-		Vector2(1, 0)    # Right
-	]
-	
-	# Explore all possible directions
-	for direction in directions:
-		var new_x = x + direction.x
-		var new_y = y + direction.y
+		# Base case: If moves made are equal to max_moves, stop recursion.
+		if moves_made == max_moves:
+			return
 		
-		var tile_position = Vector2(new_x, new_y)
-		var tile_data = tile_map.get_cell_tile_data(0, tile_position)
-	
-		# Check bounds and if can go to the new cell
-		if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
-			var global_tile_pos = tile_map.map_to_local(tile_position)
-			var noUnitThere = true
-			for unit in Units:
-				if unit.global_position == global_tile_pos:
-					noUnitThere = false
-					break
-			if noUnitThere == true:
-				getAllowedSpaces(new_x, new_y, max_moves, moves_made + 1, spacesArray)
+		# Directions for movement: up, down, left, right
+		var directions = [
+			Vector2(0, -1),  # Up
+			Vector2(0, 1),   # Down
+			Vector2(-1, 0),  # Left
+			Vector2(1, 0)    # Right
+		]
+		
+		# Explore all possible directions
+		for direction in directions:
+			var new_x = x + direction.x
+			var new_y = y + direction.y
+			
+			var tile_position = Vector2(new_x, new_y)
+			tile_data = tile_map.get_cell_tile_data(0, tile_position)
+		
+			# Check bounds and if can go to the new cell
+			if (tile_data != null) and (tile_data.get_custom_data("walkable") == true):
+				var global_tile_pos = tile_map.map_to_local(tile_position)
+				var noUnitThere = true
+				for unit in Units:
+					if unit.global_position == global_tile_pos:
+						noUnitThere = false
+						break
+				if (noUnitThere == true):
+					getAllowedSpaces(new_x, new_y, max_moves, moves_made + 1, spacesArray)
 			
 	return
 	
@@ -260,6 +378,7 @@ func movePerson(player):
 			#print("passed finished moving")
 	highlight_map.clear()
 	update_AStarGrid() # make sure we cant get by people
+	checkHazardTile(player)
 	emit_signal("characterMovementComplete")
 	return
 	
@@ -379,6 +498,7 @@ func moveEnemyPerson(enemy): # move enemy randomly
 	
 	startMoving = false
 	update_AStarGrid()
+	checkHazardTile(enemy)
 	emit_signal("characterMovementComplete")
 	return
 		
@@ -512,5 +632,16 @@ func gatherUnitInfo():
 	
 	pass
 
-func _loadBackground():
-	pass
+func checkHazardTile(unit):
+	var player_position : Vector2i = tile_map.local_to_map(unit.global_position)
+	var tile_data = tile_map.get_cell_tile_data(0, player_position)
+	if (tile_data.get_custom_data("hazard") == true):
+		unit.health -= 10
+		tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
+		await get_tree().create_timer(1).timeout # wait for 3 secodns
+		tile_map.set_cell(0, player_position, castleHoles_tile, Vector2i(0, 0))
+	return
+	
+func loadBackground(newTexture):
+	background.texture = newTexture
+	return

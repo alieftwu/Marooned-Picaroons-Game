@@ -7,6 +7,14 @@ var speed : int
 var health : float
 var basicAttackDamage : int
 var passiveAbility : String = "none"
+
+var frenzyBuff : bool = false # used to determine when 2 turns are up
+var frenzyBuffCount : int = 0
+var isStunned : bool = false
+var isStunnedCount : int = 0
+var bonusMove = false
+var isBlocking = false
+var didBlock = false
 signal finishedTurn
 
 func _ready():
