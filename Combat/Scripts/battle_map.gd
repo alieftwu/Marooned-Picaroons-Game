@@ -7,6 +7,12 @@ class_name BattleMap
 @onready var main_camera = $BattleCam
 @onready var highlight_map = $HighlightMap
 @onready var background = $Background
+@onready var abilityControl = $AbilityControl
+@onready var cooldownDisp0 = $Ability1/cooldown
+@onready var cooldownDisp1 = $Ability2/cooldown
+@onready var cooldownDisp2 = $Ability3/cooldown
+@onready var cooldownDisp3 = $Ability4/cooldown
+
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
 var target_position: Vector2
@@ -78,6 +84,7 @@ signal characterMovementComplete
 signal finishedGenerating
 signal attackChosen
 signal attackDone
+signal abilityFinished
 
 # Called when the node enters the scene tree for the first time.
 func initialize():
@@ -764,4 +771,101 @@ func spawnUnits(playerUnitsList, enemyUnitsList):
 		var spawnChoice = y_cord_list.pick_random()
 		y_cord_list.erase(spawnChoice)
 		unit.global_position = spawnChoice
+	return
+
+
+func _on_ability_1_pressed(): # basic attack Option
+	var currentUnit = turn_queue.get_active_character()
+	if currentUnit.canPress == true:
+		currentUnit.canPress = false
+		print("button 1 pressed!")
+		var isPlayer = abilityControl.checkTeam(currentUnit)
+		if isPlayer:
+			await simpleAttack(currentUnit)
+		else:
+			await simpleEnemyAttack(currentUnit)
+		emit_signal("abilityFinished")	
+	return
+
+func _on_ability_2_pressed(): # special ability 1, gotten from unit data
+	var currentUnit = turn_queue.get_active_character()
+	if currentUnit.special1CoolDown == 0: # button 2 is special ability 1, check cooldown
+		if currentUnit.canPress == true:
+			currentUnit.canPress = false
+			var cooldown : int = 0
+			print("button 2 pressed!")
+			var unitAbility = currentUnit.abilityList[0]
+			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
+			await increaseCooldown(currentUnit, cooldown, 1)
+			emit_signal("abilityFinished")
+	else:
+		print("On cooldown") # play a sound after	
+	return
+
+func _on_ability_3_pressed(): # special ability 2, gotten from unit data
+	var currentUnit = turn_queue.get_active_character()
+	if currentUnit.special2CoolDown == 0:
+		if currentUnit.canPress == true:
+			currentUnit.canPress = false
+			var cooldown : int = 0
+			print("button 3 pressed!")
+			var unitAbility = currentUnit.abilityList[1]
+			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
+			await increaseCooldown(currentUnit, cooldown, 2)
+			emit_signal("abilityFinished")	
+	else:
+		print("On cooldown") # play a sound after	
+	return
+
+func _on_ability_4_pressed(): # special ability 3, gotten from unit data
+	var currentUnit = turn_queue.get_active_character()
+	if currentUnit.special3CoolDown == 0:
+		if currentUnit.canPress == true:
+			currentUnit.canPress = false
+			var cooldown : int = 0
+			print("button 4 pressed!")
+			var unitAbility = currentUnit.abilityList[2]
+			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
+			await increaseCooldown(currentUnit, cooldown, 3)
+			emit_signal("abilityFinished")	
+	else:
+		print("On cooldown") # play a sound after	
+		return
+
+func increaseCooldown(unit, cooldown, moveSlot):
+	if moveSlot == 1:
+		unit.special1CoolDown = cooldown
+	elif moveSlot == 2:
+		unit.special2CoolDown = cooldown
+	elif moveSlot == 3:
+		unit.special3CoolDown = cooldown
+	return
+
+func checkCooldownIcons(unit):
+	cooldownDisp0.visible = false
+	if unit.special1CoolDown == 0:
+		cooldownDisp1.visible = false
+	else:
+		cooldownDisp1.visible = true
+		cooldownDisp1.text = " " + str(unit.special1CoolDown)
+	if unit.special2CoolDown == 0:
+		cooldownDisp2.visible = false
+	else:
+		cooldownDisp2.visible = true
+		cooldownDisp1.text = " " + str(unit.special2CoolDown)
+	if unit.special3CoolDown == 0:
+		cooldownDisp3.visible = false
+	else:
+		cooldownDisp3.visible = true
+		cooldownDisp1.text = " " + str(unit.special3CoolDown)
+	return
+
+func setAttackIconsDull(): # make attacks dull
+	cooldownDisp0.visible = true
+	cooldownDisp1.visible = true
+	cooldownDisp2.visible = true
+	cooldownDisp3.visible = true
+	cooldownDisp1.text = ""
+	cooldownDisp2.text = ""
+	cooldownDisp3.text = ""
 	return

@@ -83,6 +83,63 @@ func checkTeam(player): # check what team the calling player is on
 		isPlayer = false
 	return isPlayer
 
+func checkMoveSlot(player, ability): # see what the players move for that button is and call it
+	var cooldown : int = 0
+	if ability == "pistolShot":
+		print("pistolShot")
+		await pistolShot(player)
+		cooldown = 2
+	elif ability == "heavySwordSwing":
+		print("heavySwordSwing")
+		await heavySwordSwing(player)
+		cooldown = 2
+	elif ability == "recklessFrenzy":
+		print("recklessFrenzy")
+		await recklessFrenzy(player)
+		cooldown = 3
+	elif ability == "takeDown":
+		print("takeDown")
+		await takeDown(player)
+		cooldown = 4
+	elif ability == "pirateBlessing":
+		print("pirateBlessing")
+		await pirateBlessing(player)
+		cooldown = 2
+	elif ability == "axeToss":
+		print("axeToss")
+		await axeToss(player)
+		cooldown = 3
+	elif ability == "quickStrike":
+		print("quickStrike")
+		await quickStrike(player)
+		cooldown = 2
+	elif ability == "circleSlash":
+		print("circleSlash")
+		await circleSlash(player)
+		cooldown = 1
+	elif ability == "desparateStrike":
+		print("desparateStrike")
+		await desparateStrike(player)
+		cooldown = 1
+	elif ability == "rapidFire":
+		print("rapidFire")
+		await rapidFire(player)
+		cooldown = 3
+	elif ability == "cannonShot":
+		print("cannonShot")
+		await cannonShot(player)
+		cooldown = 2
+	elif ability == "engagingBlock":
+		print("engagingBlock")
+		await engagingBlock(player)
+		cooldown = 3
+	elif ability == "bombThrow":
+		print("bombThrow")
+		await bombThrow(player)
+		cooldown = 3
+	
+	return cooldown
+	
 func checkEnemyPresent(targetSpace, isPlayer): # see if unit from other team is there
 	var enemyThere = false
 	var targetUnit

@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=62 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -30,6 +30,10 @@
 [ext_resource type="Texture2D" uid="uid://do7e0h7fr0llq" path="res://Tilesets/grassRock.png" id="18_6is7k"]
 [ext_resource type="Texture2D" uid="uid://b6xcgj1eypa2g" path="res://Tilesets/grassTruck.png" id="19_qmoav"]
 [ext_resource type="Texture2D" uid="uid://b8d4jq3ni5bfh" path="res://Tilesets/SewerTileBarrel.png" id="20_hhj27"]
+[ext_resource type="Texture2D" uid="uid://c8ops6veqfr8l" path="res://Combat/Resources/SkillIcons/PNG/1.png" id="31_gjvt6"]
+[ext_resource type="Texture2D" uid="uid://c0fm0amr86t81" path="res://Combat/Resources/SkillIcons/PNG/7.png" id="32_lvlgj"]
+[ext_resource type="Texture2D" uid="uid://dqgtkwx4v4vow" path="res://Combat/Resources/SkillIcons/PNG/23.png" id="33_h0cm0"]
+[ext_resource type="Texture2D" uid="uid://3f0u3xmyig3g" path="res://Combat/Resources/SkillIcons/PNG/31.png" id="34_oc33l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5e7gd"]
 texture = ExtResource("2_qy8r3")
@@ -6992,3 +6996,113 @@ max_distance = 4000.0
 
 [node name="AbilityControl" type="Node2D" parent="."]
 script = ExtResource("11_rlhw2")
+
+[node name="Ability1" type="TextureButton" parent="."]
+offset_left = -33.0
+offset_top = 5.0
+offset_right = 479.0
+offset_bottom = 517.0
+scale = Vector2(0.05, 0.05)
+texture_normal = ExtResource("31_gjvt6")
+
+[node name="cooldown" type="TextEdit" parent="Ability1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/background_color = Color(0.054902, 0.027451, 0.027451, 0.580392)
+theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 2
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 400
+text = " 
+"
+
+[node name="Ability2" type="TextureButton" parent="."]
+offset_left = -33.0
+offset_top = 39.0
+offset_right = 479.0
+offset_bottom = 551.0
+scale = Vector2(0.05, 0.05)
+texture_normal = ExtResource("32_lvlgj")
+
+[node name="cooldown" type="TextEdit" parent="Ability2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/background_color = Color(0.054902, 0.027451, 0.027451, 0.580392)
+theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 2
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 400
+text = " 1
+"
+
+[node name="Ability3" type="TextureButton" parent="."]
+offset_left = -33.0
+offset_top = 75.0
+offset_right = 479.0
+offset_bottom = 587.0
+scale = Vector2(0.05, 0.05)
+texture_normal = ExtResource("33_h0cm0")
+
+[node name="cooldown" type="TextEdit" parent="Ability3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/background_color = Color(0.054902, 0.027451, 0.027451, 0.580392)
+theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 2
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 400
+text = " 1
+"
+
+[node name="Ability4" type="TextureButton" parent="."]
+offset_left = -33.0
+offset_top = 111.0
+offset_right = 479.0
+offset_bottom = 623.0
+scale = Vector2(0.05, 0.05)
+texture_normal = ExtResource("34_oc33l")
+texture_pressed = ExtResource("34_oc33l")
+
+[node name="cooldown" type="TextEdit" parent="Ability4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/background_color = Color(0.054902, 0.027451, 0.027451, 0.580392)
+theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 2
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 400
+text = " 1
+"
+
+[connection signal="pressed" from="Ability1" to="." method="_on_ability_1_pressed"]
+[connection signal="pressed" from="Ability2" to="." method="_on_ability_2_pressed"]
+[connection signal="pressed" from="Ability3" to="." method="_on_ability_3_pressed"]
+[connection signal="pressed" from="Ability4" to="." method="_on_ability_4_pressed"]
