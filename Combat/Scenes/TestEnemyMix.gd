@@ -3,6 +3,7 @@ extends Node2D
 @onready var battlemap = $"../../BattleMap"
 @onready var highlightmap = $"../../BattleMap/HighlightMap"
 @onready var healthBar = $HealthBar
+@onready var abilityControl = $"../../BattleMap/AbilityControl"
 var stats = load("res://Combat/Resources/enemytest.tres")
 var speed : int
 var health : float
@@ -36,23 +37,26 @@ func _ready():
 
 func play_turn():
 	updateHealthBar()
-	battlemap.setAttackIconsDull() # make buttons dull
-	print("e3Move")
-	if randf() < .75:
-		await battlemap.agressiveEnemyMove(self)
-	else:
-		await battlemap.moveEnemyPerson(self)
-	print("e3BetweenMoveAttack")
-	battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-	await battlemap.simpleEnemyAttack(self)
-	print("e3AttackAfter")
+	var skipTurn = await abilityControl.checkStun(self)
+	if skipTurn == false:
+		abilityControl.checkFlags(self)
+		battlemap.setAttackIconsDull() # make buttons dull
+		print("e3Move")
+		if randf() < .75:
+			await battlemap.agressiveEnemyMove(self)
+		else:
+			await battlemap.moveEnemyPerson(self)
+		print("e3BetweenMoveAttack")
+		battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		await battlemap.enemyRandomAbility(self)
+		print("e3AttackAfter")
 	updateCooldowns()
 	emit_signal("finishedTurn")
 
 func updateHealthBar():
 	var maxValue = maxHealth
 	healthBar.value = (health / maxHealth) * 100
-	print("new enemy health: ", (health / maxHealth) * 100)
+	#print("new enemy health: ", (health / maxHealth) * 100)
 	
 func updateCooldowns():
 	if special1CoolDown >= 1:

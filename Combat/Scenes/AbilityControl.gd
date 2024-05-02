@@ -36,26 +36,30 @@ func _input(event):
 			return
 
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
-	var skipTurn = false
 	if player.frenzyBuff == true:
 		player.frenzyBuffCounter -= 1
 		if player.frenzyBuffCounter == 0:
 			player.frenzyBuff = false
 			player.speed -= 1
 			player.basicAttackDamage -= 10
-	if player.isStunned == true:
-		skipTurn = true
-		player.isStunnedCount -= 1
-		if player.isStunnedCount == 0:
-			player.isStunned = false
+	return
+	
+func checkBlocking(player):
 	if player.isBlocking == true: # if I was blocking, stop blocking, if i did not block anything i am stunned
 		player.isBlocking = false
 		if player.didBlock == false:
 			player.isStunned = true
 			player.isStunnedCount = 2
-			skipTurn = true
 		player.didBlock = false
-		
+	return
+	
+func checkStun(player):
+	var skipTurn = false
+	if player.isStunned == true:
+		skipTurn = true
+		player.isStunnedCount -= 1
+		if player.isStunnedCount == 0:
+			player.isStunned = false
 	return skipTurn
 	
 func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
@@ -157,6 +161,15 @@ func checkEnemyPresent(targetSpace, isPlayer): # see if unit from other team is 
 				break
 	return enemyThere
 	
+func checkUnitThere(targetSpace, isPlayer): # see if a unit is on that space
+	var unitThere = false
+	var targetUnit
+	for unit in battle_map.Units:
+		if tile_map.local_to_map(unit.global_position) == targetSpace:
+			unitThere = true
+			break
+	return unitThere
+	
 func checkTileData(targetSpace): #see if tile has certain properties
 	var validTile = false
 	tile_data = tile_map.get_cell_tile_data(0, targetSpace)
@@ -197,13 +210,14 @@ func lineFind(x, y, moves_made, max_moves, direction, spacesArray, isPlayer):
 		return
 	
 	var enemyThere = checkEnemyPresent(new_position, isPlayer)
+	var unitThere = checkUnitThere(new_position, isPlayer)
 	var validTile = checkTileData(new_position)
 	if enemyThere and validTile: # if a unit from other team is there, add to possible attack spaces
 		spacesArray.append(new_position)
 		highlight_map.highlightRed(new_position)
 	
 	moves_made += 1
-	if validTile and enemyThere == false: # can't shoot this through units
+	if validTile and unitThere == false: # can't shoot this through units
 		lineFind(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)
 	
 func lineFindPierce(x, y, moves_made, max_moves, direction, spacesArray, isPlayer):
@@ -339,6 +353,7 @@ func pistolShot(player): #shoot in a line 3 away
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 	highlight_map.clear()
@@ -370,6 +385,7 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 	highlight_map.clear()
@@ -428,6 +444,7 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
 		interactUnit.updateHealthBar()
 		interactUnit.isStunned = true
@@ -487,6 +504,7 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 	highlight_map.clear()
@@ -517,6 +535,7 @@ func quickStrike(player): # attack then you can move again
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 1.2 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 	highlight_map.clear()
@@ -535,6 +554,7 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 			interactUnit = getTarget(targetSpace)
 			var attackModifier = checkPassiveAttack(player, 0, "Melee")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
+			checkBlocking(interactUnit)
 			interactUnit.health -= (player.basicAttackDamage * 1.5 * attackModifier * defendModifier) - interactUnit.armor
 			interactUnit.updateHealthBar()
 	highlight_map.clear()
@@ -568,6 +588,7 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 		var moveModifier = 1.0
 		if (player.health <= 10):
 			moveModifier = 2.0
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 	highlight_map.clear()
@@ -600,6 +621,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Ranged")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 		highlight_map.clearTile(attackChoice)
@@ -618,6 +640,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 			interactUnit = getTarget(attackChoice)
 			attackModifier = checkPassiveAttack(player, 0, "Ranged")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
+			checkBlocking(interactUnit)
 			interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
 			interactUnit.updateHealthBar()
 			
@@ -649,6 +672,7 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 5 * attackModifier * defendModifier)
 		interactUnit.updateHealthBar()
 	player.isStunned = true
@@ -686,6 +710,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 		
@@ -697,6 +722,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 			interactUnit = getTarget(attackChoice)
 			attackModifier = checkPassiveAttack(player, 0, "Range")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+			checkBlocking(interactUnit)
 			interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
 			interactUnit.updateHealthBar()
 			

@@ -536,7 +536,10 @@ func simpleAttack(player):
 		var global_tile_pos = tile_map.map_to_local(tile_selected)
 		for unit in Units:
 			if unit.global_position == global_tile_pos:
-				unit.health -= currentPlayer.basicAttackDamage - unit.armor
+				abilityControl.checkBlocking(unit)
+				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
+				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
+				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
 				unit.updateHealthBar()
 				print("hit enemy!")
 				break
@@ -552,7 +555,10 @@ func simpleAttack(player):
 		var global_tile_pos = tile_map.map_to_local(tile_selected)
 		for unit in Units:
 			if unit.global_position == global_tile_pos:
-				unit.health -= currentPlayer.basicAttackDamage - unit.armor
+				abilityControl.checkBlocking(unit)
+				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
+				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
+				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
 				unit.updateHealthBar()
 				print("hit enemy!")
 				break
@@ -717,8 +723,12 @@ func simpleEnemyAttack(enemy):
 				attackTargets.append([option, unit])
 	if attackTargets.is_empty() == false:
 		var random_Choice = attackTargets.pick_random()
-		var attacked_unit = random_Choice[1]
-		attacked_unit.health -= currentEnemy.basicAttackDamage - attacked_unit.armor
+		var attacked_unit = random_Choice[1] # get the unit being attacked
+		abilityControl.checkFlags(attacked_unit)
+		abilityControl.checkBlocking(attacked_unit)
+		var attackModifier = abilityControl.checkPassiveAttack(enemy, 0, "Melee")
+		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
+		attacked_unit.health -= (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
 		attacked_unit.updateHealthBar()
 		print("player hit!")
 	else:
@@ -773,6 +783,27 @@ func spawnUnits(playerUnitsList, enemyUnitsList):
 		unit.global_position = spawnChoice
 	return
 
+func enemyRandomAbility(enemy):
+	var abilityList : Array = []
+	if enemy.special1CoolDown == 0:
+		abilityList.append([1, enemy.abilityList[0]])
+	if enemy.special2CoolDown == 0:
+		abilityList.append([2, enemy.abilityList[1]])
+	if enemy.special3CoolDown == 0:
+		abilityList.append([3, enemy.abilityList[2]])
+	if abilityList.is_empty() == true:
+		_on_ability_1_pressed()
+	else:
+		if randf() < 0.2:
+			_on_ability_1_pressed()
+		else:
+			enemy.canPress = false
+			var cooldown : int = 0
+			var unitAbility = abilityList.pick_random()
+			cooldown = await abilityControl.checkMoveSlot(enemy, unitAbility[1]) # execute ability
+			await increaseCooldown(enemy, cooldown, unitAbility[0])
+	emit_signal("abilityFinished")
+	return
 
 func _on_ability_1_pressed(): # basic attack Option
 	var currentUnit = turn_queue.get_active_character()
@@ -869,3 +900,9 @@ func setAttackIconsDull(): # make attacks dull
 	cooldownDisp2.text = ""
 	cooldownDisp3.text = ""
 	return
+
+func checkStun(unit): # see if unit needs to skip turn
+	var skipTurn = false
+	if unit.isStunned == true:
+		skipTurn = true
+		return skipTurn

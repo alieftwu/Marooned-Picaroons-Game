@@ -38,26 +38,30 @@ func _ready():
 
 func play_turn():
 	updateHealthBar()
-	battlemap.setAttackIconsDull() # make buttons dull
-	print("pMove")
-	await abilityControl.checkFlags(self)
-	await battlemap.movePerson(self)
-	print("pBetweenMoveAtack")
-	battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-	canPress = true
-	await battlemap.abilityFinished
-	print("pAttackAfter")
-	if bonusMove == true:
-		bonusMove = false
+	var skipTurn = await abilityControl.checkStun(self)
+	if skipTurn == false:
+		abilityControl.checkFlags(self)
+		battlemap.setAttackIconsDull() # make buttons dull
+		print("pMove")
 		await battlemap.movePerson(self)
-		print("bonusmove")
+		print("pBetweenMoveAtack")
+		battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		canPress = true
+		await battlemap.abilityFinished
+		print("pAttackAfter")
+		if bonusMove == true:
+			bonusMove = false
+			await battlemap.movePerson(self)
+			print("bonusmove")
+	else:
+		print("player is stunned!")
 	updateCooldowns()
 	emit_signal("finishedTurn")
 
 func updateHealthBar():
 	var maxValue = maxHealth
 	healthBar.value = (health / maxHealth) * 100
-	print("new player health: ", (health / maxHealth) * 100)
+	#print("new player health: ", (health / maxHealth) * 100)
 	
 func updateCooldowns():
 	if special1CoolDown >= 1:
