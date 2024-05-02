@@ -5,12 +5,13 @@ extends CharacterBody2D
 @onready var textBox = get_node("HUD/TextureRect")
 @onready var textBoxText = get_node("HUD/TextureRect/Label")
 
+@export var fightScene = NodePath()
 @export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
 
 signal showTextBox
 signal hideTextBox
 signal haltMove
-signal newText(title)
+signal newFText(title, scene)
 
 var closeEnough = false
 var textDisplayed = false
@@ -25,7 +26,8 @@ func _process(delta):
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_tree().current_scene.get_node("TileMap"):
 		closeEnough = true
-		newText.emit(self.name)
+		haltMove.emit()
+		newFText.emit(self.name, fightScene)
 		showTextBox.emit()
 
 

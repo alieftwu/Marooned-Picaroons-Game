@@ -249,7 +249,6 @@ texture = ExtResource("2_vlp0u")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 7
-frame = 2
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -332,8 +331,9 @@ autowrap_mode = 2
 script = ExtResource("7_onnyt")
 connected_scene = "CombatScene"
 
+[connection signal="haltMove" from="." to="HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newText" from="." to="HUD/TextureRect/Label" method="_on_new_text"]
+[connection signal="newFText" from="." to="HUD/TextureRect/Label" method="_on_new_f_text"]
 [connection signal="showTextBox" from="." to="HUD/TextureRect" method="_on_npc_show_text_box"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
