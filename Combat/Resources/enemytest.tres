@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_b2asv")
 Name = "Enemy"
-Health = 100
+Health = 1
 MaxHealth = 100
 Armor = 0
 Speed = 3

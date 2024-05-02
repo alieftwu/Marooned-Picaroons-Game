@@ -21,7 +21,8 @@ func _process(delta):
 		emit_signal("hideBoxLabel")
 		print("swap to scene for fighting")
 		iterator = -1
-		# scene_manager.change_scene(get_owner(), connected_scene)
+		
+		scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
 
 
 func _on_new_text(title):

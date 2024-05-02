@@ -2,6 +2,7 @@ extends Node2D
 
 class_name TurnQueue
 @onready var battle_map = $"../BattleMap"
+@onready var combatScene = get_parent()
 @export var connected_scene: String
 var num_children
 var active_character
@@ -30,17 +31,17 @@ func play_round():
 		gameResult = checkGameOver()
 		if gameResult == 1:
 			print("You lost")
-			scene_manager.change_scene(get_owner(), connected_scene)
+			scene_manager.switchBackScene(get_owner(), combatScene.combatInformation[3])
 			break
 		if gameResult == 2:
 			print("You Won!")
-			scene_manager.change_scene(get_owner(), connected_scene)
+			scene_manager.switchBackScene(get_owner(), combatScene.combatInformation[3])
 			break
 		#print("child ", active_character.get_index(), "'s turn has ended")
 		new_index = active_character.get_index() + 1
 		battle_map.gatherUnitInfo() # good to make sure Unit tracker up to date
 		num_children = get_child_count()
-		print("numchildren: " + str(num_children) + " index: " + str(new_index))
+		#print("numchildren: " + str(num_children) + " index: " + str(new_index))
 		if new_index >= num_children:
 			break
 	

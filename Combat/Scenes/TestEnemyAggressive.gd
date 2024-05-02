@@ -11,7 +11,7 @@ var maxHealth : float
 var armor : int
 var basicAttackDamage : int
 var passiveAbility : String = "none"
-var abilityList : Array = ["cannonShot", "pistolShot", "engagingBlock"] # buttons 2-4 abilities. can switch out 
+var abilityList : Array = ["circleSlash", "pistolShot", "engagingBlock"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
