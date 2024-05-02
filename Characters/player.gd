@@ -1,11 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-<<<<<<< HEAD
-@export var speed : float = 200.0
-=======
 @export var speed : float = 100.0
->>>>>>> aliefs-branch
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 var direction : Vector2 = Vector2.ZERO
@@ -24,10 +20,6 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 
 	move_and_slide()
-<<<<<<< HEAD
-
-=======
->>>>>>> aliefs-branch
 func update_animation_parameters():
 	if(velocity == Vector2.ZERO):
 		animation_tree["parameters/conditions/idle"] = true

@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-[gd_scene load_steps=6 format=3 uid="uid://bxq1k8x0igytt"]
-
-[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_hehos"]
-[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_31ogi"]
-[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_rw7yo"]
-[ext_resource type="PackedScene" uid="uid://c0w18y8mxdqnm" path="res://Combat/Scenes/TestEnemy.tscn" id="4_uq7de"]
-[ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="5_0nufo"]
-
-[node name="Combat" type="Node2D"]
-script = ExtResource("1_hehos")
-
-[node name="BattleMap" parent="." instance=ExtResource("2_31ogi")]
-
-[node name="TurnQueue" parent="." instance=ExtResource("3_rw7yo")]
-
-[node name="TestEnemy" parent="TurnQueue" groups=["EnemyUnits", "Units"] instance=ExtResource("4_uq7de")]
-position = Vector2(136, 40)
-
-[node name="TestEnemy2" parent="TurnQueue" groups=["EnemyUnits", "Units"] instance=ExtResource("4_uq7de")]
-position = Vector2(136, 88)
-
-[node name="TestPlayer" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("5_0nufo")]
-position = Vector2(8, 72)
-
-[node name="TestPlayer2" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("5_0nufo")]
-position = Vector2(8, 40)
-
-[node name="TestPlayer3" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("5_0nufo")]
-position = Vector2(8, 104)
-=======
 [gd_scene load_steps=5 format=3 uid="uid://bxq1k8x0igytt"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_q45js"]
@@ -52,4 +21,3 @@ position = Vector2(16, 144)
 
 [node name="TestPlayer3" parent="TurnQueue" instance=ExtResource("4_fcfpx")]
 position = Vector2(16, 208)
->>>>>>> aliefs-branch

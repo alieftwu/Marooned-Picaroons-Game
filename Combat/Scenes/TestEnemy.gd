@@ -44,11 +44,7 @@ func play_turn():
 		print("e1Move")
 		await battlemap.moveEnemyPerson(self)
 		print("e1betweenAttackMove")
-<<<<<<< HEAD
-		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-=======
 		battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
->>>>>>> aliefs-branch
 		await battlemap.enemyRandomAbility(self)
 		print("e1AttackAfter")
 	updateCooldowns()
