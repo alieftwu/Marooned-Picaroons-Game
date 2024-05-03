@@ -1,8 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://l5gmqp433vtn"]
+[gd_scene load_steps=34 format=3 uid="uid://cf1ivq7wok67g"]
 
-[ext_resource type="Script" path="res://Characters/RoamingNPC.gd" id="1_u7m1f"]
-[ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_5kxlu"]
-[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_mdqb4"]
+[ext_resource type="Script" path="res://Characters/FightNPC.gd" id="1_cbjnb"]
+[ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_vlp0u"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_a773g"]
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="4_lk6ln"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="5_g7tg3"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="6_xdx5j"]
+[ext_resource type="Script" path="res://World/Label.gd" id="7_onnyt"]
 
 [sub_resource type="Animation" id="Animation_5rgvr"]
 resource_name = "backwards_idle"
@@ -226,22 +230,25 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
 states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5s0k2"]
-radius = 15.0
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_diywf"]
+points = PackedVector2Array(-6, 0, -40, 75, 40, 75, 6, 0, 0, -6)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("6_xdx5j")
+font_color = Color(0, 0, 0, 1)
 
 [node name="NPC" type="CharacterBody2D"]
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_u7m1f")
+script = ExtResource("1_cbjnb")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("2_5kxlu")
+texture = ExtResource("2_vlp0u")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 7
-frame = 1
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -250,7 +257,6 @@ libraries = {
 speed_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 y_sort_enabled = true
 position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
@@ -272,7 +278,7 @@ offset_left = -5.0
 offset_top = -34.0
 offset_right = 7.0
 offset_bottom = -22.0
-texture = ExtResource("3_mdqb4")
+texture = ExtResource("3_a773g")
 expand_mode = 3
 stretch_mode = 4
 
@@ -280,8 +286,55 @@ stretch_mode = 4
 position = Vector2(0, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_5s0k2")
+shape = SubResource("ConvexPolygonShape2D_diywf")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("4_lk6ln")
+stretch_mode = 4
+script = ExtResource("5_g7tg3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("7_onnyt")
+connected_scene = "CombatScene"
+
+[connection signal="haltMove" from="." to="HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="." to="HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="." to="HUD/TextureRect" method="_on_npc_show_text_box"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="HUD/TextureRect/Label" to="HUD/TextureRect" method="_on_label_hide_box_label"]

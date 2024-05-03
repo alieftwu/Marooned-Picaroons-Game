@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://754l5c1v65w4"]
 
-[ext_resource type="Script" path="res://Characters/player.gd" id="1_05q78"]
+[ext_resource type="Script" path="res://Characters/Player.gd" id="1_05q78"]
 [ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
 [ext_resource type="Texture2D" uid="uid://8o3ueryei1od" path="res://Sprites/Icons/Move.png" id="3_2sos0"]
 [ext_resource type="Texture2D" uid="uid://88w28i2vycqh" path="res://Sprites/Icons/Sword.png" id="4_dgyli"]
