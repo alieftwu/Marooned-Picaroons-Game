@@ -6964,6 +6964,7 @@ sources/5 = SubResource("TileSetAtlasSource_nvo0p")
 [node name="BattleMap" type="Node2D"]
 position = Vector2(0, 1)
 script = ExtResource("1_nbqfk")
+mapType = "City"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_hcfap")
@@ -7046,7 +7047,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
 theme_override_font_sizes/font_size = 400
-text = " 1
+text = " 
 "
 
 [node name="Ability3" type="TextureButton" parent="."]
@@ -7072,7 +7073,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
 theme_override_font_sizes/font_size = 400
-text = " 1
+text = " 
 "
 
 [node name="Ability4" type="TextureButton" parent="."]
@@ -7099,7 +7100,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
 theme_override_font_sizes/font_size = 400
-text = " 1
+text = " 
 "
 
 [connection signal="pressed" from="Ability1" to="." method="_on_ability_1_pressed"]
