@@ -1,14 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=13 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="2_i5w82"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="3_0fysw"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="3_0fysw"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_wqytr"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_i06jn"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
-[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="11_af5ti"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
 
@@ -82,8 +81,9 @@ shape = SubResource("RectangleShape2D_3llp2")
 
 [node name="questy" parent="." instance=ExtResource("11_x7c8x")]
 position = Vector2(660, 811)
+questFinished = true
 
-[node name="pissy" parent="." instance=ExtResource("7_kwfy2")]
+[node name="fighty" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(492, 812)
 
 [node name="parent" parent="." instance=ExtResource("7_kwfy2")]
@@ -104,12 +104,3 @@ shape = SubResource("RectangleShape2D_r5rqs")
 [node name="mountain passage border" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1327, 871.5)
 shape = SubResource("RectangleShape2D_r5rqs")
-
-[node name="Englishman" parent="." instance=ExtResource("11_af5ti")]
-position = Vector2(574, 360)
-
-[node name="NPC" parent="." instance=ExtResource("7_kwfy2")]
-position = Vector2(468, 122)
-npcText = ["Ahoy Cap'n! ", "like this!", "Very cool I know.", "Now lets fight!"]
-
-[connection signal="haltMove" from="Englishman" to="Player" method="_on_halt_move"]
