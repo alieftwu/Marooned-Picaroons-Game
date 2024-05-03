@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var fightScene = NodePath()
 @export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
 
+
 signal showTextBox
 signal hideTextBox
 signal haltMove
@@ -29,7 +30,7 @@ func _on_area_2d_body_entered(body):
 		haltMove.emit()
 		newFText.emit(self.name, fightScene)
 		showTextBox.emit()
-
+		
 
 func _on_area_2d_body_exited(body):
 	emit_signal("hideTextBox")

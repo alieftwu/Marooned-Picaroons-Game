@@ -67,6 +67,9 @@ position = Vector2(1112, 868)
 [node name="first_village" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(-532, 78)
 
+[node name="CombatScene" type="Marker2D" parent="EntranceMarkers"]
+position = Vector2(-537, -370)
+
 [node name="talky" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(263, 762)
 npcText = ["You can talk to me and I talk back!", "I know, some very cool mechanics truly", "Anywho I don't have anything for sale", "See you later now!"]

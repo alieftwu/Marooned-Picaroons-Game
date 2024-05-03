@@ -91,7 +91,7 @@ func initialize():
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generateGrassMap()
+	_generateCityMap()
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
