@@ -33,8 +33,9 @@ func combatSceneSwitch(originalScene, enemyList : Array, mapType : String) -> vo
 	originalScene.get_tree().call_deferred("change_scene_to_file", combatScenePath)
 	return
 	
-func switchBackScene(from, to_scene_name: String) -> void:	
-	from.get_tree().call_deferred("change_scene_to_file", from)
+func switchBackScene(from, to_scene_name: String) -> void:
+	var full_path = scene_dir_path + to_scene_name + ".tscn"
+	from.get_tree().call_deferred("change_scene_to_file", full_path)
 	return
 	
 func getCombatData():
