@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=3 uid="uid://cf1ivq7wok67g"]
 
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="1_cbjnb"]
-[ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_vlp0u"]
+[ext_resource type="Texture2D" uid="uid://ca62ji8untpgg" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png" id="2_rn2rh"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_a773g"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="4_lk6ln"]
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="5_g7tg3"]
@@ -229,6 +229,7 @@ states/Start/position = Vector2(191, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
 states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
+graph_offset = Vector2(-186.663, 0)
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_diywf"]
 points = PackedVector2Array(-6, 0, -40, 75, 40, 75, 6, 0, 0, -6)
@@ -241,12 +242,14 @@ font_color = Color(0, 0, 0, 1)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_cbjnb")
+fightScene = null
+npcText = null
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("2_vlp0u")
-offset = Vector2(0, -15)
+texture = ExtResource("2_rn2rh")
+offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 7
 frame = 1

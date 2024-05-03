@@ -4,8 +4,8 @@ extends CharacterBody2D
 @onready var bubble = get_node("TextureRect")
 @onready var textBox = get_node("HUD/TextureRect")
 @onready var textBoxText = get_node("HUD/TextureRect/Label")
+@onready var animation_tree : AnimationTree = $AnimationTree
 
-@export var fightScene = NodePath()
 @export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
 
 
