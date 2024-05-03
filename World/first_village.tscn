@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjpxvcpu5uu7q"]
+[gd_scene load_steps=13 format=3 uid="uid://bjpxvcpu5uu7q"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_dvtju"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_hbqp5"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_3fwoq"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_0dqrl"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="4_0dqrl"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_k3fc5"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="6_mdsp7"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_whcwq"]
+[ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="8_0021f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtqkp"]
 size = Vector2(13, 671)
@@ -108,3 +109,7 @@ position = Vector2(635, 43)
 
 [node name="Companion2" parent="." instance=ExtResource("7_whcwq")]
 SPEED = 100.0
+
+[node name="NPC" parent="." instance=ExtResource("8_0021f")]
+position = Vector2(249, 392)
+npcText = ["Welcome to my shop!", "Take a look around! Buy whatever you would like!", "All of these items are very useful I swear", "I will not try to cheat you out of your money I pinky promise."]
