@@ -28,7 +28,7 @@ func _ready():
 func _generateMoveMap(player):
 	self.clear()
 	starting_location = tile_map.local_to_map(player.global_position)
-	exploreGrid(starting_location[0], starting_location[1], 0, player.stats.Speed)
+	exploreGrid(starting_location[0], starting_location[1], 0, player.speed)
 	self.erase_cell(0, starting_location)
 
 func exploreGrid(x, y, moves_made, max_moves):

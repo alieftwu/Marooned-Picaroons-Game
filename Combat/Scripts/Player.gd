@@ -12,7 +12,7 @@ var maxHealth : float
 var armor : int
 var basicAttackDamage : int
 var passiveAbility : String = "Brawler"
-var abilityList : Array = ["cannonShot", "pistolShot", "engagingBlock"] # buttons 2-4 abilities. can switch out 
+var abilityList : Array = ["cannonShot", "desparateStrike", "pirateBlessing"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -48,6 +48,7 @@ func play_turn():
 		await battlemap.setAttackIconsDull() # make buttons dull
 		await battlemap.movePerson(self)
 		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		await battlemap.updateButtons(self)
 		canPress = true
 		await battlemap.abilityFinished
 		if bonusMove == true:

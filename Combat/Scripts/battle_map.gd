@@ -12,6 +12,9 @@ class_name BattleMap
 @onready var cooldownDisp1 = $Ability2/cooldown
 @onready var cooldownDisp2 = $Ability3/cooldown
 @onready var cooldownDisp3 = $Ability4/cooldown
+@onready var button2 = $Ability2
+@onready var button3 = $Ability3
+@onready var button4 = $Ability4
 @onready var abilityMusic = $abilityMusic
 
 var astar_grid: AStarGrid2D
@@ -886,21 +889,18 @@ func checkCooldownIcons(unit):
 	if unit.special1CoolDown == 0:
 		cooldownDisp1.visible = false
 	else:
-		print("FOUND1")
 		cooldownDisp1.visible = true
 		cooldownDisp1.text = " " + str(unit.special1CoolDown)
 	print(unit.special1CoolDown)
 	if unit.special2CoolDown == 0:
 		cooldownDisp2.visible = false
 	else:
-		print("FOUND2")
 		cooldownDisp2.visible = true
 		cooldownDisp2.text = " " + str(unit.special2CoolDown)
 	print(unit.special1CoolDown)
 	if unit.special3CoolDown == 0:
 		cooldownDisp3.visible = false
 	else:
-		print("FOUND3")
 		cooldownDisp3.visible = true
 		cooldownDisp3.text = " " + str(unit.special3CoolDown)
 	return
@@ -922,4 +922,125 @@ func checkStun(unit): # see if unit needs to skip turn
 		return skipTurn
 
 func updateButtons(player): # update icons to match abilities
-	pass
+	var button2Label = player.abilityList[0]
+	var button3Label = player.abilityList[1]
+	var button4Label = player.abilityList[2]
+	var buttonLoad
+	if button2Label == "pistolShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "heavySwordSwing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/43.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "recklessFrenzy":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/41.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "takeDown":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/49.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "pirateBlessing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/15.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "axeToss": # make daggerToss
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/48.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "quickStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/4.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "circleSlash":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/32.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "desparateStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/46.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "rapidFire":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/50.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "cannonShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/7.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "engagingBlock":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/31.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "bombThrow":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button2.texture_normal = buttonLoad
+	if button3Label == "pistolShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "heavySwordSwing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/43.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "recklessFrenzy":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/41.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "takeDown":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/49.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "pirateBlessing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/15.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "axeToss": # make daggerToss
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/48.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "quickStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/4.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "circleSlash":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/32.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "desparateStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/46.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "rapidFire":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/50.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "cannonShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/7.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "engagingBlock":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/31.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "bombThrow":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button3.texture_normal = buttonLoad
+	if button4Label == "pistolShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "heavySwordSwing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/43.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "recklessFrenzy":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/41.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "takeDown":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/49.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "pirateBlessing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/15.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "axeToss": # make daggerToss
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/48.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "quickStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/4.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "circleSlash":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/32.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "desparateStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/46.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "rapidFire":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/50.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "cannonShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/7.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "engagingBlock":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/31.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "bombThrow":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button4.texture_normal = buttonLoad
+	return
