@@ -4,6 +4,7 @@ extends Node2D
 @onready var highlightmap = $"../../BattleMap/HighlightMap"
 @onready var healthBar = $HealthBar
 @onready var abilityControl = $"../../BattleMap/AbilityControl"
+@onready var statusEffect = $StatusEffect
 var stats = load("res://Combat/Resources/enemytest.tres")
 var speed : int
 var health : float
@@ -37,19 +38,19 @@ func _ready():
 
 func play_turn():
 	updateHealthBar()
+	abilityControl.checkBlocking(self)
+	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
+	updateStatusEffect()
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		print("e3Move")
 		if randf() < .75:
 			await battlemap.agressiveEnemyMove(self)
 		else:
 			await battlemap.moveEnemyPerson(self)
-		print("e3BetweenMoveAttack")
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
-		print("e3AttackAfter")
 	updateCooldowns()
 	emit_signal("finishedTurn")
 
@@ -66,3 +67,11 @@ func updateCooldowns():
 	if special3CoolDown >= 1:
 		special3CoolDown -= 1
 	return
+
+func updateStatusEffect():
+	var effect
+	if isStunned == true:
+		effect = load("res://Combat/Resources/stunned.png")
+		statusEffect.texture = effect
+	else:
+		statusEffect.texture = null

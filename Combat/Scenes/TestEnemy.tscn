@@ -26,3 +26,10 @@ scale = Vector2(0.25, 0.25)
 value = 100.0
 texture_under = ExtResource("7_2fohp")
 texture_progress = ExtResource("8_082uu")
+
+[node name="StatusEffect" type="TextureRect" parent="."]
+offset_left = -4.0
+offset_top = -7.0
+offset_right = 36.0
+offset_bottom = 33.0
+scale = Vector2(0.22, 0.22)
