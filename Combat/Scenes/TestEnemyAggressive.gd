@@ -40,11 +40,11 @@ func play_turn():
 	var skipTurn = await abilityControl.checkStun(self)
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
-		battlemap.setAttackIconsDull() # make buttons dull
+		#battlemap.setAttackIconsDull() # make buttons dull
 		print("e2Move")
 		await battlemap.agressiveEnemyMove(self)
 		print("e2betweenMoveAttack")
-		battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
 		print("e2AttackAfter")
 	updateCooldowns()

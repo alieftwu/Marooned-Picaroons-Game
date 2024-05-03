@@ -876,18 +876,23 @@ func checkCooldownIcons(unit):
 	if unit.special1CoolDown == 0:
 		cooldownDisp1.visible = false
 	else:
+		print("FOUND1")
 		cooldownDisp1.visible = true
 		cooldownDisp1.text = " " + str(unit.special1CoolDown)
+	print(unit.special1CoolDown)
 	if unit.special2CoolDown == 0:
 		cooldownDisp2.visible = false
 	else:
+		print("FOUND2")
 		cooldownDisp2.visible = true
-		cooldownDisp1.text = " " + str(unit.special2CoolDown)
+		cooldownDisp2.text = " " + str(unit.special2CoolDown)
+	print(unit.special1CoolDown)
 	if unit.special3CoolDown == 0:
 		cooldownDisp3.visible = false
 	else:
+		print("FOUND3")
 		cooldownDisp3.visible = true
-		cooldownDisp1.text = " " + str(unit.special3CoolDown)
+		cooldownDisp3.text = " " + str(unit.special3CoolDown)
 	return
 
 func setAttackIconsDull(): # make attacks dull

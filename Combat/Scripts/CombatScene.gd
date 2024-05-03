@@ -7,7 +7,7 @@ extends Node2D
 # var current_scene_path = get_tree().get_current_scene().get_path()
 func _ready():
 	combatInformation = await scene_manager.getCombatData()
-	print("pop: ", combatInformation[3])
+	# print("twat: ", combatInformation[3])
 	turn_queue.initialize()
 	battle_map.initialize()
 	start_game()
