@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=63 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://c0fm0amr86t81" path="res://Combat/Resources/SkillIcons/PNG/7.png" id="32_lvlgj"]
 [ext_resource type="Texture2D" uid="uid://dqgtkwx4v4vow" path="res://Combat/Resources/SkillIcons/PNG/23.png" id="33_h0cm0"]
 [ext_resource type="Texture2D" uid="uid://3f0u3xmyig3g" path="res://Combat/Resources/SkillIcons/PNG/31.png" id="34_oc33l"]
+[ext_resource type="AudioStream" uid="uid://bic0o5r21u6n2" path="res://Combat/Resources/07_human_atk_sword_2.wav" id="35_o360o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5e7gd"]
 texture = ExtResource("2_qy8r3")
@@ -6964,7 +6965,6 @@ sources/5 = SubResource("TileSetAtlasSource_nvo0p")
 [node name="BattleMap" type="Node2D"]
 position = Vector2(0, 1)
 script = ExtResource("1_nbqfk")
-mapType = "City"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_hcfap")
@@ -7102,6 +7102,11 @@ theme_override_constants/outline_size = 14
 theme_override_font_sizes/font_size = 400
 text = " 
 "
+
+[node name="abilityMusic" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(144, 352)
+stream = ExtResource("35_o360o")
+max_distance = 4000.0
 
 [connection signal="pressed" from="Ability1" to="." method="_on_ability_1_pressed"]
 [connection signal="pressed" from="Ability2" to="." method="_on_ability_2_pressed"]

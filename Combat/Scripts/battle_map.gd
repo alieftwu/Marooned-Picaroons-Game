@@ -12,6 +12,7 @@ class_name BattleMap
 @onready var cooldownDisp1 = $Ability2/cooldown
 @onready var cooldownDisp2 = $Ability3/cooldown
 @onready var cooldownDisp3 = $Ability4/cooldown
+@onready var abilityMusic = $abilityMusic
 @export var mapType: String
 
 var astar_grid: AStarGrid2D
@@ -549,6 +550,9 @@ func simpleAttack(player):
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
 				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
 				unit.updateHealthBar()
+				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+				abilityMusic.stream = testMusic
+				abilityMusic.play()
 				print("hit enemy!")
 				break
 
@@ -568,6 +572,9 @@ func simpleAttack(player):
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
 				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
 				unit.updateHealthBar()
+				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+				abilityMusic.stream = testMusic
+				abilityMusic.play()
 				print("hit enemy!")
 				break
 		
@@ -737,6 +744,9 @@ func simpleEnemyAttack(enemy):
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
 		attacked_unit.health -= (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
 		attacked_unit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		print("player hit!")
 	else:
 		print("no player found")
@@ -918,3 +928,6 @@ func checkStun(unit): # see if unit needs to skip turn
 	if unit.isStunned == true:
 		skipTurn = true
 		return skipTurn
+
+func updateButtons(player): # update icons to match abilities
+	pass

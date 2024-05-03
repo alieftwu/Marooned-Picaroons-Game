@@ -52,6 +52,9 @@ func play_round():
 func checkDeaths(): # i just make them invisible for now, we will need other way of handling 
 	for unit in battle_map.Units:
 		if unit.health <= 0:
+			var deathSound = load("res://Combat/Resources/14_human_death_spin.wav")
+			battle_map.abilityMusic.stream = deathSound
+			battle_map.abilityMusic.play()
 			unit.remove_from_group("Units")
 			unit.remove_from_group("PlayerUnits")
 			unit.remove_from_group("EnemyUnits")
