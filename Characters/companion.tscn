@@ -254,11 +254,7 @@ texture = ExtResource("2_ehi30")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 8
-<<<<<<< HEAD
 frame = 1
-=======
-frame = 9
->>>>>>> sams-branch
 script = SubResource("GDScript_jitm7")
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
