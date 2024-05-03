@@ -2,6 +2,7 @@ extends Node2D
 
 class_name TurnQueue
 @onready var battle_map = $"../BattleMap"
+@onready var combatScene = get_parent()
 @export var connected_scene: String
 var num_children
 var active_character
@@ -30,17 +31,17 @@ func play_round():
 		gameResult = checkGameOver()
 		if gameResult == 1:
 			print("You lost")
-			scene_manager.change_scene(get_owner(), connected_scene)
+			scene_manager.switchBackScene(get_owner(), connected_scene)
 			break
 		if gameResult == 2:
 			print("You Won!")
-			scene_manager.change_scene(get_owner(), connected_scene)
+			scene_manager.switchBackScene(get_owner(), connected_scene)
 			break
 		#print("child ", active_character.get_index(), "'s turn has ended")
 		new_index = active_character.get_index() + 1
 		battle_map.gatherUnitInfo() # good to make sure Unit tracker up to date
 		num_children = get_child_count()
-		print("numchildren: " + str(num_children) + " index: " + str(new_index))
+		#print("numchildren: " + str(num_children) + " index: " + str(new_index))
 		if new_index >= num_children:
 			break
 	
@@ -51,6 +52,9 @@ func play_round():
 func checkDeaths(): # i just make them invisible for now, we will need other way of handling 
 	for unit in battle_map.Units:
 		if unit.health <= 0:
+			var deathSound = load("res://Combat/Resources/14_human_death_spin.wav")
+			battle_map.abilityMusic.stream = deathSound
+			battle_map.abilityMusic.play()
 			unit.remove_from_group("Units")
 			unit.remove_from_group("PlayerUnits")
 			unit.remove_from_group("EnemyUnits")

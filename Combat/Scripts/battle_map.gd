@@ -12,6 +12,8 @@ class_name BattleMap
 @onready var cooldownDisp1 = $Ability2/cooldown
 @onready var cooldownDisp2 = $Ability3/cooldown
 @onready var cooldownDisp3 = $Ability4/cooldown
+@onready var abilityMusic = $abilityMusic
+@export var mapType: String
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -91,7 +93,14 @@ func initialize():
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generateGrassMap()
+	if (mapType == "City"):
+		{
+			0: _generateCityMap()
+		}
+	if (mapType == "Prison"):
+		{
+			0: _generatePrisonMap()
+		}
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
@@ -541,6 +550,9 @@ func simpleAttack(player):
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
 				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
 				unit.updateHealthBar()
+				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+				abilityMusic.stream = testMusic
+				abilityMusic.play()
 				print("hit enemy!")
 				break
 
@@ -560,6 +572,9 @@ func simpleAttack(player):
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
 				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
 				unit.updateHealthBar()
+				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+				abilityMusic.stream = testMusic
+				abilityMusic.play()
 				print("hit enemy!")
 				break
 		
@@ -595,7 +610,6 @@ func moveEnemyPerson(enemy): # move enemy randomly
 		random_movePick	
 		).slice(1)
 		startMoving = true
-		print("await2")
 		await finishedMoving # wait for physics to finish moving
 		
 	else:
@@ -730,6 +744,9 @@ func simpleEnemyAttack(enemy):
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
 		attacked_unit.health -= (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
 		attacked_unit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		print("player hit!")
 	else:
 		print("no player found")
@@ -809,7 +826,7 @@ func _on_ability_1_pressed(): # basic attack Option
 	var currentUnit = turn_queue.get_active_character()
 	if currentUnit.canPress == true:
 		currentUnit.canPress = false
-		print("button 1 pressed!")
+		#print("button 1 pressed!")
 		var isPlayer = abilityControl.checkTeam(currentUnit)
 		if isPlayer:
 			await simpleAttack(currentUnit)
@@ -824,7 +841,7 @@ func _on_ability_2_pressed(): # special ability 1, gotten from unit data
 		if currentUnit.canPress == true:
 			currentUnit.canPress = false
 			var cooldown : int = 0
-			print("button 2 pressed!")
+			#print("button 2 pressed!")
 			var unitAbility = currentUnit.abilityList[0]
 			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
 			await increaseCooldown(currentUnit, cooldown, 1)
@@ -839,7 +856,7 @@ func _on_ability_3_pressed(): # special ability 2, gotten from unit data
 		if currentUnit.canPress == true:
 			currentUnit.canPress = false
 			var cooldown : int = 0
-			print("button 3 pressed!")
+			#print("button 3 pressed!")
 			var unitAbility = currentUnit.abilityList[1]
 			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
 			await increaseCooldown(currentUnit, cooldown, 2)
@@ -854,7 +871,7 @@ func _on_ability_4_pressed(): # special ability 3, gotten from unit data
 		if currentUnit.canPress == true:
 			currentUnit.canPress = false
 			var cooldown : int = 0
-			print("button 4 pressed!")
+			#print("button 4 pressed!")
 			var unitAbility = currentUnit.abilityList[2]
 			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
 			await increaseCooldown(currentUnit, cooldown, 3)
@@ -877,18 +894,23 @@ func checkCooldownIcons(unit):
 	if unit.special1CoolDown == 0:
 		cooldownDisp1.visible = false
 	else:
+		print("FOUND1")
 		cooldownDisp1.visible = true
 		cooldownDisp1.text = " " + str(unit.special1CoolDown)
+	print(unit.special1CoolDown)
 	if unit.special2CoolDown == 0:
 		cooldownDisp2.visible = false
 	else:
+		print("FOUND2")
 		cooldownDisp2.visible = true
-		cooldownDisp1.text = " " + str(unit.special2CoolDown)
+		cooldownDisp2.text = " " + str(unit.special2CoolDown)
+	print(unit.special1CoolDown)
 	if unit.special3CoolDown == 0:
 		cooldownDisp3.visible = false
 	else:
+		print("FOUND3")
 		cooldownDisp3.visible = true
-		cooldownDisp1.text = " " + str(unit.special3CoolDown)
+		cooldownDisp3.text = " " + str(unit.special3CoolDown)
 	return
 
 func setAttackIconsDull(): # make attacks dull
@@ -906,3 +928,6 @@ func checkStun(unit): # see if unit needs to skip turn
 	if unit.isStunned == true:
 		skipTurn = true
 		return skipTurn
+
+func updateButtons(player): # update icons to match abilities
+	pass

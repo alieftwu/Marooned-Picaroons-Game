@@ -1,11 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://uvr460ks63mx"]
+[gd_scene load_steps=6 format=3 uid="uid://uvr460ks63mx"]
 
 [ext_resource type="Script" path="res://Combat/Scenes/TestEnemyAggressive.gd" id="1_627ib"]
 [ext_resource type="Texture2D" uid="uid://b11r5c8r0l424" path="res://Art/Pirates/Pirate Red Sprite Sheet/Pirates Red Sprite Sheet.png" id="2_hlnbp"]
-[ext_resource type="Texture2D" uid="uid://8o3ueryei1od" path="res://Sprites/Icons/Move.png" id="3_ai81d"]
-[ext_resource type="Texture2D" uid="uid://88w28i2vycqh" path="res://Sprites/Icons/Sword.png" id="4_v2v61"]
-[ext_resource type="Texture2D" uid="uid://b1ovu8pkt1crf" path="res://Sprites/Icons/Pistol.png" id="5_1wa6r"]
-[ext_resource type="Texture2D" uid="uid://cnmexemqs5ctw" path="res://Sprites/Icons/Rum.png" id="6_88mmh"]
 [ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="7_w5j0l"]
 [ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="8_3kygq"]
 
@@ -19,44 +15,19 @@ script = ExtResource("1_627ib")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_2jdr8")
 
-[node name="PlayerPanel" type="Panel" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.2, 0.2)
-
-[node name="AbilityButtons" type="HBoxContainer" parent="PlayerPanel"]
-layout_mode = 0
-offset_left = -85.5
-offset_top = 40.0
-offset_right = 86.5
-offset_bottom = 80.0
-
-[node name="MoveButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("3_ai81d")
-
-[node name="BasicAttackButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("4_v2v61")
-
-[node name="PistolButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("5_1wa6r")
-
-[node name="RumButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("6_88mmh")
-
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -8.0
 offset_top = -11.0
 offset_right = 56.0
 offset_bottom = -1.0
 scale = Vector2(0.25, 0.25)
-value = 40.0
+value = 100.0
 texture_under = ExtResource("7_w5j0l")
 texture_progress = ExtResource("8_3kygq")
+
+[node name="StatusEffect" type="TextureRect" parent="."]
+offset_left = -4.0
+offset_top = -7.0
+offset_right = 36.0
+offset_bottom = 33.0
+scale = Vector2(0.22, 0.22)

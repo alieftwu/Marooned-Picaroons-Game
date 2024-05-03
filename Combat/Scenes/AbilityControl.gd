@@ -46,7 +46,6 @@ func checkFlags(player): # will check and see if certain conditions have been me
 	
 func checkBlocking(player):
 	if player.isBlocking == true: # if I was blocking, stop blocking, if i did not block anything i am stunned
-		player.isBlocking = false
 		if player.didBlock == false:
 			player.isStunned = true
 			player.isStunnedCount = 2
@@ -60,6 +59,8 @@ func checkStun(player):
 		player.isStunnedCount -= 1
 		if player.isStunnedCount == 0:
 			player.isStunned = false
+	if player.isBlocking == true:
+		pass
 	return skipTurn
 	
 func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
@@ -68,6 +69,10 @@ func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check
 		if damageType == "Melee":
 			damageModifier = 1.40
 			print("Melee Damage increased flag")
+	if player.passiveAbility == "Bomber":
+		if damageType == "Bomb":
+			damageModifier = 1.25
+			print("Bomb Damage increased flag")
 	return damageModifier
 	
 func checkPassiveDefend(player, potentialDamage = 0, damageType = null): # check passive ability
@@ -449,6 +454,7 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		interactUnit.updateHealthBar()
 		interactUnit.isStunned = true
 		interactUnit.isStunnedCount = 3 # 2 turns
+		interactUnit.updateStatusEffect()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -677,6 +683,7 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 		interactUnit.updateHealthBar()
 	player.isStunned = true
 	player.isStunnedCount = 2 # 1 turn
+	player.updateStatusEffect()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -708,8 +715,8 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 			attackChoice = attackTargets.pick_random()
 			
 		interactUnit = getTarget(attackChoice)
-		var attackModifier = checkPassiveAttack(player, 0, "Range")
-		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		var attackModifier = checkPassiveAttack(player, 0, "Bomb")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Bomb")
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()

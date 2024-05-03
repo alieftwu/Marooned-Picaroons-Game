@@ -1,27 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://da137es324l1j"]
+[gd_scene load_steps=29 format=3 uid="uid://l5gmqp433vtn"]
 
-[ext_resource type="Script" path="res://Characters/companion.gd" id="1_3d8y2"]
-[ext_resource type="Texture2D" uid="uid://shfpxnniiomr" path="res://Art/Pirates/Pirate Blue Sprite Sheet/blue companion sheet.png" id="2_ehi30"]
-[ext_resource type="Texture2D" uid="uid://8o3ueryei1od" path="res://Sprites/Icons/Move.png" id="3_0whtl"]
-[ext_resource type="Texture2D" uid="uid://88w28i2vycqh" path="res://Sprites/Icons/Sword.png" id="4_40548"]
-[ext_resource type="Texture2D" uid="uid://b1ovu8pkt1crf" path="res://Sprites/Icons/Pistol.png" id="5_cfd7u"]
-[ext_resource type="Texture2D" uid="uid://cnmexemqs5ctw" path="res://Sprites/Icons/Rum.png" id="6_s7pvh"]
-[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="7_n4sul"]
-[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="8_ngowy"]
-
-[sub_resource type="GDScript" id="GDScript_jitm7"]
-script/source = "extends Sprite2D
-
-var companions = {
-	0: preload(\"res://Art/Pirates/Pirate Blue Sprite Sheet/blue companion sheet.png\"),
-	1: preload(\"res://Art/Pirates/Pirate Gray Sprite Sheet/gray companion character sheet.png\"),
-	2: preload(\"res://Art/Pirates/Pirate Green Sprite Sheet/green companion character sheet .png\"),
-}
-
-func _ready():
-	self.texture = companions[Global.first_companion]
-	
-"
+[ext_resource type="Script" path="res://Characters/RoamingNPC.gd" id="1_u7m1f"]
+[ext_resource type="Texture2D" uid="uid://ct8g3u7iwvvri" path="res://Art/NPC+UI/TestNPC1.png" id="2_5kxlu"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_mdqb4"]
 
 [sub_resource type="Animation" id="Animation_5rgvr"]
 resource_name = "backwards_idle"
@@ -42,7 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_crl8m"]
 resource_name = "forward_idle"
-length = 1.2
+length = 0.9
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -171,6 +152,10 @@ _data = {
 "walk_up": SubResource("Animation_otycb")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
+radius = 6.0
+height = 12.0
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nte6"]
 animation = &"left_idle"
 
@@ -241,27 +226,34 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
 states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
-[node name="Companion" type="CharacterBody2D"]
-position = Vector2(0, 12)
+[sub_resource type="CircleShape2D" id="CircleShape2D_5s0k2"]
+radius = 15.0
+
+[node name="NPC" type="CharacterBody2D"]
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_3d8y2")
+script = ExtResource("1_u7m1f")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, 13)
-texture = ExtResource("2_ehi30")
+position = Vector2(-1, 1)
+texture = ExtResource("2_5kxlu")
 offset = Vector2(0, -15)
 hframes = 3
-vframes = 8
-frame = 2
-script = SubResource("GDScript_jitm7")
+vframes = 7
+frame = 1
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_2kr0c")
 }
 speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
@@ -271,56 +263,25 @@ tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
-parameters/Idle/blend_position = Vector2(0, 1.1)
+parameters/Idle/blend_position = Vector2(-0.00160003, 1.11164)
 parameters/Walk/blend_position = Vector2(0, 0)
 
-[node name="PlayerPanel" type="Panel" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.2, 0.2)
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("3_mdqb4")
+expand_mode = 3
+stretch_mode = 4
 
-[node name="AbilityButtons" type="HBoxContainer" parent="PlayerPanel"]
-layout_mode = 0
-offset_left = -85.5
-offset_top = 40.0
-offset_right = 86.5
-offset_bottom = 80.0
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -11)
 
-[node name="MoveButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("3_0whtl")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_5s0k2")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="BasicAttackButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("4_40548")
-
-[node name="PistolButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("5_cfd7u")
-
-[node name="RumButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("6_s7pvh")
-
-[node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -8.0
-offset_top = -16.0
-offset_right = 56.0
-offset_bottom = -6.0
-scale = Vector2(0.25, 0.25)
-value = 100.0
-texture_under = ExtResource("7_n4sul")
-texture_progress = ExtResource("8_ngowy")
-
-[node name="StatusEffect" type="TextureRect" parent="."]
-offset_left = -4.0
-offset_top = -7.0
-offset_right = 36.0
-offset_bottom = 33.0
-scale = Vector2(0.22, 0.22)
-
-[connection signal="replacing_by" from="Body" to="." method="_on_body_replacing_by"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -23,7 +23,7 @@ func _process(delta):
 		print("swap to scene for fighting")
 		iterator = -1
 		if doFight:
-			scene_manager.change_scene(get_owner(), connected_scene)
+			scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
 
 
 func _on_new_text(title):
