@@ -28,13 +28,11 @@ func _process(delta):
 
 func _on_new_text(title):
 	print("new text selected!")
-	NPC = NPC.get_parent().get_node(NodePath(title))
 	textList = NPC.npcText
 	text = textList[0]
 
 
 func _on_new_q_text(title, QS, QF):
-	NPC = NPC.get_parent().get_node(NodePath(title))
 	if QS and !QF:
 		textList = NPC.durQuest
 	else:
@@ -52,8 +50,7 @@ func _on_npc_halt_move():
 	iterator = 0
 
 
-func _on_new_f_text(title, scene):
-	NPC = NPC.get_parent().get_node(NodePath(title))
+func _on_new_f_text(title):
 	# connected_scene = scene
 	textList = NPC.npcText
 	text = textList[0]
