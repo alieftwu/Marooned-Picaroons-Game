@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cf1ivq7wok67g"]
+[gd_scene load_steps=33 format=3 uid="uid://cf1ivq7wok67g"]
 
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="1_cbjnb"]
 [ext_resource type="Texture2D" uid="uid://ca62ji8untpgg" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png" id="2_rn2rh"]
@@ -227,12 +227,9 @@ states/Idle/node = SubResource("AnimationNodeBlendSpace2D_bxed4")
 states/Idle/position = Vector2(379, 100)
 states/Start/position = Vector2(191, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
-states/Walk/position = Vector2(634, 100)
+states/Walk/position = Vector2(635, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 graph_offset = Vector2(-186.663, 0)
-
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_diywf"]
-points = PackedVector2Array(-6, 0, -40, 75, 40, 75, 6, 0, 0, -6)
 
 [sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
 font = ExtResource("6_xdx5j")
@@ -242,8 +239,6 @@ font_color = Color(0, 0, 0, 1)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_cbjnb")
-fightScene = null
-npcText = null
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -251,8 +246,8 @@ position = Vector2(-1, 1)
 texture = ExtResource("2_rn2rh")
 offset = Vector2(0, -14.9)
 hframes = 3
-vframes = 7
-frame = 1
+vframes = 8
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -273,7 +268,7 @@ tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
-parameters/Idle/blend_position = Vector2(-0.00160003, 1.11164)
+parameters/Idle/blend_position = Vector2(1.232, -0.0407407)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -289,13 +284,13 @@ stretch_mode = 4
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(0, -11)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("ConvexPolygonShape2D_diywf")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
 [node name="Polygon2D" type="Polygon2D" parent="Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
 polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
