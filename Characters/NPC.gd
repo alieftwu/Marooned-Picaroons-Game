@@ -45,7 +45,6 @@ func _process(delta):
 
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_tree().current_scene.get_node("TileMap"):
-		print("display and await!\n", self.name)
 		closeEnough = true
 		newText.emit(self.name)
 
@@ -53,6 +52,5 @@ func _on_area_2d_body_entered(body):
 func _on_area_2d_body_exited(body):
 	if(textDisplayed):
 		emit_signal("hideTextBox")
-		print("remove textbox")
 		closeEnough = false
 		textDisplayed = false
