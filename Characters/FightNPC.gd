@@ -7,8 +7,7 @@ extends CharacterBody2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 
 @export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
-
-
+@export var fightScene = NodePath()
 signal showTextBox
 signal hideTextBox
 signal haltMove

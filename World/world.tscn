@@ -110,6 +110,8 @@ shape = SubResource("RectangleShape2D_r5rqs")
 
 [node name="Englishman" parent="." instance=ExtResource("11_af5ti")]
 position = Vector2(574, 360)
+npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
+fightScene = NodePath("")
 
 [node name="NPC" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(468, 122)
