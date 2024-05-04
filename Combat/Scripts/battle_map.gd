@@ -16,6 +16,7 @@ class_name BattleMap
 @onready var button3 = $Ability3
 @onready var button4 = $Ability4
 @onready var abilityMusic = $abilityMusic
+@export var mapType: String
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -95,7 +96,31 @@ func initialize():
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generatePrisonMap()
+	if (mapType == "City"):
+		{
+			0: _generateCityMap()
+		}
+	if (mapType == "Prison"):
+		{
+			0: _generatePrisonMap()
+		}
+	if (mapType == "Grass"):
+		{
+			0: _generateGrassMap()
+		}
+	if (mapType == "Snow"):
+		{
+			0: _generateSnowMap()
+		}
+	if (mapType == "Sewer"):
+		{
+			0: _generateSewerMap()
+		}
+	if (mapType == "Castle"):
+		{
+			0: _generateSewerMap()
+		}
+	
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
