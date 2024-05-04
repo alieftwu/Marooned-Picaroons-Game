@@ -1,41 +1,37 @@
-[gd_scene load_steps=11 format=3 uid="uid://dc4vudniph6xq"]
+[gd_scene load_steps=10 format=3 uid="uid://dc4vudniph6xq"]
 
-[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_q45js"]
-[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_v7qri"]
-[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_3vu48"]
-[ext_resource type="PackedScene" uid="uid://c0w18y8mxdqnm" path="res://Combat/Scenes/TestEnemy.tscn" id="4_pf6av"]
-[ext_resource type="PackedScene" uid="uid://uvr460ks63mx" path="res://Combat/Scenes/TestEnemyAggressive.tscn" id="5_3gmus"]
-[ext_resource type="PackedScene" uid="uid://c6o8w82e5ltul" path="res://Combat/Scenes/TestEnemyMix.tscn" id="6_oiwdm"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="7_sgm2s"]
-[ext_resource type="Script" path="res://Combat/Scripts/Player.gd" id="8_uepir"]
-[ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="9_7pbir"]
-[ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="10_wkhg3"]
+[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_81gjc"]
+[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_yj7ip"]
+[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_t5ilx"]
+[ext_resource type="PackedScene" uid="uid://c0w18y8mxdqnm" path="res://Combat/Scenes/TestEnemy.tscn" id="4_1mkxc"]
+[ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="4_ims13"]
+[ext_resource type="PackedScene" uid="uid://uvr460ks63mx" path="res://Combat/Scenes/TestEnemyAggressive.tscn" id="5_3xphh"]
+[ext_resource type="PackedScene" uid="uid://c6o8w82e5ltul" path="res://Combat/Scenes/TestEnemyMix.tscn" id="6_ielpd"]
+[ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_ndjlc"]
+[ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_tjcvt"]
 
 [node name="Combat" type="Node2D"]
-script = ExtResource("1_q45js")
+script = ExtResource("1_81gjc")
 
-[node name="BattleMap" parent="." instance=ExtResource("2_v7qri")]
+[node name="BattleMap" parent="." instance=ExtResource("2_yj7ip")]
 
-[node name="TurnQueue" parent="." instance=ExtResource("3_3vu48")]
+[node name="TurnQueue" parent="." instance=ExtResource("3_t5ilx")]
 
-[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_pf6av")]
+[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_1mkxc")]
 position = Vector2(136, 40)
 scale = Vector2(1, 0.76)
 
-[node name="TestEnemyAg" parent="TurnQueue" instance=ExtResource("5_3gmus")]
+[node name="TestEnemyAg" parent="TurnQueue" instance=ExtResource("5_3xphh")]
 position = Vector2(136, 72)
 
-[node name="TestEnemyMix" parent="TurnQueue" instance=ExtResource("6_oiwdm")]
+[node name="TestEnemyMix" parent="TurnQueue" instance=ExtResource("6_ielpd")]
 position = Vector2(136, 104)
 
-[node name="Player" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("7_sgm2s")]
+[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_ims13")]
+position = Vector2(8, 88)
+
+[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("8_ndjlc")]
+position = Vector2(8, 56)
+
+[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_tjcvt")]
 position = Vector2(8, 72)
-script = ExtResource("8_uepir")
-
-[node name="Companion" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("9_7pbir")]
-position = Vector2(8, 40)
-script = ExtResource("8_uepir")
-
-[node name="Companion2" parent="TurnQueue" groups=["PlayerUnits", "Units"] instance=ExtResource("10_wkhg3")]
-position = Vector2(8, 104)
-script = ExtResource("8_uepir")

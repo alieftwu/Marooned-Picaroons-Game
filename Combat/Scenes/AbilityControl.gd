@@ -4,6 +4,7 @@ extends Node2D
 @onready var tile_map = get_node("../TileMap")
 @onready var turn_queue = $"../../TurnQueue"
 @onready var highlight_map = get_node("../HighlightMap")
+@onready var abilityMusic = $"../abilityMusic"
 
 var astar_grid: AStarGrid2D
 var height : int = 9
@@ -37,7 +38,7 @@ func _input(event):
 
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
 	if player.frenzyBuff == true:
-		player.frenzyBuffCounter -= 1
+		player.frenzyBuffCount -= 1
 		if player.frenzyBuffCounter == 0:
 			player.frenzyBuff = false
 			player.speed -= 1
@@ -361,6 +362,9 @@ func pistolShot(player): #shoot in a line 3 away
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -393,6 +397,9 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -407,7 +414,7 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 	player.speed += 1
 	player.basicAttackDamage += 10
 	player.health -= 10
-	player.frezyBuff = true
+	player.frenzyBuff = true
 	player.frenzyBuffCount = 2 # to tell when 2 turns are up
 	
 	for space in buffTargets:	
@@ -455,6 +462,9 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		interactUnit.isStunned = true
 		interactUnit.isStunnedCount = 3 # 2 turns
 		interactUnit.updateStatusEffect()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -482,6 +492,9 @@ func pirateBlessing(player): #heal any friend on the map a little
 	var healedModifier = checkPassiveDefend(healChoice, 0, "Heal")
 	healChoice.health += 25 * healedModifier * healerModifier
 	healChoice.updateHealthBar()
+	#var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+	#abilityMusic.stream = testMusic
+	#abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -513,6 +526,9 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -544,6 +560,9 @@ func quickStrike(player): # attack then you can move again
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 1.2 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	player.bonusMove = true
 	emit_signal("specialAttackDone")
@@ -556,6 +575,7 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 	aroundFind(starting_position, 1, attackTargets, isPlayer)
 	
 	if attackTargets.is_empty() == false:
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		for targetSpace in attackTargets:
 			interactUnit = getTarget(targetSpace)
 			var attackModifier = checkPassiveAttack(player, 0, "Melee")
@@ -563,6 +583,8 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 			checkBlocking(interactUnit)
 			interactUnit.health -= (player.basicAttackDamage * 1.5 * attackModifier * defendModifier) - interactUnit.armor
 			interactUnit.updateHealthBar()
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -597,6 +619,9 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -630,6 +655,9 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		highlight_map.clearTile(attackChoice)
 		
 		if areTwoTargets == true: # second attack
@@ -649,6 +677,9 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 			checkBlocking(interactUnit)
 			interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
 			interactUnit.updateHealthBar()
+			testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 			
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
@@ -684,12 +715,18 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 	player.isStunned = true
 	player.isStunnedCount = 2 # 1 turn
 	player.updateStatusEffect()
+	var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+	abilityMusic.stream = testMusic
+	abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
 	
 func engagingBlock(player): # block all attacks until your next turn, if not hit stunned for 2 turns
 	player.isBlocking = true
+	#var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+	#abilityMusic.stream = testMusic
+	#abilityMusic.play()
 	emit_signal("specialAttackDone")
 	return
 
@@ -720,6 +757,9 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		
 		# find units around for splash damage
 		var splashTargets : Array = []

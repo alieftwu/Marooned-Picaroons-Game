@@ -1,13 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://da137es324l1j"]
+[gd_scene load_steps=27 format=3 uid="uid://da137es324l1j"]
 
 [ext_resource type="Script" path="res://Characters/companion.gd" id="1_3d8y2"]
 [ext_resource type="Texture2D" uid="uid://shfpxnniiomr" path="res://Art/Pirates/Pirate Blue Sprite Sheet/blue companion sheet.png" id="2_ehi30"]
-[ext_resource type="Texture2D" uid="uid://8o3ueryei1od" path="res://Sprites/Icons/Move.png" id="3_0whtl"]
-[ext_resource type="Texture2D" uid="uid://88w28i2vycqh" path="res://Sprites/Icons/Sword.png" id="4_40548"]
-[ext_resource type="Texture2D" uid="uid://b1ovu8pkt1crf" path="res://Sprites/Icons/Pistol.png" id="5_cfd7u"]
-[ext_resource type="Texture2D" uid="uid://cnmexemqs5ctw" path="res://Sprites/Icons/Rum.png" id="6_s7pvh"]
-[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="7_n4sul"]
-[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="8_ngowy"]
 
 [sub_resource type="GDScript" id="GDScript_jitm7"]
 script/source = "extends Sprite2D
@@ -273,54 +267,5 @@ parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/Idle/blend_position = Vector2(0, 1.1)
 parameters/Walk/blend_position = Vector2(0, 0)
-
-[node name="PlayerPanel" type="Panel" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.2, 0.2)
-
-[node name="AbilityButtons" type="HBoxContainer" parent="PlayerPanel"]
-layout_mode = 0
-offset_left = -85.5
-offset_top = 40.0
-offset_right = 86.5
-offset_bottom = 80.0
-
-[node name="MoveButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("3_0whtl")
-
-[node name="BasicAttackButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("4_40548")
-
-[node name="PistolButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("5_cfd7u")
-
-[node name="RumButton" type="Button" parent="PlayerPanel/AbilityButtons"]
-layout_mode = 2
-icon = ExtResource("6_s7pvh")
-
-[node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -8.0
-offset_top = -16.0
-offset_right = 56.0
-offset_bottom = -6.0
-scale = Vector2(0.25, 0.25)
-value = 100.0
-texture_under = ExtResource("7_n4sul")
-texture_progress = ExtResource("8_ngowy")
-
-[node name="StatusEffect" type="TextureRect" parent="."]
-offset_left = -4.0
-offset_top = -7.0
-offset_right = 36.0
-offset_bottom = 33.0
-scale = Vector2(0.22, 0.22)
 
 [connection signal="replacing_by" from="Body" to="." method="_on_body_replacing_by"]
