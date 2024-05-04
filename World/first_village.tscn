@@ -111,10 +111,15 @@ position = Vector2(635, 43)
 [node name="Companion2" parent="." instance=ExtResource("7_whcwq")]
 SPEED = 100.0
 
-[node name="NPC" parent="." instance=ExtResource("8_0021f")]
+[node name="Shopper" parent="." instance=ExtResource("8_0021f")]
 position = Vector2(249, 392)
 npcText = ["Welcome to my shop!", "Take a look around! Buy whatever you would like!", "All of these items are very useful I swear", "I will not try to cheat you out of your money I pinky promise."]
 
-[node name="NPC2" parent="." instance=ExtResource("9_d1x8v")]
+[node name="Guard1" parent="." instance=ExtResource("9_d1x8v")]
 position = Vector2(523, 223)
 rotation = 0.00174533
+direction = "right"
+
+[node name="Guard2" parent="." instance=ExtResource("9_d1x8v")]
+position = Vector2(661, 318)
+direction = "left"

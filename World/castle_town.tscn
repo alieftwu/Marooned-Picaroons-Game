@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1kvfk5elbeq7"]
+[gd_scene load_steps=10 format=3 uid="uid://c1kvfk5elbeq7"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_4p81j"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_l3uni"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="4_2tl43"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="5_eqxoq"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_lli4a"]
+[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="7_w5tjh"]
+[ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="8_r8bb2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_03bfn"]
 size = Vector2(21.1607, 60)
@@ -82,3 +84,37 @@ position = Vector2(732, 632)
 
 [node name="kings_castle_entrance" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(404, 379)
+
+[node name="CastleGuard1" parent="." instance=ExtResource("7_w5tjh")]
+position = Vector2(786, 495)
+
+[node name="CastleGuard2" parent="." instance=ExtResource("7_w5tjh")]
+position = Vector2(692, 495)
+
+[node name="CabbagesGuy" parent="." instance=ExtResource("8_r8bb2")]
+position = Vector2(451, 747)
+npcText = ["You better not lay a finger on my cabbages."]
+
+[node name="Farmer1" parent="." instance=ExtResource("8_r8bb2")]
+position = Vector2(447, 910)
+direction = "right"
+npcText = ["I'm sorry I don't think I can sell produce to criminals."]
+
+[node name="Farmer2" parent="." instance=ExtResource("8_r8bb2")]
+position = Vector2(545, 912)
+direction = "left"
+npcText = ["Unlike that OTHER GUY I'll gladly sell you produce!", "IF I HAD ANY TO SELL."]
+
+[node name="Farmer3" parent="." instance=ExtResource("8_r8bb2")]
+position = Vector2(449, 990)
+direction = "right"
+npcText = ["What are those two lunatics arguing about?", "Why Don't they just sell produce and get it over with.", "I would sell to you but my wife says I shouldn't talk to criminals."]
+
+[node name="Farmer4" parent="." instance=ExtResource("8_r8bb2")]
+position = Vector2(544, 993)
+direction = "left"
+npcText = ["Y'know, my kid is really interested in pirates, I think he'd love to meet you.", "We live closer to the coast, maybe you've been there?", "His mother wouldn't want to see you near him, but it'd make his day."]
+
+[node name="Smithy" parent="." instance=ExtResource("8_r8bb2")]
+position = Vector2(1026, 980)
+npcText = ["Hello there! I be the smithy of the town here!", "Do you need anything to be smithed?"]

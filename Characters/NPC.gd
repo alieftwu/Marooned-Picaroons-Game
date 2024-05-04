@@ -4,8 +4,10 @@ extends CharacterBody2D
 @onready var bubble = get_node("TextureRect")
 @onready var textBox = get_node("HUD/TextureRect")
 @onready var textBoxText = get_node("HUD/TextureRect/Label")
+@onready var animation_tree : AnimationTree = $AnimationTree
 
-@export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
+@export var direction = "down"
+@export var npcText = ["I say words! and when you press space, I say more!"]
 
 signal showTextBox
 signal hideTextBox
@@ -16,7 +18,19 @@ var textDisplayed = false
 
 func _ready():
 	bubble.hide()
-	pass
+	match direction:
+		"down":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		"up":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		"left":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		"right":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
 
 func _process(delta):
 	if(closeEnough):
