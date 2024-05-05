@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://72nmcd4jn5p5"]
+[gd_scene load_steps=7 format=3 uid="uid://72nmcd4jn5p5"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/Player.gd" id="1_8d1rl"]
 [ext_resource type="Texture2D" uid="uid://b1r13ed5vl8sh" path="res://Sprites/Pirates/Pirates Blue Sprite Sheet.png" id="3_w0e3q"]
@@ -9,11 +9,30 @@
 atlas = ExtResource("3_w0e3q")
 region = Rect2(0, 0, 16, 16)
 
+[sub_resource type="GDScript" id="GDScript_a7q57"]
+script/source = "extends Sprite2D
+
+
+var companions2 = {
+	0: preload(\"res://Art/Pirates/Pirate White Sprite Sheet/white companion character.png\"),
+	1: preload(\"res://Art/Pirates/Pirate Red Sprite Sheet/actual red pirate companion.png\"),
+	2: preload(\"res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png\"),
+}
+
+func _ready():
+	self.texture = companions2[Global.second_companion]
+	
+
+"
+
 [node name="TestPlayer" type="Node2D" groups=["PlayerUnits", "Units"]]
 script = ExtResource("1_8d1rl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_v1mjp")
+hframes = 3
+vframes = 8
+script = SubResource("GDScript_a7q57")
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -8.0

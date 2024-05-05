@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhn5bvhkvnuh7"]
+[gd_scene load_steps=7 format=3 uid="uid://bhn5bvhkvnuh7"]
 
 [ext_resource type="Texture2D" uid="uid://b1r13ed5vl8sh" path="res://Sprites/Pirates/Pirates Blue Sprite Sheet.png" id="2_pqj7h"]
 [ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="3_keuwp"]
@@ -18,8 +18,25 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"Brawler\"
-var abilityList : Array = [\"rapidFire\", \"pistolShot\", \"bombThrow\"] # buttons 2-4 abilities. can switch out 
+#changes passive abilities
+var passiveAbility = {
+	0: \"Brawler\",
+	1: \"Bomber\",
+	2: \"ShotPrediction\",
+	3: \"Brawler\",
+	4: \"Bomber\",
+	5: \"ShotPrediction\"
+}
+
+# buttons 2-4 abilities. can switch out
+var abilityList = {
+	0: [\"heavySwordSwing\", \"quickStrike\", \"recklessFrenzy\"], #green pirate
+	1: [\"rapidFire\" , \"pistolShot\", \"engagingBlock\"], #blue pirate
+	2: [\"quickStrike\" , \"axeToss\", \"pirateBlessing\"], #gray pirate
+	3: [\"rapidFire\" , \"pistolShot\", \"bombThrow\"], #red pirate
+	4: [\"quickStrike\" , \"cannonShot\", \"pirateBlessing\"], #white pirate
+	5: [\"heavySwordSwing\", \"quickStrike\", \"recklessFrenzy\"], #yellow pirate
+} 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -43,6 +60,8 @@ func _ready():
 	maxHealth = 95
 	armor = 0
 	basicAttackDamage = 12
+	setAbilities(Global.PlayerSelect)
+	setPassives(Global.PlayerSelect)
 
 func play_turn():
 	updateHealthBar()
@@ -88,17 +107,50 @@ func updateStatusEffect():
 		statusEffect.texture = effect
 	else:
 		statusEffect.texture = null
+
+func setAbilities(spriteIndex):
+	if spriteIndex in abilityList:
+		abilityList = abilityList[spriteIndex]
+	else:
+		#Default abilities
+		abilityList = [\"rapidFire\", \"quickStrike\", \"pirateBlessing\"]
+
+func setPassives(spriteIndex):
+	if spriteIndex in passiveAbility:
+		passiveAbility = passiveAbility[spriteIndex]
+	else:
+		#default passive
+		print(\"main character setting to default passive\")
+		passiveAbility = \"Brawler\"
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v1mjp"]
 atlas = ExtResource("2_pqj7h")
 region = Rect2(16.529, 127.247, 16, 16)
 
+[sub_resource type="GDScript" id="GDScript_xf6ae"]
+script/source = "extends Sprite2D
+
+var players = {
+	0: preload(\"res://Art/Pirates/Pirate Green Sprite Sheet/Green Pirate Main Character.png\"),
+	1: preload(\"res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png\"),
+	2: preload(\"res://Art/Pirates/Pirate Gray Sprite Sheet/Gray Pirate Main Character.png\"),
+	3: preload(\"res://Art/Pirates/Pirate Red Sprite Sheet/red pirate companion.png\"),
+	4: preload(\"res://Art/Pirates/Pirate White Sprite Sheet/White Pirate Main Character.png\"),
+	5: preload(\"res://Art/Pirates/Pirate Yellow Sprite Sheet/Yellow Pirate Main Character.png\")
+}
+func _ready():
+	self.texture = players[Global.PlayerSelect]
+"
+
 [node name="TestPlayer" type="Node2D" groups=["PlayerUnits", "Units"]]
 script = SubResource("GDScript_p2gbp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_v1mjp")
+hframes = 3
+vframes = 8
+script = SubResource("GDScript_xf6ae")
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -8.0

@@ -19,6 +19,7 @@ class_name BattleMap
 @onready var damageDisplay = $DamageDisplay
 @onready var abilityInfo = $AbilityInfo
 @onready var abilityInfoLabel = $AbilityInfo/InfoText
+@export var mapType : String
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -95,10 +96,38 @@ signal abilityFinished
 
 # Called when the node enters the scene tree for the first time.
 func initialize():
+	if mapType == null:
+		print("maptype is null")
+	print(mapType)
+	print("test")
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generatePrisonMap()
+	if (mapType == "City"):
+		{
+			0: _generateCityMap()
+		}
+	if (mapType == "Prison"):
+		{
+			0: _generatePrisonMap()
+		}
+	if (mapType == "Grass"):
+		{
+			0: _generateGrassMap()
+		}
+	if (mapType == "Snow"):
+		{
+			0: _generateSnowMap()
+		}
+	if (mapType == "Sewer"):
+		{
+			0: _generateSewerMap()
+		}
+	if (mapType == "Castle"):
+		{
+			0: _generateCastleMap()
+		}
+	
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
@@ -933,6 +962,14 @@ func checkStun(unit): # see if unit needs to skip turn
 		skipTurn = true
 		return skipTurn
 
+func updateDamageDisplay(player, damage):
+	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
+	damageDisplay.visible = true
+	damageDisplay.text = ("-" + str(damage) + " damage")
+	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	damageDisplay.visible = false
+	return
+
 func updateButtons(player): # update icons to match abilities
 	var button2Label = player.abilityList[0]
 	var button3Label = player.abilityList[1]
@@ -1057,14 +1094,6 @@ func updateButtons(player): # update icons to match abilities
 		button4.texture_normal = buttonLoad
 	return
 
-func updateDamageDisplay(player, damage):
-	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
-	damageDisplay.visible = true
-	damageDisplay.text = ("-" + str(damage) + " damage")
-	await get_tree().create_timer(0.75).timeout # wait for 2 seconds
-	damageDisplay.visible = false
-	return
-
 func updateAbilityInfo(player, ability):
 	abilityInfo.visible = true
 	abilityInfoLabel.text = getAbilityText(ability)
@@ -1123,7 +1152,7 @@ func _on_ability_2_mouse_exited():
 	abilityInfoLabel.text = ""
 	abilityInfo.visible = false
 	return
-	
+
 func _on_ability_3_mouse_entered():
 	var currentPlayer = turn_queue.get_active_character()
 	var ability = currentPlayer.abilityList[1]
