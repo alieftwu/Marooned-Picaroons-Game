@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_tnmug"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_wub1e"]
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="8_kabi6"]
-[ext_resource type="Texture2D" uid="uid://ca62ji8untpgg" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png" id="9_yjppt"]
+[ext_resource type="Texture2D" uid="uid://cuxx31j1m5vg0" path="res://Art/Pirates/Pirate White Sprite Sheet/white enemy sprite.png" id="9_57bax"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="10_miv4p"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="11_1ecr4"]
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="12_onb41"]
@@ -346,7 +346,7 @@ npcText = ["Now lets fight!", "This is actually a test lol"]
 [node name="Body" type="Sprite2D" parent="Guard 1"]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("9_yjppt")
+texture = ExtResource("9_57bax")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
@@ -443,7 +443,7 @@ direction = "up"
 [node name="Body" type="Sprite2D" parent="Guard 2"]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("9_yjppt")
+texture = ExtResource("9_57bax")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
@@ -539,7 +539,7 @@ script = ExtResource("8_kabi6")
 [node name="Body" type="Sprite2D" parent="Guard 3"]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("9_yjppt")
+texture = ExtResource("9_57bax")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
