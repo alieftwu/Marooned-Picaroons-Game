@@ -7108,6 +7108,7 @@ stream = ExtResource("35_o360o")
 max_distance = 4000.0
 
 [node name="DamageDisplay" type="RichTextLabel" parent="."]
+visible = false
 offset_left = 53.0
 offset_top = -6.0
 offset_right = 183.0

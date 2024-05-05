@@ -18,9 +18,9 @@ var passiveAbility = {
 }
 #buttons 2-4 abilities. can switch out
 var abilityList = {
-	0: ["heavySwordSwing", "quickStrike", "recklessFrenzy"], #white companion
+	0: ["heavySwordSwing", "quickStrike", "damageWave"], #white companion
 	1: ["rapidFire" , "pistolShot", "engagingBlock"], #red companion
-	2: ["quickStrike" , "axeToss", "pirateBlessing"], #yellow companion
+	2: ["quickStrike" , "axeToss", "recklessFrenzy"], #yellow companion
 } 
 
 # look at abilityControl checkMoveSlot
