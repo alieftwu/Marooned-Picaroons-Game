@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=62 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -32,6 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://b8d4jq3ni5bfh" path="res://Tilesets/SewerTileBarrel.png" id="20_hhj27"]
 [ext_resource type="Texture2D" uid="uid://c8ops6veqfr8l" path="res://Combat/Resources/SkillIcons/PNG/1.png" id="31_gjvt6"]
 [ext_resource type="FontFile" uid="uid://cox8f22drukm0" path="res://Art/fonts/PIXELOIDSANSBOLD-PKNYD.TTF" id="32_hk35y"]
+[ext_resource type="Texture2D" uid="uid://bi1b75vx27cv2" path="res://Combat/Resources/UI_Flat_Frame_01_Standard.png" id="34_kknik"]
 [ext_resource type="AudioStream" uid="uid://bic0o5r21u6n2" path="res://Combat/Resources/07_human_atk_sword_2.wav" id="35_o360o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5e7gd"]
@@ -7107,15 +7108,50 @@ stream = ExtResource("35_o360o")
 max_distance = 4000.0
 
 [node name="DamageDisplay" type="RichTextLabel" parent="."]
-visible = false
-offset_left = 7.0
-offset_top = -22.0
-offset_right = 137.0
-offset_bottom = -1.0
+offset_left = 53.0
+offset_top = -6.0
+offset_right = 183.0
+offset_bottom = 15.0
+scale = Vector2(0.2, 0.195)
 theme_override_colors/default_color = Color(0.898039, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("32_hk35y")
+text = "4 damage"
 
+[node name="AbilityInfo" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 148.0
+offset_top = 2.0
+offset_right = 188.0
+offset_bottom = 42.0
+scale = Vector2(0.707609, 0.676479)
+
+[node name="InfoBackground" type="TextureRect" parent="AbilityInfo"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("34_kknik")
+
+[node name="InfoText" type="Label" parent="AbilityInfo"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 244.0
+offset_bottom = 123.0
+scale = Vector2(0.37684, 0.732212)
+text = "Test"
+autowrap_mode = 2
+
+[connection signal="mouse_entered" from="Ability1" to="." method="_on_ability_1_mouse_entered"]
+[connection signal="mouse_exited" from="Ability1" to="." method="_on_ability_1_mouse_exited"]
 [connection signal="pressed" from="Ability1" to="." method="_on_ability_1_pressed"]
+[connection signal="mouse_entered" from="Ability2" to="." method="_on_ability_2_mouse_entered"]
+[connection signal="mouse_exited" from="Ability2" to="." method="_on_ability_2_mouse_exited"]
 [connection signal="pressed" from="Ability2" to="." method="_on_ability_2_pressed"]
+[connection signal="mouse_entered" from="Ability3" to="." method="_on_ability_3_mouse_entered"]
+[connection signal="mouse_exited" from="Ability3" to="." method="_on_ability_3_mouse_exited"]
 [connection signal="pressed" from="Ability3" to="." method="_on_ability_3_pressed"]
+[connection signal="mouse_entered" from="Ability4" to="." method="_on_ability_4_mouse_entered"]
+[connection signal="mouse_exited" from="Ability4" to="." method="_on_ability_4_mouse_exited"]
 [connection signal="pressed" from="Ability4" to="." method="_on_ability_4_pressed"]
