@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=61 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://b6xcgj1eypa2g" path="res://Tilesets/grassTruck.png" id="19_qmoav"]
 [ext_resource type="Texture2D" uid="uid://b8d4jq3ni5bfh" path="res://Tilesets/SewerTileBarrel.png" id="20_hhj27"]
 [ext_resource type="Texture2D" uid="uid://c8ops6veqfr8l" path="res://Combat/Resources/SkillIcons/PNG/1.png" id="31_gjvt6"]
+[ext_resource type="FontFile" uid="uid://cox8f22drukm0" path="res://Art/fonts/PIXELOIDSANSBOLD-PKNYD.TTF" id="32_hk35y"]
 [ext_resource type="AudioStream" uid="uid://bic0o5r21u6n2" path="res://Combat/Resources/07_human_atk_sword_2.wav" id="35_o360o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5e7gd"]
@@ -7017,6 +7018,7 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
 text = " 
 "
@@ -7042,6 +7044,7 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
 text = " 
 "
@@ -7067,6 +7070,7 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
 text = " 
 "
@@ -7092,6 +7096,7 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
 text = " 
 "
@@ -7100,6 +7105,15 @@ text = "
 position = Vector2(144, 352)
 stream = ExtResource("35_o360o")
 max_distance = 4000.0
+
+[node name="DamageDisplay" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 7.0
+offset_top = -22.0
+offset_right = 137.0
+offset_bottom = -1.0
+theme_override_colors/default_color = Color(0.898039, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("32_hk35y")
 
 [connection signal="pressed" from="Ability1" to="." method="_on_ability_1_pressed"]
 [connection signal="pressed" from="Ability2" to="." method="_on_ability_2_pressed"]

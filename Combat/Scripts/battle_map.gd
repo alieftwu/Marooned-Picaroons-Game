@@ -16,6 +16,7 @@ class_name BattleMap
 @onready var button3 = $Ability3
 @onready var button4 = $Ability4
 @onready var abilityMusic = $abilityMusic
+@onready var damageDisplay = $DamageDisplay
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -543,11 +544,13 @@ func simpleAttack(player):
 				abilityControl.checkBlocking(unit)
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
-				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				unit.health -= damage
 				unit.updateHealthBar()
 				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 				abilityMusic.stream = testMusic
 				abilityMusic.play()
+				await updateDamageDisplay(unit, damage)
 				print("hit enemy!")
 				break
 
@@ -565,11 +568,13 @@ func simpleAttack(player):
 				abilityControl.checkBlocking(unit)
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
-				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				unit.health -= damage
 				unit.updateHealthBar()
 				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 				abilityMusic.stream = testMusic
 				abilityMusic.play()
+				await updateDamageDisplay(unit, damage)
 				print("hit enemy!")
 				break
 		
@@ -737,11 +742,13 @@ func simpleEnemyAttack(enemy):
 		abilityControl.checkBlocking(attacked_unit)
 		var attackModifier = abilityControl.checkPassiveAttack(enemy, 0, "Melee")
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
-		attacked_unit.health -= (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		var damage = (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		attacked_unit.health -= damage
 		attacked_unit.updateHealthBar()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
+		await updateDamageDisplay(attacked_unit, damage)
 		print("player hit!")
 	else:
 		print("no player found")
@@ -762,6 +769,9 @@ func checkHazardTile(unit):
 	var tile_data = tile_map.get_cell_tile_data(0, player_position)
 	if (tile_data.get_custom_data("hazard") == true):
 		unit.health -= 10
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		unit.updateHealthBar()
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
@@ -1043,4 +1053,11 @@ func updateButtons(player): # update icons to match abilities
 	elif button4Label == "bombThrow":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
 		button4.texture_normal = buttonLoad
+	return
+
+func updateDamageDisplay(player, damage):
+	damageDisplay.visible = true
+	damageDisplay.text = ("-" + str(damage) + " damage")
+	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	damageDisplay.visible = false
 	return
