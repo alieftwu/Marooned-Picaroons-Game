@@ -14,7 +14,7 @@
 script = ExtResource("1_81gjc")
 
 [node name="BattleMap" parent="." instance=ExtResource("2_yj7ip")]
-mapType = "Sewer"
+mapType = "City"
 
 [node name="TurnQueue" parent="." instance=ExtResource("3_t5ilx")]
 

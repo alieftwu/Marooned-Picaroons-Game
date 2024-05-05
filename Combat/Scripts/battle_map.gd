@@ -16,7 +16,7 @@ class_name BattleMap
 @onready var button3 = $Ability3
 @onready var button4 = $Ability4
 @onready var abilityMusic = $abilityMusic
-@export var mapType: String
+@export var mapType : String
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -93,6 +93,10 @@ signal abilityFinished
 
 # Called when the node enters the scene tree for the first time.
 func initialize():
+	if mapType == null:
+		print("maptype is null")
+	print(mapType)
+	print("test")
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
@@ -118,7 +122,7 @@ func initialize():
 		}
 	if (mapType == "Castle"):
 		{
-			0: _generateSewerMap()
+			0: _generateCastleMap()
 		}
 	
 	_makeAStarGrid()

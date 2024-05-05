@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name FightNPC
 @onready var around = get_node("Area2D")
 @onready var bubble = get_node("TextureRect")
 @onready var textBox = get_node("HUD/TextureRect")
@@ -8,7 +8,6 @@ extends CharacterBody2D
 
 @export var direction = "down"
 @export var npcText = ["Now lets fight!"]
-
 
 signal showTextBox
 signal hideTextBox

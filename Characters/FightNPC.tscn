@@ -328,7 +328,6 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("7_onnyt")
-connected_scene = "CombatScene"
 
 [connection signal="haltMove" from="." to="HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]

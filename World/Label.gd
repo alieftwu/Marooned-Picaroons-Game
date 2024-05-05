@@ -1,5 +1,5 @@
 extends Label
-@export var connected_scene: String #name of scene to change to
+@export var combat_scene: String #name of scene to change to
 @onready var textBox = get_parent() 
 @onready var NPC = get_parent().get_parent().get_parent() 
 @onready var iterator = -1
@@ -23,7 +23,7 @@ func _process(delta):
 		print("swap to scene for fighting")
 		iterator = -1
 		if doFight:
-			scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
+			scene_manager.combatSceneSwitch(get_owner(), combat_scene)
 
 
 func _on_new_text(title):
