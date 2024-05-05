@@ -65,26 +65,59 @@ func checkStun(player):
 			skipTurn = true
 		else:
 			player.didBlock = false
+	if player.passiveAbility == "unflinching":
+		skipTurn = false
 	return skipTurn
 	
 func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
 	if player.passiveAbility == "Brawler":
 		if damageType == "Melee":
-			damageModifier = 1.40
+			damageModifier = 1.25
 			print("Melee Damage increased flag")
 	if player.passiveAbility == "Bomber":
 		if damageType == "Bomb":
-			damageModifier = 1.25
+			damageModifier = 1.3
 			print("Bomb Damage increased flag")
+	if player.passiveAbility == "Sniper":
+		if damageType == "Ranged":
+			damageModifier = 1.4
+			print("Range Damage increased flag")
+			
+	# unflinching passive makes it so you can't be stunned		
+			
 	return damageModifier
 	
 func checkPassiveDefend(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
 	if player.passiveAbility == "ShotPrediction":
 		if damageType == "Ranged":
-			damageModifier = 0.60
+			damageModifier = 0.65
 			print("Range Damage reduced flag")
+	elif player.passiveAbility == "steelSkin":
+		if damageType == "Melee":
+			damageModifier = 0.10
+			print("Melee Damage reduced flag")
+	elif player.passiveAbility == "leatherSkin":
+		if damageType == "Melee":
+			damageModifier = 0.70
+			print("Melee Damage reduced flag")
+	elif player.passiveAbility == "hardToHit":
+		if damageType == "Throw":
+			damageModifier = 0
+			print("Throw Damage reduced flag")
+	elif player.passiveAbility == "evasive":
+		if randf() < 0.2:
+			damageModifier = 0
+			print("evasive flag")
+	elif player.passiveAbility == "ninja":
+		if randf() < 0.5:
+			damageModifier = 0
+			print("ghost flag")
+	elif player.passiveAbility == "ghost":
+		if randf() < 0.7:
+			damageModifier = 0
+			print("ghost flag")
 	if player.isBlocking == true: # if they are blocking negate all damage
 		damageModifier = 0.0
 		player.didBlock = true
@@ -539,8 +572,8 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 			attackChoice = attackTargets.pick_random()
 			
 		interactUnit = getTarget(attackChoice)
-		var attackModifier = checkPassiveAttack(player, 0, "Range")
-		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		var attackModifier = checkPassiveAttack(player, 0, "Throw")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Throw")
 		checkBlocking(interactUnit)
 		var damage = (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.health -= damage
