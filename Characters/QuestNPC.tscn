@@ -241,6 +241,7 @@ font_color = Color(0, 0, 0, 1)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_utidl")
+questName = "none"
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -264,9 +265,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -331,6 +329,7 @@ connected_scene = "CombatScene"
 
 [connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newQText" from="." to="HUD/TextureRect/Label" method="_on_new_q_text"]
+[connection signal="newText" from="." to="HUD/TextureRect/Label" method="_on_new_text"]
 [connection signal="showTextBox" from="." to="HUD/TextureRect" method="_on_npc_show_text_box"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

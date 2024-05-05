@@ -8,6 +8,7 @@ extends Label
 
 # Called when the node enters the scene tree for the first time.
 signal hideBoxLabel
+signal hideHideable
 
 func _ready():
 	text = ""
@@ -20,14 +21,13 @@ func _process(delta):
 		text = textList[iterator]
 	elif textBox.visible and Input.is_action_just_pressed("ui_accept") and iterator == textList.size()-1:
 		emit_signal("hideBoxLabel")
-		print("swap to scene for fighting")
+		emit_signal("hideHideable")
 		iterator = -1
 		if doFight:
 			scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
 
 
 func _on_new_text(title):
-	print("new text selected!")
 	textList = NPC.npcText
 	text = textList[0]
 
@@ -40,10 +40,6 @@ func _on_new_q_text(title, QS, QF):
 	if QF:
 		textList = NPC.postQuest
 	text = textList[0]
-
-
-func _on_scene_transition():
-	print("here I am!")
 
 
 func _on_npc_halt_move():
@@ -62,7 +58,3 @@ func _on_npc_new_i_text(title, IC):
 	else:
 		textList = NPC.preItem
 	text = textList[0]
-
-
-func _on_npc_new_text(title):
-	pass # Replace with function body.

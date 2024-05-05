@@ -31,8 +31,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
 		textDisplayed = true
 		emit_signal("showTextBox")
-		if !itemCollected:
+		if !itemCollected and Global.currentQuest == connectedQuest:
 			itemCollected = true
+			Global.currentQuestDone = true
 
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_tree().current_scene.get_node("TileMap"):

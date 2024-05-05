@@ -332,3 +332,4 @@ connected_scene = "CombatScene"
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="HUD/TextureRect/Label" to="HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="hideHideable" from="HUD/TextureRect/Label" to="." method="_on_hide_hideable"]

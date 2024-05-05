@@ -99,3 +99,6 @@ direction = "left"
 [node name="DynamiteEnjoyer" parent="." instance=ExtResource("8_n2uav")]
 position = Vector2(234, 394)
 questName = "prisonBreak"
+preQuest = ["Hey you wanna help me break into the prison?", "My friends in there and I'd like to get him out.", "If you could find some dynamite that'd be great and maybe he could help you too.", "Probably look up in the mountains for some dynamite, that'd be best"]
+durQuest = ["Do you have the Dynamite yet?", "Check up in the mountains that'd be where I'd look."]
+postQuest = ["Hey you got the dynamite!", "Alright I'll go blow the hole open if you can get my friend out.", "Good Luck To you!"]
