@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://754l5c1v65w4"]
 
-[ext_resource type="Script" path="res://Characters/Player.gd" id="1_05q78"]
+[ext_resource type="Script" path="res://Characters/player.gd" id="1_vxn5x"]
 [ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
 
 [sub_resource type="GDScript" id="GDScript_oqcru"]
@@ -243,7 +243,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_05q78")
+script = ExtResource("1_vxn5x")
 speed = 80.0
 
 [node name="Body" type="Sprite2D" parent="."]
@@ -253,6 +253,7 @@ texture = ExtResource("2_lsqmj")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 8
+frame = 2
 script = SubResource("GDScript_oqcru")
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
