@@ -581,7 +581,7 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 			var attackModifier = checkPassiveAttack(player, 0, "Melee")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 			checkBlocking(interactUnit)
-			interactUnit.health -= (player.basicAttackDamage * 1.5 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.health -= (player.basicAttackDamage * 1.3 * attackModifier * defendModifier) - interactUnit.armor
 			interactUnit.updateHealthBar()
 			abilityMusic.stream = testMusic
 			abilityMusic.play()
@@ -614,10 +614,10 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		var moveModifier = 1.0
-		if (player.health <= 10):
-			moveModifier = 2.0
+		if (player.health <= 20):
+			moveModifier = 2.4
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
+		interactUnit.health -= (player.basicAttackDamage * 1.25 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
@@ -710,10 +710,10 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 5 * attackModifier * defendModifier)
+		interactUnit.health -= (player.basicAttackDamage * 4 * attackModifier * defendModifier)
 		interactUnit.updateHealthBar()
 	player.isStunned = true
-	player.isStunnedCount = 2 # 1 turn
+	player.isStunnedCount = 3 # 2 turn
 	player.updateStatusEffect()
 	var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 	abilityMusic.stream = testMusic
@@ -755,7 +755,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		var attackModifier = checkPassiveAttack(player, 0, "Bomb")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Bomb")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic

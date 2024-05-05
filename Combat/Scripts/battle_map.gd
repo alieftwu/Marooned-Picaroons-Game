@@ -16,6 +16,9 @@ class_name BattleMap
 @onready var button3 = $Ability3
 @onready var button4 = $Ability4
 @onready var abilityMusic = $abilityMusic
+@onready var damageDisplay = $DamageDisplay
+@onready var abilityInfo = $AbilityInfo
+@onready var abilityInfoLabel = $AbilityInfo/InfoText
 @export var mapType : String
 
 var astar_grid: AStarGrid2D
@@ -572,11 +575,13 @@ func simpleAttack(player):
 				abilityControl.checkBlocking(unit)
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
-				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				unit.health -= damage
 				unit.updateHealthBar()
 				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 				abilityMusic.stream = testMusic
 				abilityMusic.play()
+				await updateDamageDisplay(unit, damage)
 				print("hit enemy!")
 				break
 
@@ -594,11 +599,13 @@ func simpleAttack(player):
 				abilityControl.checkBlocking(unit)
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
-				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				unit.health -= damage
 				unit.updateHealthBar()
 				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 				abilityMusic.stream = testMusic
 				abilityMusic.play()
+				await updateDamageDisplay(unit, damage)
 				print("hit enemy!")
 				break
 		
@@ -766,11 +773,13 @@ func simpleEnemyAttack(enemy):
 		abilityControl.checkBlocking(attacked_unit)
 		var attackModifier = abilityControl.checkPassiveAttack(enemy, 0, "Melee")
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
-		attacked_unit.health -= (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		var damage = (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		attacked_unit.health -= damage
 		attacked_unit.updateHealthBar()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
+		await updateDamageDisplay(attacked_unit, damage)
 		print("player hit!")
 	else:
 		print("no player found")
@@ -791,6 +800,9 @@ func checkHazardTile(unit):
 	var tile_data = tile_map.get_cell_tile_data(0, player_position)
 	if (tile_data.get_custom_data("hazard") == true):
 		unit.health -= 10
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		unit.updateHealthBar()
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
@@ -950,6 +962,14 @@ func checkStun(unit): # see if unit needs to skip turn
 		skipTurn = true
 		return skipTurn
 
+func updateDamageDisplay(player, damage):
+	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
+	damageDisplay.visible = true
+	damageDisplay.text = ("-" + str(damage) + " damage")
+	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	damageDisplay.visible = false
+	return
+
 func updateButtons(player): # update icons to match abilities
 	var button2Label = player.abilityList[0]
 	var button3Label = player.abilityList[1]
@@ -1072,4 +1092,85 @@ func updateButtons(player): # update icons to match abilities
 	elif button4Label == "bombThrow":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
 		button4.texture_normal = buttonLoad
+	return
+
+func updateAbilityInfo(player, ability):
+	abilityInfo.visible = true
+	abilityInfoLabel.text = getAbilityText(ability)
+	return
+
+func getAbilityText(ability):
+	var text = "error"
+	if ability == "Basic":
+		text = "Attack a target around you for basic damage."
+	elif ability == "pistolShot":
+		text = "Shoot an enemy 4 or less tiles away."
+	elif ability == "heavySwordSwing":
+		text = "Attack a target next to you for big damage"
+	elif ability == "recklessFrenzy":
+		text = "Increase speed and attack at the cost of health for 2 turns"
+	elif ability == "takeDown":
+		text = "Must have an ally next to you, damage and stun nearby opponent for 2 turns. Ignores armor."
+	elif ability == "pirateBlessing":
+		text = "Partially heal any friend on the map."
+	elif ability == "axeToss": # make daggerToss
+		text = "Toss a dagger that can go over obstacles, must be 2-3 spaces away from you."
+	elif ability == "quickStrike":
+		text = "Attack a target around you for 120% damage, then move again."
+	elif ability == "circleSlash":
+		text = "Attack all targets around you for 130% basic damage."
+	elif ability == "desparateStrike":
+		text = "Attack a target around you, dealing 125% damage normally and 300% damage if you have less than 20 health."
+	elif ability == "rapidFire":
+		text = "Attack up to 2 targets 3 or less tiles away for 75% damage."
+	elif ability == "cannonShot":
+		text = "Attack a target in a line for 400% damage, and you are stunned for 2 turns. Ignores armor."
+	elif ability == "engagingBlock":
+		text = "Block ALL enemy damage for 1 turn, if you are not attacked before you next turn, get stunned for 2 turns."
+	elif ability == "bombThrow":
+		text = "Throw a bomb in a line up to 3 tiles away from you, hitting the target and all nearby units for 200% damage."
+	return text
+
+func _on_ability_1_mouse_entered(): # when mouse enters button 1
+	var ability = "Basic"
+	var currentPlayer = turn_queue.get_active_character()
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_1_mouse_exited(): # clear Infotext
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return
+
+func _on_ability_2_mouse_entered():
+	var currentPlayer = turn_queue.get_active_character()
+	var ability = currentPlayer.abilityList[0]
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_2_mouse_exited():
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return
+
+func _on_ability_3_mouse_entered():
+	var currentPlayer = turn_queue.get_active_character()
+	var ability = currentPlayer.abilityList[1]
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_3_mouse_exited():
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return
+
+func _on_ability_4_mouse_entered():
+	var currentPlayer = turn_queue.get_active_character()
+	var ability = currentPlayer.abilityList[2]
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_4_mouse_exited():
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
 	return
