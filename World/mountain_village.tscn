@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://cptqw6by0eogk"]
+[gd_scene load_steps=16 format=3 uid="uid://cptqw6by0eogk"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_mpgjl"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_ql2ok"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_4oavv"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="4_oojuv"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_oojuv"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_oavo7"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_gj1sq"]
+[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
 
 [sub_resource type="Gradient" id="Gradient_dvd5f"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -126,8 +127,9 @@ npcText = ["Do you need anything from me? if not go away. Capiche?"]
 
 [node name="Snowman" parent="." instance=ExtResource("7_gj1sq")]
 position = Vector2(711, 331)
-npcText = ["HahaHaha! A snowman!"]
+npcText = ["Haha! A snowman!"]
 
-[node name="Item Giver" parent="." instance=ExtResource("7_gj1sq")]
-position = Vector2(1000, 280)
-npcText = ["You need anything?", "I'll give you an item if you need it"]
+[node name="DynamiteBoy" parent="." instance=ExtResource("8_k1amb")]
+position = Vector2(997, 281)
+connectedQuest = "prisonBreak"
+preItem = ["You were told I have dynamite you could use?", "Yeah, i do, Here you go, don't blow yourself up with it."]

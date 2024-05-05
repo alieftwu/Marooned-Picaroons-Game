@@ -3,16 +3,16 @@ extends CharacterBody2D
 @onready var around = get_node("Area2D")
 @onready var bubble = get_node("TextureRect")
 
-@export var questName = "quest name"
-@export var preQuest = ["I say words! and ask you to do something!"]
-@export var durQuest = ["How's that thing I told you to do going?"]
-@export var postQuest = ["You came back! no way that's crazy!"]
-@export var questFinished = false
-@export var questStarted = false
+@export var connectedQuest = "quest"
+@export var npcText = ["Howdy! I give items!"]
+@export var preItem = ["I say words! and ask you to do something!"]
+@export var postItem = ["How's that thing I told you to do going?"]
+@export var itemCollected = false
 
 signal showTextBox
 signal hideTextBox
-signal newQText(title, QS, QF)
+signal newIText(title, IC)
+signal newText(title)
 
 var closeEnough = false
 var textDisplayed = false
@@ -30,22 +30,18 @@ func _process(delta):
 	# check for interaction
 	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
 		textDisplayed = true
-		if !questStarted and !Global.currentQuestDone:
-			questStarted = true
-			Global.currentQuest = questName
-		if Global.currentQuestDone:
-			if Global.currentQuest == questName:
-				Global.questsDone += 1
-			questFinished = true
-			newQText.emit(name, questStarted, questFinished)
-			Global.currentQuest = "none"
 		emit_signal("showTextBox")
+		if !itemCollected:
+			itemCollected = true
 
 func _on_area_2d_body_entered(body):
-	if body is Player:
+	if body != self and body != get_tree().current_scene.get_node("TileMap"):
 		print("display and await!")
 		closeEnough = true
-		newQText.emit(name, questStarted, questFinished)
+		if Global.currentQuest == connectedQuest:
+			newIText.emit(name, itemCollected)
+		else:
+			newText.emit(name)
 
 
 func _on_area_2d_body_exited(body):

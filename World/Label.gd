@@ -56,3 +56,13 @@ func _on_new_f_text(title):
 	text = textList[0]
 	doFight = true
 
+func _on_npc_new_i_text(title, IC):
+	if IC:
+		textList = NPC.postItem
+	else:
+		textList = NPC.preItem
+	text = textList[0]
+
+
+func _on_npc_new_text(title):
+	pass # Replace with function body.

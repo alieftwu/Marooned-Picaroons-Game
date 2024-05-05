@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://dsiq8d3452055"]
+[gd_scene load_steps=11 format=3 uid="uid://dsiq8d3452055"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_3wigp"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_5kknc"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_hc102"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_hc102"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_o2tub"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_khk7t"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="4_x5kux"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_b510a"]
+[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="8_211qw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bwlne"]
 size = Vector2(21.1607, 60)
@@ -100,11 +101,15 @@ shape = SubResource("RectangleShape2D_6ylb1")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(633.732, 717.581)
 rotation = -3.13985
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_6ylb1")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1508, 487)
 rotation = -4.71095
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_6ylb1")
+
+[node name="NPC" parent="." instance=ExtResource("8_211qw")]
+position = Vector2(486, 454)
+
+[node name="NPC2" parent="." instance=ExtResource("8_211qw")]
+position = Vector2(621, 458)

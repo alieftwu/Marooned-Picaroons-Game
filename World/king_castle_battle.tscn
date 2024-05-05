@@ -1,12 +1,35 @@
-[gd_scene load_steps=7 format=3 uid="uid://duk18h72tn37u"]
+[gd_scene load_steps=13 format=3 uid="uid://duk18h72tn37u"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_n8x85"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_xbltg"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_dc0h5"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_dc0h5"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_wo8mo"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_ydsio"]
+[ext_resource type="Script" path="res://World/PathFollow2D.gd" id="6_4sao6"]
+[ext_resource type="PackedScene" uid="uid://367wmpe8vxyd" path="res://Characters/PatrolNPC.tscn" id="7_l2tns"]
+[ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="8_43bb4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5jpg"]
+
+[sub_resource type="Curve2D" id="Curve2D_slvoe"]
+bake_interval = 0.01
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 839.65, 520)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_dp0x3"]
+bake_interval = 0.01
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 291.307, 682)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_73ecf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 50, 50, 0, 0, 0, 0, 323, 45)
+}
+point_count = 2
 
 [node name="king_castle_battle" type="Node2D"]
 y_sort_enabled = true
@@ -51,3 +74,88 @@ position = Vector2(232, 547)
 
 [node name="king_castle_hallway" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(-165, 49)
+
+[node name="Path2D2" type="Path2D" parent="."]
+z_index = 1
+position = Vector2(35, 163)
+scale = Vector2(0.875365, 1)
+curve = SubResource("Curve2D_slvoe")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D2"]
+position = Vector2(291.307, 519)
+rotation = 0.00938702
+rotates = false
+loop = false
+script = ExtResource("6_4sao6")
+
+[node name="PatrollingGuard" parent="Path2D2/PathFollow2D" instance=ExtResource("7_l2tns")]
+position = Vector2(2.34097, 5.9783)
+rotation = -0.00938702
+scale = Vector2(1.14238, 1)
+direction = "right"
+
+[node name="Path2D3" type="Path2D" parent="."]
+z_index = 1
+position = Vector2(56, -37)
+scale = Vector2(0.875365, 1)
+curve = SubResource("Curve2D_dp0x3")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D3"]
+position = Vector2(291.307, 519)
+rotation = 0.00938702
+rotates = false
+loop = false
+script = ExtResource("6_4sao6")
+
+[node name="PatrollingGuard" parent="Path2D3/PathFollow2D" instance=ExtResource("7_l2tns")]
+position = Vector2(2.34097, 5.9783)
+rotation = -0.00938702
+scale = Vector2(1.14238, 1)
+direction = "right"
+
+[node name="Path2D4" type="Path2D" parent="."]
+z_index = 1
+position = Vector2(506, -31)
+scale = Vector2(0.875365, 1)
+curve = SubResource("Curve2D_dp0x3")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D4"]
+position = Vector2(291.307, 519)
+rotation = 0.00938702
+rotates = false
+loop = false
+script = ExtResource("6_4sao6")
+
+[node name="PatrollingGuard" parent="Path2D4/PathFollow2D" instance=ExtResource("7_l2tns")]
+position = Vector2(2.34097, 5.9783)
+rotation = -0.00938702
+scale = Vector2(1.14238, 1)
+direction = "right"
+
+[node name="Path2D5" type="Path2D" parent="."]
+z_index = 1
+position = Vector2(40, -187)
+scale = Vector2(0.875365, 1)
+curve = SubResource("Curve2D_slvoe")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(354, 548)
+curve = SubResource("Curve2D_73ecf")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(50, 50)
+rotation = 0.0107234
+scale = Vector2(0.875377, 0.99999)
+skew = -0.00250638
+rotates = false
+loop = false
+script = ExtResource("6_4sao6")
+
+[node name="PatrollingGuard" parent="Path2D/PathFollow2D" instance=ExtResource("7_l2tns")]
+position = Vector2(2.34097, 5.9783)
+rotation = -0.00938702
+scale = Vector2(1.14238, 1)
+direction = "right"
+
+[node name="NPC" parent="." instance=ExtResource("8_43bb4")]
+position = Vector2(536, 468)
