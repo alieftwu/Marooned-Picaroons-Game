@@ -11,6 +11,10 @@ signal hideBoxLabel
 signal hideHideable
 
 func _ready():
+	if(Global.currentFightNPC == NPC.name and Global.currentFightWon):
+		NPC.hasWon = true
+		Global.currentFightNPC = null
+		Global.currentFightWon = false
 	text = ""
 	textList[0] = text
 	pass
@@ -24,6 +28,7 @@ func _process(delta):
 		emit_signal("hideHideable")
 		iterator = -1
 		if doFight:
+			Global.currentFightNPC = NPC.name
 			scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
 
 
