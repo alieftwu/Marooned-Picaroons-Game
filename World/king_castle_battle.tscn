@@ -297,7 +297,7 @@ layer_3/name = "Tilemap - Doodads - No Collisions"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("2_dc0h5")]
-position = Vector2(141, 614)
+position = Vector2(36, 587)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
