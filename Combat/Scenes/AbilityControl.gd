@@ -74,53 +74,74 @@ func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check
 	if player.passiveAbility == "Brawler":
 		if damageType == "Melee":
 			damageModifier = 1.25
-			print("Melee Damage increased flag")
-	if player.passiveAbility == "Bomber":
+			print("Brawler")
+	elif player.passiveAbility == "Bomber":
 		if damageType == "Bomb":
-			damageModifier = 1.3
-			print("Bomb Damage increased flag")
-	if player.passiveAbility == "Sniper":
-		if damageType == "Ranged":
 			damageModifier = 1.4
-			print("Range Damage increased flag")
-			
+			print("Bomber")
+	elif player.passiveAbility == "Sniper":
+		if damageType == "Ranged":
+			damageModifier = 1.3
+			print("Sniper")
+	elif player.passiveAbility == "ninja":
+			damageModifier = 0.8
+			print("Ninja")
 	# unflinching passive makes it so you can't be stunned		
 			
 	return damageModifier
 	
 func checkPassiveDefend(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
+	var testMusic = load("res://Combat/Resources/block.wav")
 	if player.passiveAbility == "ShotPrediction":
 		if damageType == "Ranged":
 			damageModifier = 0.65
-			print("Range Damage reduced flag")
+			print("ShotPrediction")
 	elif player.passiveAbility == "steelSkin":
 		if damageType == "Melee":
 			damageModifier = 0.10
-			print("Melee Damage reduced flag")
+			print("steelSkin")
+			testMusic = load("res://Combat/Resources/block.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 	elif player.passiveAbility == "leatherSkin":
 		if damageType == "Melee":
 			damageModifier = 0.70
-			print("Melee Damage reduced flag")
+			print("leatherSkin")
 	elif player.passiveAbility == "hardToHit":
 		if damageType == "Throw":
 			damageModifier = 0
-			print("Throw Damage reduced flag")
+			print("hardToHit")
+			testMusic = load("res://Combat/Resources/dodge.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 	elif player.passiveAbility == "evasive":
 		if randf() < 0.2:
 			damageModifier = 0
-			print("evasive flag")
+			print("evasive")
+			testMusic = load("res://Combat/Resources/dodge.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 	elif player.passiveAbility == "ninja":
 		if randf() < 0.5:
 			damageModifier = 0
-			print("ghost flag")
+			print("ninja")
+			testMusic = load("res://Combat/Resources/dodge.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 	elif player.passiveAbility == "ghost":
 		if randf() < 0.7:
 			damageModifier = 0
-			print("ghost flag")
+			print("ghost")
+			testMusic = load("res://Combat/Resources/dodge.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
 	if player.isBlocking == true: # if they are blocking negate all damage
 		damageModifier = 0.0
 		player.didBlock = true
+		testMusic = load("res://Combat/Resources/block.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	return damageModifier
 	
 func checkTeam(player): # check what team the calling player is on
@@ -405,7 +426,8 @@ func pistolShot(player): #shoot in a line 3 away
 		checkBlocking(interactUnit)
 		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
 		interactUnit.updateHealthBar()
-		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		
+		var testMusic = load("res://Combat/Resources/pistol.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
 	highlight_map.clear()
@@ -455,7 +477,9 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 	var buffTargets : Array = []
 	var attackChoice = null
 	aroundFind(starting_position, 1, buffTargets, isPlayer)
-	
+	var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
+	abilityMusic.stream = testMusic
+	abilityMusic.play()
 	player.speed += 1
 	player.basicAttackDamage += 10
 	player.health -= 10
@@ -470,6 +494,9 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 		interactUnit.updateHealthBar()
 		interactUnit.frenzyBuff = true
 		interactUnit.frenzyBuffCount = 3 # lasts 2 turns
+		
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -543,9 +570,9 @@ func pirateBlessing(player): #heal any friend on the map a little
 		healChoice.health = healChoice.maxHealth
 	healChoice.updateHealthBar()
 	await battle_map.updateDamageDisplayHeal(healChoice, health)
-	#var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
-	#abilityMusic.stream = testMusic
-	#abilityMusic.play()
+	var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
+	abilityMusic.stream = testMusic
+	abilityMusic.play()
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
 	return
@@ -716,7 +743,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
-		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		var testMusic = load("res://Combat/Resources/pistol.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
 		highlight_map.clearTile(attackChoice)
@@ -740,7 +767,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
 			await battle_map.updateDamageDisplay(interactUnit, damage)
-			testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+			testMusic = load("res://Combat/Resources/pistol.wav")
 			abilityMusic.stream = testMusic
 			abilityMusic.play()
 			
@@ -780,7 +807,7 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 	player.isStunned = true
 	player.isStunnedCount = 3 # 2 turn
 	player.updateStatusEffect()
-	var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+	var testMusic = load("res://Combat/Resources/pistol.wav")
 	abilityMusic.stream = testMusic
 	abilityMusic.play()
 	highlight_map.clear()
@@ -789,9 +816,9 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 	
 func engagingBlock(player): # block all attacks until your next turn, if not hit stunned for 2 turns
 	player.isBlocking = true
-	#var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
-	#abilityMusic.stream = testMusic
-	#abilityMusic.play()
+	var testMusic = load("res://Combat/Resources/block.wav")
+	abilityMusic.stream = testMusic
+	abilityMusic.play()
 	emit_signal("specialAttackDone")
 	return
 
@@ -824,7 +851,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
-		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		var testMusic = load("res://Combat/Resources/pistol.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
 		
@@ -850,7 +877,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 func damageWave(player): # deal damage to entire enemy team from 50% to 250%
 	
 	var isPlayer = checkTeam(player)
-	var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+	var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
 	if isPlayer:
 		for unit in battle_map.enemyUnits:
 			interactUnit = unit
@@ -890,7 +917,7 @@ func spawnMinion(player):
 			unitThere = true
 			break
 		if unitThere == false:
-			var newMinionSource = load("res://Combat/Scenes/TestEnemyAggressive.tscn")
+			var newMinionSource = load("res://Combat/Resources/damageWaveSound.wav")
 			var locationConvert : Vector2 = location
 			var newMinion = newMinionSource.instantiate()
 			turn_queue.add_child(newMinion)

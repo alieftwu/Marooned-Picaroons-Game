@@ -14,5 +14,4 @@ func _ready():
 
 func start_game():
 	while 1:
-		turn_queue.play_round()
-		await turn_queue.endRound
+		await turn_queue.play_round()
