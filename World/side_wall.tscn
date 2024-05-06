@@ -75,14 +75,16 @@ scale = Vector2(11.649, 2)
 shape = SubResource("RectangleShape2D_bwlne")
 
 [node name="Player" parent="." instance=ExtResource("2_3yf1c")]
-position = Vector2(1079, 187)
+position = Vector2(1258, 138)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("5_huaq2")]
+position = Vector2(1242, 128)
 
 [node name="Companion2" parent="." instance=ExtResource("6_id1fm")]
+position = Vector2(1241, 157)
 SPEED = 100.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

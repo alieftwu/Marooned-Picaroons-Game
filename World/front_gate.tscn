@@ -20,7 +20,7 @@ y_sort_enabled = true
 script = ExtResource("1_5kknc")
 
 [node name="Player" parent="." instance=ExtResource("2_hc102")]
-position = Vector2(1297, 493)
+position = Vector2(1270, 482)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
@@ -42,8 +42,10 @@ layer_3/name = "Tilemap-Doodads-No Collision"
 layer_3/tile_data = PackedInt32Array(524351, 458770, 6, 589887, 458770, 7, 524352, 524306, 6, 589888, 524306, 7, 1572928, 589827, 4, 1507393, 655363, 3, 1572929, 655363, 4, 1638465, 655363, 5, 1572930, 720899, 4, 1048640, 589827, 4, 983105, 655363, 3, 1048641, 655363, 4, 1114177, 655363, 5, 1048642, 720899, 4, 524355, 589827, 1, 458820, 655363, 0, 524356, 655363, 1, 589892, 655363, 2, 524357, 720899, 1, 196673, 589827, 1, 131138, 655363, 0, 196674, 655363, 1, 262210, 655363, 2, 196675, 720899, 1, 458832, 589827, 1, 393297, 655363, 0, 458833, 655363, 1, 524369, 655363, 2, 458834, 720899, 1, 720981, 589827, 4, 655446, 655363, 3, 720982, 655363, 4, 786518, 655363, 5, 720983, 720899, 4, 720972, 589827, 4, 655437, 655363, 3, 720973, 655363, 4, 786509, 655363, 5, 720974, 720899, 4, 393291, 589827, 4, 327756, 655363, 3, 393292, 655363, 4, 458828, 655363, 5, 393293, 720899, 4)
 
 [node name="Companion" parent="." instance=ExtResource("3_o2tub")]
+position = Vector2(1276, 495)
 
 [node name="Companion2" parent="." instance=ExtResource("6_b510a")]
+position = Vector2(1272, 468)
 SPEED = 100.0
 
 [node name="EntranceMarkers" type="Node2D" parent="."]
