@@ -423,7 +423,7 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 		interactUnit.basicAttackDamage += 10
 		interactUnit.health -= 10
 		interactUnit.updateHealthBar()
-		interactUnit.frezyBuff = true
+		interactUnit.frenzyBuff = true
 		interactUnit.frenzyBuffCount = 3 # lasts 2 turns
 	highlight_map.clear()
 	emit_signal("specialAttackDone")

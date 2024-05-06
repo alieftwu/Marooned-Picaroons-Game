@@ -1,14 +1,92 @@
-[gd_scene load_steps=10 format=3 uid="uid://citrj633c1ml"]
+[gd_scene load_steps=9 format=3 uid="uid://citrj633c1ml"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_s4ovk"]
 [ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_oxlwe"]
 [ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_vwarf"]
-[ext_resource type="PackedScene" uid="uid://c0w18y8mxdqnm" path="res://Combat/Scenes/TestEnemy.tscn" id="4_tnlwp"]
-[ext_resource type="PackedScene" uid="uid://uvr460ks63mx" path="res://Combat/Scenes/TestEnemyAggressive.tscn" id="5_8svyq"]
-[ext_resource type="PackedScene" uid="uid://c6o8w82e5ltul" path="res://Combat/Scenes/TestEnemyMix.tscn" id="6_fm7cy"]
+[ext_resource type="PackedScene" uid="uid://btjotkmkiqmwr" path="res://Combat/Enemies/KnightEnemy.tscn" id="4_iwkwm"]
 [ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="7_a2oyo"]
 [ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_7826v"]
 [ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_lddst"]
+
+[sub_resource type="GDScript" id="GDScript_k44xp"]
+script/source = "extends Node2D
+
+@onready var battlemap = $\"../../BattleMap\"
+@onready var highlightmap = $\"../../BattleMap/HighlightMap\"
+@onready var healthBar = $HealthBar
+@onready var abilityControl = $\"../../BattleMap/AbilityControl\"
+@onready var statusEffect = $StatusEffect
+var stats = load(\"res://Combat/Resources/enemytest.tres\")
+var speed : int
+var health : float
+var maxHealth : float
+var armor : int
+var basicAttackDamage : int
+var passiveAbility : String = \"Brawler\"
+var abilityList : Array = [\"circleSlash\", \"pistolShot\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
+# look at abilityControl checkMoveSlot
+
+var frenzyBuff : bool = false # used to determine when 2 turns are up
+var frenzyBuffCount : int = 0
+var isStunned : bool = false
+var isStunnedCount : int = 0
+var bonusMove = false
+var isBlocking = false
+var didBlock = false
+signal finishedTurn
+
+var canPress : bool = false
+var special1CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
+var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
+var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
+
+func _ready():
+	speed = stats.Speed
+	health = stats.Health
+	maxHealth = stats.MaxHealth
+	armor = stats.Armor
+	basicAttackDamage = stats.BasicAttackDamage
+
+func play_turn():
+	updateHealthBar()
+	abilityControl.checkBlocking(self)
+	isBlocking = false
+	var skipTurn = await abilityControl.checkStun(self)
+	updateStatusEffect()
+	if skipTurn == false:
+		abilityControl.checkFlags(self)
+		#battlemap.setAttackIconsDull() # make buttons dull
+		if randf() < .75:
+			await battlemap.agressiveEnemyMove(self)
+		else:
+			await battlemap.moveEnemyPerson(self)
+		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		await battlemap.enemyRandomAbility(self)
+	updateCooldowns()
+	emit_signal(\"finishedTurn\")
+
+func updateHealthBar():
+	var maxValue = maxHealth
+	healthBar.value = (health / maxHealth) * 100
+	#print(\"new enemy health: \", (health / maxHealth) * 100)
+	
+func updateCooldowns():
+	if special1CoolDown >= 1:
+		special1CoolDown -= 1
+	if special2CoolDown >= 1:
+		special2CoolDown -= 1
+	if special3CoolDown >= 1:
+		special3CoolDown -= 1
+	return
+
+func updateStatusEffect():
+	var effect
+	if isStunned == true:
+		effect = load(\"res://Combat/Resources/stunned.png\")
+		statusEffect.texture = effect
+	else:
+		statusEffect.texture = null
+"
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_s4ovk")
@@ -19,15 +97,12 @@ mapType = "Prison"
 [node name="TurnQueue" parent="." instance=ExtResource("3_vwarf")]
 connected_scene = "inside_prison"
 
-[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_tnlwp")]
+[node name="KnightEnemy" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
 position = Vector2(136, 40)
-scale = Vector2(1, 0.76)
 
-[node name="TestEnemyAg" parent="TurnQueue" instance=ExtResource("5_8svyq")]
-position = Vector2(136, 72)
-
-[node name="TestEnemyMix" parent="TurnQueue" instance=ExtResource("6_fm7cy")]
+[node name="KnightEnemy2" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
 position = Vector2(136, 104)
+script = SubResource("GDScript_k44xp")
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("7_a2oyo")]
 position = Vector2(8, 88)
@@ -37,3 +112,6 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_lddst")]
 position = Vector2(8, 72)
+
+[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
+position = Vector2(136, 70)

@@ -1,15 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://4iv050npjmbq"]
+[gd_scene load_steps=5 format=3 uid="uid://reyw7kieh4y8"]
 
-[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_u14b2"]
-[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_fwnl7"]
-[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_21xs2"]
-[ext_resource type="PackedScene" uid="uid://barp3xmfh2pgl" path="res://Combat/Enemies/BluePirateEnemy.tscn" id="4_ggdf1"]
-[ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="7_rdxla"]
-[ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_4qwyq"]
-[ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_e3ic7"]
-[ext_resource type="PackedScene" uid="uid://bcndt6q1wls4e" path="res://Combat/Enemies/SnowmanEnemy.tscn" id="9_j2nyu"]
+[ext_resource type="Texture2D" uid="uid://bp817oyhdj53k" path="res://Combat/Enemies/Enemy Art/Rat-Warrior.png" id="1_0uhfs"]
+[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="2_og7oa"]
+[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="3_d5cm2"]
 
-[sub_resource type="GDScript" id="GDScript_c6ucy"]
+[sub_resource type="GDScript" id="GDScript_3gfyo"]
 script/source = "extends Node2D
 
 @onready var battlemap = $\"../../BattleMap\"
@@ -23,7 +18,7 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"Brawler\"
+var passiveAbility : String = \"none\"
 var abilityList : Array = [\"circleSlash\", \"pistolShot\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
@@ -57,10 +52,7 @@ func play_turn():
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < .75:
-			await battlemap.agressiveEnemyMove(self)
-		else:
-			await battlemap.moveEnemyPerson(self)
+		await battlemap.agressiveEnemyMove(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
 	updateCooldowns()
@@ -89,30 +81,27 @@ func updateStatusEffect():
 		statusEffect.texture = null
 "
 
-[node name="Combat" type="Node2D"]
-script = ExtResource("1_u14b2")
+[node name="TestEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
+script = SubResource("GDScript_3gfyo")
 
-[node name="BattleMap" parent="." instance=ExtResource("2_fwnl7")]
-mapType = "Snow"
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+scale = Vector2(-0.440001, 0.449999)
+texture = ExtResource("1_0uhfs")
 
-[node name="TurnQueue" parent="." instance=ExtResource("3_21xs2")]
-connected_scene = "mountain_village"
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -8.0
+offset_top = -11.0
+offset_right = 56.0
+offset_bottom = -1.0
+scale = Vector2(0.25, 0.25)
+value = 100.0
+texture_under = ExtResource("2_og7oa")
+texture_progress = ExtResource("3_d5cm2")
 
-[node name="BluePirate" parent="TurnQueue" instance=ExtResource("4_ggdf1")]
-position = Vector2(136, 72)
-
-[node name="Snowman" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
-position = Vector2(136, 40)
-
-[node name="Snowman2" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
-position = Vector2(136, 104)
-script = SubResource("GDScript_c6ucy")
-
-[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("7_rdxla")]
-position = Vector2(8, 88)
-
-[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("8_4qwyq")]
-position = Vector2(8, 56)
-
-[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_e3ic7")]
-position = Vector2(8, 72)
+[node name="StatusEffect" type="TextureRect" parent="."]
+offset_left = -4.0
+offset_top = -7.0
+offset_right = 36.0
+offset_bottom = 33.0
+scale = Vector2(0.22, 0.22)
