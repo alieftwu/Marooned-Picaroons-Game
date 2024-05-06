@@ -1,5 +1,5 @@
 extends Label
-@export var combat_scene: String #name of scene to change to
+@export var connected_scene: String #name of scene to change to
 @onready var textBox = get_parent() 
 @onready var NPC = get_parent().get_parent().get_parent() 
 @onready var iterator = -1
@@ -26,11 +26,11 @@ func _process(delta):
 	elif textBox.visible and Input.is_action_just_pressed("ui_accept") and iterator == textList.size()-1:
 		emit_signal("hideBoxLabel")
 		emit_signal("hideHideable")
-		print("swap to scene for fighting")
 		iterator = -1
 		if doFight:
 			Global.currentFightNPC = NPC.name
-			scene_manager.combatSceneSwitch(get_owner(), combat_scene)
+			scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
+
 
 func _on_new_text(title):
 	textList = NPC.npcText
