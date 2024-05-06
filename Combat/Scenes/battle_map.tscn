@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=68 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -26,8 +26,11 @@
 [ext_resource type="Texture2D" uid="uid://bmt2er00rlyn2" path="res://Combat/Resources/truck.png" id="15_1s4q5"]
 [ext_resource type="Texture2D" uid="uid://c4lhqm6rsjun3" path="res://Art/Tilesets/Tiles Prison.png" id="15_n7kyo"]
 [ext_resource type="Texture2D" uid="uid://xx7fdpxyy6p4" path="res://Art/Tilesets/castle_interriors.png" id="16_6lsmr"]
+[ext_resource type="Texture2D" uid="uid://biduf4c0xlh4j" path="res://Tilesets/woodPlank.png" id="16_fhv1s"]
 [ext_resource type="Texture2D" uid="uid://1j73h3f0qwdo" path="res://Tilesets/grassBush.png" id="17_2lk5e"]
+[ext_resource type="Texture2D" uid="uid://da7f25ug28fdo" path="res://Tilesets/woodPlankBarrel.png" id="17_e4why"]
 [ext_resource type="Texture2D" uid="uid://do7e0h7fr0llq" path="res://Tilesets/grassRock.png" id="18_6is7k"]
+[ext_resource type="Texture2D" uid="uid://cu4hw1s8xigh4" path="res://Tilesets/woodPlankCrate.png" id="18_rs1e6"]
 [ext_resource type="Texture2D" uid="uid://b6xcgj1eypa2g" path="res://Tilesets/grassTruck.png" id="19_qmoav"]
 [ext_resource type="Texture2D" uid="uid://b8d4jq3ni5bfh" path="res://Tilesets/SewerTileBarrel.png" id="20_hhj27"]
 [ext_resource type="Texture2D" uid="uid://c8ops6veqfr8l" path="res://Combat/Resources/SkillIcons/PNG/1.png" id="31_gjvt6"]
@@ -1017,6 +1020,19 @@ texture = ExtResource("14_qvxy6")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwcma"]
 texture = ExtResource("15_1s4q5")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2m0y"]
+texture = ExtResource("16_fhv1s")
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w58gj"]
+texture = ExtResource("17_e4why")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_83iqv"]
+texture = ExtResource("18_rs1e6")
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ewvy7"]
@@ -5339,6 +5355,9 @@ sources/17 = SubResource("TileSetAtlasSource_yqt5e")
 sources/18 = SubResource("TileSetAtlasSource_e3d77")
 sources/19 = SubResource("TileSetAtlasSource_2jx8v")
 sources/20 = SubResource("TileSetAtlasSource_rwcma")
+sources/24 = SubResource("TileSetAtlasSource_b2m0y")
+sources/25 = SubResource("TileSetAtlasSource_w58gj")
+sources/26 = SubResource("TileSetAtlasSource_83iqv")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q7wo7"]
 texture = ExtResource("7_bfi6l")

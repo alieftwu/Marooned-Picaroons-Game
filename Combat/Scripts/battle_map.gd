@@ -85,6 +85,9 @@ var castleSpikes_tile : int = 17
 var castleBossHoles : int = 18
 var stonesCastle_tile : int = 19
 var snowTrunk_tile : int = 20
+var woodPlank_tile : int = 24
+var woodPlankBarrel_tile : int = 25
+var woodPlankCrate_tile : int = 26
 
 signal moveSelected
 signal finishedMoving
@@ -189,30 +192,31 @@ func _generateShipMap():
 		for x in range(width):
 			if x == random_ColNum and y != random_SafeRowNum:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
 			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
 			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
 			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
 				if randf() < 0.5:
-					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
 				else:
-					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
 			else:
-				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				tile_map.set_cell(0, Vector2i(x, y), woodPlank_tile, Vector2i(0,0))
 				
 	var newBackImage = load("res://Combat/Resources/shipBackground.png")
 	loadBackground(newBackImage)			
 	return
+	
 func _generatePrisonMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
