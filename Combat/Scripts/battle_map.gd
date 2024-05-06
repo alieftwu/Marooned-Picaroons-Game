@@ -723,18 +723,18 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 					if validMove == true:
 						move_pick = move
 						smallestDistance = distanceCalc
+		current_id_path = astar_grid.get_id_path(
+		starting_position,
+		move_pick	
+		).slice(1)
+		startMoving = true
+		#print("awaitAgMove")
+		await finishedMoving # wait for physics to finish moving
+		#print("finishedAgMove")
+		startMoving = false
 	else:
 		move_pick = starting_position
 	
-	current_id_path = astar_grid.get_id_path(
-	starting_position,
-	move_pick	
-	).slice(1)
-	startMoving = true
-	#print("awaitAgMove")
-	await finishedMoving # wait for physics to finish moving
-	#print("finishedAgMove")
-	startMoving = false
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return

@@ -513,7 +513,8 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 	
 	var allyList : Array = []
 	aroundFind(starting_position, 1, allyList, !isPlayer) # find ally around you
-	
+	for unit in allyList:
+		highlight_map.clearTile(unit)
 	if (attackTargets.is_empty() == false) and (allyList.is_empty() == false):
 		if isPlayer == true:
 			chooseAttack = true
@@ -582,10 +583,10 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 	var isPlayer = checkTeam(player)
 	var attackTargets : Array = []
 	var attackChoice = null
-	lineFindPierce(starting_position.x - 1, starting_position.y, 0, 2, "left", attackTargets, isPlayer)
-	lineFindPierce(starting_position.x + 1, starting_position.y, 0, 2, "right", attackTargets, isPlayer)
-	lineFindPierce(starting_position.x, starting_position.y + 1, 0, 2, "up", attackTargets, isPlayer)
-	lineFindPierce(starting_position.x, starting_position.y - 1, 0, 2, "down", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "left", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "right", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "up", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "down", attackTargets, isPlayer)
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
