@@ -1,10 +1,12 @@
 extends Label
-@export var connected_scene: String #name of scene to change to
+@export var combat_scene: String #name of scene to change to
 @onready var textBox = get_parent() 
 @onready var NPC = get_parent().get_parent().get_parent() 
 @onready var iterator = -1
 @onready var textList = [""]
 @onready var doFight = false
+
+signal sceneTransition
 
 # Called when the node enters the scene tree for the first time.
 signal hideBoxLabel
@@ -29,7 +31,11 @@ func _process(delta):
 		iterator = -1
 		if doFight:
 			Global.currentFightNPC = NPC.name
-			scene_manager.combatSceneSwitch(get_owner(), [1,2,3,4,5], "Grass")
+			
+			AudioPlayer.play_draw_sword()
+			TransitionScreen.transition()
+			await TransitionScreen.on_transition_finished
+			scene_manager.combatSceneSwitch(get_owner(), combat_scene)
 
 
 func _on_new_text(title):

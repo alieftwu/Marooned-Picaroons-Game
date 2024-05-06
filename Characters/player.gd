@@ -3,9 +3,11 @@ class_name Player
 
 @export var speed : float = 100.0
 
+@onready var footsteps = $Footsteps
 @onready var animation_tree : AnimationTree = $AnimationTree
 var direction : Vector2 = Vector2.ZERO
 var canMove = true
+
 
 func _ready():
 	animation_tree.active = true
@@ -38,3 +40,7 @@ func update_animation_parameters():
 func _on_halt_move():
 	canMove = false
 	update_animation_parameters()
+
+func _play_footstep_audio():
+	footsteps.pitch_scale = randf_range(.8, 1.2)
+	footsteps.play()

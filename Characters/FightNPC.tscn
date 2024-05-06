@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://cf1ivq7wok67g"]
 
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="1_cbjnb"]
-[ext_resource type="Texture2D" uid="uid://ca62ji8untpgg" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png" id="2_rn2rh"]
+[ext_resource type="Texture2D" uid="uid://ei1yshe1hqvb" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow enemy sprite.png" id="2_ahss8"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_a773g"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="4_lk6ln"]
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="5_g7tg3"]
@@ -243,7 +243,7 @@ script = ExtResource("1_cbjnb")
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-1, 1)
-texture = ExtResource("2_rn2rh")
+texture = ExtResource("2_ahss8")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
@@ -325,7 +325,6 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("7_onnyt")
-connected_scene = "CombatScene"
 
 [connection signal="haltMove" from="." to="HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]

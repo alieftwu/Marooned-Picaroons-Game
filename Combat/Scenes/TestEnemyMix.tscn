@@ -1,19 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6o8w82e5ltul"]
+[gd_scene load_steps=5 format=3 uid="uid://c6o8w82e5ltul"]
 
 [ext_resource type="Script" path="res://Combat/Scenes/TestEnemyMix.gd" id="1_afshp"]
-[ext_resource type="Texture2D" uid="uid://b11r5c8r0l424" path="res://Art/Pirates/Pirate Red Sprite Sheet/Pirates Red Sprite Sheet.png" id="2_4xf51"]
+[ext_resource type="Texture2D" uid="uid://cuxx31j1m5vg0" path="res://Art/Pirates/Pirate White Sprite Sheet/white enemy sprite.png" id="2_qsrdl"]
 [ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="7_t8j8l"]
 [ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="8_ojrvq"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2jdr8"]
-atlas = ExtResource("2_4xf51")
-region = Rect2(15.4947, 128.072, 16.172, 16.5636)
 
 [node name="TestEnemyMix" type="Node2D" groups=["EnemyUnits", "Units"]]
 script = ExtResource("1_afshp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_2jdr8")
+texture = ExtResource("2_qsrdl")
+hframes = 3
+vframes = 8
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -8.0

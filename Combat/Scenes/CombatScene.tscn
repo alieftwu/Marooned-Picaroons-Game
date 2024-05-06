@@ -1,12 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc4vudniph6xq"]
+[gd_scene load_steps=9 format=3 uid="uid://dc4vudniph6xq"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_81gjc"]
 [ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_yj7ip"]
 [ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_t5ilx"]
-[ext_resource type="PackedScene" uid="uid://c0w18y8mxdqnm" path="res://Combat/Scenes/TestEnemy.tscn" id="4_1mkxc"]
 [ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="4_ims13"]
-[ext_resource type="PackedScene" uid="uid://uvr460ks63mx" path="res://Combat/Scenes/TestEnemyAggressive.tscn" id="5_3xphh"]
-[ext_resource type="PackedScene" uid="uid://c6o8w82e5ltul" path="res://Combat/Scenes/TestEnemyMix.tscn" id="6_ielpd"]
+[ext_resource type="PackedScene" uid="uid://qgxmjoegsfj6" path="res://Combat/Enemies/YellowPirateEnemy.tscn" id="7_ythwj"]
+[ext_resource type="AudioStream" uid="uid://c0vkdjtfvnyn1" path="res://Combat/Resources/sea_theme_1.wav" id="8_gkv8h"]
 [ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_ndjlc"]
 [ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_tjcvt"]
 
@@ -14,19 +13,9 @@
 script = ExtResource("1_81gjc")
 
 [node name="BattleMap" parent="." instance=ExtResource("2_yj7ip")]
-mapType = "Sewer"
+mapType = "City"
 
 [node name="TurnQueue" parent="." instance=ExtResource("3_t5ilx")]
-
-[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_1mkxc")]
-position = Vector2(136, 40)
-scale = Vector2(1, 0.76)
-
-[node name="TestEnemyAg" parent="TurnQueue" instance=ExtResource("5_3xphh")]
-position = Vector2(136, 72)
-
-[node name="TestEnemyMix" parent="TurnQueue" instance=ExtResource("6_ielpd")]
-position = Vector2(136, 104)
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_ims13")]
 position = Vector2(8, 88)
@@ -36,3 +25,11 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_tjcvt")]
 position = Vector2(8, 72)
+
+[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("7_ythwj")]
+position = Vector2(136, 72)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_gkv8h")
+volume_db = -0.155
+autoplay = true

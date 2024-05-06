@@ -20,22 +20,22 @@ var armor : int
 var basicAttackDamage : int
 #changes passive abilities
 var passiveAbility = {
-	0: \"Brawler\",
-	1: \"Bomber\",
-	2: \"ShotPrediction\",
-	3: \"Brawler\",
-	4: \"Bomber\",
+	0: \"evasive\",
+	1: \"Brawler\",
+	2: \"Sniper\",
+	3: \"leatherSkin\",
+	4: \"evasive\",
 	5: \"ShotPrediction\"
 }
 
 # buttons 2-4 abilities. can switch out
 var abilityList = {
-	0: [\"heavySwordSwing\", \"quickStrike\", \"recklessFrenzy\"], #green pirate
-	1: [\"rapidFire\" , \"pistolShot\", \"engagingBlock\"], #blue pirate
-	2: [\"quickStrike\" , \"axeToss\", \"pirateBlessing\"], #gray pirate
-	3: [\"rapidFire\" , \"pistolShot\", \"bombThrow\"], #red pirate
-	4: [\"quickStrike\" , \"cannonShot\", \"pirateBlessing\"], #white pirate
-	5: [\"heavySwordSwing\", \"quickStrike\", \"recklessFrenzy\"], #yellow pirate
+	0: [\"bombThrow\", \"axeToss\", \"quickStrike\"], #green pirate
+	1: [\"heavySwordSwing\" , \"circleSlash\", \"recklessFrenzy\"], # pirate
+	2: [\"pistolShot\" , \"rapidFire\", \"pirateBlessing\"], # pirate
+	3: [\"engagingBlock\" , \"cannonShot\", \"desparateStrike\"], #red pirate
+	4: [\"takeDown\" , \"pistolShot\", \"heavySwordSwing\"], #white pirate
+	5: [\"pirateBlessing\", \"axeToss\", \"engagingBlock\"], #yellow pirate
 } 
 # look at abilityControl checkMoveSlot
 
@@ -54,12 +54,12 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = 2
-	health = 95
+	speed = 3
+	health = 100
 	print(\"Start Health: \", health)
-	maxHealth = 95
-	armor = 0
-	basicAttackDamage = 12
+	maxHealth = 100
+	armor = 4
+	basicAttackDamage = 15
 	setAbilities(Global.PlayerSelect)
 	setPassives(Global.PlayerSelect)
 

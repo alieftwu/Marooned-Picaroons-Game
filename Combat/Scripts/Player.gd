@@ -12,15 +12,15 @@ var maxHealth : float
 var armor : int
 var basicAttackDamage : int
 var passiveAbility = {
-	0: "Brawler",
+	0: "evasive",
 	1: "Bomber",
-	2: "ShotPrediction"
+	2: "Sniper"
 }
 #buttons 2-4 abilities. can switch out
 var abilityList = {
-	0: ["heavySwordSwing", "quickStrike", "recklessFrenzy"], #white companion
-	1: ["rapidFire" , "pistolShot", "engagingBlock"], #red companion
-	2: ["quickStrike" , "axeToss", "pirateBlessing"], #yellow companion
+	0: ["pirateBlessing", "circleSlash", "quickStrike"], #white companion2
+	1: ["bombThrow" , "circleSlash", "takeDown"], #red companion2
+	2: ["heavySwordSwing" , "rapidFire", "desparateStrike"], #yellow companion2
 } 
 
 # look at abilityControl checkMoveSlot
@@ -40,12 +40,12 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = stats.Speed
-	health = stats.Health
+	speed = 3
+	health = 100
 	print("Start Health: ", health)
-	maxHealth = stats.MaxHealth
-	armor = stats.Armor
-	basicAttackDamage = stats.BasicAttackDamage
+	maxHealth = 100
+	armor = 2
+	basicAttackDamage = 15
 	setAbilities(Global.second_companion)
 	setPassives(Global.second_companion)
 func play_turn():
@@ -53,7 +53,8 @@ func play_turn():
 	abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	if isStunned == true:
+		updateStatusEffect()
 	if skipTurn == false:
 		await abilityControl.checkFlags(self)
 		await battlemap.setAttackIconsDull() # make buttons dull

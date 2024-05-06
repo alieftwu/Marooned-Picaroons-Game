@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci4y1486frrer"]
+
+[ext_resource type="Script" path="res://Global/audio_player.gd" id="1_tac3m"]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D"]
+volume_db = -5.379
+autoplay = true
+script = ExtResource("1_tac3m")

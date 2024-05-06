@@ -1,0 +1,37 @@
+[gd_scene load_steps=10 format=3 uid="uid://cxhdyhcrcrxoy"]
+
+[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_ho37g"]
+[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_1nkql"]
+[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_1vvte"]
+[ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="4_ap50m"]
+[ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="5_twpyl"]
+[ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="6_m7l0g"]
+[ext_resource type="PackedScene" uid="uid://qgxmjoegsfj6" path="res://Combat/Enemies/YellowPirateEnemy.tscn" id="7_8pas4"]
+[ext_resource type="AudioStream" uid="uid://dfta0kep3xb41" path="res://Audio/Pirate Music Pack/ogg/Pirate 2.ogg" id="8_kkpay"]
+[ext_resource type="Script" path="res://Combat/Scenes/CombatShipAudio.gd" id="9_h35ag"]
+
+[node name="Combat" type="Node2D"]
+script = ExtResource("1_ho37g")
+
+[node name="BattleMap" parent="." instance=ExtResource("2_1nkql")]
+mapType = "Ship"
+
+[node name="TurnQueue" parent="." instance=ExtResource("3_1vvte")]
+
+[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_ap50m")]
+position = Vector2(8, 88)
+
+[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("5_twpyl")]
+position = Vector2(8, 56)
+
+[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_m7l0g")]
+position = Vector2(8, 72)
+
+[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("7_8pas4")]
+position = Vector2(136, 72)
+
+[node name="CombatShipAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_kkpay")
+volume_db = -6.903
+autoplay = true
+script = ExtResource("9_h35ag")

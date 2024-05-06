@@ -8,6 +8,7 @@ signal sceneTransition
 signal removeNPC
 
 func _ready():
+	AudioPlayer.play_music_world()
 	#handles player between scenes
 	match name:
 		"first_village":

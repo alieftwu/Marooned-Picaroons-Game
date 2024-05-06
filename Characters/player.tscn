@@ -1,7 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://754l5c1v65w4"]
+[gd_scene load_steps=29 format=3 uid="uid://754l5c1v65w4"]
 
-[ext_resource type="Script" path="res://Characters/Player.gd" id="1_05q78"]
+[ext_resource type="Script" path="res://Characters/player.gd" id="1_vxn5x"]
 [ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
+[ext_resource type="AudioStream" uid="uid://dlrvr63od0djm" path="res://Audio/FreeSteps/Wood/Steps_wood-001.ogg" id="3_51fh0"]
 
 [sub_resource type="GDScript" id="GDScript_oqcru"]
 script/source = "extends Sprite2D
@@ -102,6 +103,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [12, 13, 14, 13]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_play_footstep_audio"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_41uqw"]
 resource_name = "walk_left"
@@ -118,6 +133,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [9, 21, 10, 23, 11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_play_footstep_audio"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_wcl5n"]
@@ -136,6 +165,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [6, 18, 7, 20, 8]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_play_footstep_audio"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_otycb"]
 resource_name = "walk_up"
@@ -152,6 +195,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [15, 16, 17, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_play_footstep_audio"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2kr0c"]
@@ -241,9 +298,10 @@ states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(0, -10)
 collision_layer = 9
 motion_mode = 1
-script = ExtResource("1_05q78")
+script = ExtResource("1_vxn5x")
 speed = 80.0
 
 [node name="Body" type="Sprite2D" parent="."]
@@ -253,7 +311,6 @@ texture = ExtResource("2_lsqmj")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 8
-frame = 1
 script = SubResource("GDScript_oqcru")
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
@@ -264,13 +321,20 @@ speed_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, 5)
+position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/Idle/blend_position = Vector2(0.00212765, 1.07672)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="Footsteps" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_51fh0")
+volume_db = -9.602

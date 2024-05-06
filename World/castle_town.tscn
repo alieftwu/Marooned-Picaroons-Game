@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1kvfk5elbeq7"]
+[gd_scene load_steps=69 format=3 uid="uid://c1kvfk5elbeq7"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_4p81j"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_l3uni"]
@@ -6,13 +6,246 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="4_2tl43"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="5_eqxoq"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_lli4a"]
-[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="7_w5tjh"]
+[ext_resource type="Script" path="res://Characters/FightNPC.gd" id="7_krlab"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="8_r8bb2"]
 [ext_resource type="Script" path="res://World/PathFollow2D.gd" id="9_mwx1g"]
-[ext_resource type="PackedScene" uid="uid://367wmpe8vxyd" path="res://Characters/PatrolNPC.tscn" id="10_l6bqe"]
+[ext_resource type="Script" path="res://Characters/PatrolNPC.gd" id="10_tcusx"]
+[ext_resource type="Texture2D" uid="uid://cuxx31j1m5vg0" path="res://Art/Pirates/Pirate White Sprite Sheet/white enemy sprite.png" id="11_oal0v"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="12_eheld"]
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="13_n3d3t"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="14_1sypa"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="15_rxry8"]
+[ext_resource type="Script" path="res://World/Label.gd" id="16_a5q7q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_03bfn"]
 size = Vector2(21.1607, 60)
+
+[sub_resource type="Animation" id="Animation_5rgvr"]
+resource_name = "backwards_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_crl8m"]
+resource_name = "forward_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_u6iu1"]
+resource_name = "left_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_dataw"]
+resource_name = "right_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_yr0q2"]
+resource_name = "walk_down"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 13]
+}
+
+[sub_resource type="Animation" id="Animation_41uqw"]
+resource_name = "walk_left"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 21, 10, 23, 11]
+}
+
+[sub_resource type="Animation" id="Animation_wcl5n"]
+resource_name = "walk_right"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 18, 7, 20, 8]
+}
+
+[sub_resource type="Animation" id="Animation_otycb"]
+resource_name = "walk_up"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kr0c"]
+_data = {
+"backwards_idle": SubResource("Animation_5rgvr"),
+"forward_idle": SubResource("Animation_crl8m"),
+"left_idle": SubResource("Animation_u6iu1"),
+"right_idle": SubResource("Animation_dataw"),
+"walk_down": SubResource("Animation_yr0q2"),
+"walk_left": SubResource("Animation_41uqw"),
+"walk_right": SubResource("Animation_wcl5n"),
+"walk_up": SubResource("Animation_otycb")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nte6"]
+animation = &"left_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pfb13"]
+animation = &"right_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b31fg"]
+animation = &"backwards_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wsq7x"]
+animation = &"forward_idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_bxed4"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2nte6")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_pfb13")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_b31fg")
+blend_point_2/pos = Vector2(0, -1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_wsq7x")
+blend_point_3/pos = Vector2(0, 1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+snap = Vector2(0.01, 0.01)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fdhxr"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nr62k"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u0d5l"]
+animation = &"walk_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tajqw"]
+animation = &"walk_up"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_are8h"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_fdhxr")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_nr62k")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_u0d5l")
+blend_point_2/pos = Vector2(0, 1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_tajqw")
+blend_point_3/pos = Vector2(0, -1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_er8wl"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_arxb6"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_aj34a"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_us6gr"]
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_bxed4")
+states/Idle/position = Vector2(379, 100)
+states/Start/position = Vector2(191, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
+states/Walk/position = Vector2(635, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
+graph_offset = Vector2(-27.1196, 24.8361)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("15_rxry8")
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Curve2D" id="Curve2D_36pql"]
 bake_interval = 0.01
@@ -20,6 +253,233 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 1157.23, 516)
 }
 point_count = 2
+
+[sub_resource type="Animation" id="Animation_pb8bv"]
+resource_name = "backwards_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_4h06h"]
+resource_name = "forward_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_c88oa"]
+resource_name = "left_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_ypkfi"]
+resource_name = "right_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_heoek"]
+resource_name = "walk_down"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 13]
+}
+
+[sub_resource type="Animation" id="Animation_ts47i"]
+resource_name = "walk_left"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 21, 10, 23, 11]
+}
+
+[sub_resource type="Animation" id="Animation_bw0n0"]
+resource_name = "walk_right"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 18, 7, 20, 8]
+}
+
+[sub_resource type="Animation" id="Animation_j7fdh"]
+resource_name = "walk_up"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mknle"]
+_data = {
+"backwards_idle": SubResource("Animation_pb8bv"),
+"forward_idle": SubResource("Animation_4h06h"),
+"left_idle": SubResource("Animation_c88oa"),
+"right_idle": SubResource("Animation_ypkfi"),
+"walk_down": SubResource("Animation_heoek"),
+"walk_left": SubResource("Animation_ts47i"),
+"walk_right": SubResource("Animation_bw0n0"),
+"walk_up": SubResource("Animation_j7fdh")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b6rta"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s1pko"]
+animation = &"left_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8w6by"]
+animation = &"right_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q08tf"]
+animation = &"backwards_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hgmlj"]
+animation = &"forward_idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_qhx0f"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_s1pko")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_8w6by")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_q08tf")
+blend_point_2/pos = Vector2(0, -1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_hgmlj")
+blend_point_3/pos = Vector2(0, 1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+snap = Vector2(0.01, 0.01)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vmuqd"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5h3k0"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2l0ox"]
+animation = &"walk_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3y1vj"]
+animation = &"walk_up"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_18xv2"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_vmuqd")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_5h3k0")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_2l0ox")
+blend_point_2/pos = Vector2(0, 1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_3y1vj")
+blend_point_3/pos = Vector2(0, -1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_x0lhf"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mg8my"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p2yo3"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_a5qla"]
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_qhx0f")
+states/Idle/position = Vector2(379, 100)
+states/Start/position = Vector2(191, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_18xv2")
+states/Walk/position = Vector2(633, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_x0lhf"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_mg8my"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_p2yo3")]
+graph_offset = Vector2(201.692, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gkdhy"]
+font = ExtResource("15_rxry8")
+font_color = Color(0, 0, 0, 1)
 
 [node name="castle_town" type="Node2D"]
 y_sort_enabled = true
@@ -94,11 +554,197 @@ position = Vector2(732, 632)
 [node name="kings_castle_entrance" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(404, 379)
 
-[node name="CastleGuard1" parent="." instance=ExtResource("7_w5tjh")]
+[node name="CastleGuard1" type="CharacterBody2D" parent="."]
 position = Vector2(786, 495)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("7_krlab")
 
-[node name="CastleGuard2" parent="." instance=ExtResource("7_w5tjh")]
+[node name="Body" type="Sprite2D" parent="CastleGuard1"]
+texture_filter = 1
+position = Vector2(-1, 1)
+texture = ExtResource("11_oal0v")
+offset = Vector2(0, -14.9)
+hframes = 3
+vframes = 8
+frame = 7
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="CastleGuard1"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CastleGuard1"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="AnimationTree" type="AnimationTree" parent="CastleGuard1"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+tree_root = SubResource("AnimationNodeStateMachine_us6gr")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(1.232, -0.0407407)
+parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CastleGuard1"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("12_eheld")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="CastleGuard1"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="CastleGuard1/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CastleGuard1/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="CastleGuard1"]
+
+[node name="TextureRect" type="TextureRect" parent="CastleGuard1/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("13_n3d3t")
+stretch_mode = 4
+script = ExtResource("14_1sypa")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CastleGuard1/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("16_a5q7q")
+combat_scene = "CombatCastleTown"
+
+[node name="CastleGuard2" type="CharacterBody2D" parent="."]
 position = Vector2(692, 495)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("7_krlab")
+
+[node name="Body" type="Sprite2D" parent="CastleGuard2"]
+texture_filter = 1
+position = Vector2(-1, 1)
+texture = ExtResource("11_oal0v")
+offset = Vector2(0, -14.9)
+hframes = 3
+vframes = 8
+frame = 7
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="CastleGuard2"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CastleGuard2"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="AnimationTree" type="AnimationTree" parent="CastleGuard2"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+tree_root = SubResource("AnimationNodeStateMachine_us6gr")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(1.232, -0.0407407)
+parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CastleGuard2"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("12_eheld")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="CastleGuard2"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="CastleGuard2/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CastleGuard2/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="CastleGuard2"]
+
+[node name="TextureRect" type="TextureRect" parent="CastleGuard2/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("13_n3d3t")
+stretch_mode = 4
+script = ExtResource("14_1sypa")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CastleGuard2/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("16_a5q7q")
+combat_scene = "CombatCastleTown"
 
 [node name="CabbagesGuy" parent="." instance=ExtResource("8_r8bb2")]
 position = Vector2(451, 747)
@@ -141,11 +787,105 @@ rotates = false
 loop = false
 script = ExtResource("9_mwx1g")
 
-[node name="PatrollingGuard" parent="Path2D2/PathFollow2D" instance=ExtResource("10_l6bqe")]
+[node name="PatrollingGuard" type="CharacterBody2D" parent="Path2D2/PathFollow2D"]
 position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("10_tcusx")
 direction = "right"
+
+[node name="Body" type="Sprite2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+texture_filter = 1
+position = Vector2(0, -3)
+scale = Vector2(0.957713, 0.957713)
+texture = ExtResource("11_oal0v")
+offset = Vector2(0, -14.9)
+hframes = 3
+vframes = 8
+frame = 1
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+libraries = {
+"": SubResource("AnimationLibrary_mknle")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_b6rta")
+
+[node name="AnimationTree" type="AnimationTree" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+libraries = {
+"": SubResource("AnimationLibrary_mknle")
+}
+tree_root = SubResource("AnimationNodeStateMachine_a5qla")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(-0.00819671, 1.26296)
+parameters/Walk/blend_position = Vector2(-0.00614756, 1.05344)
+
+[node name="TextureRect" type="TextureRect" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("12_eheld")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Path2D2/PathFollow2D/PatrollingGuard/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Path2D2/PathFollow2D/PatrollingGuard/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+
+[node name="TextureRect" type="TextureRect" parent="Path2D2/PathFollow2D/PatrollingGuard/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("13_n3d3t")
+stretch_mode = 4
+script = ExtResource("14_1sypa")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_gkdhy")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("16_a5q7q")
+combat_scene = "CombatCastleTown"
 
 [node name="Path2D3" type="Path2D" parent="."]
 z_index = 1
@@ -160,8 +900,131 @@ rotates = false
 loop = false
 script = ExtResource("9_mwx1g")
 
-[node name="PatrollingGuard" parent="Path2D3/PathFollow2D" instance=ExtResource("10_l6bqe")]
+[node name="PatrollingGuard" type="CharacterBody2D" parent="Path2D3/PathFollow2D"]
 position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("10_tcusx")
 direction = "right"
+
+[node name="Body" type="Sprite2D" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+texture_filter = 1
+position = Vector2(0, -3)
+scale = Vector2(0.957713, 0.957713)
+texture = ExtResource("11_oal0v")
+offset = Vector2(0, -14.9)
+hframes = 3
+vframes = 8
+frame = 1
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+libraries = {
+"": SubResource("AnimationLibrary_mknle")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_b6rta")
+
+[node name="AnimationTree" type="AnimationTree" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+libraries = {
+"": SubResource("AnimationLibrary_mknle")
+}
+tree_root = SubResource("AnimationNodeStateMachine_a5qla")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(-0.00819671, 1.26296)
+parameters/Walk/blend_position = Vector2(-0.00614756, 1.05344)
+
+[node name="TextureRect" type="TextureRect" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("12_eheld")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Path2D3/PathFollow2D/PatrollingGuard/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Path2D3/PathFollow2D/PatrollingGuard/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Path2D3/PathFollow2D/PatrollingGuard"]
+
+[node name="TextureRect" type="TextureRect" parent="Path2D3/PathFollow2D/PatrollingGuard/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("13_n3d3t")
+stretch_mode = 4
+script = ExtResource("14_1sypa")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_gkdhy")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("16_a5q7q")
+combat_scene = "CombatCastleTown"
+
+[connection signal="haltMove" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="CastleGuard1/Area2D" to="CastleGuard1" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="CastleGuard1/Area2D" to="CastleGuard1" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="CastleGuard1/HUD/TextureRect/Label" to="CastleGuard1/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="CastleGuard2/Area2D" to="CastleGuard2" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="CastleGuard2/Area2D" to="CastleGuard2" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="CastleGuard2/HUD/TextureRect/Label" to="CastleGuard2/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Path2D2/PathFollow2D/PatrollingGuard/Area2D" to="Path2D2/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Path2D2/PathFollow2D/PatrollingGuard/Area2D" to="Path2D2/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Path2D3/PathFollow2D/PatrollingGuard/Area2D" to="Path2D3/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Path2D3/PathFollow2D/PatrollingGuard/Area2D" to="Path2D3/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_label_hide_box_label"]
