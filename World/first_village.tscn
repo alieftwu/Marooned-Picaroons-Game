@@ -15,7 +15,7 @@
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="13_vek3j"]
 [ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="14_rnqt6"]
 [ext_resource type="Script" path="res://World/Label.gd" id="15_q4j6l"]
-[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="16_6moaf"]
+[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="16_6moaf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtqkp"]
 size = Vector2(13, 671)

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_oavo7"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_gj1sq"]
-[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
+[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="9_oe5nn"]
 [ext_resource type="AudioStream" uid="uid://r646tid5uxdr" path="res://Audio/Wind/wind_whistle.ogg" id="10_801q5"]
 [ext_resource type="Texture2D" uid="uid://078w03oe1knm" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Blue Enemy Sprite.png" id="10_auwmj"]

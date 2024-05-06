@@ -297,7 +297,7 @@ layer_3/name = "Tilemap - Doodads - No Collisions"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("2_dc0h5")]
-position = Vector2(141, 614)
+position = Vector2(12, 591)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -471,10 +471,10 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("14_wm82p")
-combat_scene = "CombatCastle"
+combat_scene = "CombatCastleHall"
 
 [node name="Guard" type="CharacterBody2D" parent="."]
-position = Vector2(407, 472)
+position = Vector2(199, 549)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_onxs4")
@@ -551,10 +551,11 @@ script = ExtResource("14_wm82p")
 combat_scene = "CombatCastle"
 
 [node name="Guard2" type="CharacterBody2D" parent="."]
-position = Vector2(650, 470)
+position = Vector2(69, 644)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_lxxnb")
+direction = "up"
 
 [node name="Body" type="Sprite2D" parent="Guard2"]
 texture_filter = 1
@@ -580,6 +581,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Guard2"]
 position = Vector2(0, -11)
+rotation = 3.14159
 
 [node name="Polygon2D" type="Polygon2D" parent="Guard2/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
