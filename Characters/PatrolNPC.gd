@@ -39,9 +39,9 @@ func _process(delta):
 	pass
 
 func _on_area_2d_body_entered(body):
-	if body != get_tree().current_scene.get_node("TileMap") and body != self:
+	if body is Player:
 		closeEnough = true
-		haltMove.emit()
+		emit_signal("haltMove")
 		newFText.emit(self.name)
 		showTextBox.emit()
 

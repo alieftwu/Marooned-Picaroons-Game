@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="2_i5w82"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="3_0fysw"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="3_0fysw"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_wqytr"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_i06jn"]
@@ -604,9 +604,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Englishman"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -708,9 +705,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_fcfuq")
 
 [node name="AnimationTree" type="AnimationTree" parent="NPC"]
-libraries = {
-"": SubResource("AnimationLibrary_amfu5")
-}
 tree_root = SubResource("AnimationNodeStateMachine_juhir")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false

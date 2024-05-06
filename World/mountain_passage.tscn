@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_3va5a"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_tk14g"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_gsj4q"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_0rf22"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="4_0rf22"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_e70uf"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_tnmug"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_wub1e"]
@@ -364,9 +364,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Guard 1"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -461,9 +458,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Guard 2"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -557,9 +551,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Guard 3"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -626,6 +617,7 @@ autowrap_mode = 2
 script = ExtResource("14_pn6gw")
 combat_scene = "CombatPassage"
 
+[connection signal="haltMove" from="Guard 1" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Guard 1" to="Guard 1/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard 1" to="Guard 1/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard 1" to="Guard 1/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -633,6 +625,7 @@ combat_scene = "CombatPassage"
 [connection signal="body_entered" from="Guard 1/Area2D" to="Guard 1" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Guard 1/Area2D" to="Guard 1" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Guard 1/HUD/TextureRect/Label" to="Guard 1/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Guard 2" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Guard 2" to="Guard 2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard 2" to="Guard 2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard 2" to="Guard 2/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -640,6 +633,7 @@ combat_scene = "CombatPassage"
 [connection signal="body_entered" from="Guard 2/Area2D" to="Guard 2" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Guard 2/Area2D" to="Guard 2" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Guard 2/HUD/TextureRect/Label" to="Guard 2/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Guard 3" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Guard 3" to="Guard 3/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard 3" to="Guard 3/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard 3" to="Guard 3/HUD/TextureRect/Label" method="_on_new_f_text"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://754l5c1v65w4"]
 
-[ext_resource type="Script" path="res://Characters/player.gd" id="1_vxn5x"]
+[ext_resource type="Script" path="res://Characters/Player.gd" id="1_vxn5x"]
 [ext_resource type="Texture2D" uid="uid://dn4pe8v74gw5r" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Main Character.png" id="2_lsqmj"]
 [ext_resource type="AudioStream" uid="uid://dlrvr63od0djm" path="res://Audio/FreeSteps/Wood/Steps_wood-001.ogg" id="3_51fh0"]
 
@@ -325,9 +325,6 @@ position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
