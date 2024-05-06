@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://qgxmjoegsfj6" path="res://Combat/Enemies/YellowPirateEnemy.tscn" id="7_nux5g"]
 [ext_resource type="AudioStream" uid="uid://c0vkdjtfvnyn1" path="res://Combat/Resources/sea_theme_1.wav" id="8_qyc5d"]
 
-[sub_resource type="GDScript" id="GDScript_rmbv1"]
+[sub_resource type="GDScript" id="GDScript_twoof"]
 script/source = "extends Node2D
 
 @onready var battlemap = $\"../../BattleMap\"
@@ -23,8 +23,8 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"unflinching\"
-var abilityList : Array = [\"axeToss\", \"quickStrike\", \"quickStrike\"] # buttons 2-4 abilities. can switch out 
+var passiveAbility : String = \"none\"
+var abilityList : Array = [\"spawnMinion\", \"spawnMinion\", \"spawnMinion\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -42,26 +42,22 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = 4
-	health = 140
-	maxHealth = 140
-	armor = 2
-	basicAttackDamage = 13
+	speed = stats.Speed
+	health = stats.Health
+	maxHealth = stats.MaxHealth
+	armor = stats.Armor
+	basicAttackDamage = stats.BasicAttackDamage
 
 func play_turn():
 	updateHealthBar()
 	abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	if isStunned == true:
-		updateStatusEffect()
+	updateStatusEffect()
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < 0.40:
-			await battlemap.moveEnemyPerson(self)
-		else:
-			await battlemap.agressiveEnemyMove(self)
+		await battlemap.agressiveEnemyMove(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
 	updateCooldowns()
@@ -108,12 +104,12 @@ position = Vector2(8, 56)
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_7rtl1")]
 position = Vector2(8, 72)
 
-[node name="OtherYellow1" parent="TurnQueue" instance=ExtResource("7_nux5g")]
+[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("7_nux5g")]
 position = Vector2(136, 104)
 
-[node name="YellowEnemy1" parent="TurnQueue" instance=ExtResource("7_nux5g")]
-position = Vector2(136, 34)
-script = SubResource("GDScript_rmbv1")
+[node name="TestEnemy2" parent="TurnQueue" instance=ExtResource("7_nux5g")]
+position = Vector2(136, 40)
+script = SubResource("GDScript_twoof")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_qyc5d")

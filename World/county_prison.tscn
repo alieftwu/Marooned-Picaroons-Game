@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_agnrs"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="1_fw1rd"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_jb3ev"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_rgc3d"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_rgc3d"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="4_mfiqd"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_ndssg"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_bgjeq"]
@@ -335,7 +335,7 @@ texture = ExtResource("9_y7snt")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="NPC2"]
 libraries = {
@@ -349,9 +349,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="NPC2"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -432,7 +429,7 @@ texture = ExtResource("9_y7snt")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="NPC3"]
 libraries = {
@@ -446,9 +443,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="NPC3"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -522,6 +516,7 @@ preQuest = ["Hey you wanna help me break into the prison?", "My friends in there
 durQuest = ["Do you have the Dynamite yet?", "Check up in the mountains that'd be where I'd look."]
 postQuest = ["Hey you got the dynamite!", "Alright I'll go blow the hole open if you can get my friend out.", "Good Luck To you!"]
 
+[connection signal="haltMove" from="NPC2" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="NPC2" to="NPC2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="NPC2" to="NPC2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="NPC2" to="NPC2/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -529,6 +524,7 @@ postQuest = ["Hey you got the dynamite!", "Alright I'll go blow the hole open if
 [connection signal="body_entered" from="NPC2/Area2D" to="NPC2" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="NPC2/Area2D" to="NPC2" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="NPC2/HUD/TextureRect/Label" to="NPC2/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="NPC3" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="NPC3" to="NPC3/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="NPC3" to="NPC3/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="NPC3" to="NPC3/HUD/TextureRect/Label" method="_on_new_f_text"]

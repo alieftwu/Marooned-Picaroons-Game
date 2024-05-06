@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="2_i5w82"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="3_0fysw"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="3_0fysw"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_wqytr"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_i06jn"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="11_d3hky"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
-[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="12_a8ruc"]
+[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="12_a8ruc"]
 [ext_resource type="Texture2D" uid="uid://ei1yshe1hqvb" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow enemy sprite.png" id="12_nfnw4"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="13_6qnvj"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="14_7avca"]
@@ -561,7 +561,7 @@ npcText = ["What are you looking at punk?", "You Looking at me?", "If I didn't m
 position = Vector2(857, 761)
 npcText = ["Are you a pirate?", "If so you shouldn't be talking to my son.", "You're a bad influence, being a criminal", "So Stay away from my son!"]
 
-[node name="child" parent="." instance=ExtResource("7_kwfy2")]
+[node name="greeter" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(663, 808)
 npcText = ["Welcome to our town! I see you sailed here.", "Very Nice ship I see."]
 
@@ -590,7 +590,7 @@ texture = ExtResource("12_nfnw4")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Englishman"]
 libraries = {
@@ -604,9 +604,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Englishman"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -685,7 +682,6 @@ position = Vector2(488, 107)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("11_d3hky")
-killable = true
 teleportPos = Vector2(400, 150)
 
 [node name="Body" type="Sprite2D" parent="NPC"]
@@ -695,7 +691,7 @@ texture = ExtResource("12_nfnw4")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="NPC"]
 libraries = {
@@ -709,9 +705,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_fcfuq")
 
 [node name="AnimationTree" type="AnimationTree" parent="NPC"]
-libraries = {
-"": SubResource("AnimationLibrary_amfu5")
-}
 tree_root = SubResource("AnimationNodeStateMachine_juhir")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -778,6 +771,7 @@ autowrap_mode = 2
 script = ExtResource("17_5gogs")
 combat_scene = "CombatShip"
 
+[connection signal="haltMove" from="Englishman" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Englishman" to="Englishman/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Englishman" to="Englishman/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Englishman" to="Englishman/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -785,6 +779,7 @@ combat_scene = "CombatShip"
 [connection signal="body_entered" from="Englishman/Area2D" to="Englishman" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Englishman/Area2D" to="Englishman" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Englishman/HUD/TextureRect/Label" to="Englishman/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="NPC" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="NPC" to="NPC/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="NPC" to="NPC/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="NPC" to="NPC/HUD/TextureRect/Label" method="_on_new_f_text"]

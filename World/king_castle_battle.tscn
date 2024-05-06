@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_n8x85"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_xbltg"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_dc0h5"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_dc0h5"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_wo8mo"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_ydsio"]
 [ext_resource type="Script" path="res://World/PathFollow2D.gd" id="6_4sao6"]
@@ -297,7 +297,7 @@ layer_3/name = "Tilemap - Doodads - No Collisions"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("2_dc0h5")]
-position = Vector2(29, 587)
+position = Vector2(141, 614)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -377,12 +377,6 @@ rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
 
-[node name="Path2D5" type="Path2D" parent="."]
-z_index = 1
-position = Vector2(40, -187)
-scale = Vector2(0.875365, 1)
-curve = SubResource("Curve2D_slvoe")
-
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(354, 548)
 curve = SubResource("Curve2D_73ecf")
@@ -407,7 +401,6 @@ position = Vector2(536, 468)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_c0vyf")
-killable = true
 
 [node name="Body" type="Sprite2D" parent="King"]
 texture_filter = 1
@@ -478,14 +471,13 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("14_wm82p")
-combat_scene = "CombatCastleHall"
+combat_scene = "CombatCastle"
 
 [node name="Guard" type="CharacterBody2D" parent="."]
-position = Vector2(199, 541)
+position = Vector2(407, 472)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_onxs4")
-killable = true
 
 [node name="Body" type="Sprite2D" parent="Guard"]
 texture_filter = 1
@@ -559,12 +551,10 @@ script = ExtResource("14_wm82p")
 combat_scene = "CombatCastle"
 
 [node name="Guard2" type="CharacterBody2D" parent="."]
-position = Vector2(141, 644)
+position = Vector2(650, 470)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_lxxnb")
-direction = "null"
-killable = true
 
 [node name="Body" type="Sprite2D" parent="Guard2"]
 texture_filter = 1
@@ -576,14 +566,13 @@ offset = Vector2(0, -14.9)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Guard2"]
 y_sort_enabled = true
 position = Vector2(0, -11)
-rotation = 3.59014
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="TextureRect" type="TextureRect" parent="Guard2"]
 texture_filter = 1
-offset_left = -4.99998
+offset_left = -5.0
 offset_top = -34.0
-offset_right = 7.00002
+offset_right = 7.0
 offset_bottom = -22.0
 texture = ExtResource("10_cpqxq")
 expand_mode = 3
@@ -591,7 +580,6 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Guard2"]
 position = Vector2(0, -11)
-rotation = 2.66512
 
 [node name="Polygon2D" type="Polygon2D" parent="Guard2/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
@@ -639,6 +627,15 @@ autowrap_mode = 2
 script = ExtResource("14_wm82p")
 combat_scene = "CombatCastle"
 
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D" method="_on_patrolling_guard_halt_move"]
+[connection signal="haltMove" from="Path2D4/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D4/PathFollow2D/PatrollingGuard" to="Path2D4/PathFollow2D" method="_on_patrolling_guard_halt_move"]
+[connection signal="haltMove" from="Path2D/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D/PathFollow2D/PatrollingGuard" to="Path2D/PathFollow2D" method="_on_patrolling_guard_halt_move"]
+[connection signal="haltMove" from="King" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="King" to="King/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="King" to="King/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="King" to="King/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -646,6 +643,7 @@ combat_scene = "CombatCastle"
 [connection signal="body_entered" from="King/Area2D" to="King" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="King/Area2D" to="King" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="King/HUD/TextureRect/Label" to="King/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Guard" to="." method="_on_halt_move"]
 [connection signal="haltMove" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard" to="Guard/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -653,6 +651,7 @@ combat_scene = "CombatCastle"
 [connection signal="body_entered" from="Guard/Area2D" to="Guard" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Guard/Area2D" to="Guard" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Guard/HUD/TextureRect/Label" to="Guard/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Guard2" to="." method="_on_halt_move"]
 [connection signal="haltMove" from="Guard2" to="Guard2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard2" to="Guard2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard2" to="Guard2/HUD/TextureRect/Label" method="_on_new_f_text"]

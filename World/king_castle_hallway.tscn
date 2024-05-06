@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_jtbjt"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_treh7"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_pkk2k"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_pkk2k"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_mgfj5"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_tvvh3"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_awytk"]
@@ -117,3 +117,8 @@ position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
+
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D" method="_on_halt_move"]

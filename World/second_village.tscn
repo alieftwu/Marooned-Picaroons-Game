@@ -1,13 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://covnejc7xk3bc"]
+[gd_scene load_steps=17 format=3 uid="uid://covnejc7xk3bc"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_1xuy7"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_inqj7"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="3_74knn"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="3_74knn"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="4_s1ti7"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_68in7"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="6_3w2hx"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_tbbkp"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="8_wbvtm"]
+[ext_resource type="Script" path="res://World/PathFollow2D.gd" id="9_ykefi"]
+[ext_resource type="PackedScene" uid="uid://367wmpe8vxyd" path="res://Characters/PatrolNPC.tscn" id="10_hq3gq"]
+[ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_k5o5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23po0"]
 size = Vector2(21.1607, 60)
@@ -20,6 +23,13 @@ size = Vector2(415, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xb7yu"]
 size = Vector2(182.262, 45.7137)
+
+[sub_resource type="Curve2D" id="Curve2D_kradl"]
+bake_interval = 0.01
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 1493.09, 518)
+}
+point_count = 2
 
 [node name="second_village" type="Node2D"]
 y_sort_enabled = true
@@ -166,21 +176,27 @@ shape = SubResource("RectangleShape2D_xb7yu")
 
 [node name="NPC" parent="." instance=ExtResource("8_wbvtm")]
 position = Vector2(666, 394)
+direction = "right"
+npcText = ["If I had something to sell you I'd tell you wouldn't I?"]
+hideable = true
 
 [node name="NPC2" parent="." instance=ExtResource("8_wbvtm")]
 position = Vector2(731, 488)
+direction = "right"
+npcText = ["I'd give you a piece of fruit, but it looks like you wouldn't like it.", "Not sure why. Just general feeling about you."]
 
 [node name="NPC3" parent="." instance=ExtResource("8_wbvtm")]
 position = Vector2(663, 488)
-
-[node name="NPC4" parent="." instance=ExtResource("8_wbvtm")]
-position = Vector2(730, 393)
+direction = "right"
+npcText = ["Sorry, I don't sell to anyone who looks like a sailor.", "Pirate or otherwise, I don't like boats or people who can use them."]
 
 [node name="NPC5" parent="." instance=ExtResource("8_wbvtm")]
-position = Vector2(698, 326)
+position = Vector2(677, 325)
+npcText = ["I've seen people like you before, stay away from the cabbages."]
 
 [node name="NPC6" parent="." instance=ExtResource("8_wbvtm")]
 position = Vector2(1016, 457)
+npcText = ["Sorry sir, the store's closed. come back again another time."]
 
 [node name="NPC7" parent="." instance=ExtResource("8_wbvtm")]
 position = Vector2(539, 71)
@@ -190,4 +206,37 @@ npcText = ["Sorry sir, this path is off limits for the moment.", "Large event in
 position = Vector2(981, 116)
 npcText = ["I would not reccomend going up this path right now.", "Lots of Animals, very dangerous.", "come back another time, sorry."]
 
+[node name="Path2D2" type="Path2D" parent="."]
+z_index = 1
+position = Vector2(-193, 38)
+scale = Vector2(0.875365, 1)
+curve = SubResource("Curve2D_kradl")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D2"]
+position = Vector2(291.307, 519)
+rotation = 0.00938702
+rotates = false
+loop = false
+script = ExtResource("9_ykefi")
+
+[node name="PatrollingGuard" parent="Path2D2/PathFollow2D" instance=ExtResource("10_hq3gq")]
+position = Vector2(2.34097, 5.9783)
+rotation = -0.00938702
+scale = Vector2(1.14238, 1)
+direction = "right"
+
+[node name="NPC4" parent="." instance=ExtResource("11_k5o5t")]
+position = Vector2(712, 325)
+questName = "fetchQuest"
+preQuest = ["Can you grab me something from the other village?", "It's just up the road, if you could get something for me that'd be great.", "Just head to the shop looking building and talk to the salesman.", "Thanks in advance!"]
+durQuest = ["Have you gotten the stuff yet?"]
+postQuest = ["Sweet thank you so much!"]
+
+[node name="NPC9" parent="." instance=ExtResource("8_wbvtm")]
+position = Vector2(730, 395)
+direction = "right"
+npcText = ["I just have a stand, It's fun to sit here with everyone", "You look like a pirate, very cool costume if I do say so myself."]
+
 [connection signal="removeNPC" from="." to="NPC7" method="_on_second_village_remove_npc"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]

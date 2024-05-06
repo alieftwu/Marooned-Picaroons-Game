@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_mpgjl"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_ql2ok"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_4oavv"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_oojuv"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="4_oojuv"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_oavo7"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_gj1sq"]
@@ -343,16 +343,13 @@ scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_b6pub")
 
 [node name="Player" parent="." instance=ExtResource("4_oojuv")]
-position = Vector2(802, 323)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("5_lwphu")]
-position = Vector2(821, 317)
 
 [node name="Companion2" parent="." instance=ExtResource("6_oavo7")]
-position = Vector2(781, 313)
 SPEED = 100.0
 
 [node name="Greeter" parent="." instance=ExtResource("7_gj1sq")]
@@ -382,7 +379,7 @@ texture = ExtResource("10_auwmj")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 8
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Snowman"]
 libraries = {

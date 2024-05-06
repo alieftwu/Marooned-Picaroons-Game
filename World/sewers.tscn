@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_5rb32"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rv8p8"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_als4q"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_als4q"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_ph08f"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_nyyt4"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_jokib"]
@@ -357,16 +357,15 @@ layer_3/name = "Tilemap - Doodads - No Collisions"
 layer_3/tile_data = PackedInt32Array(-1048566, 262166, 9, -983030, 262166, 10, -917494, 262166, 11, -851958, 262166, 12, -786422, 262166, 13, -720886, 262166, 14, -1048565, 327702, 9, -983029, 327702, 10, -917493, 327702, 11, -851957, 327702, 12, -786421, 327702, 13, -720885, 327702, 14, -1245160, 393238, 12, -1179624, 393238, 13, -1245159, 458774, 12, -1179623, 458774, 13, -1245158, 524310, 12, -1179622, 524310, 13, -1245157, 524310, 12, -1179621, 524310, 13, -1245156, 524310, 12, -1179620, 524310, 13, -1245155, 524310, 12, -1179619, 524310, 13, -1245154, 524310, 12, -1179618, 524310, 13, -1245153, 589846, 12, -1179617, 589846, 13, -1245152, 655382, 12, -1179616, 655382, 13, -327650, 393238, 12, -262114, 393238, 13, -327649, 458774, 12, -262113, 458774, 13, -327648, 524310, 12, -262112, 524310, 13, -327647, 524310, 12, -262111, 524310, 13, -327646, 524310, 12, -262110, 524310, 13, -327645, 524310, 12, -262109, 524310, 13, -327644, 524310, 12, -262108, 524310, 13, -327643, 589846, 12, -262107, 589846, 13, -327642, 655382, 12, -262106, 655382, 13, -786402, 589846, 4, -786420, 327702, 4, -786419, 393238, 4, -786418, 393238, 4, -786417, 393238, 4, -786416, 393238, 4, -786415, 393238, 4, -786414, 393238, 4, -786413, 393238, 4, -786412, 393238, 4, -786411, 393238, 4, -786410, 393238, 4, -786409, 393238, 4, -786408, 393238, 4, -786407, 393238, 4, -786406, 393238, 4, -786405, 393238, 4, -786404, 393238, 4, -786403, 393238, 4, 2228225, 1114133, 0, 2293761, 1114133, 1, 2359297, 1114133, 2, 2424833, 1114133, 3, 2228226, 1179669, 0, 2293762, 1179669, 1, 2359298, 1179669, 2, 2424834, 1179669, 3, 2228227, 1245205, 0, 2293763, 1245205, 1, 2359299, 1245205, 2, 2424835, 1245205, 3, 2228228, 1310741, 0, 2293764, 1310741, 1, 2359300, 1310741, 2, 2424836, 1310741, 3, 2359302, 327702, 7, 2293769, 393238, 7, 2359306, 655382, 6, 2359313, 589846, 6, 2293780, 589846, 6, 2293773, 21, 12, 2293774, 65557, 12, 2293775, 131093, 12, 2359315, 21, 12, 2359316, 65557, 12, 2359317, 131093, 12, 1703962, 589846, 6, 1703963, 655382, 6, 1769498, 655382, 6, 1769499, 458774, 6, 1638425, 458774, 6, 1703961, 393238, 6, 1900572, 131093, 12, 1835036, 458774, 6, 1769500, 393238, 6, 2228255, 393238, 7, 2162718, 393238, 8, 2097181, 327702, 8, 2228258, 393238, 7, 2031639, 589846, 6, 2097174, 589846, 6, 2162711, 655382, 6, 2228247, 655382, 6, 2031638, 393238, 6, 1900565, 21, 12, 1900566, 65557, 12, 1900567, 65557, 12, 1900568, 65557, 12, 1900569, 65557, 12, 1900570, 65557, 12, 1900571, 65557, 12, 2293797, 393238, 7, 2359334, 393238, 8, 2293799, 327702, 7, 2359335, 327702, 8, 2293808, 21, 12, 2293809, 65557, 12, 2293810, 65557, 12, 2293811, 65557, 12, 2293812, 65557, 12, 2293813, 65557, 12, 2293801, 21, 12, 2293802, 65557, 12, 2293803, 65557, 12, 2293804, 65557, 12, 2293805, 65557, 12, 2293806, 131093, 12, 1835066, 393238, 7, 1703995, 393238, 7, 1769532, 393238, 8, 1507387, 393238, 8, 1376316, 393238, 8, 1245243, 393238, 8, 1572923, 393238, 7, 1376313, 393238, 7, 1179708, 393238, 7, 1376315, 458774, 6, 1179705, 458774, 6, 1638458, 655382, 6, 1310781, 655382, 6, 524334, 327702, 7, 655411, 327702, 7, 655397, 327702, 7, 589863, 327702, 7, 655402, 327702, 7, 524343, 327702, 7, 655408, 393238, 7, 720955, 393238, 7, 524320, 393238, 7, 589859, 393238, 6, 720933, 393238, 6, 589866, 393238, 6, 655405, 393238, 6, 524339, 393238, 6, 655392, 393238, 6, 655417, 393238, 6, 655414, 655382, 6, 524347, 655382, 6, 589873, 655382, 6, 524325, 655382, 6, 524316, 589846, 6, 524315, 589846, 6, -196585, 589846, 6, -458727, 589846, 6, 65564, 327702, 7, -262116, 327702, 7, -524275, 327702, 7, -589808, 327702, 7, -589816, 524310, 6, -458742, 524310, 6, -655353, 65557, 12, -589817, 65557, 12, -524281, 65557, 12, -786423, 589846, 4, -786424, 524310, 4, -786425, 458774, 4, -786426, 393238, 4, -786427, 393238, 4, -786428, 393238, 4, -786429, 327702, 4, -1179641, 458773, 8, -1245177, 458773, 8, -1179631, 524309, 8, -1179630, 524309, 8, -1179629, 589845, 8, -1245167, 589845, 8, -1310703, 589845, 8, -1310699, 524309, 8, -1245163, 524309, 8, -1179627, 524309, 8, -1310698, 524309, 8, -1245162, 524309, 8, -1376237, 524309, 8, -1114099, 524309, 8, -1114104, 524309, 8, -1376251, 524309, 8, -1179642, 524309, 8, -1114092, 458774, 6, -1310702, 458774, 6, -1376239, 458774, 6, -1114097, 524310, 6, -1441786, 524310, 6, -1376233, 589846, 6, -1114106, 589846, 6, -1376243, 327702, 8, -1376249, 327702, 3, -1310714, 327702, 3, -1179609, 524310, 6, -1114074, 524310, 6, -1376222, 524310, 6, -983000, 589846, 6, -1179606, 589846, 6, -1310682, 327702, 7, -1376216, 327702, 7, -1048540, 393238, 8, -1048543, 393238, 8, -524247, 458774, 6, -327640, 458774, 6, -65492, 458774, 6, -131024, 458774, 6, -65482, 458774, 6, -131032, 589846, 6, -589785, 589846, 6, -131026, 589846, 6, -131016, 589846, 6, -589763, 589846, 6, -393157, 393238, 7, -786374, 393238, 7, -589766, 327702, 7, -851908, 327702, 7, -1114053, 327702, 7, -1376198, 393238, 6, -982982, 393238, 6, -1376196, 393238, 6, -1245125, 393238, 6, -131022, 393238, 6, -131030, 327702, 7, -393176, 327702, 7, -786393, 327702, 7, -65484, 327702, 7, -655319, 327702, 7, -524267, 327702, 7, -655333, 327702, 7, 1507334, 1179669, 3, 1507335, 1245205, 3, 1507333, 1114133, 3)
 
 [node name="Player" parent="." instance=ExtResource("2_als4q")]
-position = Vector2(755, 398)
+position = Vector2(242, 1065)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("3_ph08f")]
-position = Vector2(775, 392)
+position = Vector2(239, 1050)
 
 [node name="Companion2" parent="." instance=ExtResource("5_jokib")]
-position = Vector2(737, 380)
 SPEED = 100.0
 
 [node name="EntranceMarkers" type="Node2D" parent="."]
@@ -705,6 +704,7 @@ autowrap_mode = 2
 script = ExtResource("12_q26m2")
 combat_scene = "CombatSewers"
 
+[connection signal="haltMove" from="Mage Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Mage Rat" to="Mage Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Mage Rat" to="Mage Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Mage Rat" to="Mage Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -712,6 +712,7 @@ combat_scene = "CombatSewers"
 [connection signal="body_entered" from="Mage Rat/Area2D" to="Mage Rat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Mage Rat/Area2D" to="Mage Rat" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Mage Rat/HUD/TextureRect/Label" to="Mage Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Warrior Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -719,6 +720,7 @@ combat_scene = "CombatSewers"
 [connection signal="body_entered" from="Warrior Rat/Area2D" to="Warrior Rat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Warrior Rat/Area2D" to="Warrior Rat" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Warrior Rat/HUD/TextureRect/Label" to="Warrior Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Base Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Base Rat" to="Base Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Base Rat" to="Base Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Base Rat" to="Base Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -726,6 +728,7 @@ combat_scene = "CombatSewers"
 [connection signal="body_entered" from="Base Rat/Area2D" to="Base Rat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Base Rat/Area2D" to="Base Rat" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Base Rat/HUD/TextureRect/Label" to="Base Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Rogue Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
