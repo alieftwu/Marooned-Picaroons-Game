@@ -342,7 +342,6 @@ position = Vector2(135, 406)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("8_kabi6")
-npcText = ["Now lets fight!", "This is actually a test lol"]
 
 [node name="Body" type="Sprite2D" parent="Guard 1"]
 texture_filter = 1
