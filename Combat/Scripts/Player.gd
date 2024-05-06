@@ -41,11 +41,11 @@ var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 
 func _ready():
 	speed = 3
-	health = 100
+	health = 100 * Global.statsMultiplier
 	print("Start Health: ", health)
-	maxHealth = 100
-	armor = 2
-	basicAttackDamage = 15
+	maxHealth = 100 * Global.statsMultiplier
+	armor = 2 * Global.statsMultiplier
+	basicAttackDamage = 15 * Global.statsMultiplier
 	setAbilities(Global.second_companion)
 	setPassives(Global.second_companion)
 func play_turn():

@@ -33,15 +33,21 @@ func play_round():
 		if gameResult == 1:
 			print("You lost")
 			loseScreen.visible = true
+			TransitionScreen.transition()
+			await TransitionScreen.on_transition_finished
 			await get_tree().create_timer(3).timeout # wait for 3 seconds
 			loseScreen.visible = false
-			get_tree().reload_current_scene()
+			get_tree().quit()
+			#get_tree().reload_current_scene()
 			break
 		if gameResult == 2:
 			print("You Won!")
 			Global.currentFightWon = true
 			Global.fightsWon += 1
 			print("Fights Won: " , Global.fightsWon)
+			Global.statsMultiplier += 0.12
+			TransitionScreen.transition()
+			await TransitionScreen.on_transition_finished
 			scene_manager.switchBackScene(get_owner(), connected_scene)
 			break
 		#print("child ", active_character.get_index(), "'s turn has ended")

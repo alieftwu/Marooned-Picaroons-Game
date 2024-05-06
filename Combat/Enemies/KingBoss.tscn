@@ -18,7 +18,7 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"none\"
+var passiveAbility : String = \"unflinching\"
 var abilityList : Array = [\"quickStrike\", \"damageWave\", \"spawnMinion\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
@@ -41,7 +41,7 @@ func _ready():
 	health = 750
 	maxHealth = 750
 	armor = 4
-	basicAttackDamage = 10
+	basicAttackDamage = 14
 
 func play_turn():
 	updateHealthBar()

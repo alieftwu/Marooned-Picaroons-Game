@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmxw52ig0jlsg"]
+
+[ext_resource type="Texture2D" uid="uid://bo7s03gw03pvv" path="res://Combat/Resources/winScreen.jpg" id="1_4g64q"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 323.0
+offset_top = 133.0
+offset_right = 935.0
+offset_bottom = 462.0
+scale = Vector2(0.898471, 1.0838)
+texture = ExtResource("1_4g64q")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(588, 326)

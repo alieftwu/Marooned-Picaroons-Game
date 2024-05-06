@@ -41,7 +41,7 @@ func _ready():
 	health = 140
 	maxHealth = 140
 	armor = 2
-	basicAttackDamage = 13
+	basicAttackDamage = 20
 
 func play_turn():
 	updateHealthBar()
@@ -89,7 +89,7 @@ func updateStatusEffect():
 atlas = ExtResource("2_pgqa3")
 region = Rect2(0, 0, 16, 16)
 
-[node name="TestEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
+[node name="YellowEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
 script = SubResource("GDScript_3gfyo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

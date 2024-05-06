@@ -407,6 +407,7 @@ position = Vector2(536, 468)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_c0vyf")
+killable = true
 
 [node name="Body" type="Sprite2D" parent="King"]
 texture_filter = 1
@@ -477,13 +478,14 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("14_wm82p")
-combat_scene = "CombatCastle"
+combat_scene = "CombatCastleHall"
 
 [node name="Guard" type="CharacterBody2D" parent="."]
-position = Vector2(407, 472)
+position = Vector2(199, 541)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_onxs4")
+killable = true
 
 [node name="Body" type="Sprite2D" parent="Guard"]
 texture_filter = 1
@@ -557,10 +559,12 @@ script = ExtResource("14_wm82p")
 combat_scene = "CombatCastle"
 
 [node name="Guard2" type="CharacterBody2D" parent="."]
-position = Vector2(650, 470)
+position = Vector2(141, 644)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_lxxnb")
+direction = "null"
+killable = true
 
 [node name="Body" type="Sprite2D" parent="Guard2"]
 texture_filter = 1
@@ -572,13 +576,14 @@ offset = Vector2(0, -14.9)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Guard2"]
 y_sort_enabled = true
 position = Vector2(0, -11)
+rotation = 3.59014
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="TextureRect" type="TextureRect" parent="Guard2"]
 texture_filter = 1
-offset_left = -5.0
+offset_left = -4.99998
 offset_top = -34.0
-offset_right = 7.0
+offset_right = 7.00002
 offset_bottom = -22.0
 texture = ExtResource("10_cpqxq")
 expand_mode = 3
@@ -586,6 +591,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Guard2"]
 position = Vector2(0, -11)
+rotation = 2.66512
 
 [node name="Polygon2D" type="Polygon2D" parent="Guard2/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)

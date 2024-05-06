@@ -925,6 +925,9 @@ func spawnMinion(player):
 			turn_queue.add_child(newMinion)
 			print("current: ", newMinion.global_position)
 			print("want to be: ", locationConvert)
+			var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
+			abilityMusic.stream = testMusic
+			abilityMusic.play
 			# var globalPos = battle_map.tile_map.map_to_local(locationConvert)
 			newMinion.global_position = locationConvert
 			break
