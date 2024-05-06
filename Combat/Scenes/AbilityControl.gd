@@ -151,7 +151,7 @@ func checkMoveSlot(player, ability): # see what the players move for that button
 		print("pirateBlessing")
 		await pirateBlessing(player)
 		cooldown = 2
-	elif ability == "axeToss":
+	elif ability == "axeToss": # really should be dagger toss
 		print("axeToss")
 		await axeToss(player)
 		cooldown = 3

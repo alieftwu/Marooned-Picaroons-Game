@@ -18,8 +18,8 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"none\"
-var abilityList : Array = [\"circleSlash\", \"pistolShot\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
+var passiveAbility : String = \"unflinching\"
+var abilityList : Array = [\"heavySwordSwing\", \"desparateStrike\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -37,11 +37,11 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = stats.Speed
-	health = stats.Health
-	maxHealth = stats.MaxHealth
-	armor = stats.Armor
-	basicAttackDamage = stats.BasicAttackDamage
+	speed = 1
+	health = 200
+	maxHealth = 200
+	armor = 10
+	basicAttackDamage = 22
 
 func play_turn():
 	updateHealthBar()
@@ -52,7 +52,10 @@ func play_turn():
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		await battlemap.agressiveEnemyMove(self)
+		if randf() < 0.9:
+			await battlemap.agressiveEnemyMove(self)
+		else:
+			await battlemap.moveEnemyPerson(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
 	updateCooldowns()
