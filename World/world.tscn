@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=15 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="11_af5ti"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
+[ext_resource type="PackedScene" uid="uid://dfgnh20vuyyf0" path="res://Pause Menu/pause_menu.tscn" id="12_p3xxu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
 size = Vector2(28, 32)
@@ -114,5 +115,11 @@ position = Vector2(574, 360)
 [node name="NPC" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(468, 122)
 npcText = ["Ahoy Cap'n! ", "like this!", "Very cool I know.", "Now lets fight!"]
+
+[node name="PauseMenu" parent="." instance=ExtResource("12_p3xxu")]
+offset_left = 537.0
+offset_top = 13.0
+offset_right = 537.0
+offset_bottom = 13.0
 
 [connection signal="haltMove" from="Englishman" to="Player" method="_on_halt_move"]

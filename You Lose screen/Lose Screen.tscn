@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckmbqdcwkwiad"]
+
+[ext_resource type="Script" path="res://You Lose screen/Lose Screen.gd" id="1_n8oks"]
+[ext_resource type="Texture2D" uid="uid://ba0hu01h037tb" path="res://You Lose screen/You Lose.jpg" id="2_247mn"]
+
+[sub_resource type="SystemFont" id="SystemFont_c70ce"]
+font_names = PackedStringArray("Impact")
+
+[node name="You Lose Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n8oks")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 84.0
+offset_top = 1.0
+offset_right = -420.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_247mn")
+expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 68.0
+offset_right = 1.0
+offset_bottom = -172.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Separator2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Start_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_c70ce")
+theme_override_font_sizes/font_size = 24
+text = "Play Again"
+
+[node name="Exit_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_c70ce")
+theme_override_font_sizes/font_size = 24
+text = "Quit"
