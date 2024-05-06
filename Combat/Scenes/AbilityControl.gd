@@ -39,18 +39,16 @@ func _input(event):
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
 	if player.frenzyBuff == true:
 		player.frenzyBuffCount -= 1
-		if player.frenzyBuffCounter == 0:
+		if player.frenzyBuffCount == 0:
 			player.frenzyBuff = false
 			player.speed -= 1
 			player.basicAttackDamage -= 10
 	return
 	
-func checkBlocking(player):
-	if player.isBlocking == true: # if I was blocking, stop blocking, if i did not block anything i am stunned
-		if player.didBlock == false:
-			player.isStunned = true
-			player.isStunnedCount = 2
-		player.didBlock = false
+func checkBlocking(unit):
+	if unit.isBlocking == true: # keep unit from being stunned by updating didBlock
+		if unit.didBlock == false:
+			unit.didBlock = true
 	return
 	
 func checkStun(player):
@@ -61,27 +59,65 @@ func checkStun(player):
 		if player.isStunnedCount == 0:
 			player.isStunned = false
 	if player.isBlocking == true:
-		pass
+		if player.didBlock == false:
+			player.isStunned = true
+			player.isStunnedCount = 2
+			skipTurn = true
+		else:
+			player.didBlock = false
+	if player.passiveAbility == "unflinching":
+		skipTurn = false
 	return skipTurn
 	
 func checkPassiveAttack(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
 	if player.passiveAbility == "Brawler":
 		if damageType == "Melee":
-			damageModifier = 1.40
+			damageModifier = 1.25
 			print("Melee Damage increased flag")
 	if player.passiveAbility == "Bomber":
 		if damageType == "Bomb":
-			damageModifier = 1.25
+			damageModifier = 1.3
 			print("Bomb Damage increased flag")
+	if player.passiveAbility == "Sniper":
+		if damageType == "Ranged":
+			damageModifier = 1.4
+			print("Range Damage increased flag")
+			
+	# unflinching passive makes it so you can't be stunned		
+			
 	return damageModifier
 	
 func checkPassiveDefend(player, potentialDamage = 0, damageType = null): # check passive ability
 	var damageModifier : float = 1.0
 	if player.passiveAbility == "ShotPrediction":
 		if damageType == "Ranged":
-			damageModifier = 0.60
+			damageModifier = 0.65
 			print("Range Damage reduced flag")
+	elif player.passiveAbility == "steelSkin":
+		if damageType == "Melee":
+			damageModifier = 0.10
+			print("Melee Damage reduced flag")
+	elif player.passiveAbility == "leatherSkin":
+		if damageType == "Melee":
+			damageModifier = 0.70
+			print("Melee Damage reduced flag")
+	elif player.passiveAbility == "hardToHit":
+		if damageType == "Throw":
+			damageModifier = 0
+			print("Throw Damage reduced flag")
+	elif player.passiveAbility == "evasive":
+		if randf() < 0.2:
+			damageModifier = 0
+			print("evasive flag")
+	elif player.passiveAbility == "ninja":
+		if randf() < 0.5:
+			damageModifier = 0
+			print("ghost flag")
+	elif player.passiveAbility == "ghost":
+		if randf() < 0.7:
+			damageModifier = 0
+			print("ghost flag")
 	if player.isBlocking == true: # if they are blocking negate all damage
 		damageModifier = 0.0
 		player.didBlock = true
@@ -147,7 +183,14 @@ func checkMoveSlot(player, ability): # see what the players move for that button
 		print("bombThrow")
 		await bombThrow(player)
 		cooldown = 3
-	
+	elif ability == "damageWave":
+		print("damageWave")
+		await damageWave(player)
+		cooldown = 4
+	elif ability == "spawnMinion":
+		print("spawnMinion")
+		await spawnMinion(player)
+		cooldown = 2
 	return cooldown
 	
 func checkEnemyPresent(targetSpace, isPlayer): # see if unit from other team is there
@@ -251,7 +294,7 @@ func lineFindPierce(x, y, moves_made, max_moves, direction, spacesArray, isPlaye
 	
 	moves_made += 1
 	if validTile:
-		lineFind(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)	
+		lineFindPierce(new_position.x, new_position.y, moves_made, max_moves, direction, spacesArray, isPlayer)	
 	return
 	
 func areaFind(x, y, moves_made, max_moves, spacesArray, isPlayer): # find spaces in an area
@@ -340,10 +383,10 @@ func pistolShot(player): #shoot in a line 3 away
 	var isPlayer = checkTeam(player)
 	var attackTargets : Array = []
 	var attackChoice = null
-	lineFind(starting_position.x, starting_position.y, 0, 3, "left", attackTargets, isPlayer)
-	lineFind(starting_position.x, starting_position.y, 0, 3, "right", attackTargets, isPlayer)
-	lineFind(starting_position.x, starting_position.y, 0, 3, "up", attackTargets, isPlayer)
-	lineFind(starting_position.x, starting_position.y, 0, 3, "down", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 4, "left", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 4, "right", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 4, "up", attackTargets, isPlayer)
+	lineFind(starting_position.x, starting_position.y, 0, 4, "down", attackTargets, isPlayer)
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
@@ -395,8 +438,10 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 3 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -415,7 +460,7 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 	player.basicAttackDamage += 10
 	player.health -= 10
 	player.frenzyBuff = true
-	player.frenzyBuffCount = 2 # to tell when 2 turns are up
+	player.frenzyBuffCount = 3 # to tell when 2 turns are up
 	
 	for space in buffTargets:	
 		interactUnit = getTarget(space)
@@ -457,7 +502,9 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier)
+		interactUnit.health -= damage
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		interactUnit.updateHealthBar()
 		interactUnit.isStunned = true
 		interactUnit.isStunnedCount = 3 # 2 turns
@@ -477,7 +524,7 @@ func pirateBlessing(player): #heal any friend on the map a little
 	
 	if isPlayer:
 		for unit in battle_map.friendlyUnits:
-			var unit_position = tile_map.local_to_map(player.global_position)
+			var unit_position = tile_map.local_to_map(unit.global_position)
 			highlight_map.highlightRed(unit_position)
 			healTargets.append(unit_position)
 		chooseAttack = true
@@ -490,8 +537,12 @@ func pirateBlessing(player): #heal any friend on the map a little
 		healChoice = battle_map.enemyUnits.pick_random()
 	var healerModifier = checkPassiveAttack(player, 0, "Heal")
 	var healedModifier = checkPassiveDefend(healChoice, 0, "Heal")
-	healChoice.health += 25 * healedModifier * healerModifier
+	var health = 25 * healedModifier * healerModifier
+	healChoice.health += health
+	if healChoice.health > healChoice.maxHealth:
+		healChoice.health = healChoice.maxHealth
 	healChoice.updateHealthBar()
+	await battle_map.updateDamageDisplayHeal(healChoice, health)
 	#var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 	#abilityMusic.stream = testMusic
 	#abilityMusic.play()
@@ -521,11 +572,13 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 			attackChoice = attackTargets.pick_random()
 			
 		interactUnit = getTarget(attackChoice)
-		var attackModifier = checkPassiveAttack(player, 0, "Range")
-		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+		var attackModifier = checkPassiveAttack(player, 0, "Throw")
+		var defendModifier = checkPassiveDefend(interactUnit, 0, "Throw")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -558,8 +611,10 @@ func quickStrike(player): # attack then you can move again
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 1.2 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 1.2 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -581,8 +636,10 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 			var attackModifier = checkPassiveAttack(player, 0, "Melee")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 			checkBlocking(interactUnit)
-			interactUnit.health -= (player.basicAttackDamage * 1.3 * attackModifier * defendModifier) - interactUnit.armor
+			var damage = (player.basicAttackDamage * 1.3 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
+			await battle_map.updateDamageDisplay(interactUnit, damage)
 			abilityMusic.stream = testMusic
 			abilityMusic.play()
 	highlight_map.clear()
@@ -617,8 +674,10 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 		if (player.health <= 20):
 			moveModifier = 2.4
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 1.25 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 1.25 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -653,8 +712,10 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		var attackModifier = checkPassiveAttack(player, 0, "Ranged")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -675,8 +736,10 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 			attackModifier = checkPassiveAttack(player, 0, "Ranged")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
 			checkBlocking(interactUnit)
-			interactUnit.health -= (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+			damage = (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
+			await battle_map.updateDamageDisplay(interactUnit, damage)
 			testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 			abilityMusic.stream = testMusic
 			abilityMusic.play()
@@ -710,8 +773,10 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 4 * attackModifier * defendModifier)
+		var damage = (player.basicAttackDamage * 4 * attackModifier * defendModifier)
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 	player.isStunned = true
 	player.isStunnedCount = 3 # 2 turn
 	player.updateStatusEffect()
@@ -735,10 +800,10 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 	var isPlayer = checkTeam(player)
 	var attackTargets : Array = []
 	var attackChoice = null
-	lineFindPierce(starting_position.x - 1, starting_position.y, 0, 2, "left", attackTargets, isPlayer)
-	lineFindPierce(starting_position.x + 1, starting_position.y, 0, 2, "right", attackTargets, isPlayer)
-	lineFindPierce(starting_position.x, starting_position.y + 1, 0, 2, "up", attackTargets, isPlayer)
-	lineFindPierce(starting_position.x, starting_position.y - 1, 0, 2, "down", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "left", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "right", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "up", attackTargets, isPlayer)
+	lineFindPierce(starting_position.x, starting_position.y, 0, 3, "down", attackTargets, isPlayer)
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
@@ -755,8 +820,10 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		var attackModifier = checkPassiveAttack(player, 0, "Bomb")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Bomb")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
+		await battle_map.updateDamageDisplay(interactUnit, damage)
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -765,14 +832,71 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		var splashTargets : Array = []
 		aroundFind(attackChoice, 1, splashTargets, isPlayer)
 		aroundFind(attackChoice, 1, splashTargets, !isPlayer) # teammates to
-		for unit in splashTargets:
-			interactUnit = getTarget(attackChoice)
+		print("splash: ", splashTargets)
+		for unitSpace in splashTargets:
+			interactUnit = getTarget(unitSpace)
 			attackModifier = checkPassiveAttack(player, 0, "Range")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 			checkBlocking(interactUnit)
-			interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+			damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
+			await battle_map.updateDamageDisplay(interactUnit, damage)
 			
 	highlight_map.clear()
 	emit_signal("specialAttackDone")
+	return
+
+func damageWave(player): # deal damage to entire enemy team from 50% to 250%
+	
+	var isPlayer = checkTeam(player)
+	var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+	if isPlayer:
+		for unit in battle_map.enemyUnits:
+			interactUnit = unit
+			var attackModifier = checkPassiveAttack(player, 0, "Range")
+			var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+			checkBlocking(interactUnit)
+			var damage = (player.basicAttackDamage * randf_range(0.5, 2.5) * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.health -= damage
+			interactUnit.updateHealthBar()
+			abilityMusic.stream = testMusic
+			abilityMusic.play()
+			await battle_map.updateDamageDisplay(interactUnit, damage)
+	else:
+		for unit in battle_map.friendlyUnits:
+			interactUnit = unit
+			var attackModifier = checkPassiveAttack(player, 0, "Range")
+			var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
+			checkBlocking(interactUnit)
+			var damage = (player.basicAttackDamage * randf_range(0.5, 2.5) * attackModifier * defendModifier) - interactUnit.armor
+			interactUnit.health -= damage
+			interactUnit.updateHealthBar()
+			abilityMusic.stream = testMusic
+			abilityMusic.play
+			await battle_map.updateDamageDisplay(interactUnit, damage)
+			
+	highlight_map.clear()
+	emit_signal("specialAttackDone")
+	return
+
+func spawnMinion(player):
+	var spawnLocations : Array = [Vector2i(136,8), Vector2i(136,24), Vector2i(136,40), Vector2i(136,56), Vector2i(136,72),
+	 Vector2i(136,88),Vector2i(136,104), Vector2i(136,120), Vector2i(136,136)]
+	for location in spawnLocations:
+		var starting_position = tile_map.local_to_map(location)
+		var unitThere = false
+		if checkEnemyPresent(starting_position, true) or checkEnemyPresent(starting_position, false):
+			unitThere = true
+			break
+		if unitThere == false:
+			var newMinionSource = load("res://Combat/Scenes/TestEnemyAggressive.tscn")
+			var locationConvert : Vector2 = location
+			var newMinion = newMinionSource.instantiate()
+			turn_queue.add_child(newMinion)
+			print("current: ", newMinion.global_position)
+			print("want to be: ", locationConvert)
+			# var globalPos = battle_map.tile_map.map_to_local(locationConvert)
+			newMinion.global_position = locationConvert
+			break
 	return

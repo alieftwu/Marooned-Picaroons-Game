@@ -804,6 +804,7 @@ func checkHazardTile(unit):
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
 		unit.updateHealthBar()
+		
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
 			await get_tree().create_timer(1).timeout # wait for 3 secodns
@@ -818,32 +819,17 @@ func loadBackground(newTexture):
 	background.texture = newTexture
 	return
 
-func spawnUnits(playerUnitsList, enemyUnitsList):
-	var x_cord = 8
-	var y_cord = 56
-	for unit in playerUnitsList:
-		unit.health = unit.maxHealth
-		unit.updateHealthBar()
-		unit.global_position = Vector2i(x_cord,y_cord)
-		y_cord += 16
-	var y_cord_list = [Vector2i(136, 8), Vector2i(136, 24), Vector2i(136, 40), Vector2i(136, 56),
-	Vector2i(136, 72), Vector2i(136, 88), Vector2i(136, 104), Vector2i(136, 120), Vector2i(136, 136)] 
-	for unit in enemyUnitsList:
-		unit.health = unit.maxHealth
-		unit.updateHealthBar()
-		var spawnChoice = y_cord_list.pick_random()
-		y_cord_list.erase(spawnChoice)
-		unit.global_position = spawnChoice
-	return
-
 func enemyRandomAbility(enemy):
 	var abilityList : Array = []
 	if enemy.special1CoolDown == 0:
-		abilityList.append([1, enemy.abilityList[0]])
+		if enemy.abilityList[0] != null:
+			abilityList.append([1, enemy.abilityList[0]])
 	if enemy.special2CoolDown == 0:
-		abilityList.append([2, enemy.abilityList[1]])
+		if enemy.abilityList[1] != null:
+			abilityList.append([2, enemy.abilityList[1]])
 	if enemy.special3CoolDown == 0:
-		abilityList.append([3, enemy.abilityList[2]])
+		if enemy.abilityList[2] != null:
+			abilityList.append([3, enemy.abilityList[2]])
 	if abilityList.is_empty() == true:
 		_on_ability_1_pressed()
 	else:
@@ -970,6 +956,14 @@ func updateDamageDisplay(player, damage):
 	damageDisplay.visible = false
 	return
 
+func updateDamageDisplayHeal(player, health):
+	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
+	damageDisplay.visible = true
+	damageDisplay.text = ("+" + str(health) + " health")
+	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	damageDisplay.visible = false
+	return
+	
 func updateButtons(player): # update icons to match abilities
 	var button2Label = player.abilityList[0]
 	var button3Label = player.abilityList[1]
@@ -1014,6 +1008,9 @@ func updateButtons(player): # update icons to match abilities
 	elif button2Label == "bombThrow":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
 		button2.texture_normal = buttonLoad
+	elif button2Label == "damageWave":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/22.png")
+		button2.texture_normal = buttonLoad
 	if button3Label == "pistolShot":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
 		button3.texture_normal = buttonLoad
@@ -1052,6 +1049,9 @@ func updateButtons(player): # update icons to match abilities
 		button3.texture_normal = buttonLoad
 	elif button3Label == "bombThrow":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "damageWave":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/22.png")
 		button3.texture_normal = buttonLoad
 	if button4Label == "pistolShot":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
@@ -1092,6 +1092,9 @@ func updateButtons(player): # update icons to match abilities
 	elif button4Label == "bombThrow":
 		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
 		button4.texture_normal = buttonLoad
+	elif button4Label == "damageWave":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/22.png")
+		button4.texture_normal = buttonLoad
 	return
 
 func updateAbilityInfo(player, ability):
@@ -1106,7 +1109,7 @@ func getAbilityText(ability):
 	elif ability == "pistolShot":
 		text = "Shoot an enemy 4 or less tiles away."
 	elif ability == "heavySwordSwing":
-		text = "Attack a target next to you for big damage"
+		text = "Attack a target next to you for 200% damage"
 	elif ability == "recklessFrenzy":
 		text = "Increase speed and attack at the cost of health for 2 turns"
 	elif ability == "takeDown":
@@ -1129,6 +1132,8 @@ func getAbilityText(ability):
 		text = "Block ALL enemy damage for 1 turn, if you are not attacked before you next turn, get stunned for 2 turns."
 	elif ability == "bombThrow":
 		text = "Throw a bomb in a line up to 3 tiles away from you, hitting the target and all nearby units for 200% damage."
+	elif ability == "damageWave":
+		text = "Deal random damage to ALL enemies"
 	return text
 
 func _on_ability_1_mouse_entered(): # when mouse enters button 1
