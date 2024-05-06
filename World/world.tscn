@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="11_d3hky"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
-[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="12_a8ruc"]
+[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="12_a8ruc"]
 [ext_resource type="Texture2D" uid="uid://ei1yshe1hqvb" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow enemy sprite.png" id="12_nfnw4"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="13_6qnvj"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="14_7avca"]
@@ -685,6 +685,7 @@ position = Vector2(488, 107)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("11_d3hky")
+killable = true
 teleportPos = Vector2(400, 150)
 
 [node name="Body" type="Sprite2D" parent="NPC"]

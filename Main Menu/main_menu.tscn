@@ -69,6 +69,7 @@ theme_override_font_sizes/font_size = 24
 text = "Exit Game"
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_ywgri")]
+visible = false
 layout_mode = 1
 offset_left = 530.0
 offset_top = 228.0
