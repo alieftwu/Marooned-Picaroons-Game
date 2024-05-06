@@ -21,14 +21,14 @@ var basicAttackDamage : int
 #change passive abilities
 var passiveAbility = {
 	0: \"Brawler\", #blue companion
-	1: \"Bomber\", #gray companion
-	2: \"ShotPrediction\", #green companion
+	1: \"leatherSkin\", #gray companion
+	2: \"ninja\", #green companion
 }
 #buttons 2-4 abilities. can switch out
 var abilityList = {
-	0: [\"circleSlash\", \"quickStrike\", \"bombThrow\"], #blue companion
-	1: [\"rapidFire\" , \"pistolShot\", \"bombThrow\"], #gray companion
-	2: [\"quickStrike\" , \"cannonShot\", \"pirateBlessing\"], #green companion
+	0: [\"recklessFrenzy\", \"cannonShot\", \"desparateStrike\"], #blue companion1
+	1: [\"heavySwordSwing\" , \"engagingBlock\", \"bombThrow\"], #gray companion1
+	2: [\"quickStrike\" , \"rapidFire\", \"takeDown\"], #green companion1
 } 
 
 # look at abilityControl checkMoveSlot
@@ -49,9 +49,9 @@ var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 
 func _ready():
 	speed = 4
-	health = 120
-	maxHealth = 120
-	armor = 3
+	health = 100
+	maxHealth = 100
+	armor = 0
 	basicAttackDamage = 15
 	setAbilities(Global.first_companion)
 	setPassives(Global.first_companion)

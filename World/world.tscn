@@ -685,6 +685,7 @@ position = Vector2(488, 107)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("11_d3hky")
+teleportPos = Vector2(400, 150)
 
 [node name="Body" type="Sprite2D" parent="NPC"]
 texture_filter = 1

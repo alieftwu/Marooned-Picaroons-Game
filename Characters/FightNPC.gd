@@ -6,12 +6,13 @@ extends CharacterBody2D
 @onready var textBoxText = get_node("HUD/TextureRect/Label")
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var animations : AnimationPlayer = $PlayerAnimation
+@onready var playerUnits = get_node("/root/world/Player")
 
 @export var direction = "down"
 @export var npcText = ["Now lets fight!"]
 @export var hasWon = false
 @export var killable = false
-
+@export var teleportPos : Vector2
 
 signal showTextBox
 signal hideTextBox
@@ -45,6 +46,7 @@ func _process(delta):
 			get_node("CollisionShape2D").disabled = true
 		around.hide()
 		around.get_node("CollisionPolygon2D").disabled = true
+		#playerUnits.global_position = teleportPos
 	else:
 		show()
 		get_node("CollisionShape2D").disabled = false

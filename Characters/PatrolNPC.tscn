@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://367wmpe8vxyd"]
 
 [ext_resource type="Script" path="res://Characters/PatrolNPC.gd" id="1_wro0q"]
-[ext_resource type="Texture2D" uid="uid://cuxx31j1m5vg0" path="res://Art/Pirates/Pirate White Sprite Sheet/white enemy sprite.png" id="2_miv5c"]
+[ext_resource type="Texture2D" uid="uid://ca62ji8untpgg" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png" id="2_sl57r"]
 [ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="3_gf0tf"]
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="4_3s45t"]
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="5_06qju"]
@@ -229,7 +229,7 @@ states/Start/position = Vector2(191, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
 states/Walk/position = Vector2(633, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
-graph_offset = Vector2(201.692, 0)
+graph_offset = Vector2(-186.663, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
 font = ExtResource("6_av8c1")
@@ -242,13 +242,12 @@ script = ExtResource("1_wro0q")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -3)
-scale = Vector2(0.957713, 0.957713)
-texture = ExtResource("2_miv5c")
+position = Vector2(-1, 1)
+texture = ExtResource("2_sl57r")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 1
+frame = 9
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -262,15 +261,12 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
-parameters/Idle/blend_position = Vector2(-0.00819671, 1.26296)
-parameters/Walk/blend_position = Vector2(-0.00614756, 1.05344)
+parameters/Idle/blend_position = Vector2(-0.0992963, -0.0174603)
+parameters/Walk/blend_position = Vector2(-0.102424, 0.55291)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
@@ -329,7 +325,7 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("7_auwsv")
-combat_scene = "CombatCastle"
+connected_scene = "CombatScene"
 
 [connection signal="haltMove" from="." to="HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="." to="HUD/TextureRect" method="_on_npc_hide_text_box"]

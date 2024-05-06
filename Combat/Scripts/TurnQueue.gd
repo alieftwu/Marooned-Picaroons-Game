@@ -4,6 +4,7 @@ class_name TurnQueue
 @onready var battle_map = $"../BattleMap"
 @onready var combatScene = get_parent()
 @export var connected_scene: String
+@onready var loseScreen = $"../BattleMap/loseScreen"
 var num_children
 var active_character
 var new_index
@@ -31,7 +32,10 @@ func play_round():
 		gameResult = checkGameOver()
 		if gameResult == 1:
 			print("You lost")
-			scene_manager.switchBackScene(get_owner(), connected_scene)
+			loseScreen.visible = true
+			await get_tree().create_timer(3).timeout # wait for 3 seconds
+			loseScreen.visible = false
+			get_tree().reload_current_scene()
 			break
 		if gameResult == 2:
 			print("You Won!")
