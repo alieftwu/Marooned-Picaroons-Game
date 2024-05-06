@@ -99,21 +99,24 @@ position = Vector2(-1.5625, 3)
 shape = SubResource("RectangleShape2D_wdjr7")
 
 [node name="Player" parent="." instance=ExtResource("4_0dqrl")]
+position = Vector2(592, 34)
 speed = 120.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
+position = Vector2(0, 1)
 script = ExtResource("5_k3fc5")
 tilemap = NodePath("../../TileMap")
 
 [node name="Companion" parent="." instance=ExtResource("6_mdsp7")]
-position = Vector2(635, 43)
+position = Vector2(605, 35)
 
 [node name="Companion2" parent="." instance=ExtResource("7_whcwq")]
+position = Vector2(578, 32)
 SPEED = 100.0
 
 [node name="Shopper" parent="." instance=ExtResource("8_0021f")]
 position = Vector2(249, 392)
-npcText = ["Welcome to my shop!", "Take a look around! Buy whatever you would like!", "All of these items are very useful I swear", "I will not try to cheat you out of your money I pinky promise."]
+npcText = ["Hey sorry, the store's closed, some guy came by and stole all of my stuff", "Like quite literally all of it."]
 
 [node name="Guard1" parent="." instance=ExtResource("9_d1x8v")]
 position = Vector2(523, 223)
@@ -123,3 +126,6 @@ direction = "right"
 [node name="Guard2" parent="." instance=ExtResource("9_d1x8v")]
 position = Vector2(661, 318)
 direction = "left"
+
+[connection signal="haltMove" from="Guard1" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Guard2" to="Player" method="_on_halt_move"]

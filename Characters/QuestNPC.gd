@@ -23,6 +23,9 @@ var textDisplayed = false
 func _ready():
 	if Global.currentQuest == questName:
 		questStarted = true
+	for str in Global.completeQuests:
+		if str == questName:
+			questFinished = true
 	bubble.hide()
 	pass
 
@@ -50,6 +53,8 @@ func _process(delta):
 				questStarted = false
 				Global.currentQuest = null
 				Global.currentQuestDone = false
+				Global.completeQuests.append(questName)
+				print(Global.completeQuests)
 			newQText.emit(name, true, true)
 		else:
 			newQText.emit(name, questStarted, questFinished)

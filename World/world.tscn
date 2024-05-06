@@ -101,7 +101,7 @@ npcText = ["What are you looking at punk?", "You Looking at me?", "If I didn't m
 position = Vector2(857, 761)
 npcText = ["Are you a pirate?", "If so you shouldn't be talking to my son.", "You're a bad influence, being a criminal", "So Stay away from my son!"]
 
-[node name="child" parent="." instance=ExtResource("7_kwfy2")]
+[node name="greeter" parent="." instance=ExtResource("7_kwfy2")]
 position = Vector2(663, 808)
 npcText = ["Welcome to our town! I see you sailed here.", "Very Nice ship I see."]
 

@@ -9,4 +9,9 @@ var currentFightWon = false
 
 var currentQuest = null
 var currentQuestDone = false
+var completeQuests = []
 var questsDone = 0
+
+var firstVillageQuest = false
+var mountainPassage = false
+

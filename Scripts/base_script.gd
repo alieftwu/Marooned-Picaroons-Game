@@ -5,9 +5,22 @@ class_name BaseScene extends Node
 @onready var companion2 : Companion2 = $Companion2
 @onready var entrance_markers: Node2D = $EntranceMarkers
 signal sceneTransition
+signal removeNPC
 
 func _ready():
 	#handles player between scenes
+	match name:
+		"first_village":
+			Global.firstVillageQuest = true
+		"mountain_passage":
+			Global.mountainPassage = true
+		"second_village":
+			if Global.firstVillageQuest:
+				get_node("StaticBody2D/CollisionShape2D5").disabled = true
+				get_node("NPC7")._on_second_village_remove_npc()
+			if Global.mountainPassage:
+				get_node("StaticBody2D/CollisionShape2D6").disabled = true
+				get_node("NPC8")._on_second_village_remove_npc()
 	if scene_manager.player:
 		if is_instance_valid(scene_manager.player):
 			var player_parent = scene_manager.player.get_parent()
