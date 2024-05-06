@@ -99,12 +99,15 @@ mapType = "Prison"
 [node name="TurnQueue" parent="." instance=ExtResource("3_vwarf")]
 connected_scene = "inside_prison"
 
-[node name="KnightEnemy" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
+[node name="Guard3" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
 position = Vector2(136, 40)
 
-[node name="KnightEnemy2" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
+[node name="Guard2" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
 position = Vector2(136, 104)
 script = SubResource("GDScript_k44xp")
+
+[node name="Guard" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
+position = Vector2(136, 72)
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("7_a2oyo")]
 position = Vector2(8, 88)
@@ -114,9 +117,6 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_lddst")]
 position = Vector2(8, 72)
-
-[node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
-position = Vector2(136, 70)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(72, 176)

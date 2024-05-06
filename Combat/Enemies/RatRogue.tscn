@@ -85,7 +85,7 @@ func updateStatusEffect():
 		statusEffect.texture = null
 "
 
-[node name="TestEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
+[node name="RatRogue" type="Node2D" groups=["EnemyUnits", "Units"]]
 script = SubResource("GDScript_3gfyo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

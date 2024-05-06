@@ -48,7 +48,7 @@ script/source = "extends CharacterBody2D
 #@onready var animations : AnimationPlayer = $PlayerAnimation
 
 @export var direction = \"down\"
-@export var npcText = [\"Now lets fight!\"]
+@export var npcText = [\"You dare challenge the King!?!\"]
 @export var hasWon = false
 @export var killable = false
 
@@ -401,6 +401,7 @@ position = Vector2(536, 468)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_c0vyf")
+killable = true
 
 [node name="Body" type="Sprite2D" parent="King"]
 texture_filter = 1
@@ -478,6 +479,7 @@ position = Vector2(199, 549)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_onxs4")
+killable = true
 
 [node name="Body" type="Sprite2D" parent="Guard"]
 texture_filter = 1
@@ -556,6 +558,7 @@ collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_lxxnb")
 direction = "up"
+killable = true
 
 [node name="Body" type="Sprite2D" parent="Guard2"]
 texture_filter = 1
