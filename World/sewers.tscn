@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://du1t36r23w1wn"]
+[gd_scene load_steps=23 format=3 uid="uid://du1t36r23w1wn"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_5rb32"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rv8p8"]
@@ -6,9 +6,334 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_ph08f"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_nyyt4"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_jokib"]
+[ext_resource type="Texture2D" uid="uid://m6dgx6vgmjdv" path="res://Combat/Enemies/Enemy Art/Rat-Mage.png" id="7_3vwmh"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="8_8tgqx"]
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="9_83rgx"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="10_tjxyq"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="11_1a0n5"]
+[ext_resource type="Script" path="res://World/Label.gd" id="12_q26m2"]
+[ext_resource type="Texture2D" uid="uid://bp817oyhdj53k" path="res://Combat/Enemies/Enemy Art/Rat-Warrior.png" id="13_d0qnx"]
+[ext_resource type="Texture2D" uid="uid://8kjr2r77mkci" path="res://Combat/Enemies/Enemy Art/Rat-Base.png" id="14_g51re"]
+[ext_resource type="Texture2D" uid="uid://d1d5qw7op5lkr" path="res://Combat/Enemies/Enemy Art/Rat-Rogue.png" id="15_yamxp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykatl"]
 size = Vector2(21.1607, 60)
+
+[sub_resource type="GDScript" id="GDScript_nro7k"]
+script/source = "extends CharacterBody2D
+
+@onready var around = get_node(\"Area2D\")
+@onready var bubble = get_node(\"TextureRect\")
+@onready var textBox = get_node(\"HUD/TextureRect\")
+@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
+#@onready var animation_tree : AnimationTree = $AnimationTree
+#@onready var animations : AnimationPlayer = $PlayerAnimation
+
+@export var direction = \"down\"
+@export var npcText = [\"Now lets fight!\"]
+@export var hasWon = false
+@export var killable = false
+
+
+signal showTextBox
+signal hideTextBox
+signal haltMove
+signal newFText(title)
+
+var closeEnough = false
+var textDisplayed = false
+
+func _ready():
+	match direction:
+		\"down\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
+	bubble.hide()
+	pass
+
+func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node(\"CollisionShape2D\").disabled = true
+		around.hide()
+		around.get_node(\"CollisionPolygon2D\").disabled = true
+	else:
+		show()
+		get_node(\"CollisionShape2D\").disabled = false
+		around.show()
+		around.get_node(\"CollisionPolygon2D\").disabled = false
+	match direction:
+		\"down\":
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			around.rotation = Vector2(0,-1).angle()
+	pass
+
+func _on_area_2d_body_entered(body):
+	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
+		closeEnough = true
+		haltMove.emit()
+		newFText.emit(self.name)
+		showTextBox.emit()
+
+func _on_area_2d_body_exited(body):
+	emit_signal(\"hideTextBox\")
+	closeEnough = false
+
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("11_1a0n5")
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_67pl7"]
+script/source = "extends CharacterBody2D
+
+@onready var around = get_node(\"Area2D\")
+@onready var bubble = get_node(\"TextureRect\")
+@onready var textBox = get_node(\"HUD/TextureRect\")
+@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
+#@onready var animation_tree : AnimationTree = $AnimationTree
+#@onready var animations : AnimationPlayer = $PlayerAnimation
+
+@export var direction = \"down\"
+@export var npcText = [\"Now lets fight!\"]
+@export var hasWon = false
+@export var killable = false
+
+
+signal showTextBox
+signal hideTextBox
+signal haltMove
+signal newFText(title)
+
+var closeEnough = false
+var textDisplayed = false
+
+func _ready():
+	match direction:
+		\"down\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
+	bubble.hide()
+	pass
+
+func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node(\"CollisionShape2D\").disabled = true
+		around.hide()
+		around.get_node(\"CollisionPolygon2D\").disabled = true
+	else:
+		show()
+		get_node(\"CollisionShape2D\").disabled = false
+		around.show()
+		around.get_node(\"CollisionPolygon2D\").disabled = false
+	match direction:
+		\"down\":
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			around.rotation = Vector2(0,-1).angle()
+	pass
+
+func _on_area_2d_body_entered(body):
+	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
+		closeEnough = true
+		haltMove.emit()
+		newFText.emit(self.name)
+		showTextBox.emit()
+
+func _on_area_2d_body_exited(body):
+	emit_signal(\"hideTextBox\")
+	closeEnough = false
+
+"
+
+[sub_resource type="GDScript" id="GDScript_kc2fc"]
+script/source = "extends CharacterBody2D
+
+@onready var around = get_node(\"Area2D\")
+@onready var bubble = get_node(\"TextureRect\")
+@onready var textBox = get_node(\"HUD/TextureRect\")
+@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
+#@onready var animation_tree : AnimationTree = $AnimationTree
+#@onready var animations : AnimationPlayer = $PlayerAnimation
+
+@export var direction = \"down\"
+@export var npcText = [\"Now lets fight!\"]
+@export var hasWon = false
+@export var killable = false
+
+
+signal showTextBox
+signal hideTextBox
+signal haltMove
+signal newFText(title)
+
+var closeEnough = false
+var textDisplayed = false
+
+func _ready():
+	match direction:
+		\"down\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
+	bubble.hide()
+	pass
+
+func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node(\"CollisionShape2D\").disabled = true
+		around.hide()
+		around.get_node(\"CollisionPolygon2D\").disabled = true
+	else:
+		show()
+		get_node(\"CollisionShape2D\").disabled = false
+		around.show()
+		around.get_node(\"CollisionPolygon2D\").disabled = false
+	match direction:
+		\"down\":
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			around.rotation = Vector2(0,-1).angle()
+	pass
+
+func _on_area_2d_body_entered(body):
+	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
+		closeEnough = true
+		haltMove.emit()
+		newFText.emit(self.name)
+		showTextBox.emit()
+
+func _on_area_2d_body_exited(body):
+	emit_signal(\"hideTextBox\")
+	closeEnough = false
+
+"
+
+[sub_resource type="GDScript" id="GDScript_2ch73"]
+script/source = "extends CharacterBody2D
+
+@onready var around = get_node(\"Area2D\")
+@onready var bubble = get_node(\"TextureRect\")
+@onready var textBox = get_node(\"HUD/TextureRect\")
+@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
+#@onready var animation_tree : AnimationTree = $AnimationTree
+#@onready var animations : AnimationPlayer = $PlayerAnimation
+
+@export var direction = \"down\"
+@export var npcText = [\"Now lets fight!\"]
+@export var hasWon = false
+@export var killable = false
+
+
+signal showTextBox
+signal hideTextBox
+signal haltMove
+signal newFText(title)
+
+var closeEnough = false
+var textDisplayed = false
+
+func _ready():
+	match direction:
+		\"down\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
+	bubble.hide()
+	pass
+
+func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node(\"CollisionShape2D\").disabled = true
+		around.hide()
+		around.get_node(\"CollisionPolygon2D\").disabled = true
+	else:
+		show()
+		get_node(\"CollisionShape2D\").disabled = false
+		around.show()
+		around.get_node(\"CollisionPolygon2D\").disabled = false
+	match direction:
+		\"down\":
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			around.rotation = Vector2(0,-1).angle()
+	pass
+
+func _on_area_2d_body_entered(body):
+	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
+		closeEnough = true
+		haltMove.emit()
+		newFText.emit(self.name)
+		showTextBox.emit()
+
+func _on_area_2d_body_exited(body):
+	emit_signal(\"hideTextBox\")
+	closeEnough = false
+
+"
 
 [node name="sewers" type="Node2D"]
 y_sort_enabled = true
@@ -71,3 +396,339 @@ connected_scene = "castle_town"
 position = Vector2(-1.3, 3)
 scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_ykatl")
+
+[node name="Mage Rat" type="CharacterBody2D" parent="."]
+position = Vector2(713, 122)
+collision_layer = 9
+motion_mode = 1
+script = SubResource("GDScript_nro7k")
+killable = true
+
+[node name="Body" type="Sprite2D" parent="Mage Rat"]
+texture_filter = 1
+position = Vector2(-1, -9)
+texture = ExtResource("7_3vwmh")
+offset = Vector2(0, -14.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mage Rat"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="TextureRect" type="TextureRect" parent="Mage Rat"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("8_8tgqx")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Mage Rat"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Mage Rat/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Mage Rat/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Mage Rat"]
+
+[node name="TextureRect" type="TextureRect" parent="Mage Rat/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("9_83rgx")
+stretch_mode = 4
+script = ExtResource("10_tjxyq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Mage Rat/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("12_q26m2")
+combat_scene = "CombatSewers"
+
+[node name="Warrior Rat" type="CharacterBody2D" parent="."]
+position = Vector2(509, 876)
+collision_layer = 9
+motion_mode = 1
+script = SubResource("GDScript_67pl7")
+
+[node name="Body" type="Sprite2D" parent="Warrior Rat"]
+texture_filter = 1
+position = Vector2(0, -9)
+texture = ExtResource("13_d0qnx")
+offset = Vector2(0, -14.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warrior Rat"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="TextureRect" type="TextureRect" parent="Warrior Rat"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("8_8tgqx")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Warrior Rat"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Warrior Rat/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Warrior Rat/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Warrior Rat"]
+
+[node name="TextureRect" type="TextureRect" parent="Warrior Rat/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("9_83rgx")
+stretch_mode = 4
+script = ExtResource("10_tjxyq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Warrior Rat/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("12_q26m2")
+combat_scene = "CombatSewers"
+
+[node name="Base Rat" type="CharacterBody2D" parent="."]
+position = Vector2(216, 139)
+collision_layer = 9
+motion_mode = 1
+script = SubResource("GDScript_kc2fc")
+killable = true
+
+[node name="Body" type="Sprite2D" parent="Base Rat"]
+texture_filter = 1
+position = Vector2(0, -9)
+texture = ExtResource("14_g51re")
+offset = Vector2(0, -14.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Base Rat"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="TextureRect" type="TextureRect" parent="Base Rat"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("8_8tgqx")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Base Rat"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Base Rat/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Base Rat/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Base Rat"]
+
+[node name="TextureRect" type="TextureRect" parent="Base Rat/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("9_83rgx")
+stretch_mode = 4
+script = ExtResource("10_tjxyq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Base Rat/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("12_q26m2")
+combat_scene = "CombatSewers"
+
+[node name="Rogue Rat" type="CharacterBody2D" parent="."]
+position = Vector2(482, 308)
+collision_layer = 9
+motion_mode = 1
+script = SubResource("GDScript_2ch73")
+killable = true
+
+[node name="Body" type="Sprite2D" parent="Rogue Rat"]
+texture_filter = 1
+position = Vector2(2, -8)
+texture = ExtResource("15_yamxp")
+offset = Vector2(0, -14.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rogue Rat"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="TextureRect" type="TextureRect" parent="Rogue Rat"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("8_8tgqx")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Rogue Rat"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Rogue Rat/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rogue Rat/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Rogue Rat"]
+
+[node name="TextureRect" type="TextureRect" parent="Rogue Rat/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("9_83rgx")
+stretch_mode = 4
+script = ExtResource("10_tjxyq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Rogue Rat/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("12_q26m2")
+combat_scene = "CombatSewers"
+
+[connection signal="haltMove" from="Mage Rat" to="Mage Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Mage Rat" to="Mage Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Mage Rat" to="Mage Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Mage Rat" to="Mage Rat/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Mage Rat/Area2D" to="Mage Rat" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Mage Rat/Area2D" to="Mage Rat" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Mage Rat/HUD/TextureRect/Label" to="Mage Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Warrior Rat/Area2D" to="Warrior Rat" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Warrior Rat/Area2D" to="Warrior Rat" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Warrior Rat/HUD/TextureRect/Label" to="Warrior Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Base Rat" to="Base Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Base Rat" to="Base Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Base Rat" to="Base Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Base Rat" to="Base Rat/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Base Rat/Area2D" to="Base Rat" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Base Rat/Area2D" to="Base Rat" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Base Rat/HUD/TextureRect/Label" to="Base Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Rogue Rat/Area2D" to="Rogue Rat" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Rogue Rat/Area2D" to="Rogue Rat" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Rogue Rat/HUD/TextureRect/Label" to="Rogue Rat/HUD/TextureRect" method="_on_label_hide_box_label"]

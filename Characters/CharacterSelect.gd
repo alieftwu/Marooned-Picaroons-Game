@@ -26,7 +26,7 @@ func _on_left_pressed():
 		Global.PlayerSelect -= 1
 
 func _on_right_pressed():
-	if Global.PlayerSelect < 6:
+	if Global.PlayerSelect < 5:
 		Global.PlayerSelect += 1
 
 func _on_select_pressed():

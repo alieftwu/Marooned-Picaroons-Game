@@ -18,7 +18,7 @@ func _on_left_pressed():
 
 
 func _on_right_pressed():
-	if Global.second_companion < 3:
+	if Global.second_companion < 2:
 		Global.second_companion += 1
 
 func _on_select_pressed():

@@ -9,6 +9,7 @@ extends Control
 var paused = false
 
 func _ready():
+	AudioPlayer.play_menu_music()
 	start_button.button_down.connect(on_start_pressed)
 	exit_button.button_down.connect(on_exit_pressed)
 	

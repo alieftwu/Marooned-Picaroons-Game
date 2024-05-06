@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4ehkn0j7wea5"]
+[gd_scene load_steps=5 format=3 uid="uid://d04ok43cqrcds"]
 
-[ext_resource type="Texture2D" uid="uid://ybxtvvg4f4mo" path="res://Combat/Enemies/Enemy Art/Knight.png" id="1_yu2a1"]
-[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="2_qoelf"]
-[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="3_pls6o"]
+[ext_resource type="Texture2D" uid="uid://cuxx31j1m5vg0" path="res://Art/Pirates/Pirate White Sprite Sheet/white enemy sprite.png" id="1_l4ivj"]
+[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="2_u1j50"]
+[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="3_onvdl"]
 
-[sub_resource type="GDScript" id="GDScript_3gfyo"]
+[sub_resource type="GDScript" id="GDScript_4xy4i"]
 script/source = "extends Node2D
 
 @onready var battlemap = $\"../../BattleMap\"
@@ -18,8 +18,8 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"unflinching\"
-var abilityList : Array = [\"heavySwordSwing\", \"desparateStrike\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
+var passiveAbility : String = \"evasive\"
+var abilityList : Array = [\"bombThrow\", \"desparateStrike\", \"heavySwordSwing\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -37,11 +37,11 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = 1
-	health = 200
-	maxHealth = 200
-	armor = 10
-	basicAttackDamage = 22
+	speed = 3
+	health = 100
+	maxHealth = 100
+	armor = 5
+	basicAttackDamage = 16
 
 func play_turn():
 	updateHealthBar()
@@ -51,8 +51,9 @@ func play_turn():
 	updateStatusEffect()
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
-		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < 0.9:
+		if randf() < 0.35:
+			await battlemap.cowardEnemyMove(self)
+		elif randf() < 0.65:
 			await battlemap.agressiveEnemyMove(self)
 		else:
 			await battlemap.moveEnemyPerson(self)
@@ -85,12 +86,15 @@ func updateStatusEffect():
 "
 
 [node name="TestEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
-script = SubResource("GDScript_3gfyo")
+script = SubResource("GDScript_4xy4i")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -1)
-scale = Vector2(0.055, 0.055)
-texture = ExtResource("1_yu2a1")
+scale = Vector2(1, 1.125)
+texture = ExtResource("1_l4ivj")
+hframes = 3
+vframes = 8
+frame = 12
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -8.0
@@ -99,8 +103,8 @@ offset_right = 56.0
 offset_bottom = -1.0
 scale = Vector2(0.25, 0.25)
 value = 100.0
-texture_under = ExtResource("2_qoelf")
-texture_progress = ExtResource("3_pls6o")
+texture_under = ExtResource("2_u1j50")
+texture_progress = ExtResource("3_onvdl")
 
 [node name="StatusEffect" type="TextureRect" parent="."]
 offset_left = -4.0

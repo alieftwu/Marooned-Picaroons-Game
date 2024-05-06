@@ -919,7 +919,7 @@ func spawnMinion(player):
 			unitThere = true
 			break
 		if unitThere == false:
-			var newMinionSource = load("res://Combat/Resources/damageWaveSound.wav")
+			var newMinionSource = load("res://Combat/Enemies/CastleKnight.tscn")
 			var locationConvert : Vector2 = location
 			var newMinion = newMinionSource.instantiate()
 			turn_queue.add_child(newMinion)
