@@ -377,12 +377,6 @@ rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
 
-[node name="Path2D5" type="Path2D" parent="."]
-z_index = 1
-position = Vector2(40, -187)
-scale = Vector2(0.875365, 1)
-curve = SubResource("Curve2D_slvoe")
-
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(354, 548)
 curve = SubResource("Curve2D_73ecf")
@@ -633,6 +627,15 @@ autowrap_mode = 2
 script = ExtResource("14_wm82p")
 combat_scene = "CombatCastle"
 
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D" method="_on_patrolling_guard_halt_move"]
+[connection signal="haltMove" from="Path2D4/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D4/PathFollow2D/PatrollingGuard" to="Path2D4/PathFollow2D" method="_on_patrolling_guard_halt_move"]
+[connection signal="haltMove" from="Path2D/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D/PathFollow2D/PatrollingGuard" to="Path2D/PathFollow2D" method="_on_patrolling_guard_halt_move"]
+[connection signal="haltMove" from="King" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="King" to="King/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="King" to="King/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="King" to="King/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -640,6 +643,7 @@ combat_scene = "CombatCastle"
 [connection signal="body_entered" from="King/Area2D" to="King" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="King/Area2D" to="King" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="King/HUD/TextureRect/Label" to="King/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Guard" to="." method="_on_halt_move"]
 [connection signal="haltMove" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard" to="Guard/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -647,6 +651,7 @@ combat_scene = "CombatCastle"
 [connection signal="body_entered" from="Guard/Area2D" to="Guard" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Guard/Area2D" to="Guard" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Guard/HUD/TextureRect/Label" to="Guard/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Guard2" to="." method="_on_halt_move"]
 [connection signal="haltMove" from="Guard2" to="Guard2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard2" to="Guard2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard2" to="Guard2/HUD/TextureRect/Label" method="_on_new_f_text"]

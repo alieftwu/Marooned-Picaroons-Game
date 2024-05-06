@@ -87,3 +87,5 @@ position = Vector2(190, 454)
 [node name="NPC" parent="." instance=ExtResource("7_11553")]
 position = Vector2(464, 555)
 direction = "right"
+
+[connection signal="haltMove" from="NPC" to="Player" method="_on_halt_move"]

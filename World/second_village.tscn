@@ -239,3 +239,4 @@ npcText = ["I just have a stand, It's fun to sit here with everyone", "You look 
 
 [connection signal="removeNPC" from="." to="NPC7" method="_on_second_village_remove_npc"]
 [connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]

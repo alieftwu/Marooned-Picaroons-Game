@@ -704,6 +704,7 @@ autowrap_mode = 2
 script = ExtResource("12_q26m2")
 combat_scene = "CombatSewers"
 
+[connection signal="haltMove" from="Mage Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Mage Rat" to="Mage Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Mage Rat" to="Mage Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Mage Rat" to="Mage Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -711,6 +712,7 @@ combat_scene = "CombatSewers"
 [connection signal="body_entered" from="Mage Rat/Area2D" to="Mage Rat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Mage Rat/Area2D" to="Mage Rat" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Mage Rat/HUD/TextureRect/Label" to="Mage Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Warrior Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Warrior Rat" to="Warrior Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -718,6 +720,7 @@ combat_scene = "CombatSewers"
 [connection signal="body_entered" from="Warrior Rat/Area2D" to="Warrior Rat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Warrior Rat/Area2D" to="Warrior Rat" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Warrior Rat/HUD/TextureRect/Label" to="Warrior Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Base Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Base Rat" to="Base Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Base Rat" to="Base Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Base Rat" to="Base Rat/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -725,6 +728,7 @@ combat_scene = "CombatSewers"
 [connection signal="body_entered" from="Base Rat/Area2D" to="Base Rat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Base Rat/Area2D" to="Base Rat" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Base Rat/HUD/TextureRect/Label" to="Base Rat/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Rogue Rat" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Rogue Rat" to="Rogue Rat/HUD/TextureRect/Label" method="_on_new_f_text"]

@@ -36,6 +36,15 @@ func _ready():
 	pass
 
 func _process(delta):
+	match direction:
+		"down":
+			around.rotation = Vector2(1,0).angle()
+		"up":
+			around.rotation = Vector2(-1,0).angle()
+		"left":
+			around.rotation = Vector2(0,1).angle()
+		"right":
+			around.rotation = Vector2(0,-1).angle()
 	pass
 
 func _on_area_2d_body_entered(body):
