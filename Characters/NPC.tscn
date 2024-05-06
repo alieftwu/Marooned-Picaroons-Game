@@ -264,9 +264,6 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -335,3 +332,4 @@ connected_scene = "CombatScene"
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="HUD/TextureRect/Label" to="HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="hideHideable" from="HUD/TextureRect/Label" to="." method="_on_hide_hideable"]
