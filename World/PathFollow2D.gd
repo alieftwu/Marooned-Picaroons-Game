@@ -25,5 +25,5 @@ func _process(delta):
 		progress -= 1
 		if progress_ratio == 0:
 			right = true
-	NPC.get_node("PlayerAnimation").play(animName)
+	#NPC.get_node("PlayerAnimation").play(animName)
 	pass

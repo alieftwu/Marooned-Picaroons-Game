@@ -134,6 +134,18 @@ func initialize():
 		{
 			0: _generateShipMap(),
 		}
+	if (mapType == "CastleTown"):
+		{
+			0: _generateCastleTownMap(),
+		}
+	if (mapType == "FirstVillage"):
+		{
+			0: _generateFirstVillageMap()
+		}
+	if (mapType == "CountyPrison"):
+		{
+			0: _generateCountyPrisonMap()
+		}
 	
 	_makeAStarGrid()
 	canMove = false
@@ -179,6 +191,117 @@ func _generateCityMap():
 	loadBackground(newBackImage)			
 	return
 
+func _generateCountyPrisonMap(): 
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/CountyPrisonBackground.png")
+	loadBackground(newBackImage)			
+	return
+func _generateFirstVillageMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/firstvillagebackground.png")
+	loadBackground(newBackImage)			
+	return
+func _generateCastleTownMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/castleTownBackground.png")
+	loadBackground(newBackImage)			
+	return
 func _generateShipMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)

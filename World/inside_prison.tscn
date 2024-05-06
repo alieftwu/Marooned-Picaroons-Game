@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjmo7auen0fx5"]
+[gd_scene load_steps=19 format=3 uid="uid://bjmo7auen0fx5"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_dumpt"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_x3f7w"]
@@ -7,10 +7,177 @@
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_rjxpv"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_3yicy"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_m10ha"]
-[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="8_sg2j3"]
+[ext_resource type="Texture2D" uid="uid://1y77sefiupep" path="res://Combat/Enemies/Enemy Art/KnightEnemy.png" id="9_sjmib"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="10_s4u2f"]
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="11_nomax"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="12_waeun"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="13_x2qow"]
+[ext_resource type="Script" path="res://World/Label.gd" id="14_x3dlr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4o1x5"]
 size = Vector2(21.1607, 60)
+
+[sub_resource type="GDScript" id="GDScript_ke3q4"]
+script/source = "extends CharacterBody2D
+
+@onready var around = get_node(\"Area2D\")
+@onready var bubble = get_node(\"TextureRect\")
+@onready var textBox = get_node(\"HUD/TextureRect\")
+@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
+#@onready var animation_tree : AnimationTree = $AnimationTree
+#@onready var animations : AnimationPlayer = $PlayerAnimation
+
+@export var direction = \"down\"
+@export var npcText = [\"Now lets fight!\"]
+@export var hasWon = false
+@export var killable = false
+
+
+signal showTextBox
+signal hideTextBox
+signal haltMove
+signal newFText(title)
+
+var closeEnough = false
+var textDisplayed = false
+
+func _ready():
+	match direction:
+		\"down\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
+	bubble.hide()
+	pass
+
+func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node(\"CollisionShape2D\").disabled = true
+		around.hide()
+		around.get_node(\"CollisionPolygon2D\").disabled = true
+	else:
+		show()
+		get_node(\"CollisionShape2D\").disabled = false
+		around.show()
+		around.get_node(\"CollisionPolygon2D\").disabled = false
+	match direction:
+		\"down\":
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			around.rotation = Vector2(0,-1).angle()
+	pass
+
+func _on_area_2d_body_entered(body):
+	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
+		closeEnough = true
+		haltMove.emit()
+		newFText.emit(self.name)
+		showTextBox.emit()
+
+func _on_area_2d_body_exited(body):
+	emit_signal(\"hideTextBox\")
+	closeEnough = false
+
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("13_x2qow")
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_3bdkl"]
+script/source = "extends CharacterBody2D
+
+@onready var around = get_node(\"Area2D\")
+@onready var bubble = get_node(\"TextureRect\")
+@onready var textBox = get_node(\"HUD/TextureRect\")
+@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
+#@onready var animation_tree : AnimationTree = $AnimationTree
+#@onready var animations : AnimationPlayer = $PlayerAnimation
+
+@export var direction = \"down\"
+@export var npcText = [\"Now lets fight!\"]
+@export var hasWon = false
+@export var killable = false
+
+
+signal showTextBox
+signal hideTextBox
+signal haltMove
+signal newFText(title)
+
+var closeEnough = false
+var textDisplayed = false
+
+func _ready():
+	match direction:
+		\"down\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
+	bubble.hide()
+	pass
+
+func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node(\"CollisionShape2D\").disabled = true
+		around.hide()
+		around.get_node(\"CollisionPolygon2D\").disabled = true
+	else:
+		show()
+		get_node(\"CollisionShape2D\").disabled = false
+		around.show()
+		around.get_node(\"CollisionPolygon2D\").disabled = false
+	match direction:
+		\"down\":
+			around.rotation = Vector2(1,0).angle()
+		\"up\":
+			around.rotation = Vector2(-1,0).angle()
+		\"left\":
+			around.rotation = Vector2(0,1).angle()
+		\"right\":
+			around.rotation = Vector2(0,-1).angle()
+	pass
+
+func _on_area_2d_body_entered(body):
+	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
+		closeEnough = true
+		haltMove.emit()
+		newFText.emit(self.name)
+		showTextBox.emit()
+
+func _on_area_2d_body_exited(body):
+	emit_signal(\"hideTextBox\")
+	closeEnough = false
+
+"
 
 [node name="inside_prison" type="Node2D"]
 y_sort_enabled = true
@@ -76,14 +243,176 @@ hideable = true
 position = Vector2(679, 241)
 npcText = ["Huh? You're breaking people out of the prison?", "Nah I'm okay, I don't really have anyone to go back to anyhow.", "Good luck to you though!"]
 
-[node name="NPC5" parent="." instance=ExtResource("8_sg2j3")]
+[node name="Prison Guard 1" type="CharacterBody2D" parent="."]
 position = Vector2(413, 370)
+collision_layer = 9
+motion_mode = 1
+script = SubResource("GDScript_ke3q4")
 direction = "right"
 npcText = ["Now OI! You can't be in here! fight!"]
 killable = true
 
-[node name="NPC6" parent="." instance=ExtResource("8_sg2j3")]
+[node name="Body" type="Sprite2D" parent="Prison Guard 1"]
+texture_filter = 1
+position = Vector2(-1, 1)
+texture = ExtResource("9_sjmib")
+offset = Vector2(0, -14.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Prison Guard 1"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="TextureRect" type="TextureRect" parent="Prison Guard 1"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("10_s4u2f")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Prison Guard 1"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Prison Guard 1/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Prison Guard 1/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Prison Guard 1"]
+
+[node name="TextureRect" type="TextureRect" parent="Prison Guard 1/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("11_nomax")
+stretch_mode = 4
+script = ExtResource("12_waeun")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Prison Guard 1/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("14_x3dlr")
+combat_scene = "CombatPrison"
+
+[node name="Prison Guard 2" type="CharacterBody2D" parent="."]
 position = Vector2(741, 366)
+collision_layer = 9
+motion_mode = 1
+script = SubResource("GDScript_3bdkl")
 direction = "left"
 npcText = ["HEY! Get out of the prison! You're not allowed to be here!"]
 killable = true
+
+[node name="Body" type="Sprite2D" parent="Prison Guard 2"]
+texture_filter = 1
+position = Vector2(-1, 1)
+scale = Vector2(-1, 1)
+texture = ExtResource("9_sjmib")
+offset = Vector2(0, -14.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Prison Guard 2"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="TextureRect" type="TextureRect" parent="Prison Guard 2"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("10_s4u2f")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Prison Guard 2"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Prison Guard 2/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Prison Guard 2/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Prison Guard 2"]
+
+[node name="TextureRect" type="TextureRect" parent="Prison Guard 2/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("11_nomax")
+stretch_mode = 4
+script = ExtResource("12_waeun")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Prison Guard 2/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("14_x3dlr")
+combat_scene = "CombatPrison"
+
+[connection signal="haltMove" from="Prison Guard 1" to="Prison Guard 1/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Prison Guard 1" to="Prison Guard 1/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Prison Guard 1" to="Prison Guard 1/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Prison Guard 1" to="Prison Guard 1/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Prison Guard 1/Area2D" to="Prison Guard 1" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Prison Guard 1/Area2D" to="Prison Guard 1" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Prison Guard 1/HUD/TextureRect/Label" to="Prison Guard 1/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Prison Guard 2" to="Prison Guard 2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Prison Guard 2" to="Prison Guard 2/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Prison Guard 2" to="Prison Guard 2/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Prison Guard 2" to="Prison Guard 2/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Prison Guard 2/Area2D" to="Prison Guard 2" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Prison Guard 2/Area2D" to="Prison Guard 2" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Prison Guard 2/HUD/TextureRect/Label" to="Prison Guard 2/HUD/TextureRect" method="_on_label_hide_box_label"]
