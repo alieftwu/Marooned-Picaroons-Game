@@ -41,7 +41,7 @@ func _ready():
 	health = 75
 	maxHealth = 75
 	armor = 5
-	basicAttackDamage = 15
+	basicAttackDamage = 25
 
 func play_turn():
 	updateHealthBar()

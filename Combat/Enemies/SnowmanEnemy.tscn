@@ -19,7 +19,7 @@ var maxHealth : float
 var armor : int
 var basicAttackDamage : int
 var passiveAbility : String = \"steelSkin\"
-var abilityList : Array = [\"pistolShot\", \"quickStrike\", \"pirateBlessing\"] # buttons 2-4 abilities. can switch out 
+var abilityList : Array = [\"quickStrike\", \"quickStrike\", \"pirateBlessing\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -41,7 +41,7 @@ func _ready():
 	health = 30
 	maxHealth = 30
 	armor = 0
-	basicAttackDamage = 20
+	basicAttackDamage = 30
 
 func play_turn():
 	updateHealthBar()

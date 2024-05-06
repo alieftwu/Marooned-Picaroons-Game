@@ -41,7 +41,7 @@ func _ready():
 	health = 100
 	maxHealth = 100
 	armor = 5
-	basicAttackDamage = 16
+	basicAttackDamage = 25
 
 func play_turn():
 	updateHealthBar()
@@ -51,9 +51,9 @@ func play_turn():
 	updateStatusEffect()
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
-		if randf() < 0.35:
+		if randf() < 0.25:
 			await battlemap.cowardEnemyMove(self)
-		elif randf() < 0.65:
+		elif randf() < 0.75:
 			await battlemap.agressiveEnemyMove(self)
 		else:
 			await battlemap.moveEnemyPerson(self)
@@ -85,7 +85,7 @@ func updateStatusEffect():
 		statusEffect.texture = null
 "
 
-[node name="TestEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
+[node name="WhiteEnemy" type="Node2D" groups=["EnemyUnits", "Units"]]
 script = SubResource("GDScript_3gfyo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
