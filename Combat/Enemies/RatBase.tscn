@@ -19,7 +19,7 @@ var maxHealth : float
 var armor : int
 var basicAttackDamage : int
 var passiveAbility : String = \"none\"
-var abilityList : Array = [\"circleSlash\", \"pistolShot\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
+var abilityList : Array = [\"desparateStrike\", \"quickStrike\", \"recklessFrenzy\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -37,11 +37,11 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = stats.Speed
-	health = stats.Health
-	maxHealth = stats.MaxHealth
-	armor = stats.Armor
-	basicAttackDamage = stats.BasicAttackDamage
+	speed = 4
+	health = 50
+	maxHealth = 50
+	armor = 0
+	basicAttackDamage = 12
 
 func play_turn():
 	updateHealthBar()

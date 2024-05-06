@@ -35,6 +35,9 @@ func play_round():
 			break
 		if gameResult == 2:
 			print("You Won!")
+			Global.currentFightWon = true
+			Global.fightsWon += 1
+			print("Fights Won: " + Global.fightsWon)
 			scene_manager.switchBackScene(get_owner(), connected_scene)
 			break
 		#print("child ", active_character.get_index(), "'s turn has ended")
