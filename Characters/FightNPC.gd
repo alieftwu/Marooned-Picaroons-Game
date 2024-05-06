@@ -46,7 +46,7 @@ func _process(delta):
 			get_node("CollisionShape2D").disabled = true
 		around.hide()
 		around.get_node("CollisionPolygon2D").disabled = true
-		playerUnits.global_position = teleportPos
+		#playerUnits.global_position = teleportPos
 	else:
 		show()
 		get_node("CollisionShape2D").disabled = false

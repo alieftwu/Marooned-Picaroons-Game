@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=69 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -37,6 +37,7 @@
 [ext_resource type="FontFile" uid="uid://cox8f22drukm0" path="res://Art/fonts/PIXELOIDSANSBOLD-PKNYD.TTF" id="32_hk35y"]
 [ext_resource type="Texture2D" uid="uid://bi1b75vx27cv2" path="res://Combat/Resources/UI_Flat_Frame_01_Standard.png" id="34_kknik"]
 [ext_resource type="AudioStream" uid="uid://bic0o5r21u6n2" path="res://Combat/Resources/07_human_atk_sword_2.wav" id="35_o360o"]
+[ext_resource type="Texture2D" uid="uid://ctek8cxuq7w4t" path="res://Combat/Resources/loseScreen.png" id="38_nfh0i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5e7gd"]
 texture = ExtResource("2_qy8r3")
@@ -7162,6 +7163,15 @@ offset_bottom = 123.0
 scale = Vector2(0.37684, 0.732212)
 text = "Test"
 autowrap_mode = 2
+
+[node name="loseScreen" type="TextureRect" parent="."]
+visible = false
+offset_left = -141.0
+offset_top = -39.0
+offset_right = 383.0
+offset_bottom = 245.0
+scale = Vector2(0.782547, 0.745707)
+texture = ExtResource("38_nfh0i")
 
 [connection signal="mouse_entered" from="Ability1" to="." method="_on_ability_1_mouse_entered"]
 [connection signal="mouse_exited" from="Ability1" to="." method="_on_ability_1_mouse_exited"]
