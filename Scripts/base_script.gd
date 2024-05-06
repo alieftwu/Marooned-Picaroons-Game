@@ -7,6 +7,7 @@ class_name BaseScene extends Node
 signal sceneTransition
 
 func _ready():
+	AudioPlayer.play_music_world()
 	#handles player between scenes
 	if scene_manager.player:
 		if is_instance_valid(scene_manager.player):

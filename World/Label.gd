@@ -6,6 +6,8 @@ extends Label
 @onready var textList = [""]
 @onready var doFight = false
 
+signal sceneTransition
+
 # Called when the node enters the scene tree for the first time.
 signal hideBoxLabel
 signal hideHideable
@@ -29,6 +31,10 @@ func _process(delta):
 		iterator = -1
 		if doFight:
 			Global.currentFightNPC = NPC.name
+			
+			AudioPlayer.play_draw_sword()
+			TransitionScreen.transition()
+			await TransitionScreen.on_transition_finished
 			scene_manager.combatSceneSwitch(get_owner(), combat_scene)
 
 

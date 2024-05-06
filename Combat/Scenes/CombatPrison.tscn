@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://citrj633c1ml"]
+[gd_scene load_steps=11 format=3 uid="uid://citrj633c1ml"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_s4ovk"]
 [ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_oxlwe"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://btjotkmkiqmwr" path="res://Combat/Enemies/KnightEnemy.tscn" id="4_iwkwm"]
 [ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="7_a2oyo"]
 [ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_7826v"]
+[ext_resource type="AudioStream" uid="uid://c0vkdjtfvnyn1" path="res://Combat/Resources/sea_theme_1.wav" id="8_e37yh"]
+[ext_resource type="Script" path="res://Combat/Audio Scripts For Battles/PrisonMusic.gd" id="9_6fhtc"]
 [ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_lddst"]
 
 [sub_resource type="GDScript" id="GDScript_k44xp"]
@@ -115,3 +117,10 @@ position = Vector2(8, 72)
 
 [node name="TestEnemy" parent="TurnQueue" instance=ExtResource("4_iwkwm")]
 position = Vector2(136, 70)
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(72, 176)
+stream = ExtResource("8_e37yh")
+autoplay = true
+max_distance = 4000.0
+script = ExtResource("9_6fhtc")

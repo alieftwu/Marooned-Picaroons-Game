@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bpmsglup7biaq"]
+[gd_scene load_steps=12 format=3 uid="uid://bpmsglup7biaq"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_5jx8m"]
 [ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_6vcnq"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_7aj42"]
 [ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_g67ro"]
 [ext_resource type="PackedScene" uid="uid://ciljb8ypeyujg" path="res://Combat/Enemies/WhitePirateEnemy.tscn" id="9_t8l7u"]
+[ext_resource type="AudioStream" uid="uid://dfta0kep3xb41" path="res://Audio/Pirate Music Pack/ogg/Pirate 2.ogg" id="10_csr83"]
+[ext_resource type="Script" path="res://Combat/Audio Scripts For Battles/PassageMusic.gd" id="11_e5dw4"]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_5jx8m")
@@ -36,3 +38,9 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_g67ro")]
 position = Vector2(8, 72)
+
+[node name="Passage Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_csr83")
+volume_db = -8.743
+autoplay = true
+script = ExtResource("11_e5dw4")
