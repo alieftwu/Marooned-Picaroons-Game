@@ -23,13 +23,22 @@ mapType = "Sewer"
 connected_scene = "sewers"
 
 [node name="RatMage" parent="TurnQueue" instance=ExtResource("4_vkruk")]
-position = Vector2(136, 50)
+position = Vector2(136, 56)
 
 [node name="RatBase" parent="TurnQueue" instance=ExtResource("5_gsha0")]
-position = Vector2(136, 80)
+position = Vector2(136, 88)
+
+[node name="RatBase2" parent="TurnQueue" instance=ExtResource("5_gsha0")]
+position = Vector2(136, 136)
+
+[node name="RatBase4" parent="TurnQueue" instance=ExtResource("5_gsha0")]
+position = Vector2(136, 8)
+
+[node name="RatBase3" parent="TurnQueue" instance=ExtResource("5_gsha0")]
+position = Vector2(136, 72)
 
 [node name="RatRogue" parent="TurnQueue" instance=ExtResource("6_dc6hg")]
-position = Vector2(136, 110)
+position = Vector2(136, 120)
 
 [node name="RatWarrior" parent="TurnQueue" instance=ExtResource("7_o7ufk")]
 position = Vector2(136, 20)

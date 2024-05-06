@@ -107,8 +107,15 @@ position = Vector2(136, 72)
 [node name="Snowman" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
 position = Vector2(136, 40)
 
+[node name="Snowman3" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
+position = Vector2(136, 24)
+
 [node name="Snowman2" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
 position = Vector2(136, 104)
+script = SubResource("GDScript_c6ucy")
+
+[node name="Snowman4" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
+position = Vector2(136, 120)
 script = SubResource("GDScript_c6ucy")
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("7_rdxla")]
