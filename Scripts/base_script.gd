@@ -7,6 +7,9 @@ class_name BaseScene extends Node
 @onready var pause_menu = $PauseMenu
 var paused = false
 
+@onready var pause_menu = $PauseMenu
+var paused = false
+
 signal sceneTransition
 
 func _ready():
@@ -58,19 +61,4 @@ func position_player() -> void:
 
 func _on_follow_node_set(node):
 	$Camera2D.follow_node = node
-	
-func _process(delta):
-	if Input.is_action_just_pressed("pause"):
-		pauseMenu()
-		
-func pauseMenu():
-	if paused:
-		pause_menu.hide()
-		Engine.time_scale = 1
-	else:
-		pause_menu.show()
-		Engine.time_scale = 0
-		
-	paused = !paused
-	
 
