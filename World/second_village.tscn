@@ -224,6 +224,7 @@ position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
+fightScene = "CombatFirstVillage"
 
 [node name="NPC4" parent="." instance=ExtResource("11_k5o5t")]
 position = Vector2(712, 325)

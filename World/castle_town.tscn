@@ -561,6 +561,8 @@ position = Vector2(786, 495)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("7_krlab")
+killable = true
+fightScene = "CombatFrontGate"
 
 [node name="Body" type="Sprite2D" parent="CastleGuard1"]
 texture_filter = 1
@@ -569,7 +571,7 @@ texture = ExtResource("11_oal0v")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 8
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="CastleGuard1"]
 libraries = {
@@ -657,6 +659,8 @@ position = Vector2(692, 495)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("7_krlab")
+killable = true
+fightScene = "CombatFrontGate"
 
 [node name="Body" type="Sprite2D" parent="CastleGuard2"]
 texture_filter = 1
@@ -665,7 +669,7 @@ texture = ExtResource("11_oal0v")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 8
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="CastleGuard2"]
 libraries = {
@@ -797,6 +801,7 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("10_tcusx")
 direction = "right"
+fightScene = "CombatOutsidePrison"
 
 [node name="Body" type="Sprite2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
 texture_filter = 1
@@ -806,7 +811,7 @@ texture = ExtResource("11_oal0v")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 1
+frame = 2
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D2/PathFollow2D/PatrollingGuard"]
 libraries = {
@@ -910,6 +915,7 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("10_tcusx")
 direction = "right"
+fightScene = "CombatOutsidePrison"
 
 [node name="Body" type="Sprite2D" parent="Path2D3/PathFollow2D/PatrollingGuard"]
 texture_filter = 1
@@ -919,7 +925,7 @@ texture = ExtResource("11_oal0v")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 1
+frame = 2
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D3/PathFollow2D/PatrollingGuard"]
 libraries = {
@@ -1002,6 +1008,7 @@ autowrap_mode = 2
 script = ExtResource("16_a5q7q")
 combat_scene = "CombatCastleTown"
 
+[connection signal="haltMove" from="CastleGuard1" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="CastleGuard1" to="CastleGuard1/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -1009,6 +1016,7 @@ combat_scene = "CombatCastleTown"
 [connection signal="body_entered" from="CastleGuard1/Area2D" to="CastleGuard1" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="CastleGuard1/Area2D" to="CastleGuard1" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="CastleGuard1/HUD/TextureRect/Label" to="CastleGuard1/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="CastleGuard2" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="CastleGuard2" to="CastleGuard2/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -1016,6 +1024,8 @@ combat_scene = "CombatCastleTown"
 [connection signal="body_entered" from="CastleGuard2/Area2D" to="CastleGuard2" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="CastleGuard2/Area2D" to="CastleGuard2" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="CastleGuard2/HUD/TextureRect/Label" to="CastleGuard2/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]
 [connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -1023,6 +1033,8 @@ combat_scene = "CombatCastleTown"
 [connection signal="body_entered" from="Path2D2/PathFollow2D/PatrollingGuard/Area2D" to="Path2D2/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Path2D2/PathFollow2D/PatrollingGuard/Area2D" to="Path2D2/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D" method="_on_halt_move"]
 [connection signal="haltMove" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Path2D3/PathFollow2D/PatrollingGuard" to="Path2D3/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_new_f_text"]

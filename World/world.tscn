@@ -671,7 +671,6 @@ label_settings = SubResource("LabelSettings_v2ow3")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("17_5gogs")
-combat_scene = "CombatScene"
 
 [node name="Itemy" parent="." instance=ExtResource("12_a8ruc")]
 position = Vector2(677, 130)
@@ -776,7 +775,6 @@ label_settings = SubResource("LabelSettings_cyvis")
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("17_5gogs")
-combat_scene = "CombatShip"
 
 [connection signal="haltMove" from="Englishman" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Englishman" to="Englishman/HUD/TextureRect/Label" method="_on_npc_halt_move"]

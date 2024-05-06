@@ -9,10 +9,11 @@ extends CharacterBody2D
 @onready var playerUnits = get_node("/root/world/Player")
 
 @export var direction = "down"
-@export var npcText = ["You want some practice fighting? Go easy on me captain!"]
+@export var npcText = ["Now! Fight me!"]
 @export var hasWon = false
 @export var killable = false
 @export var teleportPos : Vector2
+@export var fightScene : String
 
 signal showTextBox
 signal hideTextBox
@@ -23,6 +24,7 @@ var closeEnough = false
 var textDisplayed = false
 
 func _ready():
+	textBoxText.combat_scene = fightScene
 	match direction:
 		"down":
 			animation_tree["parameters/Idle/blend_position"] = Vector2(0,1)

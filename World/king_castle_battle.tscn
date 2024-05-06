@@ -297,14 +297,16 @@ layer_3/name = "Tilemap - Doodads - No Collisions"
 layer_3/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("2_dc0h5")]
-position = Vector2(12, 591)
+position = Vector2(13, 583)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("3_wo8mo")]
+position = Vector2(8, 553)
 
 [node name="Companion2" parent="." instance=ExtResource("5_ydsio")]
+position = Vector2(4, 594)
 SPEED = 100.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -338,6 +340,8 @@ position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
+fightScene = "CombatCastle"
+killable = true
 
 [node name="Path2D3" type="Path2D" parent="."]
 z_index = 1
@@ -357,6 +361,8 @@ position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
+fightScene = "CombatCastle"
+killable = true
 
 [node name="Path2D4" type="Path2D" parent="."]
 z_index = 1
@@ -376,6 +382,8 @@ position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
+fightScene = "CombatCastle"
+killable = true
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(354, 548)
@@ -395,6 +403,8 @@ position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
 direction = "right"
+fightScene = "CombatCastle"
+killable = true
 
 [node name="King" type="CharacterBody2D" parent="."]
 position = Vector2(536, 468)
@@ -649,6 +659,7 @@ combat_scene = "CombatCastle"
 [connection signal="body_exited" from="King/Area2D" to="King" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="King/HUD/TextureRect/Label" to="King/HUD/TextureRect" method="_on_label_hide_box_label"]
 [connection signal="haltMove" from="Guard" to="." method="_on_halt_move"]
+[connection signal="haltMove" from="Guard" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard" to="Guard/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -657,6 +668,7 @@ combat_scene = "CombatCastle"
 [connection signal="body_exited" from="Guard/Area2D" to="Guard" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="Guard/HUD/TextureRect/Label" to="Guard/HUD/TextureRect" method="_on_label_hide_box_label"]
 [connection signal="haltMove" from="Guard2" to="." method="_on_halt_move"]
+[connection signal="haltMove" from="Guard2" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Guard2" to="Guard2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Guard2" to="Guard2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Guard2" to="Guard2/HUD/TextureRect/Label" method="_on_new_f_text"]

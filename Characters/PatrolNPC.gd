@@ -8,6 +8,9 @@ extends CharacterBody2D
 
 @export var direction = "down"
 @export var npcText = ["Now lets fight!"]
+@export var fightScene : String
+@export var hasWon = false
+@export var killable = false
 
 
 signal showTextBox
@@ -19,6 +22,7 @@ var closeEnough = false
 var textDisplayed = false
 
 func _ready():
+	textBoxText.combat_scene = fightScene
 	match direction:
 		"down":
 			animation_tree["parameters/Walk/blend_position"] = Vector2(0,1)
@@ -36,6 +40,12 @@ func _ready():
 	pass
 
 func _process(delta):
+	if hasWon:
+		if killable:
+			hide()
+			get_node("CollisionShape2D").disabled = true
+		around.hide()
+		around.get_node("CollisionPolygon2D").disabled = true
 	match direction:
 		"down":
 			around.rotation = Vector2(1,0).angle()
