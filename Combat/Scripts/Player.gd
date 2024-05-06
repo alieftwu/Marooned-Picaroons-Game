@@ -53,7 +53,8 @@ func play_turn():
 	abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	if isStunned == true:
+		updateStatusEffect()
 	if skipTurn == false:
 		await abilityControl.checkFlags(self)
 		await battlemap.setAttackIconsDull() # make buttons dull

@@ -39,7 +39,7 @@ var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 func _ready():
 	speed = 4
 	health = 140
-	maxHealth = 110
+	maxHealth = 140
 	armor = 2
 	basicAttackDamage = 13
 
@@ -48,7 +48,8 @@ func play_turn():
 	abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	if isStunned == true:
+		updateStatusEffect()
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull

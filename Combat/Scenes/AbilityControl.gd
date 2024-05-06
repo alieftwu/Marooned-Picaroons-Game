@@ -536,7 +536,8 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		interactUnit.updateHealthBar()
 		interactUnit.isStunned = true
 		interactUnit.isStunnedCount = 3 # 2 turns
-		interactUnit.updateStatusEffect()
+		if interactUnit.passiveAbility != "unflinching":
+			interactUnit.updateStatusEffect()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
