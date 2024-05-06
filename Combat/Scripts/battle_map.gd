@@ -132,13 +132,13 @@ func initialize():
 		}
 	if (mapType == "Ship"):
 		{
-			0: _generateShipMap()
+			0: _generateShipMap(),
 		}
 	
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
-	$BackgroundMusic.play()
+	
 	return
 	
 func _generateCityMap():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgnn322hx8ixd"]
+[gd_scene load_steps=11 format=3 uid="uid://cgnn322hx8ixd"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_gkw4n"]
 [ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_23fo1"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="7_g20di"]
 [ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="8_qbf07"]
 [ext_resource type="PackedScene" uid="uid://bqjdbxymusavu" path="res://Combat/Enemies/KingBoss.tscn" id="9_f6a8h"]
+[ext_resource type="AudioStream" uid="uid://dmwarbn62c6n" path="res://Audio/Pirate Music Pack/ogg/Pirate 8.ogg" id="9_iq2k7"]
 [ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="9_wdlxi"]
 [ext_resource type="PackedScene" uid="uid://b4ehkn0j7wea5" path="res://Combat/Enemies/CastleKnight.tscn" id="9_y7jp5"]
+[ext_resource type="Script" path="res://Combat/Audio Scripts For Battles/CastleBackgroundMusic.gd" id="10_8a88v"]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_gkw4n")
@@ -40,3 +42,8 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_wdlxi")]
 position = Vector2(8, 72)
+
+[node name="CastleBackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_iq2k7")
+autoplay = true
+script = ExtResource("10_8a88v")

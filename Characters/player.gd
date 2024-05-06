@@ -3,8 +3,10 @@ class_name Player
 
 @export var speed : float = 100.0
 
+@onready var footsteps = $Footsteps
 @onready var animation_tree : AnimationTree = $AnimationTree
 var direction : Vector2 = Vector2.ZERO
+
 
 func _ready():
 	animation_tree.active = true
@@ -30,3 +32,7 @@ func update_animation_parameters():
 	if(direction != Vector2.ZERO):
 		animation_tree["parameters/Idle/blend_position"] = direction
 		animation_tree["parameters/Walk/blend_position"] = direction
+
+func _play_footstep_audio():
+	footsteps.pitch_scale = randf_range(.8, 1.2)
+	footsteps.play()

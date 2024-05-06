@@ -4,7 +4,7 @@ extends Control
 
 @onready var start_button = $MarginContainer/HBoxContainer/VBoxContainer/Start_Button as Button
 @onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/Exit_Button as Button
-@onready var start_level = preload("res://World/world.tscn") as PackedScene
+@onready var start_level = preload("res://Characters/character_select.tscn") as PackedScene
 @onready var pause_menu = $PauseMenu
 var paused = false
 
@@ -14,6 +14,8 @@ func _ready():
 	
 	
 func on_start_pressed() -> void:
+	TransitionScreen.transition()
+	await TransitionScreen.on_transition_finished
 	get_tree().change_scene_to_packed(start_level)
 
 
