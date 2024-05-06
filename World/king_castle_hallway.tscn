@@ -39,15 +39,16 @@ layer_3/name = "Tilemap - Doodads - No Collision"
 layer_3/tile_data = PackedInt32Array(2424841, 1048602, 52, 2490377, 1048602, 53, 2555913, 1048602, 54, 2621449, 1048602, 55, 2424842, 1114138, 52, 2490378, 1114138, 53, 2555914, 1114138, 54, 2621450, 1114138, 55, 2424851, 1048602, 52, 2490387, 1048602, 53, 2555923, 1048602, 54, 2621459, 1048602, 55, 2424852, 1114138, 52, 2490388, 1114138, 53, 2555924, 1114138, 54, 2621460, 1114138, 55)
 
 [node name="Player" parent="." instance=ExtResource("2_pkk2k")]
-position = Vector2(619, 569)
+position = Vector2(573, 533)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("3_mgfj5")]
-position = Vector2(580, 569)
+position = Vector2(552, 545)
 
 [node name="Companion2" parent="." instance=ExtResource("5_awytk")]
+position = Vector2(557, 520)
 SPEED = 100.0
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_tvvh3")]

@@ -223,6 +223,7 @@ scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_4o1x5")
 
 [node name="Companion2" parent="." instance=ExtResource("6_3yicy")]
+position = Vector2(540, 374)
 SPEED = 100.0
 
 [node name="NPC" parent="." instance=ExtResource("7_m10ha")]

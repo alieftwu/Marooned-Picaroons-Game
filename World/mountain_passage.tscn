@@ -308,7 +308,7 @@ scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_epkyg")
 
 [node name="Player" parent="." instance=ExtResource("4_0rf22")]
-position = Vector2(76, 465)
+position = Vector2(396, 199)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
@@ -316,9 +316,10 @@ script = ExtResource("5_e70uf")
 tilemap = NodePath("../../TileMap")
 
 [node name="Companion" parent="." instance=ExtResource("5_tnmug")]
-position = Vector2(47, 459)
+position = Vector2(409, 222)
 
 [node name="Companion2" parent="." instance=ExtResource("7_wub1e")]
+position = Vector2(380, 223)
 SPEED = 100.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
