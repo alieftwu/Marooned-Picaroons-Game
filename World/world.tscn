@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://c0bfrbyy1v3hp"]
+[gd_scene load_steps=15 format=3 uid="uid://c0bfrbyy1v3hp"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_rra3v"]
 [ext_resource type="PackedScene" uid="uid://cf84p30cwlcou" path="res://Art/Tilemap/tile_map.tscn" id="1_tu5pa"]
@@ -8,248 +8,16 @@
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_rtqw2"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_i06jn"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_kwfy2"]
-[ext_resource type="Script" path="res://Characters/FightNPC.gd" id="11_kftpo"]
+[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="11_af5ti"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_x7c8x"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="12_1eip4"]
-[ext_resource type="Texture2D" uid="uid://ei1yshe1hqvb" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow enemy sprite.png" id="12_orxyy"]
-[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="13_7fh5k"]
-[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="14_qgaii"]
-[ext_resource type="Script" path="res://World/TextureRect.gd" id="15_thclk"]
-[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="16_8drpw"]
-[ext_resource type="Script" path="res://World/Label.gd" id="17_i03nn"]
+[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="12_a8ruc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llp2"]
 size = Vector2(28, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r5rqs"]
 size = Vector2(232, 89)
-
-[sub_resource type="Animation" id="Animation_5rgvr"]
-resource_name = "backwards_idle"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_crl8m"]
-resource_name = "forward_idle"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
-
-[sub_resource type="Animation" id="Animation_u6iu1"]
-resource_name = "left_idle"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [9, 10, 11]
-}
-
-[sub_resource type="Animation" id="Animation_dataw"]
-resource_name = "right_idle"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [6, 7, 8]
-}
-
-[sub_resource type="Animation" id="Animation_yr0q2"]
-resource_name = "walk_down"
-length = 0.35
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [12, 13, 14, 13]
-}
-
-[sub_resource type="Animation" id="Animation_41uqw"]
-resource_name = "walk_left"
-length = 0.45
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [9, 21, 10, 23, 11]
-}
-
-[sub_resource type="Animation" id="Animation_wcl5n"]
-resource_name = "walk_right"
-length = 0.45
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [6, 18, 7, 20, 8]
-}
-
-[sub_resource type="Animation" id="Animation_otycb"]
-resource_name = "walk_up"
-length = 0.35
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [15, 16, 17, 5]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kr0c"]
-_data = {
-"backwards_idle": SubResource("Animation_5rgvr"),
-"forward_idle": SubResource("Animation_crl8m"),
-"left_idle": SubResource("Animation_u6iu1"),
-"right_idle": SubResource("Animation_dataw"),
-"walk_down": SubResource("Animation_yr0q2"),
-"walk_left": SubResource("Animation_41uqw"),
-"walk_right": SubResource("Animation_wcl5n"),
-"walk_up": SubResource("Animation_otycb")
-}
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
-radius = 6.0
-height = 12.0
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nte6"]
-animation = &"left_idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pfb13"]
-animation = &"right_idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b31fg"]
-animation = &"backwards_idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wsq7x"]
-animation = &"forward_idle"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_bxed4"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_2nte6")
-blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_pfb13")
-blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_b31fg")
-blend_point_2/pos = Vector2(0, -1.1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_wsq7x")
-blend_point_3/pos = Vector2(0, 1.1)
-min_space = Vector2(-1, -1.1)
-max_space = Vector2(1, 1.1)
-snap = Vector2(0.01, 0.01)
-blend_mode = 1
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fdhxr"]
-animation = &"walk_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nr62k"]
-animation = &"walk_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u0d5l"]
-animation = &"walk_down"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tajqw"]
-animation = &"walk_up"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_are8h"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_fdhxr")
-blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_nr62k")
-blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_u0d5l")
-blend_point_2/pos = Vector2(0, 1.1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_tajqw")
-blend_point_3/pos = Vector2(0, -1.1)
-min_space = Vector2(-1, -1.1)
-max_space = Vector2(1, 1.1)
-blend_mode = 1
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_er8wl"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_arxb6"]
-advance_mode = 2
-advance_condition = &"is_moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_aj34a"]
-advance_mode = 2
-advance_condition = &"idle"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_us6gr"]
-states/Idle/node = SubResource("AnimationNodeBlendSpace2D_bxed4")
-states/Idle/position = Vector2(379, 100)
-states/Start/position = Vector2(191, 100)
-states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
-states/Walk/position = Vector2(635, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
-graph_offset = Vector2(-186.663, 0)
-
-[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
-font = ExtResource("16_8drpw")
-font_color = Color(0, 0, 0, 1)
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
@@ -264,7 +32,7 @@ layer_2/tile_data = PackedInt32Array(524322, 2686976, 1, 589858, 2686976, 2, 524
 
 [node name="Player" parent="." instance=ExtResource("3_0fysw")]
 z_index = 2
-position = Vector2(574, 123)
+position = Vector2(573, 122)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
@@ -317,11 +85,16 @@ connected_scene = "first_village"
 position = Vector2(-1, 3)
 shape = SubResource("RectangleShape2D_3llp2")
 
-[node name="questy" parent="." instance=ExtResource("11_x7c8x")]
-position = Vector2(660, 811)
+[node name="childQuest" parent="." instance=ExtResource("11_x7c8x")]
+position = Vector2(777, 834)
+scale = Vector2(0.75, 0.75)
+questName = "test1"
+preQuest = ["Woah! A pirate!", "Are you a real pirate? If so that's so cool!", "My mom doesn't like pirates, says they're criminals", "But if you could get me something to prove that you're a pirate that'd be awesome!", "So shoo before my mom sees you! go go!"]
+durQuest = ["You're not a convincing pirate, I haven't even gotten anything cool yet..."]
+postQuest = ["WOAHHHHH A real Pirate's compass!! So cool!!!", "Thank you so much sir this is so cool!", "Alright now, go go sir! before my mom sees! Bye!!"]
 
 [node name="pissy" parent="." instance=ExtResource("7_kwfy2")]
-position = Vector2(492, 812)
+position = Vector2(494, 808)
 npcText = ["What are you looking at punk?", "You Looking at me?", "If I didn't mind getting in trouble with the authorities I'd fight you right here right now!", "But I am a good law abiding citizen, unlike you, pirate scoundrel!"]
 
 [node name="parent" parent="." instance=ExtResource("7_kwfy2")]
@@ -329,9 +102,8 @@ position = Vector2(857, 761)
 npcText = ["Are you a pirate?", "If so you shouldn't be talking to my son.", "You're a bad influence, being a criminal", "So Stay away from my son!"]
 
 [node name="child" parent="." instance=ExtResource("7_kwfy2")]
-position = Vector2(776, 833)
-scale = Vector2(0.75, 0.75)
-npcText = ["Woah! A pirate!", "Are you a real pirate? If so that's so cool!", "My mom doesn't like pirates, says they're criminals", "So shoo before my mom sees you! go go!"]
+position = Vector2(663, 808)
+npcText = ["Welcome to our town! I see you sailed here.", "Very Nice ship I see."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -343,111 +115,17 @@ shape = SubResource("RectangleShape2D_r5rqs")
 position = Vector2(1327, 871.5)
 shape = SubResource("RectangleShape2D_r5rqs")
 
-[node name="Englishman" type="CharacterBody2D" parent="."]
+[node name="Englishman" parent="." instance=ExtResource("11_af5ti")]
 position = Vector2(574, 360)
-collision_layer = 9
-motion_mode = 1
-script = ExtResource("11_kftpo")
 npcText = ["HALT! SCOUNDREL!", "You pirates are not allowed here!", "Now! Fight or Die!"]
+killable = true
 
-[node name="Body" type="Sprite2D" parent="Englishman"]
-texture_filter = 1
-position = Vector2(-1, 1)
-texture = ExtResource("12_orxyy")
-offset = Vector2(0, -14.9)
-hframes = 3
-vframes = 8
-frame = 7
-
-[node name="PlayerAnimation" type="AnimationPlayer" parent="Englishman"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
-speed_scale = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Englishman"]
-y_sort_enabled = true
-position = Vector2(0, -11)
-shape = SubResource("CapsuleShape2D_f4lr4")
-
-[node name="AnimationTree" type="AnimationTree" parent="Englishman"]
-libraries = {
-"": SubResource("AnimationLibrary_2kr0c")
-}
-tree_root = SubResource("AnimationNodeStateMachine_us6gr")
-anim_player = NodePath("../PlayerAnimation")
-parameters/conditions/idle = false
-parameters/conditions/is_moving = false
-parameters/Idle/blend_position = Vector2(1.232, -0.0407407)
-parameters/Walk/blend_position = Vector2(0, 0)
-
-[node name="TextureRect" type="TextureRect" parent="Englishman"]
-texture_filter = 1
-offset_left = -5.0
-offset_top = -34.0
-offset_right = 7.0
-offset_bottom = -22.0
-texture = ExtResource("13_7fh5k")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="Area2D" type="Area2D" parent="Englishman"]
-position = Vector2(0, -11)
-
-[node name="Polygon2D" type="Polygon2D" parent="Englishman/Area2D"]
-color = Color(0.368627, 0.368627, 0.368627, 0.352941)
-polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Englishman/Area2D"]
-position = Vector2(0, 1)
-polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
-
-[node name="HUD" type="CanvasLayer" parent="Englishman"]
-
-[node name="TextureRect" type="TextureRect" parent="Englishman/HUD"]
-z_index = 2
-texture_filter = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -142.0
-offset_top = -121.0
-offset_right = 269.0
-offset_bottom = 19.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.7, 0.7)
-size_flags_vertical = 8
-texture = ExtResource("14_qgaii")
-stretch_mode = 4
-script = ExtResource("15_thclk")
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Englishman/HUD/TextureRect"]
-texture_filter = 1
-layout_mode = 0
-offset_left = 68.0
-offset_top = 37.0
-offset_right = 347.0
-offset_bottom = 102.0
-text = "This is a text box!
-text goes here."
-label_settings = SubResource("LabelSettings_v2ow3")
-horizontal_alignment = 1
-autowrap_mode = 2
-script = ExtResource("17_i03nn")
-combat_scene = "CombatScene"
-
-[node name="Crewman" parent="." instance=ExtResource("7_kwfy2")]
-position = Vector2(468, 122)
+[node name="Itemy" parent="." instance=ExtResource("12_a8ruc")]
+position = Vector2(677, 130)
+connectedQuest = "test1"
 npcText = ["Ahoy Cap'n! ", "We have docked on the coast of the isles! How are you planning to do this?", "You could sneak your way through the villages, avoiding the patrolling brits,", "Or fight your way through! paving a path driectly to cromwell!", "I know that whatever you choose will be the best option!"]
+preItem = ["A kid wants proof you're a pirate?", "More Than just your looks and your sword?", "Alright, Here's my old compass, still works and all.", "I've got a new one so it's all good."]
+postItem = ["That kid enjoy the compass?", "I hope he does."]
 
-[connection signal="haltMove" from="Englishman" to="Englishman/HUD/TextureRect/Label" method="_on_npc_halt_move"]
-[connection signal="hideTextBox" from="Englishman" to="Englishman/HUD/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newFText" from="Englishman" to="Englishman/HUD/TextureRect/Label" method="_on_new_f_text"]
-[connection signal="showTextBox" from="Englishman" to="Englishman/HUD/TextureRect" method="_on_npc_show_text_box"]
-[connection signal="body_entered" from="Englishman/Area2D" to="Englishman" method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Englishman/Area2D" to="Englishman" method="_on_area_2d_body_exited"]
-[connection signal="hideBoxLabel" from="Englishman/HUD/TextureRect/Label" to="Englishman/HUD/TextureRect" method="_on_label_hide_box_label"]
+[node name="NPC" parent="." instance=ExtResource("11_af5ti")]
+position = Vector2(488, 107)

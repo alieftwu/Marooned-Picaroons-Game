@@ -8,6 +8,8 @@ class_name FightNPC
 
 @export var direction = "down"
 @export var npcText = ["Now lets fight!"]
+@export var hasWon = false
+@export var killable = false
 
 signal showTextBox
 signal hideTextBox
@@ -35,7 +37,20 @@ func _ready():
 	pass
 
 func _process(delta):
-	pass
+	if hasWon:
+		if killable:
+			hide()
+			get_node("CollisionShape2D").disabled = true
+		around.hide()
+		around.get_node("CollisionPolygon2D").disabled = true
+	else:
+		show()
+		get_node("CollisionShape2D").disabled = false
+		around.show()
+		around.get_node("CollisionPolygon2D").disabled = false
+	match direction:
+		"down":
+			around.rotation = Vector2(1,0).angle()
 
 func _on_area_2d_body_entered(body):
 	print(body, " Entered")
