@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://txatnpcr2owb"]
+[gd_scene load_steps=9 format=3 uid="uid://txatnpcr2owb"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_mi0cf"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_slell"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_4mfht"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_qxoiq"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="5_u74cs"]
+[ext_resource type="PackedScene" uid="uid://cf1ivq7wok67g" path="res://Characters/FightNPC.tscn" id="7_11553"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ga3m"]
 size = Vector2(21.1607, 60)
@@ -35,9 +36,10 @@ speed = 110.0
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("3_4mfht")]
-position = Vector2(568, 580)
+position = Vector2(536, 609)
 
 [node name="Companion2" parent="." instance=ExtResource("5_u74cs")]
+position = Vector2(516, 609)
 SPEED = 100.0
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_qxoiq")]
@@ -81,3 +83,7 @@ position = Vector2(268, 215)
 
 [node name="castle_town" type="Marker2D" parent="EntranceMarkers"]
 position = Vector2(190, 454)
+
+[node name="NPC" parent="." instance=ExtResource("7_11553")]
+position = Vector2(464, 555)
+direction = "right"

@@ -8,6 +8,7 @@ extends CharacterBody2D
 
 @export var direction = "down"
 @export var npcText = ["I say words! and when you press space, I say more!"]
+@export var hideable = false
 
 signal showTextBox
 signal hideTextBox
@@ -40,19 +41,22 @@ func _process(delta):
 	# check for interaction
 	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
 		textDisplayed = true
-		print("output text here!")
 		showTextBox.emit()
 
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_tree().current_scene.get_node("TileMap"):
-		print("display and await!\n", self.name)
 		closeEnough = true
 		newText.emit(self.name)
 
 
 func _on_area_2d_body_exited(body):
-	if(textDisplayed):
-		emit_signal("hideTextBox")
-		print("remove textbox")
-		closeEnough = false
-		textDisplayed = false
+	emit_signal("hideTextBox")
+	closeEnough = false
+	textDisplayed = false
+
+
+func _on_hide_hideable():
+	if hideable:
+		get_node("CollisionShape2D").disabled = true
+		get_node("Area2D/CollisionShape2D").disabled = true
+		hide()
