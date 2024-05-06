@@ -60,3 +60,9 @@ func _on_hide_hideable():
 		get_node("CollisionShape2D").disabled = true
 		get_node("Area2D/CollisionShape2D").disabled = true
 		hide()
+
+
+func _on_second_village_remove_npc():
+	get_node("CollisionShape2D").disabled = true
+	get_node("Area2D/CollisionShape2D").disabled = true
+	hide()
