@@ -16,7 +16,7 @@ script = ExtResource("1_sp18x")
 mapType = "FirstVillage"
 
 [node name="TurnQueue" parent="." instance=ExtResource("3_n0r2d")]
-connected_scene = "first_village"
+connected_scene = "second_village"
 
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_c6nnv")]
 position = Vector2(8, 88)
