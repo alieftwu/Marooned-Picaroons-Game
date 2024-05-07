@@ -70,3 +70,7 @@ func position_player() -> void:
 func _on_follow_node_set(node):
 	$Camera2D.follow_node = node
 
+
+
+func _on_halt_move():
+	pass # Replace with function body.

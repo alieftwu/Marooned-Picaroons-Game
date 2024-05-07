@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_3wigp"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_5kknc"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="2_hc102"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="2_hc102"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="3_o2tub"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="4_khk7t"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="4_x5kux"]
@@ -539,6 +539,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("14_8o3v3")
 
+[connection signal="haltMove" from="FGGuard1" to="." method="_on_halt_move"]
 [connection signal="haltMove" from="FGGuard1" to="FGGuard1/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="FGGuard1" to="FGGuard1/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="FGGuard1" to="FGGuard1/HUD/TextureRect/Label" method="_on_new_f_text"]
@@ -547,6 +548,7 @@ script = ExtResource("14_8o3v3")
 [connection signal="body_entered" from="FGGuard1/Area2D" to="FGGuard1" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="FGGuard1/Area2D" to="FGGuard1" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="FGGuard1/HUD/TextureRect/Label" to="FGGuard1/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="FGGuard2" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="FGGuard2" to="FGGuard2/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="FGGuard2" to="FGGuard2/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="FGGuard2" to="FGGuard2/HUD/TextureRect/Label" method="_on_new_f_text"]
