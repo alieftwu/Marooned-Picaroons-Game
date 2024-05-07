@@ -53,7 +53,7 @@ func checkBlocking(unit):
 	
 func checkStun(player):
 	var skipTurn = false
-	if player.isStunned == true:
+	if (player.isStunned == true) and (player.passiveAbility != "unflinching"):
 		skipTurn = true
 		player.isStunnedCount -= 1
 		if player.isStunnedCount == 0:
@@ -155,11 +155,11 @@ func checkMoveSlot(player, ability): # see what the players move for that button
 	if ability == "pistolShot":
 		print("pistolShot")
 		await pistolShot(player)
-		cooldown = 2
+		cooldown = 3
 	elif ability == "heavySwordSwing":
 		print("heavySwordSwing")
 		await heavySwordSwing(player)
-		cooldown = 2
+		cooldown = 3
 	elif ability == "recklessFrenzy":
 		print("recklessFrenzy")
 		await recklessFrenzy(player)
@@ -171,7 +171,7 @@ func checkMoveSlot(player, ability): # see what the players move for that button
 	elif ability == "pirateBlessing":
 		print("pirateBlessing")
 		await pirateBlessing(player)
-		cooldown = 2
+		cooldown = 3
 	elif ability == "axeToss":
 		print("axeToss")
 		await axeToss(player)
@@ -183,23 +183,23 @@ func checkMoveSlot(player, ability): # see what the players move for that button
 	elif ability == "circleSlash":
 		print("circleSlash")
 		await circleSlash(player)
-		cooldown = 1
+		cooldown = 3
 	elif ability == "desparateStrike":
 		print("desparateStrike")
 		await desparateStrike(player)
-		cooldown = 1
+		cooldown = 2
 	elif ability == "rapidFire":
 		print("rapidFire")
 		await rapidFire(player)
-		cooldown = 3
+		cooldown = 2
 	elif ability == "cannonShot":
 		print("cannonShot")
 		await cannonShot(player)
-		cooldown = 2
+		cooldown = 4
 	elif ability == "engagingBlock":
 		print("engagingBlock")
 		await engagingBlock(player)
-		cooldown = 3
+		cooldown = 4
 	elif ability == "bombThrow":
 		print("bombThrow")
 		await bombThrow(player)
@@ -842,7 +842,8 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 		await battle_map.updateDamageDisplay(interactUnit, damage)
 	player.isStunned = true
 	player.isStunnedCount = 3 # 2 turn
-	player.updateStatusEffect()
+	if player.passiveAbility != "unflinching":
+		player.updateStatusEffect()
 	var testMusic = load("res://Combat/Resources/pistol.wav")
 	abilityMusic.stream = testMusic
 	abilityMusic.play()
@@ -919,7 +920,6 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 func damageWave(player): # deal damage to entire enemy team from 50% to 250%
 	
 	var isPlayer = checkTeam(player)
-	var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
 	if isPlayer:
 		for unit in battle_map.enemyUnits:
 			interactUnit = unit
@@ -932,6 +932,7 @@ func damageWave(player): # deal damage to entire enemy team from 50% to 250%
 				damage = 0
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
+			var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
 			abilityMusic.stream = testMusic
 			abilityMusic.play()
 			await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -947,6 +948,7 @@ func damageWave(player): # deal damage to entire enemy team from 50% to 250%
 				damage = 0
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
+			var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
 			abilityMusic.stream = testMusic
 			abilityMusic.play
 			await battle_map.updateDamageDisplay(interactUnit, damage)

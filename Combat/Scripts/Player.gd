@@ -56,11 +56,11 @@ func play_turn():
 	if isStunned == true:
 		updateStatusEffect()
 	if skipTurn == false:
+		await battlemap.updateButtons(self)
 		await abilityControl.checkFlags(self)
 		await battlemap.setAttackIconsDull() # make buttons dull
 		await battlemap.movePerson(self)
 		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-		await battlemap.updateButtons(self)
 		canPress = true
 		await battlemap.abilityFinished
 		if bonusMove == true:

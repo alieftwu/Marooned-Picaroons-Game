@@ -38,10 +38,10 @@ var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 
 func _ready():
 	speed = 2
-	health = 750
+	health = 850
 	maxHealth = 750
 	armor = 4
-	basicAttackDamage = 14
+	basicAttackDamage = 15
 
 func play_turn():
 	updateHealthBar()
@@ -52,7 +52,7 @@ func play_turn():
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < 0.7:
+		if randf() < 0.75:
 			await battlemap.cowardEnemyMove(self)
 		elif randf() < 0.25:
 			await battlemap.agressiveEnemyMove(self)

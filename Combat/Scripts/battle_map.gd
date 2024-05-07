@@ -1079,6 +1079,7 @@ func checkHazardTile(unit):
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
 		unit.updateHealthBar()
+		updateDamageDisplay(unit, 10)
 		
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))

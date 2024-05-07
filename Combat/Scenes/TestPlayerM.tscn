@@ -48,7 +48,7 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = 4
+	speed = 3
 	health = 100 * Global.statsMultiplier
 	maxHealth = 100 * Global.statsMultiplier
 	armor = 1 * Global.statsMultiplier
@@ -63,11 +63,11 @@ func play_turn():
 	var skipTurn = await abilityControl.checkStun(self)
 	updateStatusEffect()
 	if skipTurn == false:
+		await battlemap.updateButtons(self)
 		await abilityControl.checkFlags(self)
 		await battlemap.setAttackIconsDull() # make buttons dull
 		await battlemap.movePerson(self)
 		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-		await battlemap.updateButtons(self)
 		canPress = true
 		await battlemap.abilityFinished
 		if bonusMove == true:

@@ -18,7 +18,7 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"unflinching\"
+var passiveAbility : String = \"Brawler\"
 var abilityList : Array = [\"heavySwordSwing\", \"desparateStrike\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
