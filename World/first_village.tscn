@@ -15,7 +15,7 @@
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="13_vek3j"]
 [ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="14_rnqt6"]
 [ext_resource type="Script" path="res://World/Label.gd" id="15_q4j6l"]
-[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="16_6moaf"]
+[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="16_6moaf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtqkp"]
 size = Vector2(13, 671)
@@ -333,7 +333,7 @@ position = Vector2(-1.5625, 3)
 shape = SubResource("RectangleShape2D_wdjr7")
 
 [node name="Player" parent="." instance=ExtResource("4_0dqrl")]
-position = Vector2(596, 71)
+position = Vector2(598, 457)
 speed = 120.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
@@ -341,10 +341,10 @@ script = ExtResource("5_k3fc5")
 tilemap = NodePath("../../TileMap")
 
 [node name="Companion" parent="." instance=ExtResource("6_mdsp7")]
-position = Vector2(635, 43)
+position = Vector2(628, 446)
 
 [node name="Companion2" parent="." instance=ExtResource("7_whcwq")]
-position = Vector2(557, 52)
+position = Vector2(572, 444)
 SPEED = 100.0
 
 [node name="Shopper" parent="." instance=ExtResource("8_0021f")]
@@ -358,6 +358,7 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("9_5l66b")
 direction = "right"
+npcText = ["Give me your coins!"]
 killable = true
 fightScene = "CombatFirstVillage"
 
@@ -368,7 +369,7 @@ texture = ExtResource("10_ws1au")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Guard1"]
 libraries = {
@@ -404,6 +405,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Guard1"]
 position = Vector2(0, -11)
+rotation = 4.71239
 
 [node name="Polygon2D" type="Polygon2D" parent="Guard1/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
@@ -457,6 +459,7 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("9_5l66b")
 direction = "left"
+npcText = ["You killed my father, prepare to die!"]
 killable = true
 fightScene = "CombatFirstVillage"
 
@@ -467,7 +470,7 @@ texture = ExtResource("10_ws1au")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Guard2"]
 libraries = {
@@ -503,6 +506,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Guard2"]
 position = Vector2(0, -11)
+rotation = 1.5708
 
 [node name="Polygon2D" type="Polygon2D" parent="Guard2/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)

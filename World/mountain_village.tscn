@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_oavo7"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_gj1sq"]
-[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
+[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="9_oe5nn"]
 [ext_resource type="AudioStream" uid="uid://r646tid5uxdr" path="res://Audio/Wind/wind_whistle.ogg" id="10_801q5"]
 [ext_resource type="Texture2D" uid="uid://078w03oe1knm" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Blue Enemy Sprite.png" id="10_auwmj"]
@@ -343,13 +343,16 @@ scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_b6pub")
 
 [node name="Player" parent="." instance=ExtResource("4_oojuv")]
+position = Vector2(643, 359)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("5_lwphu")]
+position = Vector2(630, 343)
 
 [node name="Companion2" parent="." instance=ExtResource("6_oavo7")]
+position = Vector2(657, 341)
 SPEED = 100.0
 
 [node name="Greeter" parent="." instance=ExtResource("7_gj1sq")]
@@ -371,6 +374,7 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("9_oe5nn")
 npcText = ["Haha! A snowman!"]
+killable = true
 fightScene = "CombatMountainVillage"
 
 [node name="Body" type="Sprite2D" parent="Snowman"]
@@ -380,7 +384,7 @@ texture = ExtResource("10_auwmj")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 8
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Snowman"]
 libraries = {

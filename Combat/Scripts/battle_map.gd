@@ -826,6 +826,9 @@ func simpleAttack(player):
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
 				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				damage = snappedf(damage, 0.01)
+				if damage < 0:
+					damage = 0
 				unit.health -= damage
 				unit.updateHealthBar()
 				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
@@ -850,6 +853,9 @@ func simpleAttack(player):
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
 				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				damage = snappedf(damage, 0.01)
+				if damage < 0:
+					damage = 0
 				unit.health -= damage
 				unit.updateHealthBar()
 				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
@@ -1023,6 +1029,9 @@ func simpleEnemyAttack(enemy):
 		var attackModifier = abilityControl.checkPassiveAttack(enemy, 0, "Melee")
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
 		var damage = (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		damage = snappedf(damage, 0.01)
+		if damage < 0:
+			damage = 0
 		attacked_unit.health -= damage
 		attacked_unit.updateHealthBar()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")

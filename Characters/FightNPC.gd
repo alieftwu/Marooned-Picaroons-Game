@@ -9,7 +9,7 @@ extends CharacterBody2D
 @onready var playerUnits = get_node("/root/world/Player")
 
 @export var direction = "down"
-@export var npcText = ["Now! Fight me!"]
+@export var npcText = ["Give me all your money!"]
 @export var hasWon = false
 @export var killable = false
 @export var teleportPos : Vector2

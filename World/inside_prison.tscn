@@ -198,13 +198,17 @@ layer_3/name = "Tilemap - Doodads - No Collision"
 layer_3/tile_data = PackedInt32Array(2162719, 655378, 0, 2228255, 655378, 1, 2162720, 720914, 0, 2228256, 720914, 1, 2293791, 655378, 2, 2293792, 720914, 2, 2293790, 786450, 0, 2293788, 655378, 0, 2293789, 720914, 0, 2097176, 458770, 10, 2162712, 458770, 11, 2097177, 524306, 10, 2162713, 524306, 11, 2031654, 458770, 10, 2097190, 458770, 11, 2031655, 524306, 10, 2097191, 524306, 11, 2097193, 524306, 12, 2162729, 524306, 13, 2097194, 589842, 12, 2162730, 589842, 13, 2097196, 655378, 11, 851998, 720914, 2, 917533, 655378, 3, 917535, 458770, 12, 851997, 655378, 2, 917534, 720914, 3, 1441822, 393235, 9, 1441824, 458771, 9, 1507361, 458771, 11, 1441834, 393235, 10, 1376301, 458771, 9, 1507367, 458771, 11, 1376297, 458771, 11, 1441816, 196626, 10, 1507352, 196626, 10, 1310766, 196626, 10, 1376302, 196626, 10, 1441838, 196626, 10, 1507374, 196626, 10, 917546, 458770, 12, 1310755, 18, 19, 1376291, 18, 20, 1441827, 18, 21, 1310756, 65554, 19, 1376292, 65554, 20, 1441828, 65554, 21, 1310757, 131090, 19, 1376293, 131090, 20, 1441829, 131090, 21)
 
 [node name="Player" parent="." instance=ExtResource("2_7oa6q")]
-position = Vector2(561, 383)
+position = Vector2(577, 352)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("3_1po7k")]
-position = Vector2(588, 383)
+position = Vector2(595, 359)
+
+[node name="Companion2" parent="." instance=ExtResource("6_3yicy")]
+position = Vector2(561, 364)
+SPEED = 100.0
 
 [node name="EntranceMarkers" type="Node2D" parent="."]
 position = Vector2(338, 134)
@@ -221,9 +225,6 @@ connected_scene = "county_prison"
 position = Vector2(-1.3, 3)
 scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_4o1x5")
-
-[node name="Companion2" parent="." instance=ExtResource("6_3yicy")]
-SPEED = 100.0
 
 [node name="NPC" parent="." instance=ExtResource("7_m10ha")]
 position = Vector2(505, 487)
@@ -275,6 +276,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Prison Guard 1"]
 position = Vector2(0, -11)
+rotation = 4.71239
 
 [node name="Polygon2D" type="Polygon2D" parent="Prison Guard 1/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
@@ -355,6 +357,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Prison Guard 2"]
 position = Vector2(0, -11)
+rotation = 1.5708
 
 [node name="Polygon2D" type="Polygon2D" parent="Prison Guard 2/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)

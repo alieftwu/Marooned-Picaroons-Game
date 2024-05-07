@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://covnejc7xk3bc"]
+[gd_scene load_steps=48 format=3 uid="uid://covnejc7xk3bc"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_1xuy7"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_inqj7"]
@@ -9,8 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_tbbkp"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="8_wbvtm"]
 [ext_resource type="Script" path="res://World/PathFollow2D.gd" id="9_ykefi"]
-[ext_resource type="PackedScene" uid="uid://367wmpe8vxyd" path="res://Characters/PatrolNPC.tscn" id="10_hq3gq"]
+[ext_resource type="Script" path="res://Characters/PatrolNPC.gd" id="10_8hdts"]
+[ext_resource type="Texture2D" uid="uid://ca62ji8untpgg" path="res://Art/Pirates/Pirate Yellow Sprite Sheet/yellow companion character shirt.png" id="11_hshcb"]
 [ext_resource type="PackedScene" uid="uid://bwj0xppo37et1" path="res://Characters/QuestNPC.tscn" id="11_k5o5t"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="12_x8d01"]
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="13_kdpg1"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="14_q78qu"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="15_igihf"]
+[ext_resource type="Script" path="res://World/Label.gd" id="16_he6pl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23po0"]
 size = Vector2(21.1607, 60)
@@ -30,6 +36,233 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 1493.09, 518)
 }
 point_count = 2
+
+[sub_resource type="Animation" id="Animation_5rgvr"]
+resource_name = "backwards_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_crl8m"]
+resource_name = "forward_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_u6iu1"]
+resource_name = "left_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_dataw"]
+resource_name = "right_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_yr0q2"]
+resource_name = "walk_down"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 13]
+}
+
+[sub_resource type="Animation" id="Animation_41uqw"]
+resource_name = "walk_left"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 21, 10, 23, 11]
+}
+
+[sub_resource type="Animation" id="Animation_wcl5n"]
+resource_name = "walk_right"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 18, 7, 20, 8]
+}
+
+[sub_resource type="Animation" id="Animation_otycb"]
+resource_name = "walk_up"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kr0c"]
+_data = {
+"backwards_idle": SubResource("Animation_5rgvr"),
+"forward_idle": SubResource("Animation_crl8m"),
+"left_idle": SubResource("Animation_u6iu1"),
+"right_idle": SubResource("Animation_dataw"),
+"walk_down": SubResource("Animation_yr0q2"),
+"walk_left": SubResource("Animation_41uqw"),
+"walk_right": SubResource("Animation_wcl5n"),
+"walk_up": SubResource("Animation_otycb")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nte6"]
+animation = &"left_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pfb13"]
+animation = &"right_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b31fg"]
+animation = &"backwards_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wsq7x"]
+animation = &"forward_idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_bxed4"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2nte6")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_pfb13")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_b31fg")
+blend_point_2/pos = Vector2(0, -1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_wsq7x")
+blend_point_3/pos = Vector2(0, 1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+snap = Vector2(0.01, 0.01)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fdhxr"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nr62k"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u0d5l"]
+animation = &"walk_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tajqw"]
+animation = &"walk_up"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_are8h"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_fdhxr")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_nr62k")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_u0d5l")
+blend_point_2/pos = Vector2(0, 1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_tajqw")
+blend_point_3/pos = Vector2(0, -1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_er8wl"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_arxb6"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_aj34a"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_us6gr"]
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_bxed4")
+states/Idle/position = Vector2(379, 100)
+states/Start/position = Vector2(191, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
+states/Walk/position = Vector2(633, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
+graph_offset = Vector2(-186.663, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("15_igihf")
+font_color = Color(0, 0, 0, 1)
 
 [node name="second_village" type="Node2D"]
 y_sort_enabled = true
@@ -51,7 +284,7 @@ layer_3/name = "Tilemap-Doodads-No Collision"
 layer_3/tile_data = PackedInt32Array(1835070, 8, 1, 1835071, 65544, 1, 1835072, 131080, 1, 1900606, 8, 1, 1900607, 65544, 1, 1900608, 131080, 1, 1966142, 8, 1, 1966143, 65544, 1, 1966144, 131080, 1, 2031678, 8, 2, 2031679, 65544, 2, 2031680, 131080, 2, 2031658, 8, 2, 2031659, 65544, 2, 2031660, 131080, 2, 1966122, 8, 1, 1900586, 8, 1, 1835050, 8, 1, 1769514, 8, 1, 1703978, 8, 1, 1638442, 8, 1, 1572906, 8, 1, 1507370, 8, 1, 1441834, 8, 1, 1966124, 131080, 1, 1900588, 131080, 1, 1835052, 131080, 1, 1769516, 131080, 1, 1703980, 131080, 1, 1638444, 131080, 1, 1572908, 131080, 1, 1507372, 131080, 1, 1441836, 131080, 1, 1376298, 8, 0, 1376299, 65544, 0, 1376300, 131080, 0, 1441835, 65544, 1, 1507371, 65544, 1, 1572907, 65544, 1, 1638443, 65544, 1, 1703979, 65544, 1, 1769515, 65544, 1, 1835051, 65544, 1, 1900587, 65544, 1, 1966123, 65544, 1, 2555906, 589827, 4, 2490371, 655363, 3, 2555907, 655363, 4, 2621443, 655363, 5, 2555908, 720899, 4, 2555920, 589827, 4, 2490385, 655363, 3, 2555921, 655363, 4, 2621457, 655363, 5, 2555922, 720899, 4, 2555941, 589827, 4, 2490406, 655363, 3, 2555942, 655363, 4, 2621478, 655363, 5, 2555943, 720899, 4, 2621446, 589827, 1, 2555911, 655363, 0, 2621447, 655363, 1, 2686983, 655363, 2, 2621448, 720899, 1, 2555917, 589827, 1, 2490382, 655363, 0, 2555918, 655363, 1, 2621454, 655363, 2, 2555919, 720899, 1, 2621465, 589827, 1, 2555930, 655363, 0, 2621466, 655363, 1, 2687002, 655363, 2, 2621467, 720899, 1, 2555950, 589827, 1, 2490415, 655363, 0, 2555951, 655363, 1, 2621487, 655363, 2, 2555952, 720899, 1, 2621496, 589827, 1, 2555961, 655363, 0, 2621497, 655363, 1, 2687033, 655363, 2, 2621498, 720899, 1, 1966138, 589827, 1, 1900603, 655363, 0, 1966139, 655363, 1, 2031675, 655363, 2, 1966140, 720899, 1, 1114159, 589827, 1, 1048624, 655363, 0, 1114160, 655363, 1, 1179696, 262147, 1, 1114161, 720899, 1, 852029, 589827, 1, 786494, 655363, 0, 852030, 655363, 1, 917566, 655363, 2, 852031, 720899, 1, 655412, 589827, 1, 589877, 655363, 0, 655413, 655363, 1, 720949, 655363, 2, 655414, 720899, 1, 1835017, 589827, 1, 1769482, 655363, 0, 1835018, 655363, 1, 1900554, 655363, 2, 1835019, 720899, 1, 1507337, 589827, 1, 1441802, 655363, 0, 1507338, 655363, 1, 1572874, 655363, 2, 1507339, 720899, 1, 2031637, 589827, 4, 1966102, 655363, 3, 2031638, 655363, 4, 2097174, 655363, 5, 2031639, 720899, 4, 1638425, 589827, 4, 1572890, 655363, 3, 1638426, 655363, 4, 1703962, 655363, 5, 1638427, 720899, 4, 1048616, 589827, 4, 983081, 655363, 3, 1048617, 655363, 4, 1114153, 655363, 5, 1048618, 720899, 4, 589861, 589827, 4, 524326, 655363, 3, 589862, 655363, 4, 655398, 655363, 5, 589863, 720899, 4, 589839, 589827, 4, 524304, 655363, 3, 589840, 655363, 4, 655376, 655363, 5, 589841, 720899, 4, 786450, 589827, 4, 720915, 655363, 3, 786451, 655363, 4, 851987, 655363, 5, 786452, 720899, 4, 458762, 589827, 1, 393227, 655363, 0, 458763, 655363, 1, 524299, 655363, 2, 458764, 720899, 1, 327684, 589827, 1, 262149, 655363, 0, 327685, 655363, 1, 393221, 655363, 2, 327686, 720899, 1, 2, 589827, 1, -65533, 655363, 0, 3, 655363, 1, 65539, 655363, 2, 4, 720899, 1, 1900548, 589827, 1, 1835013, 655363, 0, 1900549, 655363, 1, 1966085, 655363, 2, 1900550, 262147, 1, 1900544, 589827, 4, 1835009, 655363, 3, 1900545, 655363, 4, 1966081, 655363, 5, 1900546, 720899, 4, 2031661, 589827, 4, 1966126, 655363, 3, 2031662, 655363, 4, 2097198, 655363, 5, 2031663, 720899, 4, 1703975, 589827, 4, 1638440, 655363, 3, 1703976, 655363, 4, 1769512, 655363, 5, 1703977, 720899, 4, 1310760, 589827, 4, 1245225, 655363, 3, 1310761, 655363, 4, 1376297, 655363, 5, 1310762, 720899, 4, 1310765, 589827, 1, 1245230, 655363, 0, 1310766, 655363, 1, 1376302, 655363, 2, 1310767, 720899, 1, 1966146, 589827, 4, 1900611, 655363, 3, 1966147, 655363, 4, 2031683, 655363, 5, 1966148, 720899, 4, 1900553, 262147, 1, 2031640, 262147, 1, 2490392, 262147, 1, 1703995, 262147, 1, 1441841, 262147, 1, 1900593, 262147, 1, 2752513, 589827, 1, 2686978, 655363, 0, 2752514, 655363, 1, 2818050, 655363, 2, 2752515, 720899, 1, 3014665, 589827, 1, 2949130, 655363, 0, 3014666, 655363, 1, 3080202, 655363, 2, 3014667, 720899, 1, 2752523, 589827, 1, 2686988, 655363, 0, 2752524, 655363, 1, 2818060, 655363, 2, 2752525, 720899, 1, 2883601, 589827, 1, 2818066, 655363, 0, 2883602, 655363, 1, 2949138, 655363, 2, 2883603, 720899, 1, 3080216, 589827, 1, 3014681, 655363, 0, 3080217, 655363, 1, 3145753, 655363, 2, 3080218, 720899, 1, 2883615, 589827, 1, 2818080, 655363, 0, 2883616, 655363, 1, 2949152, 655363, 2, 2883617, 720899, 1, 2687014, 589827, 1, 2621479, 655363, 0, 2687015, 655363, 1, 2752551, 655363, 2, 2687016, 720899, 1, 2949160, 589827, 1, 2883625, 655363, 0, 2949161, 655363, 1, 3014697, 655363, 2, 2949162, 720899, 1, 2752560, 589827, 4, 2687025, 655363, 3, 2752561, 655363, 4, 2818097, 655363, 5, 2752562, 720899, 4, 2687008, 589827, 4, 2621473, 655363, 3, 2687009, 655363, 4, 2752545, 655363, 5, 2687010, 720899, 4, 2883608, 589827, 4, 2818073, 655363, 3, 2883609, 655363, 4, 2949145, 655363, 5, 2883610, 720899, 4, 3080208, 589827, 4, 3014673, 655363, 3, 3080209, 655363, 4, 3145745, 655363, 5, 3080210, 720899, 4, 2818100, 589827, 4, 2752565, 655363, 3, 2818101, 655363, 4, 2883637, 655363, 5, 2818102, 720899, 4, 3145782, 589827, 4, 3080247, 655363, 3, 3145783, 655363, 4, 3211319, 655363, 5, 3145784, 720899, 4, 2818113, 589827, 4, 2752578, 655363, 3, 2818114, 655363, 4, 2883650, 655363, 5, 2818115, 720899, 4, 2883643, 589827, 4, 2818108, 655363, 3, 2883644, 655363, 4, 2949180, 655363, 5, 2883645, 720899, 4, 3014702, 589827, 4, 2949167, 655363, 3, 3014703, 655363, 4, 3080239, 655363, 5, 3014704, 720899, 4)
 
 [node name="Player" parent="." instance=ExtResource("3_74knn")]
-position = Vector2(0, 5)
+position = Vector2(543, 498)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" node_paths=PackedStringArray("tilemap")]
@@ -59,10 +292,10 @@ script = ExtResource("4_s1ti7")
 tilemap = NodePath("../../TileMap")
 
 [node name="Companion" parent="." instance=ExtResource("5_68in7")]
-position = Vector2(19, -9)
+position = Vector2(563, 478)
 
 [node name="Companion2" parent="." instance=ExtResource("6_tbbkp")]
-position = Vector2(15, -9)
+position = Vector2(524, 477)
 SPEED = 100.0
 
 [node name="SceneTrigger" parent="." instance=ExtResource("6_3w2hx")]
@@ -219,12 +452,107 @@ rotates = false
 loop = false
 script = ExtResource("9_ykefi")
 
-[node name="PatrollingGuard" parent="Path2D2/PathFollow2D" instance=ExtResource("10_hq3gq")]
+[node name="PatrollingGuard" type="CharacterBody2D" parent="Path2D2/PathFollow2D"]
 position = Vector2(2.34097, 5.9783)
 rotation = -0.00938702
 scale = Vector2(1.14238, 1)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("10_8hdts")
 direction = "right"
+npcText = ["I hate pirates!"]
 fightScene = "CombatFirstVillage"
+killable = true
+
+[node name="Body" type="Sprite2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+texture_filter = 1
+position = Vector2(-1, 1)
+texture = ExtResource("11_hshcb")
+offset = Vector2(0, -14.9)
+hframes = 3
+vframes = 8
+frame = 9
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="AnimationTree" type="AnimationTree" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+tree_root = SubResource("AnimationNodeStateMachine_us6gr")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(-0.0992963, -0.0174603)
+parameters/Walk/blend_position = Vector2(-0.102424, 0.55291)
+
+[node name="TextureRect" type="TextureRect" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("12_x8d01")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+position = Vector2(0, -11)
+rotation = 4.71239
+
+[node name="Polygon2D" type="Polygon2D" parent="Path2D2/PathFollow2D/PatrollingGuard/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Path2D2/PathFollow2D/PatrollingGuard/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Path2D2/PathFollow2D/PatrollingGuard"]
+
+[node name="TextureRect" type="TextureRect" parent="Path2D2/PathFollow2D/PatrollingGuard/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("13_kdpg1")
+stretch_mode = 4
+script = ExtResource("14_q78qu")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("16_he6pl")
 
 [node name="NPC4" parent="." instance=ExtResource("11_k5o5t")]
 position = Vector2(712, 325)
@@ -241,4 +569,11 @@ npcText = ["I just have a stand, It's fun to sit here with everyone", "You look 
 [connection signal="removeNPC" from="." to="NPC7" method="_on_second_village_remove_npc"]
 [connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D" method="_on_halt_move"]
+[connection signal="haltMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" method="_on_new_f_text"]
 [connection signal="resMove" from="Path2D2/PathFollow2D/PatrollingGuard" to="Player" method="_on_res_move"]
+[connection signal="showTextBox" from="Path2D2/PathFollow2D/PatrollingGuard" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Path2D2/PathFollow2D/PatrollingGuard/Area2D" to="Path2D2/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Path2D2/PathFollow2D/PatrollingGuard/Area2D" to="Path2D2/PathFollow2D/PatrollingGuard" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect/Label" to="Path2D2/PathFollow2D/PatrollingGuard/HUD/TextureRect" method="_on_label_hide_box_label"]
