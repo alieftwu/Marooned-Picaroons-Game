@@ -359,6 +359,7 @@ motion_mode = 1
 script = ExtResource("9_5l66b")
 direction = "right"
 killable = true
+fightScene = "CombatFirstVillage"
 
 [node name="Body" type="Sprite2D" parent="Guard1"]
 texture_filter = 1
@@ -381,6 +382,9 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Guard1"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
@@ -454,6 +458,7 @@ motion_mode = 1
 script = ExtResource("9_5l66b")
 direction = "left"
 killable = true
+fightScene = "CombatFirstVillage"
 
 [node name="Body" type="Sprite2D" parent="Guard2"]
 texture_filter = 1
@@ -476,6 +481,9 @@ position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
 [node name="AnimationTree" type="AnimationTree" parent="Guard2"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
 tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false

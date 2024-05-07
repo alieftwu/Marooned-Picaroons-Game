@@ -424,7 +424,7 @@ func pistolShot(player): #shoot in a line 3 away
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 		checkBlocking(interactUnit)
-		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		interactUnit.health -= (player.basicAttackDamage * 2 * attackModifier * defendModifier)/interactUnit.armor
 		interactUnit.updateHealthBar()
 		
 		var testMusic = load("res://Combat/Resources/pistol.wav")
@@ -460,7 +460,7 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		checkBlocking(interactUnit)
-		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier)/interactUnit.armor
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -604,7 +604,7 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 		var attackModifier = checkPassiveAttack(player, 0, "Throw")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Throw")
 		checkBlocking(interactUnit)
-		var damage = (player.basicAttackDamage * 1.75 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 1.75 * attackModifier * defendModifier)/interactUnit.armor
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -640,7 +640,7 @@ func quickStrike(player): # attack then you can move again
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 		checkBlocking(interactUnit)
-		var damage = (player.basicAttackDamage * 1.2 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 1.2 * attackModifier * defendModifier)/interactUnit.armor
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -665,7 +665,7 @@ func circleSlash(player): # hit all enemies around you for 1.5 basic
 			var attackModifier = checkPassiveAttack(player, 0, "Melee")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
 			checkBlocking(interactUnit)
-			var damage = (player.basicAttackDamage * 1.3 * attackModifier * defendModifier) - interactUnit.armor
+			var damage = (player.basicAttackDamage * 1.3 * attackModifier * defendModifier)/interactUnit.armor
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
 			await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -703,7 +703,7 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 		if (player.health <= 20):
 			moveModifier = 2.4
 		checkBlocking(interactUnit)
-		var damage = (player.basicAttackDamage * 1.25 * attackModifier * defendModifier * moveModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 1.25 * attackModifier * defendModifier * moveModifier)/interactUnit.armor
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -741,7 +741,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		var attackModifier = checkPassiveAttack(player, 0, "Ranged")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
 		checkBlocking(interactUnit)
-		var damage = (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 0.75 * attackModifier * defendModifier)/interactUnit.armor
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -765,7 +765,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 			attackModifier = checkPassiveAttack(player, 0, "Ranged")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Ranged")
 			checkBlocking(interactUnit)
-			damage = (player.basicAttackDamage * 0.75 * attackModifier * defendModifier) - interactUnit.armor
+			damage = (player.basicAttackDamage * 0.75 * attackModifier * defendModifier)/interactUnit.armor
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
 			await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -849,7 +849,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 		var attackModifier = checkPassiveAttack(player, 0, "Bomb")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Bomb")
 		checkBlocking(interactUnit)
-		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier)/interactUnit.armor
 		interactUnit.health -= damage
 		interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -867,7 +867,7 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 			attackModifier = checkPassiveAttack(player, 0, "Range")
 			defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 			checkBlocking(interactUnit)
-			damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier) - interactUnit.armor
+			damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier)/interactUnit.armor
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
 			await battle_map.updateDamageDisplay(interactUnit, damage)
@@ -886,7 +886,7 @@ func damageWave(player): # deal damage to entire enemy team from 50% to 250%
 			var attackModifier = checkPassiveAttack(player, 0, "Range")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 			checkBlocking(interactUnit)
-			var damage = (player.basicAttackDamage * randf_range(0.5, 2.5) * attackModifier * defendModifier) - interactUnit.armor
+			var damage = (player.basicAttackDamage * randf_range(0.5, 2.5) * attackModifier * defendModifier)/interactUnit.armor
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
 			abilityMusic.stream = testMusic
@@ -898,7 +898,7 @@ func damageWave(player): # deal damage to entire enemy team from 50% to 250%
 			var attackModifier = checkPassiveAttack(player, 0, "Range")
 			var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
 			checkBlocking(interactUnit)
-			var damage = (player.basicAttackDamage * randf_range(0.5, 2.5) * attackModifier * defendModifier) - interactUnit.armor
+			var damage = (player.basicAttackDamage * randf_range(0.5, 2.5) * attackModifier * defendModifier)/interactUnit.armor
 			interactUnit.health -= damage
 			interactUnit.updateHealthBar()
 			abilityMusic.stream = testMusic

@@ -44,3 +44,7 @@ func _on_halt_move():
 func _play_footstep_audio():
 	footsteps.pitch_scale = randf_range(.8, 1.2)
 	footsteps.play()
+
+
+func _on_res_move():
+	canMove = true

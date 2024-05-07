@@ -110,12 +110,15 @@ position = Vector2(1508, 487)
 rotation = -4.71095
 shape = SubResource("RectangleShape2D_6ylb1")
 
-[node name="NPC" parent="." instance=ExtResource("8_211qw")]
+[node name="FGGuard1" parent="." instance=ExtResource("8_211qw")]
 position = Vector2(486, 454)
 killable = true
 fightScene = "CombatFrontGate"
 
-[node name="NPC2" parent="." instance=ExtResource("8_211qw")]
+[node name="FGGuard2" parent="." instance=ExtResource("8_211qw")]
 position = Vector2(621, 458)
 killable = true
 fightScene = "CombatFrontGate"
+
+[connection signal="resMove" from="FGGuard1" to="Player" method="_on_res_move"]
+[connection signal="resMove" from="FGGuard2" to="Player" method="_on_res_move"]

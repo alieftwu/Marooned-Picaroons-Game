@@ -320,7 +320,7 @@ shape = SubResource("RectangleShape2D_h5jpg")
 position = Vector2(232, 547)
 
 [node name="king_castle_hallway" type="Marker2D" parent="EntranceMarkers"]
-position = Vector2(-165, 49)
+position = Vector2(-209, 39)
 
 [node name="Path2D2" type="Path2D" parent="."]
 z_index = 1
@@ -406,26 +406,27 @@ direction = "right"
 fightScene = "CombatCastle"
 killable = true
 
-[node name="King" type="CharacterBody2D" parent="."]
+[node name="Cromwell" type="CharacterBody2D" parent="."]
 position = Vector2(536, 468)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_c0vyf")
+npcText = ["You DARE Challenge me?", "Lord Protector of England?", "Now DIE you pettty foolsl!"]
 killable = true
 
-[node name="Body" type="Sprite2D" parent="King"]
+[node name="Body" type="Sprite2D" parent="Cromwell"]
 texture_filter = 1
 position = Vector2(2, -7)
 scale = Vector2(0.119995, 0.119995)
 texture = ExtResource("9_u474e")
 offset = Vector2(0, -14.9)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="King"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cromwell"]
 y_sort_enabled = true
 position = Vector2(0, -11)
 shape = SubResource("CapsuleShape2D_f4lr4")
 
-[node name="TextureRect" type="TextureRect" parent="King"]
+[node name="TextureRect" type="TextureRect" parent="Cromwell"]
 texture_filter = 1
 offset_left = -5.0
 offset_top = -34.0
@@ -435,20 +436,20 @@ texture = ExtResource("10_cpqxq")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Area2D" type="Area2D" parent="King"]
+[node name="Area2D" type="Area2D" parent="Cromwell"]
 position = Vector2(0, -11)
 
-[node name="Polygon2D" type="Polygon2D" parent="King/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Cromwell/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
 polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="King/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Cromwell/Area2D"]
 position = Vector2(0, 1)
 polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
 
-[node name="HUD" type="CanvasLayer" parent="King"]
+[node name="HUD" type="CanvasLayer" parent="Cromwell"]
 
-[node name="TextureRect" type="TextureRect" parent="King/HUD"]
+[node name="TextureRect" type="TextureRect" parent="Cromwell/HUD"]
 z_index = 2
 texture_filter = 1
 anchors_preset = 7
@@ -469,7 +470,7 @@ stretch_mode = 4
 script = ExtResource("12_8ijgv")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="King/HUD/TextureRect"]
+[node name="Label" type="Label" parent="Cromwell/HUD/TextureRect"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 68.0
@@ -485,7 +486,7 @@ script = ExtResource("14_wm82p")
 combat_scene = "CombatCastleHall"
 
 [node name="Guard" type="CharacterBody2D" parent="."]
-position = Vector2(199, 549)
+position = Vector2(197, 561)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_onxs4")
@@ -563,7 +564,7 @@ script = ExtResource("14_wm82p")
 combat_scene = "CombatCastle"
 
 [node name="Guard2" type="CharacterBody2D" parent="."]
-position = Vector2(69, 644)
+position = Vector2(65, 617)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_lxxnb")
@@ -650,14 +651,14 @@ combat_scene = "CombatCastle"
 [connection signal="haltMove" from="Path2D4/PathFollow2D/PatrollingGuard" to="Path2D4/PathFollow2D" method="_on_patrolling_guard_halt_move"]
 [connection signal="haltMove" from="Path2D/PathFollow2D/PatrollingGuard" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Path2D/PathFollow2D/PatrollingGuard" to="Path2D/PathFollow2D" method="_on_patrolling_guard_halt_move"]
-[connection signal="haltMove" from="King" to="Player" method="_on_halt_move"]
-[connection signal="haltMove" from="King" to="King/HUD/TextureRect/Label" method="_on_npc_halt_move"]
-[connection signal="hideTextBox" from="King" to="King/HUD/TextureRect" method="_on_npc_hide_text_box"]
-[connection signal="newFText" from="King" to="King/HUD/TextureRect/Label" method="_on_new_f_text"]
-[connection signal="showTextBox" from="King" to="King/HUD/TextureRect" method="_on_npc_show_text_box"]
-[connection signal="body_entered" from="King/Area2D" to="King" method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="King/Area2D" to="King" method="_on_area_2d_body_exited"]
-[connection signal="hideBoxLabel" from="King/HUD/TextureRect/Label" to="King/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Cromwell" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Cromwell" to="Cromwell/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Cromwell" to="Cromwell/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Cromwell" to="Cromwell/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Cromwell" to="Cromwell/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Cromwell/Area2D" to="Cromwell" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Cromwell/Area2D" to="Cromwell" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Cromwell/HUD/TextureRect/Label" to="Cromwell/HUD/TextureRect" method="_on_label_hide_box_label"]
 [connection signal="haltMove" from="Guard" to="." method="_on_halt_move"]
 [connection signal="haltMove" from="Guard" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Guard" to="Guard/HUD/TextureRect/Label" method="_on_npc_halt_move"]

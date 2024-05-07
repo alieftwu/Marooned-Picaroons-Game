@@ -16,6 +16,7 @@ extends CharacterBody2D
 signal showTextBox
 signal hideTextBox
 signal haltMove
+signal resMove
 signal newFText(title)
 
 var closeEnough = false
@@ -67,4 +68,5 @@ func _on_area_2d_body_entered(body):
 func _on_area_2d_body_exited(body):
 	emit_signal("hideTextBox")
 	closeEnough = false
+	resMove.emit()
 
