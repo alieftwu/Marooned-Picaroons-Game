@@ -674,9 +674,9 @@ autowrap_mode = 2
 script = ExtResource("17_5gogs")
 
 [node name="Itemy" parent="." instance=ExtResource("12_a8ruc")]
-position = Vector2(677, 130)
+position = Vector2(676, 129)
 connectedQuest = "test1"
-npcText = ["Ahoy Cap'n! ", "We have docked on the coast of the isles! How are you planning to do this?", "You could sneak your way through the villages, avoiding the patrolling brits,", "Or fight your way through! paving a path driectly to cromwell!", "I know that whatever you choose will be the best option!"]
+npcText = ["Ahoy Cap'n! ", "We have docked on the coast of the isles! How are you planning to do this?", "You could sneak your way through the villages, avoiding the patrolling brits,", "Or fight your way through! Paving a path directly to Cromwell!", "I know that whatever you choose will be the best option!"]
 preItem = ["A kid wants proof you're a pirate?", "More Than just your looks and your sword?", "Alright, Here's my old compass, still works and all.", "I've got a new one so it's all good."]
 postItem = ["That kid enjoy the compass?", "I hope he does."]
 
@@ -685,6 +685,7 @@ position = Vector2(488, 107)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("11_d3hky")
+npcText = ["Take it easy on me captain!"]
 killable = true
 teleportPos = Vector2(400, 150)
 fightScene = "CombatShip"

@@ -880,29 +880,35 @@ func moveEnemyPerson(enemy): # move enemy randomly
 	var validMove = false
 	var attemptCounter = 0 #if we don't find a good random move in this many tries we just dont move
 	var random_movePick
+	#print("Moves: ", allowedSpaces)
 	if allowedSpaces.is_empty() == false:
-		while (validMove == false) and (attemptCounter <= 10):
-			validMove = true
-			attemptCounter += 1
-			random_movePick = allowedSpaces.pick_random()
-			
-			var global_tile_pos = tile_map.map_to_local(random_movePick)
-			for unit in Units:
-				if unit.global_position == global_tile_pos:
-					validMove = false
-					break
-					
-		if attemptCounter <= 10:		
-			current_id_path = astar_grid.get_id_path(
-			starting_position,
-			random_movePick	
-			).slice(1)
-			startMoving = true
-			await finishedMoving # wait for physics to finish moving
-			
+		if len(allowedSpaces) != 1:
+			while (validMove == false) and (attemptCounter <= 10):
+				validMove = true
+				attemptCounter += 1
+				random_movePick = allowedSpaces.pick_random()
+				
+				var global_tile_pos = tile_map.map_to_local(random_movePick)
+				for unit in Units:
+					if unit.global_position == global_tile_pos:
+						validMove = false
+						break
+						
+			if attemptCounter <= 10:		
+				current_id_path = astar_grid.get_id_path(
+				starting_position,
+				random_movePick	
+				).slice(1)
+				startMoving = true
+				await finishedMoving # wait for physics to finish moving
+				
+			else:
+				print("chose to not move")
+				emit_signal("finishedMoving")
 		else:
-			print("chose to not move")
 			emit_signal("finishedMoving")
+	else:
+		emit_signal("finishedMoving")
 	
 	startMoving = false
 	update_AStarGrid()
@@ -917,36 +923,41 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 	var starting_position = tile_map.local_to_map(enemy_position)
 	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
 	var validMove = false
-	
 	var smallestDistance = 999999
 	var move_pick = Vector2(0,0)
+	#print("agressMoves: ", allowedSpaces)
 	if allowedSpaces.is_empty() == false:
-		for move in allowedSpaces:
-			for playerUnit in friendlyUnits:
-				var player_pos = tile_map.local_to_map(playerUnit.global_position)
-				var distanceCalc = move.distance_to(player_pos)
-				if distanceCalc < smallestDistance:
-					validMove = true
-					var global_move_pick = tile_map.map_to_local(move)
-					for unit in Units:
-						if unit.global_position == global_move_pick:
-							validMove = false
-							break
-					if validMove == true:
-						move_pick = move
-						smallestDistance = distanceCalc
-		current_id_path = astar_grid.get_id_path(
-		starting_position,
-		move_pick	
-		).slice(1)
-		startMoving = true
-		#print("awaitAgMove")
-		await finishedMoving # wait for physics to finish moving
-		#print("finishedAgMove")
-		startMoving = false
+		if len(allowedSpaces) != 1:
+			for move in allowedSpaces:
+				for playerUnit in friendlyUnits:
+					var player_pos = tile_map.local_to_map(playerUnit.global_position)
+					var distanceCalc = move.distance_to(player_pos)
+					if distanceCalc < smallestDistance:
+						validMove = true
+						var global_move_pick = tile_map.map_to_local(move)
+						for unit in Units:
+							if unit.global_position == global_move_pick:
+								validMove = false
+								break
+						if validMove == true:
+							move_pick = move
+							smallestDistance = distanceCalc
+			current_id_path = astar_grid.get_id_path(
+			starting_position,
+			move_pick	
+			).slice(1)
+			startMoving = true
+			#print("awaitAgMove")
+			await finishedMoving # wait for physics to finish moving
+			#print("finishedAgMove")
+		else:
+			move_pick = starting_position
+			emit_signal("finishedMoving")
 	else:
 		move_pick = starting_position
+		emit_signal("finishedMoving")
 	
+	startMoving = false
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
@@ -970,31 +981,34 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 	
 	var largestDistance = -999999
 	var move_pick
+	#print("ScaredMovses: ", allowedSpaces)
 	if allowedSpaces.is_empty() == false:
-		for move in allowedSpaces: # find move that takes you farthest from closest player
-			var player_pos = tile_map.local_to_map(closestPlayer.global_position)
-			var distanceCalc = move.distance_to(player_pos)
-			if distanceCalc > largestDistance:
-				validMove = true
-				var global_move_pick = tile_map.map_to_local(move)
-				for unit in Units:
-					if unit.global_position == global_move_pick:
-						validMove = false
-						break
-				if validMove == true:
-					move_pick = move
-					largestDistance = distanceCalc
-		current_id_path = astar_grid.get_id_path(
-		starting_position,
-		move_pick	
-		).slice(1)
-		startMoving = true
-		await finishedMoving # wait for physics to finish moving
+		if len(allowedSpaces) != 1:
+			for move in allowedSpaces: # find move that takes you farthest from closest player
+				var player_pos = tile_map.local_to_map(closestPlayer.global_position)
+				var distanceCalc = move.distance_to(player_pos)
+				if distanceCalc > largestDistance:
+					validMove = true
+					var global_move_pick = tile_map.map_to_local(move)
+					for unit in Units:
+						if unit.global_position == global_move_pick:
+							validMove = false
+							break
+					if validMove == true:
+						move_pick = move
+						largestDistance = distanceCalc
+			current_id_path = astar_grid.get_id_path(
+			starting_position,
+			move_pick	
+			).slice(1)
+			startMoving = true
+			await finishedMoving # wait for physics to finish moving
+		else:
+			move_pick = starting_position
+			emit_signal("finishedMoving")
 	else:
 		move_pick = starting_position
-	
-	startMoving = true
-	await finishedMoving # wait for physics to finish moving
+		emit_signal("finishedMoving")
 	
 	startMoving = false
 	update_AStarGrid()
