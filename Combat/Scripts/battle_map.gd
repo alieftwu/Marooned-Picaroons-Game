@@ -880,28 +880,29 @@ func moveEnemyPerson(enemy): # move enemy randomly
 	var validMove = false
 	var attemptCounter = 0 #if we don't find a good random move in this many tries we just dont move
 	var random_movePick
-	while (validMove == false) and (attemptCounter <= 10):
-		validMove = true
-		attemptCounter += 1
-		random_movePick = allowedSpaces.pick_random()
-		
-		var global_tile_pos = tile_map.map_to_local(random_movePick)
-		for unit in Units:
-			if unit.global_position == global_tile_pos:
-				validMove = false
-				break
-				
-	if attemptCounter <= 10:		
-		current_id_path = astar_grid.get_id_path(
-		starting_position,
-		random_movePick	
-		).slice(1)
-		startMoving = true
-		await finishedMoving # wait for physics to finish moving
-		
-	else:
-		print("chose to not move")
-		emit_signal("finishedMoving")
+	if allowedSpaces.is_empty() == false:
+		while (validMove == false) and (attemptCounter <= 10):
+			validMove = true
+			attemptCounter += 1
+			random_movePick = allowedSpaces.pick_random()
+			
+			var global_tile_pos = tile_map.map_to_local(random_movePick)
+			for unit in Units:
+				if unit.global_position == global_tile_pos:
+					validMove = false
+					break
+					
+		if attemptCounter <= 10:		
+			current_id_path = astar_grid.get_id_path(
+			starting_position,
+			random_movePick	
+			).slice(1)
+			startMoving = true
+			await finishedMoving # wait for physics to finish moving
+			
+		else:
+			print("chose to not move")
+			emit_signal("finishedMoving")
 	
 	startMoving = false
 	update_AStarGrid()
@@ -983,13 +984,15 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 				if validMove == true:
 					move_pick = move
 					largestDistance = distanceCalc
+		current_id_path = astar_grid.get_id_path(
+		starting_position,
+		move_pick	
+		).slice(1)
+		startMoving = true
+		await finishedMoving # wait for physics to finish moving
 	else:
 		move_pick = starting_position
 	
-	current_id_path = astar_grid.get_id_path(
-	starting_position,
-	move_pick	
-	).slice(1)
 	startMoving = true
 	await finishedMoving # wait for physics to finish moving
 	
