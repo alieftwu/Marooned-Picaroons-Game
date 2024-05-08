@@ -583,6 +583,7 @@ script = ExtResource("11_d3hky")
 npcText = ["HALT! SCOUNDREL!", "You pirates are not allowed here!", "Now! Fight or Die!"]
 killable = true
 fightScene = "CombatShip"
+NPCID = "TTSE1"
 
 [node name="Body" type="Sprite2D" parent="Englishman"]
 texture_filter = 1
@@ -689,6 +690,7 @@ npcText = ["Take it easy on me captain!"]
 killable = true
 teleportPos = Vector2(400, 150)
 fightScene = "CombatShip"
+NPCID = "TTCF1"
 
 [node name="Body" type="Sprite2D" parent="NPC"]
 texture_filter = 1

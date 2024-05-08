@@ -351,6 +351,7 @@ script = ExtResource("8_j56rc")
 npcText = ["Intruders!!"]
 killable = true
 fightScene = "CombatFrontGate"
+NPCID = "FGG1"
 
 [node name="Body" type="Sprite2D" parent="FGGuard1"]
 texture_filter = 1
@@ -359,7 +360,7 @@ texture = ExtResource("9_dmhri")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 8
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="FGGuard1"]
 libraries = {
@@ -449,6 +450,7 @@ script = ExtResource("8_j56rc")
 npcText = ["Intruders!!"]
 killable = true
 fightScene = "CombatFrontGate"
+NPCID = "FGG2"
 
 [node name="Body" type="Sprite2D" parent="FGGuard2"]
 texture_filter = 1
@@ -457,7 +459,7 @@ texture = ExtResource("9_dmhri")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 6
+frame = 8
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="FGGuard2"]
 libraries = {

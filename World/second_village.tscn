@@ -463,6 +463,7 @@ direction = "right"
 npcText = ["I hate pirates!"]
 fightScene = "CombatSecondVillage"
 killable = true
+NPCID = "SVPGO"
 
 [node name="Body" type="Sprite2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
 texture_filter = 1

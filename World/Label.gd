@@ -14,6 +14,7 @@ signal hideHideable
 
 func _ready():
 	if(Global.currentFightNPC == NPC.name and Global.currentFightWon):
+		Global.fightList.append(NPC.NPCID)
 		NPC.hasWon = true
 		Global.currentFightNPC = null
 		Global.currentFightWon = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://duk18h72tn37u"]
+[gd_scene load_steps=48 format=3 uid="uid://duk18h72tn37u"]
 
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_n8x85"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_xbltg"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="11_w1b10"]
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="12_8ijgv"]
 [ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="13_aah6j"]
+[ext_resource type="Script" path="res://Characters/FightNPC.gd" id="14_gbwxk"]
 [ext_resource type="Script" path="res://World/Label.gd" id="14_wm82p"]
 [ext_resource type="Texture2D" uid="uid://ybxtvvg4f4mo" path="res://Combat/Enemies/Enemy Art/Knight.png" id="15_i51pa"]
 
@@ -265,83 +266,6 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="GDScript" id="GDScript_c0vyf"]
-script/source = "extends CharacterBody2D
-
-@onready var around = get_node(\"Area2D\")
-@onready var bubble = get_node(\"TextureRect\")
-@onready var textBox = get_node(\"HUD/TextureRect\")
-@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
-@onready var animation_tree : AnimationTree = $AnimationTree
-#@onready var animations : AnimationPlayer = $PlayerAnimation
-
-@export var direction = \"down\"
-@export var npcText = [\"You dare challenge the King!?!\"]
-@export var hasWon = false
-@export var killable = false
-
-
-signal showTextBox
-signal hideTextBox
-signal haltMove
-signal newFText(title)
-
-var closeEnough = false
-var textDisplayed = false
-
-func _ready():
-	match direction:
-		\"down\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
-			around.rotation = Vector2(1,0).angle()
-		\"up\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
-			around.rotation = Vector2(-1,0).angle()
-		\"left\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
-			around.rotation = Vector2(0,1).angle()
-		\"right\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
-			around.rotation = Vector2(0,-1).angle()
-	bubble.hide()
-	pass
-
-func _process(delta):
-	if hasWon:
-		if killable:
-			hide()
-			get_node(\"CollisionShape2D\").disabled = true
-		around.hide()
-		around.get_node(\"CollisionPolygon2D\").disabled = true
-	else:
-		show()
-		get_node(\"CollisionShape2D\").disabled = false
-		around.show()
-		around.get_node(\"CollisionPolygon2D\").disabled = false
-	match direction:
-		\"down\":
-			around.rotation = Vector2(1,0).angle()
-		\"up\":
-			around.rotation = Vector2(-1,0).angle()
-		\"left\":
-			around.rotation = Vector2(0,1).angle()
-		\"right\":
-			around.rotation = Vector2(0,-1).angle()
-	pass
-
-func _on_area_2d_body_entered(body):
-	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
-		closeEnough = true
-		haltMove.emit()
-		newFText.emit(self.name)
-		showTextBox.emit()
-
-func _on_area_2d_body_exited(body):
-	emit_signal(\"hideTextBox\")
-	closeEnough = false
-
-"
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5u53"]
 radius = 6.0
 height = 12.0
@@ -349,160 +273,6 @@ height = 12.0
 [sub_resource type="LabelSettings" id="LabelSettings_hcsuw"]
 font = ExtResource("13_aah6j")
 font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="GDScript" id="GDScript_onxs4"]
-script/source = "extends CharacterBody2D
-
-@onready var around = get_node(\"Area2D\")
-@onready var bubble = get_node(\"TextureRect\")
-@onready var textBox = get_node(\"HUD/TextureRect\")
-@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
-#@onready var animation_tree : AnimationTree = $AnimationTree
-#@onready var animations : AnimationPlayer = $PlayerAnimation
-
-@export var direction = \"down\"
-@export var npcText = [\"Now lets fight!\"]
-@export var hasWon = false
-@export var killable = false
-
-
-signal showTextBox
-signal hideTextBox
-signal haltMove
-signal newFText(title)
-
-var closeEnough = false
-var textDisplayed = false
-
-func _ready():
-	match direction:
-		\"down\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
-			around.rotation = Vector2(1,0).angle()
-		\"up\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
-			around.rotation = Vector2(-1,0).angle()
-		\"left\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
-			around.rotation = Vector2(0,1).angle()
-		\"right\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
-			around.rotation = Vector2(0,-1).angle()
-	bubble.hide()
-	pass
-
-func _process(delta):
-	if hasWon:
-		if killable:
-			hide()
-			get_node(\"CollisionShape2D\").disabled = true
-		around.hide()
-		around.get_node(\"CollisionPolygon2D\").disabled = true
-	else:
-		show()
-		get_node(\"CollisionShape2D\").disabled = false
-		around.show()
-		around.get_node(\"CollisionPolygon2D\").disabled = false
-	match direction:
-		\"down\":
-			around.rotation = Vector2(1,0).angle()
-		\"up\":
-			around.rotation = Vector2(-1,0).angle()
-		\"left\":
-			around.rotation = Vector2(0,1).angle()
-		\"right\":
-			around.rotation = Vector2(0,-1).angle()
-	pass
-
-func _on_area_2d_body_entered(body):
-	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
-		closeEnough = true
-		haltMove.emit()
-		newFText.emit(self.name)
-		showTextBox.emit()
-
-func _on_area_2d_body_exited(body):
-	emit_signal(\"hideTextBox\")
-	closeEnough = false
-
-"
-
-[sub_resource type="GDScript" id="GDScript_lxxnb"]
-script/source = "extends CharacterBody2D
-
-@onready var around = get_node(\"Area2D\")
-@onready var bubble = get_node(\"TextureRect\")
-@onready var textBox = get_node(\"HUD/TextureRect\")
-@onready var textBoxText = get_node(\"HUD/TextureRect/Label\")
-#@onready var animation_tree : AnimationTree = $AnimationTree
-#@onready var animations : AnimationPlayer = $PlayerAnimation
-
-@export var direction = \"down\"
-@export var npcText = [\"Now lets fight!\"]
-@export var hasWon = false
-@export var killable = false
-
-
-signal showTextBox
-signal hideTextBox
-signal haltMove
-signal newFText(title)
-
-var closeEnough = false
-var textDisplayed = false
-
-func _ready():
-	match direction:
-		\"down\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,1)
-			around.rotation = Vector2(1,0).angle()
-		\"up\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(0,-1)
-			around.rotation = Vector2(-1,0).angle()
-		\"left\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(-1,0)
-			around.rotation = Vector2(0,1).angle()
-		\"right\":
-			#animation_tree[\"parameters/Idle/blend_position\"] = Vector2(1,0)
-			around.rotation = Vector2(0,-1).angle()
-	bubble.hide()
-	pass
-
-func _process(delta):
-	if hasWon:
-		if killable:
-			hide()
-			get_node(\"CollisionShape2D\").disabled = true
-		around.hide()
-		around.get_node(\"CollisionPolygon2D\").disabled = true
-	else:
-		show()
-		get_node(\"CollisionShape2D\").disabled = false
-		around.show()
-		around.get_node(\"CollisionPolygon2D\").disabled = false
-	match direction:
-		\"down\":
-			around.rotation = Vector2(1,0).angle()
-		\"up\":
-			around.rotation = Vector2(-1,0).angle()
-		\"left\":
-			around.rotation = Vector2(0,1).angle()
-		\"right\":
-			around.rotation = Vector2(0,-1).angle()
-	pass
-
-func _on_area_2d_body_entered(body):
-	if body != get_tree().current_scene.get_node(\"TileMap\") and body != self:
-		closeEnough = true
-		haltMove.emit()
-		newFText.emit(self.name)
-		showTextBox.emit()
-
-func _on_area_2d_body_exited(body):
-	emit_signal(\"hideTextBox\")
-	closeEnough = false
-
-"
 
 [node name="king_castle_battle" type="Node2D"]
 y_sort_enabled = true
@@ -574,6 +344,7 @@ direction = "right"
 npcText = ["For the King!"]
 fightScene = "CombatCastle2"
 killable = true
+NPCID = "KCBPG1"
 
 [node name="Body" type="Sprite2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
 texture_filter = 1
@@ -582,7 +353,7 @@ texture = ExtResource("8_bifwd")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 9
+frame = 10
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D2/PathFollow2D/PatrollingGuard"]
 libraries = {
@@ -688,6 +459,7 @@ direction = "right"
 npcText = ["Get away pirate!"]
 fightScene = "CombatCastle2"
 killable = true
+NPCID = "KCBPG2"
 
 [node name="Body" type="Sprite2D" parent="Path2D3/PathFollow2D/PatrollingGuard"]
 texture_filter = 1
@@ -696,7 +468,7 @@ texture = ExtResource("8_bifwd")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 9
+frame = 10
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D3/PathFollow2D/PatrollingGuard"]
 libraries = {
@@ -802,6 +574,7 @@ direction = "right"
 npcText = ["What are you doing over here?"]
 fightScene = "CombatCastle2"
 killable = true
+NPCID = "KCBPG3"
 
 [node name="Body" type="Sprite2D" parent="Path2D4/PathFollow2D/PatrollingGuard"]
 texture_filter = 1
@@ -810,7 +583,7 @@ texture = ExtResource("8_bifwd")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 9
+frame = 10
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D4/PathFollow2D/PatrollingGuard"]
 libraries = {
@@ -916,6 +689,7 @@ direction = "right"
 npcText = ["I guard the King"]
 fightScene = "CombatCastle2"
 killable = true
+NPCID = "KCBPG4"
 
 [node name="Body" type="Sprite2D" parent="Path2D/PathFollow2D/PatrollingGuard"]
 texture_filter = 1
@@ -924,7 +698,7 @@ texture = ExtResource("8_bifwd")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 9
+frame = 10
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Path2D/PathFollow2D/PatrollingGuard"]
 libraries = {
@@ -1010,9 +784,9 @@ script = ExtResource("14_wm82p")
 position = Vector2(536, 468)
 collision_layer = 9
 motion_mode = 1
-script = SubResource("GDScript_c0vyf")
-npcText = ["You DARE Challenge me?", "Lord Protector of England?", "Now DIE you pettty fools!"]
-killable = true
+script = ExtResource("14_gbwxk")
+fightScene = "CombatCastle2"
+NPCID = "KCBOC"
 
 [node name="Body" type="Sprite2D" parent="Cromwell"]
 texture_filter = 1
@@ -1089,9 +863,9 @@ combat_scene = "CombatCastleHall"
 position = Vector2(197, 561)
 collision_layer = 9
 motion_mode = 1
-script = SubResource("GDScript_onxs4")
-npcText = ["You shall not pass!"]
-killable = true
+script = ExtResource("14_gbwxk")
+fightScene = "CombatCastle2"
+NPCID = "KCBG1"
 
 [node name="Body" type="Sprite2D" parent="Guard"]
 texture_filter = 1
@@ -1168,10 +942,10 @@ combat_scene = "CombatCastle2"
 position = Vector2(65, 617)
 collision_layer = 9
 motion_mode = 1
-script = SubResource("GDScript_lxxnb")
+script = ExtResource("14_gbwxk")
 direction = "up"
-npcText = ["All hail the King!"]
-killable = true
+fightScene = "CombatCastle2"
+NPCID = "KCBG2"
 
 [node name="Body" type="Sprite2D" parent="Guard2"]
 texture_filter = 1

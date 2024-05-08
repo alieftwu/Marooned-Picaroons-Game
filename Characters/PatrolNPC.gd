@@ -11,6 +11,7 @@ extends CharacterBody2D
 @export var fightScene : String
 @export var hasWon = false
 @export var killable = false
+@export var NPCID : String
 
 
 signal showTextBox
@@ -41,6 +42,9 @@ func _ready():
 	pass
 
 func _process(delta):
+	for x in Global.fightList:
+		if x == NPCID:
+			hasWon = true
 	if hasWon:
 		if killable:
 			hide()

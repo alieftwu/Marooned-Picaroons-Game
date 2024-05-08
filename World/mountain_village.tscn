@@ -3,11 +3,11 @@
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_mpgjl"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_ql2ok"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_4oavv"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="4_oojuv"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_oojuv"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_oavo7"]
 [ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_gj1sq"]
-[ext_resource type="PackedScene" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
+[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
 [ext_resource type="Script" path="res://Characters/FightNPC.gd" id="9_oe5nn"]
 [ext_resource type="AudioStream" uid="uid://r646tid5uxdr" path="res://Audio/Wind/wind_whistle.ogg" id="10_801q5"]
 [ext_resource type="Texture2D" uid="uid://078w03oe1knm" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Blue Enemy Sprite.png" id="10_auwmj"]
@@ -376,6 +376,7 @@ script = ExtResource("9_oe5nn")
 npcText = ["Haha! A snowman!"]
 killable = true
 fightScene = "CombatMountainVillage"
+NPCID = "Snowman"
 
 [node name="Body" type="Sprite2D" parent="Snowman"]
 texture_filter = 1
@@ -384,7 +385,7 @@ texture = ExtResource("10_auwmj")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 8
+frame = 7
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Snowman"]
 libraries = {

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_3va5a"]
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_tk14g"]
 [ext_resource type="PackedScene" uid="uid://dhblglut2rviu" path="res://World/scene_trigger.tscn" id="3_gsj4q"]
-[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/Player.tscn" id="4_0rf22"]
+[ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_0rf22"]
 [ext_resource type="Script" path="res://World/follow_cam.gd" id="5_e70uf"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_tnmug"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="7_wub1e"]
@@ -344,6 +344,7 @@ motion_mode = 1
 script = ExtResource("8_kabi6")
 killable = true
 fightScene = "CombatPassage"
+NPCID = "MPG1"
 
 [node name="Body" type="Sprite2D" parent="Guard 1"]
 texture_filter = 1
@@ -352,7 +353,7 @@ texture = ExtResource("9_57bax")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 6
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Guard 1"]
 libraries = {
@@ -444,6 +445,7 @@ direction = "up"
 npcText = ["Give me that cool sword!"]
 killable = true
 fightScene = "CombatPassage"
+NPCID = "MPG2"
 
 [node name="Body" type="Sprite2D" parent="Guard 2"]
 texture_filter = 1
@@ -452,7 +454,7 @@ texture = ExtResource("9_57bax")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 6
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Guard 2"]
 libraries = {
@@ -544,6 +546,7 @@ script = ExtResource("8_kabi6")
 direction = ""
 killable = true
 fightScene = "CombatPassage"
+NPCID = "MPG3"
 
 [node name="Body" type="Sprite2D" parent="Guard 3"]
 texture_filter = 1
@@ -552,7 +555,7 @@ texture = ExtResource("9_57bax")
 offset = Vector2(0, -14.9)
 hframes = 3
 vframes = 8
-frame = 7
+frame = 6
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="Guard 3"]
 libraries = {

@@ -14,6 +14,7 @@ extends CharacterBody2D
 @export var killable = false
 @export var teleportPos : Vector2
 @export var fightScene : String
+@export var NPCID : String
 
 signal showTextBox
 signal hideTextBox
@@ -28,21 +29,24 @@ func _ready():
 	textBoxText.combat_scene = fightScene
 	match direction:
 		"down":
-			animation_tree["parameters/Idle/blend_position"] = Vector2(0,1)
+			#animation_tree["parameters/Idle/blend_position"] = Vector2(0,1)
 			around.rotation = Vector2(1,0).angle()
 		"up":
-			animation_tree["parameters/Idle/blend_position"] = Vector2(0,-1)
+			#animation_tree["parameters/Idle/blend_position"] = Vector2(0,-1)
 			around.rotation = Vector2(-1,0).angle()
 		"left":
-			animation_tree["parameters/Idle/blend_position"] = Vector2(-1,0)
+			#animation_tree["parameters/Idle/blend_position"] = Vector2(-1,0)
 			around.rotation = Vector2(0,1).angle()
 		"right":
-			animation_tree["parameters/Idle/blend_position"] = Vector2(1,0)
+			#animation_tree["parameters/Idle/blend_position"] = Vector2(1,0)
 			around.rotation = Vector2(0,-1).angle()
 	bubble.hide()
 	pass
 
 func _process(delta):
+	for x in Global.fightList:
+		if x == NPCID:
+			hasWon = true
 	if hasWon:
 		if killable:
 			hide()

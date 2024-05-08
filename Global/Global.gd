@@ -8,6 +8,7 @@ var currentFightNPC = null
 var currentFightWon = false
 var fightsWon = 0
 var statsMultiplier = 1.0
+var fightList = []
 
 var currentQuest = null
 var currentQuestDone = false
