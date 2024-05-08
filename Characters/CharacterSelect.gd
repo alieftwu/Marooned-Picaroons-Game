@@ -5,29 +5,28 @@ func _process(delta):
 	match Global.PlayerSelect:
 		0:
 			get_node("PlayerSelect").play("Player0")
-			get_node("Desc").text = "-Can throw bomb and deal high damage of the enemy\n and any target near the enemy\n-Deals high damage when using ranged attacks  "
+			get_node("Desc").text = "-Bomb Throw\n-Dagger Toss\n-Quick Strike\n-Dodges 20% of attacks."
 		1:
 			get_node("PlayerSelect").play("Player1")
-			get_node("Desc").text = "-Can resist ranged attacks\n-Deals extra damage when using melee weapon"
+			get_node("Desc").text = "-Heavy Swing\n-Circle Slash\n-Reckless Frenzy\n-Deals 25% extra melee damage."
 		2:
 			get_node("PlayerSelect").play("Player2")
-			get_node("Desc").text = "-Gets an extra turn when using melee\n-Deals extra damage when doing ranged attacks"
+			get_node("Desc").text = "-Pistol Shot\n-Rapid Fire\n-Pirate Blessing\n-Deals 30% extra ranged damage."
 		3:
 			get_node("PlayerSelect").play("Player3")
-			get_node("Desc").text = "-Place Special Ability Here \n-Place Special Ability Here"
+			get_node("Desc").text = "-Cannon Shot\n-Risky Block\n-Desparate Strike \n-Takes 30% less damage from melee attacks."
 		4:
 			get_node("PlayerSelect").play("Player4")
-			get_node("Desc").text = "-Place Different Special Ability Here \n-Place Different Special Ability Here"
+			get_node("Desc").text = "-Take Down\n-Pistol Shot\n-Heavy Swing\n-Dodges 20% of attacks."
 		5:
 			get_node("PlayerSelect").play("Player5")
-			get_node("Desc").text = "-Place Another Special Ability Here \n-Place Another Special Ability Here"
+			get_node("Desc").text = "-PirateBlessing\n-Dagger Toss\n-Risky Block \n-Takes 35% less damage from ranged attacks."
 func _on_left_pressed():
 	if Global.PlayerSelect >= 0:
 		Global.PlayerSelect -= 1
 
-
 func _on_right_pressed():
-	if Global.PlayerSelect < 6:
+	if Global.PlayerSelect < 5:
 		Global.PlayerSelect += 1
 
 func _on_select_pressed():

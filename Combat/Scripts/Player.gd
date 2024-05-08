@@ -4,14 +4,25 @@ extends Node2D
 @onready var highlightmap = $"../../BattleMap/HighlightMap"
 @onready var abilityControl = $"../../BattleMap/AbilityControl"
 @onready var healthBar = $HealthBar
+@onready var statusEffect = $StatusEffect
 var stats = load("res://Combat/Resources/playertest.tres")
 var speed : int
 var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = "Brawler"
-var abilityList : Array = ["cannonShot", "pistolShot", "engagingBlock"] # buttons 2-4 abilities. can switch out 
+var passiveAbility = {
+	0: "evasive",
+	1: "Bomber",
+	2: "Sniper"
+}
+#buttons 2-4 abilities. can switch out
+var abilityList = {
+	0: ["pirateBlessing", "circleSlash", "quickStrike"], #white companion2
+	1: ["bombThrow" , "circleSlash", "takeDown"], #red companion2
+	2: ["heavySwordSwing" , "rapidFire", "desparateStrike"], #yellow companion2
+} 
+
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -29,26 +40,29 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = stats.Speed
-	health = stats.Health
+	speed = 3
+	health = 100 * Global.statsMultiplier
 	print("Start Health: ", health)
-	maxHealth = stats.MaxHealth
-	armor = stats.Armor
-	basicAttackDamage = stats.BasicAttackDamage
-
+	maxHealth = 100 * Global.statsMultiplier
+	armor = 2 * Global.statsMultiplier
+	basicAttackDamage = 15 * Global.statsMultiplier
+	setAbilities(Global.second_companion)
+	setPassives(Global.second_companion)
 func play_turn():
 	updateHealthBar()
+	abilityControl.checkBlocking(self)
+	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
+	if isStunned == true:
+		updateStatusEffect()
 	if skipTurn == false:
-		abilityControl.checkFlags(self)
-		battlemap.setAttackIconsDull() # make buttons dull
-		print("pMove")
+		await battlemap.updateButtons(self)
+		await abilityControl.checkFlags(self)
+		await battlemap.setAttackIconsDull() # make buttons dull
 		await battlemap.movePerson(self)
-		print("pBetweenMoveAtack")
-		battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
+		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		canPress = true
 		await battlemap.abilityFinished
-		print("pAttackAfter")
 		if bonusMove == true:
 			bonusMove = false
 			await battlemap.movePerson(self)
@@ -71,3 +85,27 @@ func updateCooldowns():
 	if special3CoolDown >= 1:
 		special3CoolDown -= 1
 	return
+
+func updateStatusEffect():
+	var effect
+	if isStunned == true:
+		effect = load("res://Combat/Resources/stunned.png")
+		statusEffect.texture = effect
+	else:
+		statusEffect.texture = null
+
+func setAbilities(spriteIndex):
+	if spriteIndex in abilityList:
+		abilityList = abilityList[spriteIndex]
+	else:
+		#Default abilities
+		print("setting to default ability combination")
+		abilityList = ["rapidFire", "quickStrike", "pirateBlessing"]
+
+func setPassives(spriteIndex):
+	if spriteIndex in passiveAbility:
+		passiveAbility = passiveAbility[spriteIndex]
+	else:
+		#default passive
+		print("setting to default passive: ShotPrediction")
+		passiveAbility = "ShotPrediction"

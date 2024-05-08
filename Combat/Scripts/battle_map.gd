@@ -12,6 +12,14 @@ class_name BattleMap
 @onready var cooldownDisp1 = $Ability2/cooldown
 @onready var cooldownDisp2 = $Ability3/cooldown
 @onready var cooldownDisp3 = $Ability4/cooldown
+@onready var button2 = $Ability2
+@onready var button3 = $Ability3
+@onready var button4 = $Ability4
+@onready var abilityMusic = $abilityMusic
+@onready var damageDisplay = $DamageDisplay
+@onready var abilityInfo = $AbilityInfo
+@onready var abilityInfoLabel = $AbilityInfo/InfoText
+@export var mapType : String
 
 var astar_grid: AStarGrid2D
 var current_id_path: Array[Vector2i]
@@ -77,6 +85,9 @@ var castleSpikes_tile : int = 17
 var castleBossHoles : int = 18
 var stonesCastle_tile : int = 19
 var snowTrunk_tile : int = 20
+var woodPlank_tile : int = 24
+var woodPlankBarrel_tile : int = 25
+var woodPlankCrate_tile : int = 26
 
 signal moveSelected
 signal finishedMoving
@@ -88,14 +99,70 @@ signal abilityFinished
 
 # Called when the node enters the scene tree for the first time.
 func initialize():
+	if mapType == null:
+		print("maptype is null")
+	print(mapType)
+	print("test")
 	randomize()
 	main_camera.make_current()
 	gatherUnitInfo()
-	_generateGrassMap()
+	if (mapType == "City"):
+		{
+			0: _generateCityMap()
+		}
+	if (mapType == "Prison"):
+		{
+			0: _generatePrisonMap()
+		}
+	if (mapType == "Grass"):
+		{
+			0: _generateGrassMap()
+		}
+	if (mapType == "Snow"):
+		{
+			0: _generateSnowMap()
+		}
+	if (mapType == "Sewer"):
+		{
+			0: _generateSewerMap()
+		}
+	if (mapType == "Castle"):
+		{
+			0: _generateCastleMap()
+		}
+	if (mapType == "Ship"):
+		{
+			0: _generateShipMap(),
+		}
+	if (mapType == "CastleTown"):
+		{
+			0: _generateCastleTownMap(),
+		}
+	if (mapType == "FirstVillage"):
+		{
+			0: _generateFirstVillageMap()
+		}
+	if (mapType == "CountyPrison"):
+		{
+			0: _generateCountyPrisonMap()
+		}
+	if (mapType == "FrontGate"):
+		{
+			0: _generateFrontGateMap()
+		}
+	if (mapType == "BossCastle"):
+		{
+			0: _generateBossCastleMap()
+		}
+	if (mapType == "CastleCityInside"):
+		{
+			0: _generateCastleCityInsideMap()
+		}
+	
 	_makeAStarGrid()
 	canMove = false
 	emit_signal("finishedGenerating")
-	$BackgroundMusic.play()
+	
 	return
 	
 func _generateCityMap():
@@ -133,6 +200,269 @@ func _generateCityMap():
 				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
 				
 	var newBackImage = load("res://Combat/Resources/firstVillageBackground2.png")
+	loadBackground(newBackImage)			
+	return
+func _generateBossCastleMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.75:
+					tile_map.set_cell(0, Vector2i(x, y), castleHoles_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), stonesCastle_tile, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), castle_tiles, castleTiles_list.pick_random())
+
+	prisonSpikeSwitch = false			
+	var newBackImage = load("res://Combat/Resources/bossBackground1.png")
+	loadBackground(newBackImage)			
+	return
+func _generateFrontGateMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/Front Gate Background.png")
+	loadBackground(newBackImage)			
+	return
+func _generateCountyPrisonMap(): 
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/CountyPrisonBackground.png")
+	loadBackground(newBackImage)			
+	return
+func _generateFirstVillageMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/firstvillagebackground.png")
+	loadBackground(newBackImage)			
+	return
+func _generateCastleTownMap():
+	
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/castleTownBackground.png")
+	loadBackground(newBackImage)			
+	return
+	
+func _generateCastleCityInsideMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/castleCityBackground.png")
+	loadBackground(newBackImage)			
+	return
+	
+func _generateShipMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankCrate_tile, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), woodPlankBarrel_tile, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), woodPlank_tile, Vector2i(0,0))
+				
+	var newBackImage = load("res://Combat/Resources/shipBackground.png")
 	loadBackground(newBackImage)			
 	return
 	
@@ -539,8 +869,16 @@ func simpleAttack(player):
 				abilityControl.checkBlocking(unit)
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
-				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				damage = snappedf(damage, 0.01)
+				if damage < 0:
+					damage = 0
+				unit.health -= damage
 				unit.updateHealthBar()
+				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+				abilityMusic.stream = testMusic
+				abilityMusic.play()
+				await updateDamageDisplay(unit, damage)
 				print("hit enemy!")
 				break
 
@@ -558,8 +896,16 @@ func simpleAttack(player):
 				abilityControl.checkBlocking(unit)
 				var attackModifier = abilityControl.checkPassiveAttack(player, 0, "Melee")
 				var defendModifier = abilityControl.checkPassiveDefend(unit, 0, "Melee")
-				unit.health -= (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				var damage = (currentPlayer.basicAttackDamage * attackModifier * defendModifier) - unit.armor
+				damage = snappedf(damage, 0.01)
+				if damage < 0:
+					damage = 0
+				unit.health -= damage
 				unit.updateHealthBar()
+				var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+				abilityMusic.stream = testMusic
+				abilityMusic.play()
+				await updateDamageDisplay(unit, damage)
 				print("hit enemy!")
 				break
 		
@@ -578,28 +924,34 @@ func moveEnemyPerson(enemy): # move enemy randomly
 	var validMove = false
 	var attemptCounter = 0 #if we don't find a good random move in this many tries we just dont move
 	var random_movePick
-	while (validMove == false) and (attemptCounter <= 10):
-		validMove = true
-		attemptCounter += 1
-		random_movePick = allowedSpaces.pick_random()
-		
-		var global_tile_pos = tile_map.map_to_local(random_movePick)
-		for unit in Units:
-			if unit.global_position == global_tile_pos:
-				validMove = false
-				break
+	#print("Moves: ", allowedSpaces)
+	if allowedSpaces.is_empty() == false:
+		if len(allowedSpaces) != 1:
+			while (validMove == false) and (attemptCounter <= 10):
+				validMove = true
+				attemptCounter += 1
+				random_movePick = allowedSpaces.pick_random()
 				
-	if attemptCounter <= 10:		
-		current_id_path = astar_grid.get_id_path(
-		starting_position,
-		random_movePick	
-		).slice(1)
-		startMoving = true
-		print("await2")
-		await finishedMoving # wait for physics to finish moving
-		
+				var global_tile_pos = tile_map.map_to_local(random_movePick)
+				for unit in Units:
+					if unit.global_position == global_tile_pos:
+						validMove = false
+						break
+						
+			if attemptCounter <= 10:		
+				current_id_path = astar_grid.get_id_path(
+				starting_position,
+				random_movePick	
+				).slice(1)
+				startMoving = true
+				await finishedMoving # wait for physics to finish moving
+				
+			else:
+				print("chose to not move")
+				emit_signal("finishedMoving")
+		else:
+			emit_signal("finishedMoving")
 	else:
-		print("chose to not move")
 		emit_signal("finishedMoving")
 	
 	startMoving = false
@@ -615,40 +967,45 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 	var starting_position = tile_map.local_to_map(enemy_position)
 	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
 	var validMove = false
-	
 	var smallestDistance = 999999
-	var move_pick
+	var move_pick = Vector2(0,0)
+	#print("agressMoves: ", allowedSpaces)
 	if allowedSpaces.is_empty() == false:
-		for move in allowedSpaces:
-			for playerUnit in friendlyUnits:
-				var player_pos = tile_map.local_to_map(playerUnit.global_position)
-				var distanceCalc = move.distance_to(player_pos)
-				if distanceCalc < smallestDistance:
-					validMove = true
-					var global_move_pick = tile_map.map_to_local(move)
-					for unit in Units:
-						if unit.global_position == global_move_pick:
-							validMove = false
-							break
-					if validMove == true:
-						move_pick = move
-						smallestDistance = distanceCalc
+		if len(allowedSpaces) != 1:
+			for move in allowedSpaces:
+				for playerUnit in friendlyUnits:
+					var player_pos = tile_map.local_to_map(playerUnit.global_position)
+					var distanceCalc = move.distance_to(player_pos)
+					if distanceCalc < smallestDistance:
+						validMove = true
+						var global_move_pick = tile_map.map_to_local(move)
+						for unit in Units:
+							if unit.global_position == global_move_pick:
+								validMove = false
+								break
+						if validMove == true:
+							move_pick = move
+							smallestDistance = distanceCalc
+			current_id_path = astar_grid.get_id_path(
+			starting_position,
+			move_pick	
+			).slice(1)
+			startMoving = true
+			#print("awaitAgMove")
+			await finishedMoving # wait for physics to finish moving
+			#print("finishedAgMove")
+		else:
+			move_pick = starting_position
+			emit_signal("finishedMoving")
 	else:
 		move_pick = starting_position
+		emit_signal("finishedMoving")
 	
-	current_id_path = astar_grid.get_id_path(
-	starting_position,
-	move_pick	
-	).slice(1)
-	startMoving = true
-	#print("awaitAgMove")
-	await finishedMoving # wait for physics to finish moving
-	#print("finishedAgMove")
 	startMoving = false
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
-		
+	
 func cowardEnemyMove(enemy): # move enemy away from nearest player
 	currentEnemy = enemy
 	var enemy_position = currentEnemy.global_position
@@ -669,29 +1026,34 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 	
 	var largestDistance = -999999
 	var move_pick
+	#print("ScaredMovses: ", allowedSpaces)
 	if allowedSpaces.is_empty() == false:
-		for move in allowedSpaces: # find move that takes you farthest from closest player
-			var player_pos = tile_map.local_to_map(closestPlayer.global_position)
-			var distanceCalc = move.distance_to(player_pos)
-			if distanceCalc > largestDistance:
-				validMove = true
-				var global_move_pick = tile_map.map_to_local(move)
-				for unit in Units:
-					if unit.global_position == global_move_pick:
-						validMove = false
-						break
-				if validMove == true:
-					move_pick = move
-					largestDistance = distanceCalc
+		if len(allowedSpaces) != 1:
+			for move in allowedSpaces: # find move that takes you farthest from closest player
+				var player_pos = tile_map.local_to_map(closestPlayer.global_position)
+				var distanceCalc = move.distance_to(player_pos)
+				if distanceCalc > largestDistance:
+					validMove = true
+					var global_move_pick = tile_map.map_to_local(move)
+					for unit in Units:
+						if unit.global_position == global_move_pick:
+							validMove = false
+							break
+					if validMove == true:
+						move_pick = move
+						largestDistance = distanceCalc
+			current_id_path = astar_grid.get_id_path(
+			starting_position,
+			move_pick	
+			).slice(1)
+			startMoving = true
+			await finishedMoving # wait for physics to finish moving
+		else:
+			move_pick = starting_position
+			emit_signal("finishedMoving")
 	else:
 		move_pick = starting_position
-	
-	current_id_path = astar_grid.get_id_path(
-	starting_position,
-	move_pick	
-	).slice(1)
-	startMoving = true
-	await finishedMoving # wait for physics to finish moving
+		emit_signal("finishedMoving")
 	
 	startMoving = false
 	update_AStarGrid()
@@ -728,8 +1090,16 @@ func simpleEnemyAttack(enemy):
 		abilityControl.checkBlocking(attacked_unit)
 		var attackModifier = abilityControl.checkPassiveAttack(enemy, 0, "Melee")
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
-		attacked_unit.health -= (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		var damage = (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
+		damage = snappedf(damage, 0.01)
+		if damage < 0:
+			damage = 0
+		attacked_unit.health -= damage
 		attacked_unit.updateHealthBar()
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
+		await updateDamageDisplay(attacked_unit, damage)
 		print("player hit!")
 	else:
 		print("no player found")
@@ -749,8 +1119,13 @@ func checkHazardTile(unit):
 	var player_position : Vector2i = tile_map.local_to_map(unit.global_position)
 	var tile_data = tile_map.get_cell_tile_data(0, player_position)
 	if (tile_data.get_custom_data("hazard") == true):
-		unit.health -= 10
+		unit.health -= 15
+		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
+		abilityMusic.stream = testMusic
+		abilityMusic.play()
 		unit.updateHealthBar()
+		updateDamageDisplay(unit, 15)
+		
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
 			await get_tree().create_timer(1).timeout # wait for 3 secodns
@@ -765,36 +1140,22 @@ func loadBackground(newTexture):
 	background.texture = newTexture
 	return
 
-func spawnUnits(playerUnitsList, enemyUnitsList):
-	var x_cord = 8
-	var y_cord = 56
-	for unit in playerUnitsList:
-		unit.health = unit.maxHealth
-		unit.updateHealthBar()
-		unit.global_position = Vector2i(x_cord,y_cord)
-		y_cord += 16
-	var y_cord_list = [Vector2i(136, 8), Vector2i(136, 24), Vector2i(136, 40), Vector2i(136, 56),
-	Vector2i(136, 72), Vector2i(136, 88), Vector2i(136, 104), Vector2i(136, 120), Vector2i(136, 136)] 
-	for unit in enemyUnitsList:
-		unit.health = unit.maxHealth
-		unit.updateHealthBar()
-		var spawnChoice = y_cord_list.pick_random()
-		y_cord_list.erase(spawnChoice)
-		unit.global_position = spawnChoice
-	return
-
 func enemyRandomAbility(enemy):
 	var abilityList : Array = []
 	if enemy.special1CoolDown == 0:
-		abilityList.append([1, enemy.abilityList[0]])
+		if enemy.abilityList[0] != null:
+			abilityList.append([1, enemy.abilityList[0]])
 	if enemy.special2CoolDown == 0:
-		abilityList.append([2, enemy.abilityList[1]])
+		if enemy.abilityList[1] != null:
+			abilityList.append([2, enemy.abilityList[1]])
 	if enemy.special3CoolDown == 0:
-		abilityList.append([3, enemy.abilityList[2]])
+		if enemy.abilityList[2] != null:
+			abilityList.append([3, enemy.abilityList[2]])
+	print("EnemyMoves: ", abilityList)
 	if abilityList.is_empty() == true:
 		_on_ability_1_pressed()
 	else:
-		if randf() < 0.2:
+		if randf() < 0.35:
 			_on_ability_1_pressed()
 		else:
 			enemy.canPress = false
@@ -809,7 +1170,7 @@ func _on_ability_1_pressed(): # basic attack Option
 	var currentUnit = turn_queue.get_active_character()
 	if currentUnit.canPress == true:
 		currentUnit.canPress = false
-		print("button 1 pressed!")
+		#print("button 1 pressed!")
 		var isPlayer = abilityControl.checkTeam(currentUnit)
 		if isPlayer:
 			await simpleAttack(currentUnit)
@@ -824,7 +1185,7 @@ func _on_ability_2_pressed(): # special ability 1, gotten from unit data
 		if currentUnit.canPress == true:
 			currentUnit.canPress = false
 			var cooldown : int = 0
-			print("button 2 pressed!")
+			#print("button 2 pressed!")
 			var unitAbility = currentUnit.abilityList[0]
 			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
 			await increaseCooldown(currentUnit, cooldown, 1)
@@ -839,7 +1200,7 @@ func _on_ability_3_pressed(): # special ability 2, gotten from unit data
 		if currentUnit.canPress == true:
 			currentUnit.canPress = false
 			var cooldown : int = 0
-			print("button 3 pressed!")
+			#print("button 3 pressed!")
 			var unitAbility = currentUnit.abilityList[1]
 			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
 			await increaseCooldown(currentUnit, cooldown, 2)
@@ -854,7 +1215,7 @@ func _on_ability_4_pressed(): # special ability 3, gotten from unit data
 		if currentUnit.canPress == true:
 			currentUnit.canPress = false
 			var cooldown : int = 0
-			print("button 4 pressed!")
+			#print("button 4 pressed!")
 			var unitAbility = currentUnit.abilityList[2]
 			cooldown = await abilityControl.checkMoveSlot(currentUnit, unitAbility) # execute ability
 			await increaseCooldown(currentUnit, cooldown, 3)
@@ -879,16 +1240,18 @@ func checkCooldownIcons(unit):
 	else:
 		cooldownDisp1.visible = true
 		cooldownDisp1.text = " " + str(unit.special1CoolDown)
+	print(unit.special1CoolDown)
 	if unit.special2CoolDown == 0:
 		cooldownDisp2.visible = false
 	else:
 		cooldownDisp2.visible = true
-		cooldownDisp1.text = " " + str(unit.special2CoolDown)
+		cooldownDisp2.text = " " + str(unit.special2CoolDown)
+	print(unit.special1CoolDown)
 	if unit.special3CoolDown == 0:
 		cooldownDisp3.visible = false
 	else:
 		cooldownDisp3.visible = true
-		cooldownDisp1.text = " " + str(unit.special3CoolDown)
+		cooldownDisp3.text = " " + str(unit.special3CoolDown)
 	return
 
 func setAttackIconsDull(): # make attacks dull
@@ -906,3 +1269,235 @@ func checkStun(unit): # see if unit needs to skip turn
 	if unit.isStunned == true:
 		skipTurn = true
 		return skipTurn
+
+func updateDamageDisplay(player, damage):
+	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
+	damageDisplay.visible = true
+	damageDisplay.text = ("-" + str(damage) + " damage")
+	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	damageDisplay.visible = false
+	return
+
+func updateDamageDisplayHeal(player, health):
+	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
+	damageDisplay.visible = true
+	damageDisplay.text = ("+" + str(health) + " health")
+	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	damageDisplay.visible = false
+	return
+	
+func updateButtons(player): # update icons to match abilities
+	var button2Label = player.abilityList[0]
+	var button3Label = player.abilityList[1]
+	var button4Label = player.abilityList[2]
+	var buttonLoad
+	if button2Label == "pistolShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "heavySwordSwing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/43.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "recklessFrenzy":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/41.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "takeDown":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/49.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "pirateBlessing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/15.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "axeToss": # make daggerToss
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/48.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "quickStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/4.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "circleSlash":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/32.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "desparateStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/46.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "rapidFire":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/50.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "cannonShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/7.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "engagingBlock":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/31.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "bombThrow":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button2.texture_normal = buttonLoad
+	elif button2Label == "damageWave":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/22.png")
+		button2.texture_normal = buttonLoad
+	if button3Label == "pistolShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "heavySwordSwing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/43.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "recklessFrenzy":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/41.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "takeDown":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/49.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "pirateBlessing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/15.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "axeToss": # make daggerToss
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/48.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "quickStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/4.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "circleSlash":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/32.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "desparateStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/46.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "rapidFire":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/50.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "cannonShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/7.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "engagingBlock":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/31.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "bombThrow":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button3.texture_normal = buttonLoad
+	elif button3Label == "damageWave":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/22.png")
+		button3.texture_normal = buttonLoad
+	if button4Label == "pistolShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/23.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "heavySwordSwing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/43.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "recklessFrenzy":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/41.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "takeDown":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/49.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "pirateBlessing":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/15.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "axeToss": # make daggerToss
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/48.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "quickStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/4.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "circleSlash":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/32.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "desparateStrike":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/46.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "rapidFire":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/50.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "cannonShot":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/7.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "engagingBlock":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/31.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "bombThrow":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/19.png")
+		button4.texture_normal = buttonLoad
+	elif button4Label == "damageWave":
+		buttonLoad = load("res://Combat/Resources/SkillIcons/PNG/22.png")
+		button4.texture_normal = buttonLoad
+	return
+
+func updateAbilityInfo(player, ability):
+	abilityInfo.visible = true
+	abilityInfoLabel.text = getAbilityText(ability)
+	return
+
+func getAbilityText(ability):
+	var text = "error"
+	if ability == "Basic":
+		text = "Attack a target around you for basic damage."
+	elif ability == "pistolShot":
+		text = "Shoot an enemy 4 or less tiles away."
+	elif ability == "heavySwordSwing":
+		text = "Attack a target next to you for 200% damage"
+	elif ability == "recklessFrenzy":
+		text = "Increase speed and attack of you and nearby friends at the cost of health for 2 turns."
+	elif ability == "takeDown":
+		text = "Must have an ally next to you, damage and stun nearby opponent for 2 turns. Ignores armor."
+	elif ability == "pirateBlessing":
+		text = "Partially heal any friend on the map."
+	elif ability == "axeToss": # make daggerToss
+		text = "Toss a dagger for 175% damage that can go over obstacles, must be 2-3 spaces away from you."
+	elif ability == "quickStrike":
+		text = "Attack a target around you for 120% damage, then move again."
+	elif ability == "circleSlash":
+		text = "Attack all targets around you for 130% basic damage."
+	elif ability == "desparateStrike":
+		text = "Attack a target around you, dealing 125% damage normally and 300% damage if you have less than 20 health."
+	elif ability == "rapidFire":
+		text = "Attack up to 2 targets 3 or less tiles away for 75% damage."
+	elif ability == "cannonShot":
+		text = "Attack a target in a line for 400% damage, and you are stunned for 2-3 turns. Ignores armor."
+	elif ability == "engagingBlock":
+		text = "Block ALL enemy damage for 1 turn, if you are not attacked before you next turn, get stunned for 2 turns."
+	elif ability == "bombThrow":
+		text = "Throw a bomb in a line up to 3 tiles away from you, hitting the target and all nearby units for 200% damage."
+	elif ability == "damageWave":
+		text = "Deal random damage to ALL enemies"
+	return text
+
+func _on_ability_1_mouse_entered(): # when mouse enters button 1
+	var ability = "Basic"
+	var currentPlayer = turn_queue.get_active_character()
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_1_mouse_exited(): # clear Infotext
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return
+
+func _on_ability_2_mouse_entered():
+	var currentPlayer = turn_queue.get_active_character()
+	var ability = currentPlayer.abilityList[0]
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_2_mouse_exited():
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return
+
+func _on_ability_3_mouse_entered():
+	var currentPlayer = turn_queue.get_active_character()
+	var ability = currentPlayer.abilityList[1]
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_3_mouse_exited():
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return
+
+func _on_ability_4_mouse_entered():
+	var currentPlayer = turn_queue.get_active_character()
+	var ability = currentPlayer.abilityList[2]
+	updateAbilityInfo(currentPlayer, ability)
+	return
+
+func _on_ability_4_mouse_exited():
+	abilityInfoLabel.text = ""
+	abilityInfo.visible = false
+	return

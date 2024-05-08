@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cwpfckf0fl30q"]
+[gd_scene load_steps=69 format=3 uid="uid://cwpfckf0fl30q"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/battle_map.gd" id="1_nbqfk"]
 [ext_resource type="Texture2D" uid="uid://clb8fd6s2bhnx" path="res://Tilesets/crateonStone.png" id="2_3sjpn"]
@@ -26,14 +26,18 @@
 [ext_resource type="Texture2D" uid="uid://bmt2er00rlyn2" path="res://Combat/Resources/truck.png" id="15_1s4q5"]
 [ext_resource type="Texture2D" uid="uid://c4lhqm6rsjun3" path="res://Art/Tilesets/Tiles Prison.png" id="15_n7kyo"]
 [ext_resource type="Texture2D" uid="uid://xx7fdpxyy6p4" path="res://Art/Tilesets/castle_interriors.png" id="16_6lsmr"]
+[ext_resource type="Texture2D" uid="uid://biduf4c0xlh4j" path="res://Tilesets/woodPlank.png" id="16_fhv1s"]
 [ext_resource type="Texture2D" uid="uid://1j73h3f0qwdo" path="res://Tilesets/grassBush.png" id="17_2lk5e"]
+[ext_resource type="Texture2D" uid="uid://da7f25ug28fdo" path="res://Tilesets/woodPlankBarrel.png" id="17_e4why"]
 [ext_resource type="Texture2D" uid="uid://do7e0h7fr0llq" path="res://Tilesets/grassRock.png" id="18_6is7k"]
+[ext_resource type="Texture2D" uid="uid://cu4hw1s8xigh4" path="res://Tilesets/woodPlankCrate.png" id="18_rs1e6"]
 [ext_resource type="Texture2D" uid="uid://b6xcgj1eypa2g" path="res://Tilesets/grassTruck.png" id="19_qmoav"]
 [ext_resource type="Texture2D" uid="uid://b8d4jq3ni5bfh" path="res://Tilesets/SewerTileBarrel.png" id="20_hhj27"]
 [ext_resource type="Texture2D" uid="uid://c8ops6veqfr8l" path="res://Combat/Resources/SkillIcons/PNG/1.png" id="31_gjvt6"]
-[ext_resource type="Texture2D" uid="uid://c0fm0amr86t81" path="res://Combat/Resources/SkillIcons/PNG/7.png" id="32_lvlgj"]
-[ext_resource type="Texture2D" uid="uid://dqgtkwx4v4vow" path="res://Combat/Resources/SkillIcons/PNG/23.png" id="33_h0cm0"]
-[ext_resource type="Texture2D" uid="uid://3f0u3xmyig3g" path="res://Combat/Resources/SkillIcons/PNG/31.png" id="34_oc33l"]
+[ext_resource type="FontFile" uid="uid://cox8f22drukm0" path="res://Art/fonts/PIXELOIDSANSBOLD-PKNYD.TTF" id="32_hk35y"]
+[ext_resource type="Texture2D" uid="uid://bi1b75vx27cv2" path="res://Combat/Resources/UI_Flat_Frame_01_Standard.png" id="34_kknik"]
+[ext_resource type="AudioStream" uid="uid://bic0o5r21u6n2" path="res://Combat/Resources/07_human_atk_sword_2.wav" id="35_o360o"]
+[ext_resource type="Texture2D" uid="uid://ctek8cxuq7w4t" path="res://Combat/Resources/loseScreen.png" id="38_nfh0i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5e7gd"]
 texture = ExtResource("2_qy8r3")
@@ -1017,6 +1021,19 @@ texture = ExtResource("14_qvxy6")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwcma"]
 texture = ExtResource("15_1s4q5")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2m0y"]
+texture = ExtResource("16_fhv1s")
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w58gj"]
+texture = ExtResource("17_e4why")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_83iqv"]
+texture = ExtResource("18_rs1e6")
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ewvy7"]
@@ -5339,6 +5356,9 @@ sources/17 = SubResource("TileSetAtlasSource_yqt5e")
 sources/18 = SubResource("TileSetAtlasSource_e3d77")
 sources/19 = SubResource("TileSetAtlasSource_2jx8v")
 sources/20 = SubResource("TileSetAtlasSource_rwcma")
+sources/24 = SubResource("TileSetAtlasSource_b2m0y")
+sources/25 = SubResource("TileSetAtlasSource_w58gj")
+sources/26 = SubResource("TileSetAtlasSource_83iqv")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q7wo7"]
 texture = ExtResource("7_bfi6l")
@@ -7019,6 +7039,7 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
 text = " 
 "
@@ -7029,7 +7050,6 @@ offset_top = 39.0
 offset_right = 479.0
 offset_bottom = 551.0
 scale = Vector2(0.05, 0.05)
-texture_normal = ExtResource("32_lvlgj")
 
 [node name="cooldown" type="TextEdit" parent="Ability2"]
 layout_mode = 1
@@ -7045,8 +7065,9 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
-text = " 1
+text = " 
 "
 
 [node name="Ability3" type="TextureButton" parent="."]
@@ -7055,7 +7076,6 @@ offset_top = 75.0
 offset_right = 479.0
 offset_bottom = 587.0
 scale = Vector2(0.05, 0.05)
-texture_normal = ExtResource("33_h0cm0")
 
 [node name="cooldown" type="TextEdit" parent="Ability3"]
 layout_mode = 1
@@ -7071,8 +7091,9 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
-text = " 1
+text = " 
 "
 
 [node name="Ability4" type="TextureButton" parent="."]
@@ -7081,8 +7102,6 @@ offset_top = 111.0
 offset_right = 479.0
 offset_bottom = 623.0
 scale = Vector2(0.05, 0.05)
-texture_normal = ExtResource("34_oc33l")
-texture_pressed = ExtResource("34_oc33l")
 
 [node name="cooldown" type="TextEdit" parent="Ability4"]
 layout_mode = 1
@@ -7098,11 +7117,72 @@ theme_override_colors/font_color = Color(0.686275, 0.0705882, 0.0705882, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("32_hk35y")
 theme_override_font_sizes/font_size = 400
-text = " 1
+text = " 
 "
 
+[node name="abilityMusic" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(144, 352)
+stream = ExtResource("35_o360o")
+max_distance = 4000.0
+
+[node name="DamageDisplay" type="RichTextLabel" parent="."]
+visible = false
+top_level = true
+offset_left = 53.0
+offset_top = -6.0
+offset_right = 243.0
+offset_bottom = 15.0
+scale = Vector2(0.2, 0.195)
+theme_override_colors/default_color = Color(0.898039, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("32_hk35y")
+text = "4 damage"
+
+[node name="AbilityInfo" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 148.0
+offset_top = 2.0
+offset_right = 188.0
+offset_bottom = 42.0
+scale = Vector2(0.707609, 0.676479)
+
+[node name="InfoBackground" type="TextureRect" parent="AbilityInfo"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("34_kknik")
+
+[node name="InfoText" type="Label" parent="AbilityInfo"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 244.0
+offset_bottom = 123.0
+scale = Vector2(0.37684, 0.732212)
+text = "Test"
+autowrap_mode = 2
+
+[node name="loseScreen" type="TextureRect" parent="."]
+visible = false
+offset_left = -141.0
+offset_top = -39.0
+offset_right = 383.0
+offset_bottom = 245.0
+scale = Vector2(0.782547, 0.745707)
+texture = ExtResource("38_nfh0i")
+
+[connection signal="mouse_entered" from="Ability1" to="." method="_on_ability_1_mouse_entered"]
+[connection signal="mouse_exited" from="Ability1" to="." method="_on_ability_1_mouse_exited"]
 [connection signal="pressed" from="Ability1" to="." method="_on_ability_1_pressed"]
+[connection signal="mouse_entered" from="Ability2" to="." method="_on_ability_2_mouse_entered"]
+[connection signal="mouse_exited" from="Ability2" to="." method="_on_ability_2_mouse_exited"]
 [connection signal="pressed" from="Ability2" to="." method="_on_ability_2_pressed"]
+[connection signal="mouse_entered" from="Ability3" to="." method="_on_ability_3_mouse_entered"]
+[connection signal="mouse_exited" from="Ability3" to="." method="_on_ability_3_mouse_exited"]
 [connection signal="pressed" from="Ability3" to="." method="_on_ability_3_pressed"]
+[connection signal="mouse_entered" from="Ability4" to="." method="_on_ability_4_mouse_entered"]
+[connection signal="mouse_exited" from="Ability4" to="." method="_on_ability_4_mouse_exited"]
 [connection signal="pressed" from="Ability4" to="." method="_on_ability_4_pressed"]

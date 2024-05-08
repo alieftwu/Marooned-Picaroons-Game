@@ -1,38 +1,50 @@
 extends Label
-@export var connected_scene: String #name of scene to change to
+@export var combat_scene: String #name of scene to change to
 @onready var textBox = get_parent() 
 @onready var NPC = get_parent().get_parent().get_parent() 
 @onready var iterator = -1
 @onready var textList = [""]
+@onready var doFight = false
+
+signal sceneTransition
 
 # Called when the node enters the scene tree for the first time.
 signal hideBoxLabel
+signal hideHideable
 
 func _ready():
+	if(Global.currentFightNPC == NPC.name and Global.currentFightWon):
+		Global.fightList.append(NPC.NPCID)
+		NPC.hasWon = true
+		Global.currentFightNPC = null
+		Global.currentFightWon = false
 	text = ""
 	textList[0] = text
 	pass
 
 func _process(delta):
-	if textBox.visible == true and Input.is_action_just_pressed("ui_accept") and iterator < textList.size()-1:
+	if textBox.visible and Input.is_action_just_pressed("ui_accept") and iterator < textList.size()-1:
 		iterator += 1
 		text = textList[iterator]
-	elif textBox.visible == true and Input.is_action_just_pressed("ui_accept") and iterator == textList.size()-1:
+	elif textBox.visible and Input.is_action_just_pressed("ui_accept") and iterator == textList.size()-1:
 		emit_signal("hideBoxLabel")
-		print("swap to scene for fighting")
+		emit_signal("hideHideable")
 		iterator = -1
-		# scene_manager.change_scene(get_owner(), connected_scene)
+		if doFight:
+			Global.currentFightNPC = NPC.name
+			
+			AudioPlayer.play_draw_sword()
+			TransitionScreen.transition()
+			await TransitionScreen.on_transition_finished
+			scene_manager.combatSceneSwitch(get_owner(), combat_scene)
 
 
 func _on_new_text(title):
-	print("new text selected!")
-	NPC = NPC.get_parent().get_node(NodePath(title))
 	textList = NPC.npcText
 	text = textList[0]
 
 
 func _on_new_q_text(title, QS, QF):
-	NPC = NPC.get_parent().get_node(NodePath(title))
 	if QS and !QF:
 		textList = NPC.durQuest
 	else:
@@ -42,5 +54,19 @@ func _on_new_q_text(title, QS, QF):
 	text = textList[0]
 
 
-func _on_scene_transition():
-	print("here I am!")
+func _on_npc_halt_move():
+	iterator = 0
+
+
+func _on_new_f_text(title):
+	# connected_scene = scene
+	textList = NPC.npcText
+	text = textList[0]
+	doFight = true
+
+func _on_npc_new_i_text(title, IC):
+	if IC:
+		textList = NPC.postItem
+	else:
+		textList = NPC.preItem
+	text = textList[0]

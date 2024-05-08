@@ -1,0 +1,50 @@
+[gd_scene load_steps=11 format=3 uid="uid://ss6wqn35ewt5"]
+
+[ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_tl6ud"]
+[ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_jf2gs"]
+[ext_resource type="PackedScene" uid="uid://cia0wsjlgjdcg" path="res://Combat/Scenes/TurnQueue.tscn" id="3_jeaya"]
+[ext_resource type="PackedScene" uid="uid://b4ehkn0j7wea5" path="res://Combat/Enemies/CastleKnight.tscn" id="4_akvdm"]
+[ext_resource type="PackedScene" uid="uid://72nmcd4jn5p5" path="res://Combat/Scenes/TestPlayer.tscn" id="5_d2oye"]
+[ext_resource type="PackedScene" uid="uid://biw5f6w460vwk" path="res://Combat/Scenes/TestPlayerM.tscn" id="6_ojy7y"]
+[ext_resource type="PackedScene" uid="uid://bhn5bvhkvnuh7" path="res://Combat/Scenes/TestPlayerR.tscn" id="7_wiqdt"]
+[ext_resource type="AudioStream" uid="uid://dmwarbn62c6n" path="res://Audio/Pirate Music Pack/ogg/Pirate 8.ogg" id="8_7cmai"]
+[ext_resource type="PackedScene" uid="uid://btjotkmkiqmwr" path="res://Combat/Enemies/KnightEnemy.tscn" id="8_8u8vj"]
+[ext_resource type="Script" path="res://Combat/Audio Scripts For Battles/CastleBackgroundMusic.gd" id="9_4dp6g"]
+
+[node name="Combat" type="Node2D"]
+script = ExtResource("1_tl6ud")
+
+[node name="BattleMap" parent="." instance=ExtResource("2_jf2gs")]
+mapType = "BossCastle"
+
+[node name="TurnQueue" parent="." instance=ExtResource("3_jeaya")]
+connected_scene = "king_castle_battle"
+
+[node name="Knight" parent="TurnQueue" instance=ExtResource("4_akvdm")]
+position = Vector2(136, 104)
+
+[node name="Knight2" parent="TurnQueue" instance=ExtResource("4_akvdm")]
+position = Vector2(136, 40)
+
+[node name="Knight3" parent="TurnQueue" instance=ExtResource("4_akvdm")]
+position = Vector2(136, 72)
+
+[node name="Guard2" parent="TurnQueue" instance=ExtResource("8_8u8vj")]
+position = Vector2(136, 120)
+
+[node name="Guard" parent="TurnQueue" instance=ExtResource("8_8u8vj")]
+position = Vector2(136, 24)
+
+[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("5_d2oye")]
+position = Vector2(8, 88)
+
+[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("6_ojy7y")]
+position = Vector2(8, 56)
+
+[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("7_wiqdt")]
+position = Vector2(8, 72)
+
+[node name="CastleBackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_7cmai")
+autoplay = true
+script = ExtResource("9_4dp6g")

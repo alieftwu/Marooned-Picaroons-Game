@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cptqw6by0eogk"]
+[gd_scene load_steps=49 format=3 uid="uid://cptqw6by0eogk"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_mpgjl"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_ql2ok"]
@@ -6,6 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://754l5c1v65w4" path="res://Characters/player.tscn" id="4_oojuv"]
 [ext_resource type="PackedScene" uid="uid://da137es324l1j" path="res://Characters/companion.tscn" id="5_lwphu"]
 [ext_resource type="PackedScene" uid="uid://bjjphcnxbsn1k" path="res://Characters/companion_2.tscn" id="6_oavo7"]
+[ext_resource type="PackedScene" uid="uid://bfgli07b0m8kh" path="res://Characters/NPC.tscn" id="7_gj1sq"]
+[ext_resource type="PackedScene" uid="uid://c620ynqov6xt1" path="res://Characters/ItemNPC.tscn" id="8_k1amb"]
+[ext_resource type="Script" path="res://Characters/FightNPC.gd" id="9_oe5nn"]
+[ext_resource type="AudioStream" uid="uid://r646tid5uxdr" path="res://Audio/Wind/wind_whistle.ogg" id="10_801q5"]
+[ext_resource type="Texture2D" uid="uid://078w03oe1knm" path="res://Art/Pirates/Pirate Blue Sprite Sheet/Pirate Blue Enemy Sprite.png" id="10_auwmj"]
+[ext_resource type="Texture2D" uid="uid://ct03s33e6mtbm" path="res://Art/NPC+UI/TextBox.png" id="11_y3jvc"]
+[ext_resource type="Texture2D" uid="uid://bjy0vugd28t3y" path="res://Art/NPC+UI/01_Flat_Theme/Sprites/UI_Flat_Banner_01_Upward.png" id="12_i1n45"]
+[ext_resource type="Script" path="res://World/TextureRect.gd" id="13_12jt8"]
+[ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="14_l484n"]
+[ext_resource type="Script" path="res://World/Label.gd" id="15_g0p8m"]
 
 [sub_resource type="Gradient" id="Gradient_dvd5f"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -44,6 +54,233 @@ size = Vector2(15, 661)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6pub"]
 size = Vector2(21.1607, 60)
+
+[sub_resource type="Animation" id="Animation_5rgvr"]
+resource_name = "backwards_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_crl8m"]
+resource_name = "forward_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_u6iu1"]
+resource_name = "left_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_dataw"]
+resource_name = "right_idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_yr0q2"]
+resource_name = "walk_down"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 13]
+}
+
+[sub_resource type="Animation" id="Animation_41uqw"]
+resource_name = "walk_left"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 21, 10, 23, 11]
+}
+
+[sub_resource type="Animation" id="Animation_wcl5n"]
+resource_name = "walk_right"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 18, 7, 20, 8]
+}
+
+[sub_resource type="Animation" id="Animation_otycb"]
+resource_name = "walk_up"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kr0c"]
+_data = {
+"backwards_idle": SubResource("Animation_5rgvr"),
+"forward_idle": SubResource("Animation_crl8m"),
+"left_idle": SubResource("Animation_u6iu1"),
+"right_idle": SubResource("Animation_dataw"),
+"walk_down": SubResource("Animation_yr0q2"),
+"walk_left": SubResource("Animation_41uqw"),
+"walk_right": SubResource("Animation_wcl5n"),
+"walk_up": SubResource("Animation_otycb")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4lr4"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nte6"]
+animation = &"left_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pfb13"]
+animation = &"right_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b31fg"]
+animation = &"backwards_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wsq7x"]
+animation = &"forward_idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_bxed4"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2nte6")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_pfb13")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_b31fg")
+blend_point_2/pos = Vector2(0, -1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_wsq7x")
+blend_point_3/pos = Vector2(0, 1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+snap = Vector2(0.01, 0.01)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fdhxr"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nr62k"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u0d5l"]
+animation = &"walk_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tajqw"]
+animation = &"walk_up"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_are8h"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_fdhxr")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_nr62k")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_u0d5l")
+blend_point_2/pos = Vector2(0, 1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_tajqw")
+blend_point_3/pos = Vector2(0, -1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_er8wl"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_arxb6"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_aj34a"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_us6gr"]
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_bxed4")
+states/Idle/position = Vector2(379, 100)
+states/Start/position = Vector2(191, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_are8h")
+states/Walk/position = Vector2(635, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
+graph_offset = Vector2(-186.663, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2ow3"]
+font = ExtResource("14_l484n")
+font_color = Color(0, 0, 0, 1)
 
 [node name="mountain_village" type="Node2D"]
 y_sort_enabled = true
@@ -106,11 +343,141 @@ scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_b6pub")
 
 [node name="Player" parent="." instance=ExtResource("4_oojuv")]
+position = Vector2(643, 359)
 speed = 110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Companion" parent="." instance=ExtResource("5_lwphu")]
+position = Vector2(630, 343)
 
 [node name="Companion2" parent="." instance=ExtResource("6_oavo7")]
+position = Vector2(657, 341)
 SPEED = 100.0
+
+[node name="Greeter" parent="." instance=ExtResource("7_gj1sq")]
+position = Vector2(609, 324)
+npcText = ["Oh Hello There! Haven't seen you around before!", "Welcome to our humble village!", "We don't get many Royal Armymen up here, so if you're a pirate we really don't care.", "Enjoy your time while you're here! We are just a group of miners."]
+
+[node name="Talky" parent="." instance=ExtResource("7_gj1sq")]
+position = Vector2(504, 97)
+npcText = ["Do you need anything from me? if not go away. Capiche?"]
+
+[node name="DynamiteBoy" parent="." instance=ExtResource("8_k1amb")]
+position = Vector2(997, 281)
+connectedQuest = "prisonBreak"
+preItem = ["You were told I have dynamite you could use?", "Yeah, i do, Here you go, don't blow yourself up with it."]
+
+[node name="Snowman" type="CharacterBody2D" parent="."]
+position = Vector2(710, 327)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("9_oe5nn")
+npcText = ["Haha! A snowman!"]
+killable = true
+fightScene = "CombatMountainVillage"
+NPCID = "Snowman"
+
+[node name="Body" type="Sprite2D" parent="Snowman"]
+texture_filter = 1
+position = Vector2(-1, 1)
+texture = ExtResource("10_auwmj")
+offset = Vector2(0, -14.9)
+hframes = 3
+vframes = 8
+frame = 7
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="Snowman"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Snowman"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="AnimationTree" type="AnimationTree" parent="Snowman"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+tree_root = SubResource("AnimationNodeStateMachine_us6gr")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(1.232, -0.0407407)
+parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Snowman"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("11_y3jvc")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Snowman"]
+position = Vector2(0, -11)
+
+[node name="Polygon2D" type="Polygon2D" parent="Snowman/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Snowman/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Snowman"]
+
+[node name="TextureRect" type="TextureRect" parent="Snowman/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("12_i1n45")
+stretch_mode = 4
+script = ExtResource("13_12jt8")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Snowman/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("15_g0p8m")
+combat_scene = "CombatMountainVillage"
+
+[node name="Wind Whistle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_801q5")
+volume_db = -10.584
+autoplay = true
+
+[connection signal="haltMove" from="Snowman" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Snowman" to="Snowman/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Snowman" to="Snowman/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Snowman" to="Snowman/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="showTextBox" from="Snowman" to="Snowman/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Snowman/Area2D" to="Snowman" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Snowman/Area2D" to="Snowman" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Snowman/HUD/TextureRect/Label" to="Snowman/HUD/TextureRect" method="_on_label_hide_box_label"]

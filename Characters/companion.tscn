@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://da137es324l1j"]
 
 [ext_resource type="Script" path="res://Characters/companion.gd" id="1_3d8y2"]
-[ext_resource type="Texture2D" uid="uid://ciw7w4q5nveis" path="res://Art/Pirates/Pirate Red Sprite Sheet/red pirate companion.png" id="1_c80th"]
+[ext_resource type="Texture2D" uid="uid://shfpxnniiomr" path="res://Art/Pirates/Pirate Blue Sprite Sheet/blue companion sheet.png" id="2_ehi30"]
 
 [sub_resource type="GDScript" id="GDScript_jitm7"]
 script/source = "extends Sprite2D
@@ -236,17 +236,18 @@ states/Walk/position = Vector2(634, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_er8wl"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_arxb6"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_aj34a")]
 
 [node name="Companion" type="CharacterBody2D"]
+position = Vector2(0, 12)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_3d8y2")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("1_c80th")
+position = Vector2(0, 13)
+texture = ExtResource("2_ehi30")
 offset = Vector2(0, -15)
 hframes = 3
 vframes = 8
-frame = 11
 script = SubResource("GDScript_jitm7")
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
@@ -263,7 +264,7 @@ tree_root = SubResource("AnimationNodeStateMachine_us6gr")
 anim_player = NodePath("../PlayerAnimation")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
-parameters/Idle/blend_position = Vector2(-0.0020408, -0.00484574)
+parameters/Idle/blend_position = Vector2(0, 1.1)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [connection signal="replacing_by" from="Body" to="." method="_on_body_replacing_by"]

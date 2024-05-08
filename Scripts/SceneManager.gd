@@ -4,7 +4,9 @@ var companion : Companion
 var companion2 : Companion2
 var last_scene_name: String
 var scene_dir_path = "res://World/"
-
+var combat_scene_path = "res://Combat/Scenes/"
+var combatData : Array = []
+signal sentCombatData
 
 func change_scene(from, to_scene_name: String) -> void:
 	last_scene_name = from.name
@@ -22,3 +24,20 @@ func change_scene(from, to_scene_name: String) -> void:
 	var full_path = scene_dir_path + to_scene_name + ".tscn"
 	from.get_tree().call_deferred("change_scene_to_file", full_path)
 	
+func combatSceneSwitch(originalScene, mapType : String) -> void:
+	var PlayerList = [1,2,3,4,5]
+	var EnemyList = ["a", "b", "c"]
+	var callbackScene = str(originalScene)
+	print(callbackScene)
+	combatData = [PlayerList, EnemyList, mapType, callbackScene]
+	var full_combat_path = combat_scene_path + mapType + ".tscn"
+	originalScene.get_tree().call_deferred("change_scene_to_file", full_combat_path)
+	return
+	
+func switchBackScene(from, to_scene_name: String) -> void:
+	var full_path = scene_dir_path + to_scene_name + ".tscn"
+	from.get_tree().call_deferred("change_scene_to_file", full_path)
+	return
+	
+func getCombatData():
+	return combatData

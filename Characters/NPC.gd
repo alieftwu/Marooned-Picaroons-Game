@@ -4,8 +4,11 @@ extends CharacterBody2D
 @onready var bubble = get_node("TextureRect")
 @onready var textBox = get_node("HUD/TextureRect")
 @onready var textBoxText = get_node("HUD/TextureRect/Label")
+@onready var animation_tree : AnimationTree = $AnimationTree
 
-@export var npcText = ["I say words! and when you press space, I say more!", "like this!", "Very cool I know.", "Now lets fight!"]
+@export var direction = "down"
+@export var npcText = ["I say words! and when you press space, I say more!"]
+@export var hideable = false
 
 signal showTextBox
 signal hideTextBox
@@ -16,7 +19,19 @@ var textDisplayed = false
 
 func _ready():
 	bubble.hide()
-	pass
+	match direction:
+		"down":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(0,1)
+			around.rotation = Vector2(1,0).angle()
+		"up":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(0,-1)
+			around.rotation = Vector2(-1,0).angle()
+		"left":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(-1,0)
+			around.rotation = Vector2(0,1).angle()
+		"right":
+			animation_tree["parameters/Idle/blend_position"] = Vector2(1,0)
+			around.rotation = Vector2(0,-1).angle()
 
 func _process(delta):
 	if(closeEnough):
@@ -26,19 +41,28 @@ func _process(delta):
 	# check for interaction
 	if Input.is_action_just_pressed("ui_accept") and closeEnough and !textDisplayed:
 		textDisplayed = true
-		print("output text here!")
 		showTextBox.emit()
 
 func _on_area_2d_body_entered(body):
 	if body != self and body != get_tree().current_scene.get_node("TileMap"):
-		print("display and await!\n", self.name)
 		closeEnough = true
 		newText.emit(self.name)
 
 
 func _on_area_2d_body_exited(body):
-	if(textDisplayed):
-		emit_signal("hideTextBox")
-		print("remove textbox")
-		closeEnough = false
-		textDisplayed = false
+	emit_signal("hideTextBox")
+	closeEnough = false
+	textDisplayed = false
+
+
+func _on_hide_hideable():
+	if hideable:
+		get_node("CollisionShape2D").disabled = true
+		get_node("Area2D/CollisionShape2D").disabled = true
+		hide()
+
+
+func _on_second_village_remove_npc():
+	get_node("CollisionShape2D").disabled = true
+	get_node("Area2D/CollisionShape2D").disabled = true
+	hide()
