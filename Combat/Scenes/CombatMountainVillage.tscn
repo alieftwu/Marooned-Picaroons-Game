@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://4iv050npjmbq"]
+[gd_scene load_steps=12 format=3 uid="uid://4iv050npjmbq"]
 
 [ext_resource type="Script" path="res://Combat/Scripts/CombatScene.gd" id="1_u14b2"]
 [ext_resource type="PackedScene" uid="uid://cwpfckf0fl30q" path="res://Combat/Scenes/battle_map.tscn" id="2_fwnl7"]
@@ -12,86 +12,6 @@
 [ext_resource type="Script" path="res://Combat/Audio Scripts For Battles/CombatMountain.gd" id="10_rirdd"]
 [ext_resource type="AudioStream" uid="uid://r646tid5uxdr" path="res://Audio/Wind/wind_whistle.ogg" id="11_50gsm"]
 
-[sub_resource type="GDScript" id="GDScript_c6ucy"]
-script/source = "extends Node2D
-
-@onready var battlemap = $\"../../BattleMap\"
-@onready var highlightmap = $\"../../BattleMap/HighlightMap\"
-@onready var healthBar = $HealthBar
-@onready var abilityControl = $\"../../BattleMap/AbilityControl\"
-@onready var statusEffect = $StatusEffect
-var stats = load(\"res://Combat/Resources/enemytest.tres\")
-var speed : int
-var health : float
-var maxHealth : float
-var armor : int
-var basicAttackDamage : int
-var passiveAbility : String = \"Brawler\"
-var abilityList : Array = [\"circleSlash\", \"pistolShot\", \"engagingBlock\"] # buttons 2-4 abilities. can switch out 
-# look at abilityControl checkMoveSlot
-
-var frenzyBuff : bool = false # used to determine when 2 turns are up
-var frenzyBuffCount : int = 0
-var isStunned : bool = false
-var isStunnedCount : int = 0
-var bonusMove = false
-var isBlocking = false
-var didBlock = false
-signal finishedTurn
-
-var canPress : bool = false
-var special1CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
-var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
-var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
-
-func _ready():
-	speed = stats.Speed
-	health = stats.Health
-	maxHealth = stats.MaxHealth
-	armor = stats.Armor
-	basicAttackDamage = stats.BasicAttackDamage
-
-func play_turn():
-	updateHealthBar()
-	abilityControl.checkBlocking(self)
-	isBlocking = false
-	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
-	if skipTurn == false:
-		abilityControl.checkFlags(self)
-		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < .75:
-			await battlemap.agressiveEnemyMove(self)
-		else:
-			await battlemap.moveEnemyPerson(self)
-		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-		await battlemap.enemyRandomAbility(self)
-	updateCooldowns()
-	emit_signal(\"finishedTurn\")
-
-func updateHealthBar():
-	var maxValue = maxHealth
-	healthBar.value = (health / maxHealth) * 100
-	#print(\"new enemy health: \", (health / maxHealth) * 100)
-	
-func updateCooldowns():
-	if special1CoolDown >= 1:
-		special1CoolDown -= 1
-	if special2CoolDown >= 1:
-		special2CoolDown -= 1
-	if special3CoolDown >= 1:
-		special3CoolDown -= 1
-	return
-
-func updateStatusEffect():
-	var effect
-	if isStunned == true:
-		effect = load(\"res://Combat/Resources/stunned.png\")
-		statusEffect.texture = effect
-	else:
-		statusEffect.texture = null
-"
-
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_u14b2")
 
@@ -104,20 +24,6 @@ connected_scene = "mountain_village"
 [node name="BluePirate" parent="TurnQueue" instance=ExtResource("4_ggdf1")]
 position = Vector2(136, 72)
 
-[node name="Snowman" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
-position = Vector2(136, 40)
-
-[node name="Snowman3" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
-position = Vector2(136, 24)
-
-[node name="Snowman2" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
-position = Vector2(136, 104)
-script = SubResource("GDScript_c6ucy")
-
-[node name="Snowman4" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
-position = Vector2(136, 120)
-script = SubResource("GDScript_c6ucy")
-
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("7_rdxla")]
 position = Vector2(8, 88)
 
@@ -126,6 +32,18 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("9_e3ic7")]
 position = Vector2(8, 72)
+
+[node name="SnowmanEnemy" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
+position = Vector2(136, 88)
+
+[node name="SnowmanEnemy2" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
+position = Vector2(136, 56)
+
+[node name="SnowmanEnemy3" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
+position = Vector2(136, 40)
+
+[node name="SnowmanEnemy4" parent="TurnQueue" instance=ExtResource("9_j2nyu")]
+position = Vector2(136, 104)
 
 [node name="CombatMountain" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_pcpiq")

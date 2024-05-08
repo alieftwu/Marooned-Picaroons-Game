@@ -52,7 +52,10 @@ func play_turn():
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		await battlemap.cowardEnemyMove(self)
+		if randf() < 0.25:
+			await battlemap.cowardEnemyMove(self)
+		else:
+			await battlemap.agressiveEnemyMove(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
 	updateCooldowns()

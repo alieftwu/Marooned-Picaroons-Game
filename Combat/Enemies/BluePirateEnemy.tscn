@@ -38,10 +38,10 @@ var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 
 func _ready():
 	speed = 3
-	health = 70
-	maxHealth = 70
+	health = 75
+	maxHealth = 75
 	armor = 2
-	basicAttackDamage = 13
+	basicAttackDamage = 16
 
 func play_turn():
 	updateHealthBar()

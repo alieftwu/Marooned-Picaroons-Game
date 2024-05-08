@@ -96,6 +96,9 @@ position = Vector2(413, 370)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("8_k3o72")
+direction = "right"
+npcText = ["You're under arrest!"]
+killable = true
 fightScene = "CombatPrison"
 NPCID = "IPPG1"
 
@@ -175,6 +178,9 @@ position = Vector2(741, 366)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("8_k3o72")
+direction = "left"
+npcText = ["Defend the Prisoners!"]
+killable = true
 fightScene = "CombatPrison"
 NPCID = "IPPG2"
 

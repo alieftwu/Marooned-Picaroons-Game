@@ -7129,6 +7129,7 @@ max_distance = 4000.0
 
 [node name="DamageDisplay" type="RichTextLabel" parent="."]
 visible = false
+top_level = true
 offset_left = 53.0
 offset_top = -6.0
 offset_right = 243.0

@@ -41,7 +41,7 @@ func _ready():
 	health = 170
 	maxHealth = 170
 	armor = 5
-	basicAttackDamage = 15
+	basicAttackDamage = 27
 
 func play_turn():
 	updateHealthBar()
@@ -51,7 +51,7 @@ func play_turn():
 	updateStatusEffect()
 	if skipTurn == false:
 		abilityControl.checkFlags(self)
-		if randf() < 0.5:
+		if randf() < 0.2:
 			await battlemap.cowardEnemyMove(self)
 		else:
 			await battlemap.agressiveEnemyMove(self)

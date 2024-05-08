@@ -744,7 +744,7 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 	var isPlayer = checkTeam(player)
 	var attackTargets : Array = []
 	var attackChoice = null
-	areaFind(starting_position.x, starting_position.y, 0, 2, attackTargets, isPlayer)
+	areaFind(starting_position.x, starting_position.y, 0, 3, attackTargets, isPlayer)
 	var areTwoTargets = true
 	if len(attackTargets) <= 1: # so we know to move on if only 1 target
 		areTwoTargets = false

@@ -20,6 +20,21 @@ mapType = "FrontGate"
 [node name="TurnQueue" parent="." instance=ExtResource("3_5nibl")]
 connected_scene = "castle_town"
 
+[node name="YellowEnemy" parent="TurnQueue" instance=ExtResource("7_nmc40")]
+position = Vector2(136, 8)
+
+[node name="BluePirateEnemy" parent="TurnQueue" instance=ExtResource("9_p8fmg")]
+position = Vector2(136, 72)
+
+[node name="YellowEnemy2" parent="TurnQueue" instance=ExtResource("7_nmc40")]
+position = Vector2(136, 136)
+
+[node name="BluePirateEnemy2" parent="TurnQueue" instance=ExtResource("9_p8fmg")]
+position = Vector2(136, 104)
+
+[node name="WhiteEnemy" parent="TurnQueue" instance=ExtResource("8_icww3")]
+position = Vector2(136, 40)
+
 [node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_sym3d")]
 position = Vector2(8, 88)
 
@@ -28,21 +43,6 @@ position = Vector2(8, 56)
 
 [node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_grqix")]
 position = Vector2(8, 72)
-
-[node name="YellowEnemy" parent="TurnQueue" instance=ExtResource("7_nmc40")]
-position = Vector2(136, 8)
-
-[node name="YellowEnemy2" parent="TurnQueue" instance=ExtResource("7_nmc40")]
-position = Vector2(136, 136)
-
-[node name="WhiteEnemy" parent="TurnQueue" instance=ExtResource("8_icww3")]
-position = Vector2(136, 40)
-
-[node name="BluePirateEnemy" parent="TurnQueue" instance=ExtResource("9_p8fmg")]
-position = Vector2(136, 72)
-
-[node name="BluePirateEnemy2" parent="TurnQueue" instance=ExtResource("9_p8fmg")]
-position = Vector2(136, 104)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_w8lxx")

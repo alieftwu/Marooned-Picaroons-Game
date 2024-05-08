@@ -15,19 +15,10 @@
 script = ExtResource("1_b7b45")
 
 [node name="BattleMap" parent="." instance=ExtResource("2_2og0w")]
-mapType = "CountyPrison"
+mapType = "CastleCityInside"
 
 [node name="TurnQueue" parent="." instance=ExtResource("3_d4yf8")]
 connected_scene = "castle_town"
-
-[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_2n80f")]
-position = Vector2(8, 88)
-
-[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("5_cf3y0")]
-position = Vector2(8, 56)
-
-[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_ptuy3")]
-position = Vector2(8, 72)
 
 [node name="RatBase" parent="TurnQueue" instance=ExtResource("7_wh2jm")]
 position = Vector2(136, 56)
@@ -40,6 +31,15 @@ position = Vector2(136, 88)
 
 [node name="Guard2" parent="TurnQueue" instance=ExtResource("9_culx8")]
 position = Vector2(136, 40)
+
+[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_2n80f")]
+position = Vector2(8, 88)
+
+[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("5_cf3y0")]
+position = Vector2(8, 56)
+
+[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_ptuy3")]
+position = Vector2(8, 72)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_p6vtw")

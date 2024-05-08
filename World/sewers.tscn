@@ -419,10 +419,11 @@ scale = Vector2(2.24, 2)
 shape = SubResource("RectangleShape2D_ykatl")
 
 [node name="Mage Rat" type="CharacterBody2D" parent="."]
-position = Vector2(713, 122)
+position = Vector2(998, 452)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_nro7k")
+direction = "left"
 killable = true
 NPCID = "SMR1"
 combat_scene = "CombatSewers"
@@ -450,6 +451,7 @@ stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="Mage Rat"]
 position = Vector2(0, -11)
+rotation = 1.5708
 
 [node name="Polygon2D" type="Polygon2D" parent="Mage Rat/Area2D"]
 color = Color(0.368627, 0.368627, 0.368627, 0.352941)
@@ -577,7 +579,7 @@ script = ExtResource("12_q26m2")
 combat_scene = "CombatSewers"
 
 [node name="Base Rat" type="CharacterBody2D" parent="."]
-position = Vector2(216, 139)
+position = Vector2(291, 141)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_kc2fc")
@@ -654,7 +656,7 @@ script = ExtResource("12_q26m2")
 combat_scene = "CombatSewers"
 
 [node name="Rogue Rat" type="CharacterBody2D" parent="."]
-position = Vector2(482, 308)
+position = Vector2(583, 370)
 collision_layer = 9
 motion_mode = 1
 script = SubResource("GDScript_2ch73")

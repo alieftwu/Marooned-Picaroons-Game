@@ -323,7 +323,8 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_xum23")
 
 [node name="NPC2" type="CharacterBody2D" parent="."]
-position = Vector2(458, 365)
+visible = false
+position = Vector2(423, 59)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("8_jbusd")
@@ -425,7 +426,8 @@ script = ExtResource("14_cvn7t")
 combat_scene = "CombatOutsidePrison"
 
 [node name="NPC3" type="CharacterBody2D" parent="."]
-position = Vector2(585, 364)
+visible = false
+position = Vector2(590, 52)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("8_jbusd")

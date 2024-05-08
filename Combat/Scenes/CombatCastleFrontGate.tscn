@@ -20,15 +20,6 @@ mapType = "FrontGate"
 [node name="TurnQueue" parent="." instance=ExtResource("3_7ha65")]
 connected_scene = "kings_castle_entrance"
 
-[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_fq8b6")]
-position = Vector2(8, 88)
-
-[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("5_lahwb")]
-position = Vector2(8, 56)
-
-[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_hyfl2")]
-position = Vector2(8, 72)
-
 [node name="Knight" parent="TurnQueue" instance=ExtResource("7_488uc")]
 position = Vector2(136, 24)
 
@@ -40,6 +31,15 @@ position = Vector2(136, 56)
 
 [node name="WhiteEnemy" parent="TurnQueue" instance=ExtResource("8_cawyy")]
 position = Vector2(136, 88)
+
+[node name="TestPlayer" parent="TurnQueue" instance=ExtResource("4_fq8b6")]
+position = Vector2(8, 88)
+
+[node name="TestPlayerM" parent="TurnQueue" instance=ExtResource("5_lahwb")]
+position = Vector2(8, 56)
+
+[node name="TestPlayerR" parent="TurnQueue" instance=ExtResource("6_hyfl2")]
+position = Vector2(8, 72)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_qk5q0")

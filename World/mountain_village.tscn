@@ -473,6 +473,7 @@ stream = ExtResource("10_801q5")
 volume_db = -10.584
 autoplay = true
 
+[connection signal="haltMove" from="Snowman" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="Snowman" to="Snowman/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="Snowman" to="Snowman/HUD/TextureRect" method="_on_npc_hide_text_box"]
 [connection signal="newFText" from="Snowman" to="Snowman/HUD/TextureRect/Label" method="_on_new_f_text"]

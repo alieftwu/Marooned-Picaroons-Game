@@ -256,9 +256,9 @@ font_color = Color(0, 0, 0, 1)
 [sub_resource type="Curve2D" id="Curve2D_dp0x3"]
 bake_interval = 0.01
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 291.307, 682)
+"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 292.449, 557, 0, 0, 0, 0, 291.307, 682)
 }
-point_count = 2
+point_count = 3
 
 [sub_resource type="Curve2D" id="Curve2D_73ecf"]
 _data = {
@@ -322,7 +322,7 @@ position = Vector2(-209, 39)
 
 [node name="Path2D2" type="Path2D" parent="."]
 z_index = 1
-position = Vector2(35, 163)
+position = Vector2(-671, -402)
 scale = Vector2(0.875365, 1)
 curve = SubResource("Curve2D_slvoe")
 
@@ -437,7 +437,7 @@ script = ExtResource("14_wm82p")
 
 [node name="Path2D3" type="Path2D" parent="."]
 z_index = 1
-position = Vector2(56, -37)
+position = Vector2(-659, -403)
 scale = Vector2(0.875365, 1)
 curve = SubResource("Curve2D_dp0x3")
 
@@ -552,7 +552,7 @@ script = ExtResource("14_wm82p")
 
 [node name="Path2D4" type="Path2D" parent="."]
 z_index = 1
-position = Vector2(506, -31)
+position = Vector2(-647, -384)
 scale = Vector2(0.875365, 1)
 curve = SubResource("Curve2D_dp0x3")
 
@@ -666,7 +666,7 @@ autowrap_mode = 2
 script = ExtResource("14_wm82p")
 
 [node name="Path2D" type="Path2D" parent="."]
-position = Vector2(354, 548)
+position = Vector2(-464, 61)
 curve = SubResource("Curve2D_73ecf")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
@@ -785,7 +785,8 @@ position = Vector2(536, 468)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("14_gbwxk")
-fightScene = "CombatCastle2"
+npcText = ["You DARE challenge ME!?!"]
+fightScene = "CombatCastleHall"
 NPCID = "KCBOC"
 
 [node name="Body" type="Sprite2D" parent="Cromwell"]
@@ -864,6 +865,8 @@ position = Vector2(197, 561)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("14_gbwxk")
+npcText = ["For the King!"]
+killable = true
 fightScene = "CombatCastle2"
 NPCID = "KCBG1"
 
@@ -944,6 +947,8 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("14_gbwxk")
 direction = "up"
+npcText = ["Defend the King!"]
+killable = true
 fightScene = "CombatCastle2"
 NPCID = "KCBG2"
 

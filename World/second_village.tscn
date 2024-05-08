@@ -411,7 +411,6 @@ shape = SubResource("RectangleShape2D_xb7yu")
 position = Vector2(666, 394)
 direction = "right"
 npcText = ["If I had something to sell you I'd tell you wouldn't I?"]
-hideable = true
 
 [node name="NPC2" parent="." instance=ExtResource("8_wbvtm")]
 position = Vector2(731, 488)

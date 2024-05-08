@@ -154,6 +154,10 @@ func initialize():
 		{
 			0: _generateBossCastleMap()
 		}
+	if (mapType == "CastleCityInside"):
+		{
+			0: _generateCastleCityInsideMap()
+		}
 	
 	_makeAStarGrid()
 	canMove = false
@@ -348,6 +352,7 @@ func _generateFirstVillageMap():
 	loadBackground(newBackImage)			
 	return
 func _generateCastleTownMap():
+	
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
 	random_DangerRowNum = randi_range(0, height - 1)
@@ -384,6 +389,45 @@ func _generateCastleTownMap():
 	var newBackImage = load("res://Combat/Resources/castleTownBackground.png")
 	loadBackground(newBackImage)			
 	return
+	
+func _generateCastleCityInsideMap():
+	tile_map.clear()
+	random_SafeRowNum = randi_range(0, height - 1)
+	random_DangerRowNum = randi_range(0, height - 1)
+	random_DangerRowNum2 = randi_range(0, height - 1)
+	for y in range(height): # reverse x and y for generation purposes
+		random_ColNum = randi_range(1, width - 2)
+		random_ExtraColNum = randi_range(1, width - 2)
+		random_ExtraColNum2 = randi_range(1, width - 2)
+		random_ExtraColNum3 = randi_range(1, width - 2)
+		for x in range(width):
+			if x == random_ColNum and y != random_SafeRowNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum != random_SafeRowNum and y == random_DangerRowNum and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			elif random_DangerRowNum2 != random_SafeRowNum and y == random_DangerRowNum2 and x == random_ExtraColNum3:
+				if randf() < 0.5:
+					tile_map.set_cell(0, Vector2i(x, y), BarrelOnStone_source_id, Vector2i(0, 0))
+				else:
+					tile_map.set_cell(0, Vector2i(x, y), CrateOnStone_source_id, Vector2i(0, 0))
+			else:
+				tile_map.set_cell(0, Vector2i(x, y), stonePath_source_id, Vector2i(randi_range(0, 1), randi_range(0, 1)))
+				
+	var newBackImage = load("res://Combat/Resources/castleCityBackground.png")
+	loadBackground(newBackImage)			
+	return
+	
 func _generateShipMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
@@ -961,6 +1005,7 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 	update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
+	
 func cowardEnemyMove(enemy): # move enemy away from nearest player
 	currentEnemy = enemy
 	var enemy_position = currentEnemy.global_position
@@ -1074,12 +1119,12 @@ func checkHazardTile(unit):
 	var player_position : Vector2i = tile_map.local_to_map(unit.global_position)
 	var tile_data = tile_map.get_cell_tile_data(0, player_position)
 	if (tile_data.get_custom_data("hazard") == true):
-		unit.health -= 10
+		unit.health -= 15
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
 		unit.updateHealthBar()
-		updateDamageDisplay(unit, 10)
+		updateDamageDisplay(unit, 15)
 		
 		if prisonSpikeSwitch == false:
 			tile_map.set_cell(0, player_position, castleSpikes_tile, Vector2i(0, 0))
@@ -1388,13 +1433,13 @@ func getAbilityText(ability):
 	elif ability == "heavySwordSwing":
 		text = "Attack a target next to you for 200% damage"
 	elif ability == "recklessFrenzy":
-		text = "Increase speed and attack at the cost of health for 2 turns"
+		text = "Increase speed and attack of you and nearby friends at the cost of health for 2 turns."
 	elif ability == "takeDown":
 		text = "Must have an ally next to you, damage and stun nearby opponent for 2 turns. Ignores armor."
 	elif ability == "pirateBlessing":
 		text = "Partially heal any friend on the map."
 	elif ability == "axeToss": # make daggerToss
-		text = "Toss a dagger that can go over obstacles, must be 2-3 spaces away from you."
+		text = "Toss a dagger for 175% damage that can go over obstacles, must be 2-3 spaces away from you."
 	elif ability == "quickStrike":
 		text = "Attack a target around you for 120% damage, then move again."
 	elif ability == "circleSlash":
@@ -1404,7 +1449,7 @@ func getAbilityText(ability):
 	elif ability == "rapidFire":
 		text = "Attack up to 2 targets 3 or less tiles away for 75% damage."
 	elif ability == "cannonShot":
-		text = "Attack a target in a line for 400% damage, and you are stunned for 2 turns. Ignores armor."
+		text = "Attack a target in a line for 400% damage, and you are stunned for 2-3 turns. Ignores armor."
 	elif ability == "engagingBlock":
 		text = "Block ALL enemy damage for 1 turn, if you are not attacked before you next turn, get stunned for 2 turns."
 	elif ability == "bombThrow":
