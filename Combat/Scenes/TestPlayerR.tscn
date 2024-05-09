@@ -63,11 +63,10 @@ func _ready():
 	setPassives(Global.PlayerSelect)
 
 func play_turn():
-	updateHealthBar()
-	abilityControl.checkBlocking(self)
+	await updateHealthBar()
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	await updateStatusEffect()
 	if skipTurn == false:
 		await battlemap.updateButtons(self)
 		await abilityControl.checkFlags(self)
@@ -82,7 +81,7 @@ func play_turn():
 			print(\"bonusmove\")
 	else:
 		print(\"player is stunned!\")
-	updateCooldowns()
+	await updateCooldowns()
 	emit_signal(\"finishedTurn\")
 
 func updateHealthBar():

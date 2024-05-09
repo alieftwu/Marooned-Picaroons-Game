@@ -49,12 +49,10 @@ func _ready():
 	setAbilities(Global.second_companion)
 	setPassives(Global.second_companion)
 func play_turn():
-	updateHealthBar()
-	abilityControl.checkBlocking(self)
+	await updateHealthBar()
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	if isStunned == true:
-		updateStatusEffect()
+	await updateStatusEffect()
 	if skipTurn == false:
 		await battlemap.updateButtons(self)
 		await abilityControl.checkFlags(self)

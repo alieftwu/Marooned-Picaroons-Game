@@ -42,29 +42,30 @@ func _ready():
 	maxHealth = 170
 	armor = 5
 	basicAttackDamage = 27
+	return
 
 func play_turn():
-	updateHealthBar()
-	abilityControl.checkBlocking(self)
+	await updateHealthBar()
+	await abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	await updateStatusEffect()
 	if skipTurn == false:
-		abilityControl.checkFlags(self)
+		await abilityControl.checkFlags(self)
 		if randf() < 0.2:
 			await battlemap.cowardEnemyMove(self)
 		else:
 			await battlemap.agressiveEnemyMove(self)
 
-		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
-	updateCooldowns()
+	await updateCooldowns()
 	emit_signal(\"finishedTurn\")
+	return
 
 func updateHealthBar():
 	var maxValue = maxHealth
 	healthBar.value = (health / maxHealth) * 100
-	#print(\"new enemy health: \", (health / maxHealth) * 100)
+	return
 	
 func updateCooldowns():
 	if special1CoolDown >= 1:
@@ -82,6 +83,7 @@ func updateStatusEffect():
 		statusEffect.texture = effect
 	else:
 		statusEffect.texture = null
+	return
 "
 
 [node name="Guard" type="Node2D" groups=["EnemyUnits", "Units"]]

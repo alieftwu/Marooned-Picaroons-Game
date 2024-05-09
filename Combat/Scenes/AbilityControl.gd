@@ -37,6 +37,7 @@ func _input(event):
 			return
 
 func checkFlags(player): # will check and see if certain conditions have been meet for abilities
+	print("update flags")
 	if player.frenzyBuff == true:
 		player.frenzyBuffCount -= 1
 		if player.frenzyBuffCount == 0:
@@ -46,12 +47,14 @@ func checkFlags(player): # will check and see if certain conditions have been me
 	return
 	
 func checkBlocking(unit):
+	print("update blocking")
 	if unit.isBlocking == true: # keep unit from being stunned by updating didBlock
 		if unit.didBlock == false:
 			unit.didBlock = true
 	return
 	
 func checkStun(player):
+	print("update stun")
 	var skipTurn = false
 	if (player.isStunned == true) and (player.passiveAbility != "unflinching"):
 		skipTurn = true
@@ -483,13 +486,14 @@ func recklessFrenzy(player): # increase speed and attack at cost of health for 2
 	var isPlayer = checkTeam(player)
 	var buffTargets : Array = []
 	var attackChoice = null
-	aroundFind(starting_position, 1, buffTargets, isPlayer)
+	aroundFind(starting_position, 3, buffTargets, isPlayer)
 	var testMusic = load("res://Combat/Resources/damageWaveSound.wav")
 	abilityMusic.stream = testMusic
 	abilityMusic.play()
 	player.speed += 1
 	player.basicAttackDamage += 10
 	player.health -= 10
+	player.updateHealthBar()
 	player.frenzyBuff = true
 	player.frenzyBuffCount = 3 # to tell when 2 turns are up
 	
@@ -536,7 +540,7 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Melee")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Melee")
-		checkBlocking(interactUnit)
+		await checkBlocking(interactUnit)
 		var damage = (player.basicAttackDamage * 2 * attackModifier * defendModifier)
 		damage = snappedf(damage, 0.01)
 		if damage < 0:
@@ -544,10 +548,10 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		interactUnit.health -= damage
 		await battle_map.updateDamageDisplay(interactUnit, damage)
 		interactUnit.updateHealthBar()
-		interactUnit.isStunned = true
-		interactUnit.isStunnedCount = 3 # 2 turns
 		if interactUnit.passiveAbility != "unflinching":
-			interactUnit.updateStatusEffect()
+			interactUnit.isStunned = true
+			interactUnit.isStunnedCount = 3 # 2 turns
+			await interactUnit.updateStatusEffect()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -575,8 +579,8 @@ func pirateBlessing(player): #heal any friend on the map a little
 	else:
 		healChoice = battle_map.enemyUnits.pick_random()
 	var healerModifier = checkPassiveAttack(player, 0, "Heal")
-	var healedModifier = checkPassiveDefend(healChoice, 0, "Heal")
-	var health = 25 * healedModifier * healerModifier
+	#var healedModifier = checkPassiveDefend(healChoice, 0, "Heal")
+	var health = 25 * healerModifier
 	health = snappedf(health, 0.01)
 	if health < 0:
 		health = 0
@@ -832,18 +836,19 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 		interactUnit = getTarget(attackChoice)
 		var attackModifier = checkPassiveAttack(player, 0, "Range")
 		var defendModifier = checkPassiveDefend(interactUnit, 0, "Range")
-		checkBlocking(interactUnit)
+		await checkBlocking(interactUnit)
 		var damage = (player.basicAttackDamage * 4 * attackModifier * defendModifier)
 		damage = snappedf(damage, 0.01)
 		if damage < 0:
 			damage = 0
 		interactUnit.health -= damage
-		interactUnit.updateHealthBar()
+		await interactUnit.updateHealthBar()
 		await battle_map.updateDamageDisplay(interactUnit, damage)
-	player.isStunned = true
-	player.isStunnedCount = 3 # 2 turn
+	
 	if player.passiveAbility != "unflinching":
-		player.updateStatusEffect()
+		player.isStunned = true
+		player.isStunnedCount = 3 # 2 turn
+		await player.updateStatusEffect()
 	var testMusic = load("res://Combat/Resources/pistol.wav")
 	abilityMusic.stream = testMusic
 	abilityMusic.play()

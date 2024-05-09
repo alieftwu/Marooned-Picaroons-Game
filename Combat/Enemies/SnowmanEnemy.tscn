@@ -41,21 +41,21 @@ func _ready():
 	health = 30
 	maxHealth = 30
 	armor = 0
-	basicAttackDamage = 35
+	basicAttackDamage = 40
 
 func play_turn():
-	updateHealthBar()
-	abilityControl.checkBlocking(self)
+	await updateHealthBar()
+	await abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	await updateStatusEffect()
 	if skipTurn == false:
-		abilityControl.checkFlags(self)
+		await abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
 		await battlemap.agressiveEnemyMove(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
-	updateCooldowns()
+	await updateCooldowns()
 	emit_signal(\"finishedTurn\")
 
 func updateHealthBar():

@@ -44,13 +44,13 @@ func _ready():
 	basicAttackDamage = 25
 
 func play_turn():
-	updateHealthBar()
-	abilityControl.checkBlocking(self)
+	await updateHealthBar()
+	await abilityControl.checkBlocking(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
-	updateStatusEffect()
+	await updateStatusEffect()
 	if skipTurn == false:
-		abilityControl.checkFlags(self)
+		await abilityControl.checkFlags(self)
 		if randf() < 0.15:
 			await battlemap.cowardEnemyMove(self)
 		elif randf() < 0.75:
@@ -59,7 +59,7 @@ func play_turn():
 			await battlemap.moveEnemyPerson(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		await battlemap.enemyRandomAbility(self)
-	updateCooldowns()
+	await updateCooldowns()
 	emit_signal(\"finishedTurn\")
 
 func updateHealthBar():

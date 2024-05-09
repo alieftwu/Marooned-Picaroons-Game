@@ -250,9 +250,9 @@ font_color = Color(0, 0, 0, 1)
 [sub_resource type="Curve2D" id="Curve2D_36pql"]
 bake_interval = 0.01
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 1157.23, 516)
+"points": PackedVector2Array(0, 0, 0, 0, 291.307, 519, 0, 0, 0, 0, 360.992, 520, 0, 0, 0, 0, 1157.23, 516)
 }
-point_count = 2
+point_count = 3
 
 [sub_resource type="Animation" id="Animation_pb8bv"]
 resource_name = "backwards_idle"
@@ -807,6 +807,7 @@ script = ExtResource("10_tcusx")
 direction = "right"
 npcText = ["You are not supposed to be here!"]
 fightScene = "CombatOutsideCastle"
+killable = true
 NPCID = "CTPG1"
 
 [node name="Body" type="Sprite2D" parent="Path2D2/PathFollow2D/PatrollingGuard"]
@@ -902,7 +903,7 @@ combat_scene = "CombatCastleTown"
 
 [node name="Path2D3" type="Path2D" parent="."]
 z_index = 1
-position = Vector2(97, 69)
+position = Vector2(12, -698)
 scale = Vector2(0.875365, 1)
 curve = SubResource("Curve2D_36pql")
 
@@ -924,7 +925,7 @@ direction = "right"
 npcText = ["This is my turf!"]
 fightScene = "CombatOutsideCastle"
 killable = true
-NPCID = "CTPG2"
+NPCID = "CTPG3"
 
 [node name="Body" type="Sprite2D" parent="Path2D3/PathFollow2D/PatrollingGuard"]
 texture_filter = 1

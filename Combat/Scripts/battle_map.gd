@@ -820,11 +820,11 @@ func _physics_process(_delta):
 	var activeUnit = turn_queue.get_active_character()
 	activeUnit.global_position = activeUnit.global_position.move_toward(target_position, 3)
 	
-	if activeUnit.global_position == target_position:
-		current_id_path.pop_front()
+	if (activeUnit.global_position == target_position) or (current_id_path.is_empty()):
+		if current_id_path.is_empty() == false:
+			current_id_path.pop_front()
 		if current_id_path.is_empty():
 			startMoving = false
-			#print("send finished moving")
 			emit_signal("finishedMoving")
 	return
 	
@@ -916,11 +916,12 @@ func simpleAttack(player):
 	return
 	
 func moveEnemyPerson(enemy): # move enemy randomly
+	print("move")
 	currentEnemy = enemy
 	var enemy_position = currentEnemy.global_position
 	var allowedSpaces : Array = []
 	var starting_position = tile_map.local_to_map(enemy_position)
-	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
+	await getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
 	var validMove = false
 	var attemptCounter = 0 #if we don't find a good random move in this many tries we just dont move
 	var random_movePick
@@ -947,25 +948,28 @@ func moveEnemyPerson(enemy): # move enemy randomly
 				await finishedMoving # wait for physics to finish moving
 				
 			else:
-				print("chose to not move")
+				startMoving = false
 				emit_signal("finishedMoving")
 		else:
+			startMoving = false
 			emit_signal("finishedMoving")
 	else:
+		startMoving = false
 		emit_signal("finishedMoving")
 	
 	startMoving = false
-	update_AStarGrid()
-	checkHazardTile(enemy)
+	await update_AStarGrid()
+	await checkHazardTile(enemy)
 	emit_signal("characterMovementComplete")
 	return
 		
 func agressiveEnemyMove(enemy): # move enemy to nearest player
+	print("agressive move")
 	currentEnemy = enemy
 	var enemy_position = currentEnemy.global_position
 	var allowedSpaces : Array = []
 	var starting_position = tile_map.local_to_map(enemy_position)
-	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
+	await getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
 	var validMove = false
 	var smallestDistance = 999999
 	var move_pick = Vector2(0,0)
@@ -991,22 +995,21 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 			move_pick	
 			).slice(1)
 			startMoving = true
-			#print("awaitAgMove")
 			await finishedMoving # wait for physics to finish moving
-			#print("finishedAgMove")
 		else:
-			move_pick = starting_position
+			startMoving = false
 			emit_signal("finishedMoving")
 	else:
-		move_pick = starting_position
+		startMoving = false
 		emit_signal("finishedMoving")
 	
 	startMoving = false
-	update_AStarGrid()
+	await update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return
 	
 func cowardEnemyMove(enemy): # move enemy away from nearest player
+	print("coward move")
 	currentEnemy = enemy
 	var enemy_position = currentEnemy.global_position
 	var allowedSpaces : Array = []
@@ -1021,13 +1024,13 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 			closestPlayerDistance = distanceCalc
 			closestPlayer = unit
 	
-	getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
+	await getAllowedSpaces(starting_position[0], starting_position[1], currentEnemy.speed, 0, allowedSpaces)
 	var validMove = false
 	
 	var largestDistance = -999999
 	var move_pick
 	#print("ScaredMovses: ", allowedSpaces)
-	if allowedSpaces.is_empty() == false:
+	if (allowedSpaces.is_empty() == false) and (closestPlayer != null):
 		if len(allowedSpaces) != 1:
 			for move in allowedSpaces: # find move that takes you farthest from closest player
 				var player_pos = tile_map.local_to_map(closestPlayer.global_position)
@@ -1049,14 +1052,14 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 			startMoving = true
 			await finishedMoving # wait for physics to finish moving
 		else:
-			move_pick = starting_position
+			startMoving = false
 			emit_signal("finishedMoving")
 	else:
-		move_pick = starting_position
+		startMoving = false
 		emit_signal("finishedMoving")
 	
 	startMoving = false
-	update_AStarGrid()
+	await update_AStarGrid()
 	emit_signal("characterMovementComplete")
 	return		
 		
@@ -1086,8 +1089,8 @@ func simpleEnemyAttack(enemy):
 	if attackTargets.is_empty() == false:
 		var random_Choice = attackTargets.pick_random()
 		var attacked_unit = random_Choice[1] # get the unit being attacked
-		abilityControl.checkFlags(attacked_unit)
-		abilityControl.checkBlocking(attacked_unit)
+		await abilityControl.checkFlags(attacked_unit)
+		await abilityControl.checkBlocking(attacked_unit)
 		var attackModifier = abilityControl.checkPassiveAttack(enemy, 0, "Melee")
 		var defendModifier = abilityControl.checkPassiveDefend(attacked_unit, 0, "Melee")
 		var damage = (currentEnemy.basicAttackDamage * attackModifier * defendModifier) - attacked_unit.armor
@@ -1274,7 +1277,7 @@ func updateDamageDisplay(player, damage):
 	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
 	damageDisplay.visible = true
 	damageDisplay.text = ("-" + str(damage) + " damage")
-	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	await get_tree().create_timer(0.5).timeout # wait for 2 secodns
 	damageDisplay.visible = false
 	return
 
@@ -1282,7 +1285,7 @@ func updateDamageDisplayHeal(player, health):
 	damageDisplay.global_position = player.global_position + Vector2(-8, -16)
 	damageDisplay.visible = true
 	damageDisplay.text = ("+" + str(health) + " health")
-	await get_tree().create_timer(0.75).timeout # wait for 2 secodns
+	await get_tree().create_timer(0.55).timeout # wait for 2 secodns
 	damageDisplay.visible = false
 	return
 	
@@ -1429,7 +1432,7 @@ func getAbilityText(ability):
 	if ability == "Basic":
 		text = "Attack a target around you for basic damage."
 	elif ability == "pistolShot":
-		text = "Shoot an enemy 4 or less tiles away."
+		text = "Shoot an enemy 4 or less tiles away for 200% damage."
 	elif ability == "heavySwordSwing":
 		text = "Attack a target next to you for 200% damage"
 	elif ability == "recklessFrenzy":

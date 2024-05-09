@@ -71,6 +71,7 @@ func checkDeaths(): # i just make them invisible for now, we will need other way
 			unit.remove_from_group("Units")
 			unit.remove_from_group("PlayerUnits")
 			unit.remove_from_group("EnemyUnits")
+			print("Killed: ", unit)
 			activeUnits.erase(unit)
 			remove_child(unit)
 			unit.queue_free()
