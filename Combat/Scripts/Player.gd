@@ -50,6 +50,7 @@ func _ready():
 	setPassives(Global.second_companion)
 func play_turn():
 	await updateHealthBar()
+	await highlightmap.highlightPlayer(self)
 	isBlocking = false
 	var skipTurn = await abilityControl.checkStun(self)
 	await updateStatusEffect()
@@ -67,7 +68,8 @@ func play_turn():
 			print("bonusmove")
 	else:
 		print("player is stunned!")
-	updateCooldowns()
+	await highlightmap.clear()
+	await updateCooldowns()
 	emit_signal("finishedTurn")
 
 func updateHealthBar():

@@ -42,6 +42,7 @@ var tile_selected : Vector2i
 var tile_selected_converted : Vector2
 var skipMovement : bool = false
 var prisonSpikeSwitch : bool = false # to switch what spikes are spawned for damage animation
+var infiniteMoveCount : int = 0
 
 # Unit Storage
 var friendlyUnits : Array
@@ -202,6 +203,7 @@ func _generateCityMap():
 	var newBackImage = load("res://Combat/Resources/firstVillageBackground2.png")
 	loadBackground(newBackImage)			
 	return
+	
 func _generateBossCastleMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
@@ -240,6 +242,7 @@ func _generateBossCastleMap():
 	var newBackImage = load("res://Combat/Resources/bossBackground1.png")
 	loadBackground(newBackImage)			
 	return
+	
 func _generateFrontGateMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
@@ -277,6 +280,7 @@ func _generateFrontGateMap():
 	var newBackImage = load("res://Combat/Resources/Front Gate Background.png")
 	loadBackground(newBackImage)			
 	return
+	
 func _generateCountyPrisonMap(): 
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
@@ -314,6 +318,7 @@ func _generateCountyPrisonMap():
 	var newBackImage = load("res://Combat/Resources/CountyPrisonBackground.png")
 	loadBackground(newBackImage)			
 	return
+	
 func _generateFirstVillageMap():
 	tile_map.clear()
 	random_SafeRowNum = randi_range(0, height - 1)
@@ -351,6 +356,7 @@ func _generateFirstVillageMap():
 	var newBackImage = load("res://Combat/Resources/firstvillagebackground.png")
 	loadBackground(newBackImage)			
 	return
+	
 func _generateCastleTownMap():
 	
 	tile_map.clear()
@@ -772,7 +778,6 @@ func movePerson(player):
 	current_id_path.clear()
 	# print("child ", player.get_index(), " waiting to pick")
 	highlight_map._generateMoveMap(currentPlayer)
-	highlight_map.highlightPlayer(currentPlayer)
 	
 	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
 	var allowedSpaces : Array = []
@@ -816,6 +821,12 @@ func _physics_process(_delta):
 	if startMoving == false:
 		return
 
+	infiniteMoveCount += 1
+	if infiniteMoveCount >= 60:
+		infiniteMoveCount = 0
+		print("Move error")
+		emit_signal("finishedMoving")
+		
 	target_position = tile_map.map_to_local(current_id_path.front())
 	var activeUnit = turn_queue.get_active_character()
 	activeUnit.global_position = activeUnit.global_position.move_toward(target_position, 3)
@@ -825,6 +836,7 @@ func _physics_process(_delta):
 			current_id_path.pop_front()
 		if current_id_path.is_empty():
 			startMoving = false
+			infiniteMoveCount = 0
 			emit_signal("finishedMoving")
 	return
 	
@@ -994,6 +1006,7 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 			starting_position,
 			move_pick	
 			).slice(1)
+			print("path: ", current_id_path)
 			startMoving = true
 			await finishedMoving # wait for physics to finish moving
 		else:
@@ -1005,6 +1018,7 @@ func agressiveEnemyMove(enemy): # move enemy to nearest player
 	
 	startMoving = false
 	await update_AStarGrid()
+	await checkHazardTile(enemy)
 	emit_signal("characterMovementComplete")
 	return
 	
@@ -1049,6 +1063,7 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 			starting_position,
 			move_pick	
 			).slice(1)
+			print("path: ", current_id_path)
 			startMoving = true
 			await finishedMoving # wait for physics to finish moving
 		else:
@@ -1060,6 +1075,7 @@ func cowardEnemyMove(enemy): # move enemy away from nearest player
 	
 	startMoving = false
 	await update_AStarGrid()
+	await checkHazardTile(enemy)
 	emit_signal("characterMovementComplete")
 	return		
 		
@@ -1098,7 +1114,7 @@ func simpleEnemyAttack(enemy):
 		if damage < 0:
 			damage = 0
 		attacked_unit.health -= damage
-		attacked_unit.updateHealthBar()
+		await attacked_unit.updateHealthBar()
 		var testMusic = load("res://Combat/Resources/07_human_atk_sword_2.wav")
 		abilityMusic.stream = testMusic
 		abilityMusic.play()
@@ -1115,7 +1131,6 @@ func gatherUnitInfo():
 	friendlyUnits = get_tree().get_nodes_in_group("PlayerUnits")
 	Units = get_tree().get_nodes_in_group("Units")
 	enemyUnits = get_tree().get_nodes_in_group("EnemyUnits")
-	
 	pass
 
 func checkHazardTile(unit):

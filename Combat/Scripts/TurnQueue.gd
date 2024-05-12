@@ -28,7 +28,7 @@ func play_round():
 			active_character = child
 			print("Turn of " + str(child))
 			await child.play_turn()
-		checkDeaths()
+		await checkDeaths()
 		gameResult = checkGameOver()
 		if gameResult == 1:
 			print("You lost")
@@ -75,7 +75,8 @@ func checkDeaths(): # i just make them invisible for now, we will need other way
 			activeUnits.erase(unit)
 			remove_child(unit)
 			unit.queue_free()
-			battle_map.gatherUnitInfo() # since unit is deleted, groups should update to show that
+			await battle_map.gatherUnitInfo() # since unit is deleted, groups should update to show that
+			await battle_map.update_AStarGrid()
 	return
 	
 func checkGameOver():
