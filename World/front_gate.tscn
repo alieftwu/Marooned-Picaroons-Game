@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dsiq8d3452055"]
+[gd_scene load_steps=43 format=3 uid="uid://dsiq8d3452055"]
 
 [ext_resource type="TileSet" uid="uid://bmrsgpovhc16g" path="res://Art/Tilesets/starter_world_tileset.tres" id="1_3wigp"]
 [ext_resource type="Script" path="res://Scripts/base_script.gd" id="1_5kknc"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://World/TextureRect.gd" id="12_mvtb3"]
 [ext_resource type="FontFile" uid="uid://coa2fcxdbjc6p" path="res://Art/fonts/FSEX300.ttf" id="13_x5uhg"]
 [ext_resource type="Script" path="res://World/Label.gd" id="14_8o3v3"]
+[ext_resource type="Texture2D" uid="uid://bdn78owchvycs" path="res://Combat/Resources/Yoda.png" id="15_5gw1r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bwlne"]
 size = Vector2(21.1607, 60)
@@ -25,137 +26,41 @@ size = Vector2(1580.87, 146.971)
 resource_name = "backwards_idle"
 length = 0.9
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [3, 4, 5]
-}
 
 [sub_resource type="Animation" id="Animation_crl8m"]
 resource_name = "forward_idle"
 length = 0.9
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
 
 [sub_resource type="Animation" id="Animation_u6iu1"]
 resource_name = "left_idle"
 length = 0.9
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [9, 10, 11]
-}
 
 [sub_resource type="Animation" id="Animation_dataw"]
 resource_name = "right_idle"
 length = 0.9
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [6, 7, 8]
-}
 
 [sub_resource type="Animation" id="Animation_yr0q2"]
 resource_name = "walk_down"
 length = 0.35
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [12, 13, 14, 13]
-}
 
 [sub_resource type="Animation" id="Animation_41uqw"]
 resource_name = "walk_left"
 length = 0.45
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [9, 21, 10, 23, 11]
-}
 
 [sub_resource type="Animation" id="Animation_wcl5n"]
 resource_name = "walk_right"
 length = 0.45
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [6, 18, 7, 20, 8]
-}
 
 [sub_resource type="Animation" id="Animation_otycb"]
 resource_name = "walk_up"
 length = 0.35
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [15, 16, 17, 5]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2kr0c"]
 _data = {
@@ -443,7 +348,7 @@ autowrap_mode = 2
 script = ExtResource("14_8o3v3")
 
 [node name="FGGuard2" type="CharacterBody2D" parent="."]
-position = Vector2(621, 458)
+position = Vector2(625, 453)
 collision_layer = 9
 motion_mode = 1
 script = ExtResource("8_j56rc")
@@ -541,6 +446,104 @@ horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("14_8o3v3")
 
+[node name="Yoda" type="CharacterBody2D" parent="."]
+position = Vector2(66, 480)
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("8_j56rc")
+direction = "right"
+npcText = ["Watch out for those seagulls"]
+killable = true
+fightScene = "YodaFight"
+NPCID = "YODA"
+
+[node name="Body" type="Sprite2D" parent="Yoda"]
+position = Vector2(-0.233498, -12)
+scale = Vector2(0.0278369, 0.027)
+texture = ExtResource("15_5gw1r")
+flip_h = true
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="Yoda"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+speed_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Yoda"]
+y_sort_enabled = true
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_f4lr4")
+
+[node name="AnimationTree" type="AnimationTree" parent="Yoda"]
+libraries = {
+"": SubResource("AnimationLibrary_2kr0c")
+}
+tree_root = SubResource("AnimationNodeStateMachine_us6gr")
+anim_player = NodePath("../PlayerAnimation")
+parameters/conditions/idle = false
+parameters/conditions/is_moving = false
+parameters/Idle/blend_position = Vector2(1.232, -0.0407407)
+parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Yoda"]
+texture_filter = 1
+offset_left = -5.0
+offset_top = -34.0
+offset_right = 7.0
+offset_bottom = -22.0
+texture = ExtResource("10_0og3n")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="Yoda"]
+position = Vector2(0, -11)
+rotation = 4.71239
+
+[node name="Polygon2D" type="Polygon2D" parent="Yoda/Area2D"]
+color = Color(0.368627, 0.368627, 0.368627, 0.352941)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0, 0, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Yoda/Area2D"]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-4, 0, -40, 75, 40, 75, 4, 0)
+
+[node name="HUD" type="CanvasLayer" parent="Yoda"]
+
+[node name="TextureRect" type="TextureRect" parent="Yoda/HUD"]
+z_index = 2
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -121.0
+offset_right = 269.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 8
+texture = ExtResource("11_bxxae")
+stretch_mode = 4
+script = ExtResource("12_mvtb3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Yoda/HUD/TextureRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 68.0
+offset_top = 37.0
+offset_right = 347.0
+offset_bottom = 102.0
+text = "This is a text box!
+text goes here."
+label_settings = SubResource("LabelSettings_v2ow3")
+horizontal_alignment = 1
+autowrap_mode = 2
+script = ExtResource("14_8o3v3")
+
 [connection signal="haltMove" from="FGGuard1" to="Player" method="_on_halt_move"]
 [connection signal="haltMove" from="FGGuard1" to="FGGuard1/HUD/TextureRect/Label" method="_on_npc_halt_move"]
 [connection signal="hideTextBox" from="FGGuard1" to="FGGuard1/HUD/TextureRect" method="_on_npc_hide_text_box"]
@@ -559,3 +562,12 @@ script = ExtResource("14_8o3v3")
 [connection signal="body_entered" from="FGGuard2/Area2D" to="FGGuard2" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="FGGuard2/Area2D" to="FGGuard2" method="_on_area_2d_body_exited"]
 [connection signal="hideBoxLabel" from="FGGuard2/HUD/TextureRect/Label" to="FGGuard2/HUD/TextureRect" method="_on_label_hide_box_label"]
+[connection signal="haltMove" from="Yoda" to="Player" method="_on_halt_move"]
+[connection signal="haltMove" from="Yoda" to="Yoda/HUD/TextureRect/Label" method="_on_npc_halt_move"]
+[connection signal="hideTextBox" from="Yoda" to="Yoda/HUD/TextureRect" method="_on_npc_hide_text_box"]
+[connection signal="newFText" from="Yoda" to="Yoda/HUD/TextureRect/Label" method="_on_new_f_text"]
+[connection signal="resMove" from="Yoda" to="Player" method="_on_res_move"]
+[connection signal="showTextBox" from="Yoda" to="Yoda/HUD/TextureRect" method="_on_npc_show_text_box"]
+[connection signal="body_entered" from="Yoda/Area2D" to="Yoda" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Yoda/Area2D" to="Yoda" method="_on_area_2d_body_exited"]
+[connection signal="hideBoxLabel" from="Yoda/HUD/TextureRect/Label" to="Yoda/HUD/TextureRect" method="_on_label_hide_box_label"]

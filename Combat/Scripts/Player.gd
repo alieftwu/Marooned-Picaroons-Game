@@ -58,9 +58,11 @@ func play_turn():
 		await battlemap.updateButtons(self)
 		await abilityControl.checkFlags(self)
 		await battlemap.setAttackIconsDull() # make buttons dull
+		await highlightmap.highlightPlayer(self)
 		await battlemap.movePerson(self)
 		await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
 		canPress = true
+		await highlightmap.highlightPlayer(self)
 		await battlemap.abilityFinished
 		if bonusMove == true:
 			bonusMove = false
@@ -68,7 +70,7 @@ func play_turn():
 			print("bonusmove")
 	else:
 		print("player is stunned!")
-	await highlightmap.clear()
+	highlightmap.clear()
 	await updateCooldowns()
 	emit_signal("finishedTurn")
 

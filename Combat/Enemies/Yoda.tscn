@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4ehkn0j7wea5"]
+[gd_scene load_steps=5 format=3 uid="uid://cmo57wxmnrwpi"]
 
-[ext_resource type="Texture2D" uid="uid://ybxtvvg4f4mo" path="res://Combat/Enemies/Enemy Art/Knight.png" id="1_yu2a1"]
-[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="2_qoelf"]
-[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="3_pls6o"]
+[ext_resource type="Texture2D" uid="uid://bdn78owchvycs" path="res://Combat/Resources/Yoda.png" id="1_2m1u6"]
+[ext_resource type="Texture2D" uid="uid://cyr84b2yea5lt" path="res://Combat/Resources/healthbarUnder.png" id="2_7drkc"]
+[ext_resource type="Texture2D" uid="uid://b0uq0yqd3fftn" path="res://Combat/Resources/healthbarProgress.png" id="3_u2olx"]
 
-[sub_resource type="GDScript" id="GDScript_3gfyo"]
+[sub_resource type="GDScript" id="GDScript_mon1l"]
 script/source = "extends Node2D
 
 @onready var battlemap = $\"../../BattleMap\"
@@ -18,8 +18,8 @@ var health : float
 var maxHealth : float
 var armor : int
 var basicAttackDamage : int
-var passiveAbility : String = \"Brawler\"
-var abilityList : Array = [\"heavySwordSwing\", \"desparateStrike\", \"heavySwordSwing\"] # buttons 2-4 abilities. can switch out 
+var passiveAbility : String = \"hardToHit\"
+var abilityList : Array = [\"circleSlash\", \"damageWave\", \"quickStrike\"] # buttons 2-4 abilities. can switch out 
 # look at abilityControl checkMoveSlot
 
 var frenzyBuff : bool = false # used to determine when 2 turns are up
@@ -37,11 +37,11 @@ var special2CoolDown : int = 0 # can only attack when = 0, goes down at end of t
 var special3CoolDown : int = 0 # can only attack when = 0, goes down at end of turn by 1
 
 func _ready():
-	speed = 1
-	health = 200
-	maxHealth = 200
-	armor = 10
-	basicAttackDamage = 22
+	speed = 10
+	health = 500
+	maxHealth = 500
+	armor = 5
+	basicAttackDamage = 30
 
 func play_turn():
 	await updateHealthBar()
@@ -52,23 +52,30 @@ func play_turn():
 	if skipTurn == false:
 		await abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < 0.9:
+		if randf() < 0.25:
+			await battlemap.cowardEnemyMove(self)
+			await abilityControl.damageWave(self)
+		elif randf() < 0.33:
 			await battlemap.agressiveEnemyMove(self)
+			await abilityControl.circleSlash(self)
 		else:
-			await battlemap.moveEnemyPerson(self)
+			await battlemap.agressiveEnemyMove(self)
+			await abilityControl.quickStrike(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-		await battlemap.enemyRandomAbility(self)
-	await updateCooldowns()
+		#await battlemap.enemyRandomAbility(self)
+	#await updateCooldowns()
+	if bonusMove == true:
+			bonusMove = false
+			await battlemap.cowardEnemyMove(self)
+			print(\"bonusmove\")
 	emit_signal(\"finishedTurn\")
 
 func updateHealthBar():
-	print(\"update health\")
 	var maxValue = maxHealth
 	healthBar.value = (health / maxHealth) * 100
 	#print(\"new enemy health: \", (health / maxHealth) * 100)
 	
 func updateCooldowns():
-	print(\"update cooldowns\")
 	if special1CoolDown >= 1:
 		special1CoolDown -= 1
 	if special2CoolDown >= 1:
@@ -78,7 +85,6 @@ func updateCooldowns():
 	return
 
 func updateStatusEffect():
-	print(\"update status\")
 	var effect
 	if isStunned == true:
 		effect = load(\"res://Combat/Resources/stunned.png\")
@@ -87,23 +93,24 @@ func updateStatusEffect():
 		statusEffect.texture = null
 "
 
-[node name="Knight" type="Node2D" groups=["EnemyUnits", "Units"]]
-script = SubResource("GDScript_3gfyo")
+[node name="Yoda" type="Node2D" groups=["EnemyUnits", "Units"]]
+script = SubResource("GDScript_mon1l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -1)
-scale = Vector2(0.055, 0.055)
-texture = ExtResource("1_yu2a1")
+scale = Vector2(-0.017, 0.017)
+texture = ExtResource("1_2m1u6")
+flip_h = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -8.0
+offset_left = -9.0
 offset_top = -11.0
-offset_right = 56.0
-offset_bottom = -1.0
-scale = Vector2(0.25, 0.25)
+offset_right = 55.0
+offset_bottom = -0.999999
+scale = Vector2(0.29, 0.29)
 value = 100.0
-texture_under = ExtResource("2_qoelf")
-texture_progress = ExtResource("3_pls6o")
+texture_under = ExtResource("2_7drkc")
+texture_progress = ExtResource("3_u2olx")
 
 [node name="StatusEffect" type="TextureRect" parent="."]
 offset_left = -4.0

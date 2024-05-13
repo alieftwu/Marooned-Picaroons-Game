@@ -414,12 +414,15 @@ func pistolShot(player): #shoot in a line 3 away
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -454,12 +457,15 @@ func heavySwordSwing(player): # only works if next to person, 1 tile range
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -528,12 +534,15 @@ func takeDown(player): # must have ally next to you, damage and stun nearby oppo
 		highlight_map.clearTile(unit)
 	if (attackTargets.is_empty() == false) and (allyList.is_empty() == false):
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -608,12 +617,15 @@ func axeToss(player): # toss axe that can go over obstacles, must be 2-3 away fr
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -647,12 +659,15 @@ func quickStrike(player): # attack then you can move again
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -713,12 +728,15 @@ func desparateStrike(player): # deal more damage if low health 1 away !!!!! need
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -755,12 +773,15 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1 and len(attackTargets) != 2:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -784,12 +805,15 @@ func rapidFire(player): # hit two enemies in range 2 around you for .75 basic
 		
 		if areTwoTargets == true: # second attack
 			if isPlayer == true:
-				chooseAttack = true
-				await specialAttackChosen
-				while tile_selected not in attackTargets:
+				if len(attackTargets) != 2:
 					chooseAttack = true
 					await specialAttackChosen
-				attackChoice = tile_selected
+					while tile_selected not in attackTargets:
+						chooseAttack = true
+						await specialAttackChosen
+					attackChoice = tile_selected
+				else:
+					attackChoice = attackTargets[1]
 			else:
 				attackChoice = attackTargets.pick_random()
 				
@@ -824,12 +848,15 @@ func cannonShot(player): #cannon attack in a line, you skip next turn ignores ar
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			
@@ -876,12 +903,15 @@ func bombThrow(player): # throw bomb that hits units nearby as well
 	
 	if attackTargets.is_empty() == false:
 		if isPlayer == true:
-			chooseAttack = true
-			await specialAttackChosen
-			while tile_selected not in attackTargets:
+			if len(attackTargets) != 1:
 				chooseAttack = true
 				await specialAttackChosen
-			attackChoice = tile_selected
+				while tile_selected not in attackTargets:
+					chooseAttack = true
+					await specialAttackChosen
+				attackChoice = tile_selected
+			else:
+				attackChoice = attackTargets[0]
 		else:
 			attackChoice = attackTargets.pick_random()
 			

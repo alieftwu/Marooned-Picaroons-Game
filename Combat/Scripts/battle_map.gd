@@ -782,6 +782,7 @@ func movePerson(player):
 	var starting_position = tile_map.local_to_map(currentPlayer.global_position)
 	var allowedSpaces : Array = []
 	getAllowedSpaces(starting_position[0], starting_position[1], currentPlayer.speed, 0, allowedSpaces)
+	await highlight_map.highlightPlayer(player)
 	
 	if len(allowedSpaces) >= 2:
 		canMove = true
@@ -826,8 +827,8 @@ func _physics_process(_delta):
 		infiniteMoveCount = 0
 		print("Move error")
 		emit_signal("finishedMoving")
-		
-	target_position = tile_map.map_to_local(current_id_path.front())
+	if current_id_path.is_empty() == false:
+		target_position = tile_map.map_to_local(current_id_path.front())
 	var activeUnit = turn_queue.get_active_character()
 	activeUnit.global_position = activeUnit.global_position.move_toward(target_position, 3)
 	

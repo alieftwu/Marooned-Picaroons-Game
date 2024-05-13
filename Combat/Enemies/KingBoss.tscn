@@ -52,15 +52,22 @@ func play_turn():
 	if skipTurn == false:
 		await abilityControl.checkFlags(self)
 		#battlemap.setAttackIconsDull() # make buttons dull
-		if randf() < 0.75:
+		if randf() < 0.20:
 			await battlemap.cowardEnemyMove(self)
-		elif randf() < 0.25:
+			await abilityControl.damageWave(self)
+		elif randf() < 0.40:
 			await battlemap.agressiveEnemyMove(self)
+			await abilityControl.spawnMinion(self)
 		else:
-			await battlemap.moveEnemyPerson(self)
+			await battlemap.agressiveEnemyMove(self)
+			await abilityControl.quickStrike(self)
 		#await battlemap.checkCooldownIcons(self) # updates buttons with cooldown icons
-		await battlemap.enemyRandomAbility(self)
-	await updateCooldowns()
+		#await battlemap.enemyRandomAbility(self)
+	#await updateCooldowns()
+	if bonusMove == true:
+			bonusMove = false
+			await battlemap.cowardEnemyMove(self)
+			print(\"bonusmove\")
 	emit_signal(\"finishedTurn\")
 
 func updateHealthBar():
